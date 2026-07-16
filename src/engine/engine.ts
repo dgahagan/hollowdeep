@@ -6,6 +6,7 @@ import { clearFlag, isFlagSet, itemLocation, setItemLocation } from './state';
 import { DIED_THIS_TURN, fireTriggers } from './systems/events';
 import { creatureTick } from './systems/creatures';
 import { lightTick } from './systems/light';
+import { rankFor, scoringTick } from './systems/scoring';
 import { handlerFor, type ActionResult } from './actions';
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -182,7 +183,9 @@ function worldTick(module: AdventureModule, state: GameState): [GameState, Outpu
   current = afterLight;
   output.push(...lightEvents);
 
-  // TODO(T20): scoring — treasure carry/deposit, milestones, rank.
+  const [afterScoring, scoringEvents] = scoringTick(module, current);
+  current = afterScoring;
+  output.push(...scoringEvents);
 
   return [current, output];
 }
@@ -319,13 +322,20 @@ export function step(module: AdventureModule, state: GameState, rawInput: string
 
   // ── 6. end ─────────────────────────────────────────────────────────────
   if (working.ended !== undefined) {
-    // TODO(T20): scoring.ts fills in the rank from the rank table.
+    // The `endGame` effect (systems/events.ts) only stamps `rank: ''` — it
+    // doesn't own the rank table, scoring.ts does. Fill it in here, and
+    // persist it onto `state.ended` (not just the OutputEvent) so a save
+    // taken after the game ends round-trips the same rank rather than
+    // recomputing it, and so it can't drift from what the player was told.
+    const victory = working.ended.victory;
+    const rank = rankFor(module, working.score);
+    working = { ...working, ended: { victory, rank } };
     output.push({
       kind: 'game-over',
-      text: working.ended.victory ? 'You have won.' : 'Your adventure ends here.',
-      victory: working.ended.victory,
+      text: victory ? 'You have won.' : 'Your adventure ends here.',
+      victory,
       score: working.score,
-      rank: working.ended.rank,
+      rank,
     });
   }
 
