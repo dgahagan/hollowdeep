@@ -24,6 +24,8 @@ export interface UseGameResult {
   /** Every `OutputEvent` from every CONSUMED turn, oldest first (T25). */
   transcript: OutputEvent[];
   submit: (input: string) => void;
+  /** Adopt a `GameState` loaded from a save (T26). See `load`'s own comment. */
+  load: (state: GameState) => void;
 }
 
 /**
@@ -113,11 +115,45 @@ export function useGame(module: AdventureModule, seed?: number): UseGameResult {
     writeAutosave(module.manifest.id, session.state.turn, serializeSave(blob));
   }, [module, session.state]);
 
+  // Adopt a `GameState` loaded from a save slot (T26 — SaveDialog's "Load").
+  //
+  // This does NOT go through `step` — loading isn't a turn, it's a swap of
+  // the whole session. Called from a click handler (not from inside the
+  // `setSession` updater), so it is free to have the side effect `submit`'s
+  // updater is forbidden from having: it stamps `savedTurn` BEFORE handing
+  // React the new state, so the autosave effect above sees its guard already
+  // satisfied on the next render and does not immediately re-write the ring
+  // with the state it was just read from (turn N loaded → turn N re-saved →
+  // no new information, just a chance to clobber a different turn that
+  // happens to share `N % AUTOSAVE_SLOTS`).
+  //
+  // `state` and `transcript` still commit together (Session's own comment
+  // above explains why that has to hold) — this just supplies both fields of
+  // a fresh `Session` directly instead of deriving them from the previous
+  // one.
+  //
+  // What goes in `transcript`: `GameState` carries no transcript field and
+  // must not gain one — the save shape is versioned and migrated forever
+  // (save.ts), and the transcript is disposable UI history, not game state.
+  // So a load cannot "restore" the prior session's scrollback; there isn't
+  // one to restore from a save blob that never held it. The alternative to
+  // starting empty — silently reusing whatever happened to be on screen
+  // before the click — would glue two different sessions' output together
+  // with nothing marking the seam, which reads as a bug the moment the
+  // player scrolls up. A single acknowledgement line marks the seam honestly
+  // instead: the player did something (loaded a save), and the transcript
+  // says so, the same way a command-echo says a command happened.
+  const load = useCallback((state: GameState) => {
+    savedTurn.current = state.turn;
+    setSession({ state, transcript: [{ kind: 'text', text: 'Game loaded.' }] });
+  }, []);
+
   return {
     state: session.state,
     scene: describeScene(module, session.state),
     actions: availableActions(module, session.state),
     transcript: session.transcript,
     submit,
+    load,
   };
 }

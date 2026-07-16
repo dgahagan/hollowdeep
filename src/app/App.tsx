@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { AdventureModule } from '../engine/schema';
 import { loadAdventure } from '../loader';
 import { fetchReader } from './fetchReader';
 import { ErrorBoundary } from './ErrorBoundary';
 import { useGame } from './useGame';
+import { useKeyboard } from './useKeyboard';
 import { ScenePanel } from './ScenePanel';
 import { TranscriptPanel } from './TranscriptPanel';
 import { CommandInput } from './CommandInput';
 import { ActionBar } from './ActionBar';
 import { InventoryPanel } from './InventoryPanel';
 import { StatusBar } from './StatusBar';
+import { SaveDialog } from './SaveDialog';
 import './app.css';
 
 // The app shell (design plan §6, T24/T25): load an adventure behind an error
@@ -80,12 +82,42 @@ function AdventureGate({ baseDir }: { baseDir: string }) {
 }
 
 function Game({ module }: { module: AdventureModule }) {
-  const { state, scene, actions, transcript, submit } = useGame(module);
+  const { state, scene, actions, transcript, submit, load } = useGame(module);
+  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+
+  // T26's `i` shortcut moves focus to the inventory panel rather than
+  // "doing" anything by itself — `InventoryPanel`'s own buttons are already
+  // the click path (FR-2.7), so focusing it is the whole job. The wrapper div
+  // (not `InventoryPanel` itself) carries the ref and `tabIndex={-1}`: T25's
+  // component is out of this task's file list, and a focusable, otherwise
+  // inert wrapper around it needs no change inside.
+  const inventoryFocusRef = useRef<HTMLDivElement>(null);
+
+  useKeyboard({
+    onLook: () => {
+      submit('look');
+    },
+    onInventoryFocus: () => {
+      inventoryFocusRef.current?.focus();
+    },
+    onOpenSaveDialog: () => {
+      setSaveDialogOpen(true);
+    },
+  });
 
   return (
     <main className="game">
       <header className="game__header">
         <h1>{module.manifest.title}</h1>
+        <button
+          type="button"
+          className="game__save-button"
+          onClick={() => {
+            setSaveDialogOpen(true);
+          }}
+        >
+          Save / Load
+        </button>
         <StatusBar module={module} state={state} scene={scene} />
       </header>
 
@@ -98,7 +130,9 @@ function Game({ module }: { module: AdventureModule }) {
 
         <aside className="game__sidebar">
           <ActionBar actions={actions} onAction={submit} />
-          <InventoryPanel actions={actions} onAction={submit} />
+          <div className="game__inventory-focus" ref={inventoryFocusRef} tabIndex={-1}>
+            <InventoryPanel actions={actions} onAction={submit} />
+          </div>
         </aside>
       </div>
 
@@ -107,6 +141,19 @@ function Game({ module }: { module: AdventureModule }) {
           {state.ended.victory ? 'Victory!' : 'Game over.'} Final rank: {state.ended.rank}
         </p>
       )}
+
+      <SaveDialog
+        open={saveDialogOpen}
+        module={module}
+        state={state}
+        onLoad={(loaded) => {
+          load(loaded);
+          setSaveDialogOpen(false);
+        }}
+        onClose={() => {
+          setSaveDialogOpen(false);
+        }}
+      />
     </main>
   );
 }

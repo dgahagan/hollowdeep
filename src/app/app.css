@@ -35,9 +35,25 @@ body {
   gap: 1rem;
 }
 
+.game__header {
+  position: relative;
+}
+
 .game__header h1 {
   margin: 0 0 0.5rem;
   font-size: 1.5rem;
+}
+
+.game__save-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.game__inventory-focus:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .game__ended {
@@ -292,4 +308,86 @@ input:focus-visible {
   .transcript-panel {
     scroll-behavior: auto;
   }
+}
+
+/* Save dialog */
+
+.save-dialog {
+  background: var(--panel-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem 1.25rem 1.25rem;
+  width: min(560px, 92vw);
+  font-family: inherit;
+}
+
+.save-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.save-dialog h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.2rem;
+}
+
+.save-dialog h3 {
+  margin: 1rem 0 0.4rem;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.save-dialog__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.save-dialog__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.4rem 0.6rem;
+  background: #1a1a1f;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.save-dialog__row-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.save-dialog__row-label {
+  font-weight: bold;
+}
+
+.save-dialog__row-detail {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.save-dialog__row-detail--error {
+  color: var(--danger);
+}
+
+.save-dialog__row-actions {
+  display: flex;
+  gap: 0.35rem;
+  flex-shrink: 0;
+}
+
+.save-dialog__footer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
 }
