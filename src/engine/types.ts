@@ -54,6 +54,14 @@ export interface PendingQuestion {
   options: string[];
   /** The raw input that triggered the question, replayed once resolved. */
   originalCommand: string;
+  /**
+   * The ambiguous phrase within `originalCommand`, e.g. "cup".
+   *
+   * Needed to rewrite the command once answered ("take cup" + "tin cup" →
+   * "take tin cup"); without it there is no way to know which word the answer
+   * replaces.
+   */
+  phrase: string;
 }
 
 /** How the game ended. */

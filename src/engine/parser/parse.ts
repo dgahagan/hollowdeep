@@ -53,6 +53,14 @@ export interface Disambiguation {
   /** Distinguishing phrases, e.g. ["tin cup", "silver chalice"]. */
   options: string[];
   originalCommand: string;
+  /**
+   * The ambiguous phrase itself, e.g. "cup".
+   *
+   * The pipeline needs it to rewrite the command once answered: "take cup" +
+   * "tin cup" → "take tin cup". Without it there is no way to know WHICH word
+   * of the original the answer replaces.
+   */
+  phrase: string;
 }
 
 export type ParseResult = Command | ParseFailure | Disambiguation;
@@ -478,6 +486,7 @@ function disambiguate(phrase: string[], options: string[], input: string): Disam
     question: `Which ${phrase.join(' ')} do you mean, the ${list}?`,
     options,
     originalCommand: input,
+    phrase: phrase.join(' '),
   };
 }
 

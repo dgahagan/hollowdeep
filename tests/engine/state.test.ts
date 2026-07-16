@@ -161,6 +161,7 @@ describe('serializability', () => {
         question: 'Which cup?',
         options: ['tin cup', 'silver chalice'],
         originalCommand: 'take cup',
+        phrase: 'cup',
       },
       ended: { victory: true, rank: 'Master of the Test Cave' },
     };

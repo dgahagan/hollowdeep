@@ -5,6 +5,7 @@ import {
   type ModuleDocumentName,
 } from './engine/schema';
 import { checkConsistency, type ConsistencyErrorCode } from './engine/schema/consistency';
+import { ENGINE_VERSION } from './engine/engine';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Adventure loader (design plan §7, T6).
@@ -26,12 +27,11 @@ import { checkConsistency, type ConsistencyErrorCode } from './engine/schema/con
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * TODO(T14): `ENGINE_VERSION` moves to `src/engine/engine.ts` once that file
- * exists; this module will import it from there instead of declaring it.
- * Declared here for now so the version handshake below has something to
- * check against.
+ * Re-exported for callers that already import from the loader. The canonical
+ * definition lives in `src/engine/engine.ts` (design plan §10) — the engine
+ * owns its own version number; the loader only checks manifests against it.
  */
-export const ENGINE_VERSION = '1.0.0';
+export { ENGINE_VERSION };
 
 /**
  * `LoadError` mirrors `ConsistencyError`'s shape (`document`/`id`/`field`/
