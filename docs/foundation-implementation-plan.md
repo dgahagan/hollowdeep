@@ -669,9 +669,9 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 
 **T27 — Authoring guide, docs refresh, and closeout** · `opus`
 
-- **Files:** `docs/module-format.md` (new), `CLAUDE.md`,
+- **Files:** `docs/module-format.md` (new), `docs/PLAYING.md` (new), `CLAUDE.md`,
   `docs/foundation-plan.md` (status), `docs/SCOPE.md` (deliverables checklist),
-  `README.md` (new)
+  `README.md` (**landed early — revisit, don't recreate**)
 - **Does:**
   - `docs/module-format.md` — the engine↔content contract: every document, every
     field, every `Condition`/`Effect` variant, the version handshake, worked
@@ -682,7 +682,19 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
     with the real commands and layout.
   - Mark `docs/foundation-plan.md` **IMPLEMENTED**; tick Phase 0/1 items in
     `docs/SCOPE.md` §6.
-  - `README.md` — what this is, how to run it, how to run the gate.
+  - `docs/PLAYING.md` — **the player's guide** (human-requested 2026-07-16,
+    deferred to here deliberately). The command language, the verb list, the
+    shortcuts, saving and loading, and what the game expects of the player.
+    Write it against the **running UI** from T24–T26 — the reason it is here and
+    not earlier is that until the UI lands there is nothing a player can run, and
+    a guide to something unrunnable is fiction. Drive the real thing and
+    transcribe it; do not describe it from the source. `meta.ts`'s `help` text is
+    the engine's own short version and must agree with this doc.
+  - `README.md` — **already exists** (written 2026-07-16, ahead of this task).
+    It is accurate as of T22. Update rather than rewrite: replace the "Status:
+    the engine works; the game is not playable yet" section, drop the "Today: a
+    placeholder title card" caveat from `npm run dev`, add the How-to-play
+    pointer to `docs/PLAYING.md`, and refresh the test count and feature table.
 - **Acceptance:** `npm run gate` green; all four design-plan exit criteria
   demonstrably met and stated in the closeout report; every Progress Tracker box
   ticked.
