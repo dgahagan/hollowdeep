@@ -261,6 +261,65 @@ strongest test in the file would have been quietly weightless.
 that the input is non-trivial. Otherwise the fixture decays and takes the
 property's meaning with it, silently, at a green gate.
 
+### T22 — the FR-2.7 round-trip paid for itself three times
+
+The acceptance asks that every `UIAction.command` round-trip through `step`.
+That one property found three real bugs in a single run, none of which any
+unit test of `availableActions` would have noticed, because each looked
+perfectly correct in isolation:
+
+| Bug | Why it survived review |
+|---|---|
+| `examine cup` offered while the tin cup **and** the silver chalice (also named "cup") were in scope → clicking asked *which cup* | `names[0]` is the documented canonical name. It is simply not unique, and nothing says it must be. |
+| `take` offered with hands full (FR-1.2 refuses) | The item genuinely is portable and genuinely is there. The refusal lives in a rule the view never consulted. |
+| `suggestions` never completed `ta` → `take` | Built from `module.vocabulary.verbs`, which is exactly what it sounds like — and holds only the adventure's OWN verbs. Core verbs ship in-engine. |
+
+**The generalizable bit:** a read-side query that decides what to OFFER is
+re-deriving what the write side will ACCEPT. Every such rule is duplicated by
+construction, and every duplicate is free to drift. The only defence is to
+execute the offer against the real thing. This is the same shape as T17's
+`give` bug — one predicate, two verbs, two different questions — but where
+T17's duplication was visible in a shared helper, this one is invisible: the
+view and the handlers never touch.
+
+**T22 also settled how "did it work?" gets asserted.** The first draft of the
+round-trip grepped output for refusal phrases, and immediately produced a
+FALSE failure: `twisty-1`'s `e` exit works fine, but the room beyond says
+"…there is nothing you would care to meet at speed", which the regex read as
+the engine refusing. Prose cannot distinguish the engine's voice from the
+adventure's — the exact mistake that let a real bug through T15 behind a
+`/lamp/i` assertion, made again while writing the file that criticizes it. The
+fix is to assert a real invariant instead: **a refusal, a nudge, and a parse
+error all consume no turn; every genuine action consumes one.** No prose, no
+judgement.
+
+### T22 — a `chance` condition on an exit guard would flicker (latent)
+
+`evalConditions` DRAWS RNG for a `chance` condition. Everything in `view.ts` is
+a read-side query a UI calls on every render, so `exitPassable` discards the
+returned state and nothing in the file returns a `GameState` — otherwise the
+seeded sequence would depend on how often the screen repainted, and T23 plus
+every seeded test would be hostage to the renderer. **Rendering must never be a
+move.**
+
+The residue: an exit guarded by `chance` answers differently on each call and
+would flicker in and out of the UI. No content does this and test-cave cannot
+reach it.
+
+**Where it bites:** Hollowdeep, if any exit guard uses `chance`. The clean fix
+is a `checkConsistency` rule refusing `chance` in an exit `if` — a random
+passage is better modelled as an event anyway. Not built now: it forbids a
+content pattern nothing has asked for, and that is a design call, not a
+mechanical consequence.
+
+### T22 — `suggestions` completes verbs in noun position (minor)
+
+`take f` suggests `fight` alongside `flask`: the pool is position-blind, since
+knowing that `take` wants a noun next would mean parsing partial input. FR-2.6
+asks only for prefix-filtered suggestions over currently-valid vocabulary, and
+the UI does not wire this until Phase 3. Worth revisiting there, with a real
+input box to feel it against.
+
 ### T3 — `--passWithNoTests` retired early
 
 Orchestrator note 1 scheduled its death for "T4's first tests". T3's
