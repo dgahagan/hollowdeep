@@ -695,7 +695,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T2 — Scaffold Vite + React + TypeScript (`sonnet`) — `3ee784a`
 - [x] T3 — ESLint flat config with engine-purity guards (`sonnet`) — `533ff4a` (also retired `--passWithNoTests`; see note 1)
 - [x] T4 — Adventure module schemas (zod, v1) (`opus`) — `2564b25` (Effect is a discriminated union; Verb takes `patterns[]`; milestones declarative via `when`; added `common.ts`, `manifest.carryLimit`, `manifest.lamp`. `stealAfterTurns` is in — T19 need not add it.)
-- [ ] T5 — Module consistency checks (`sonnet`)
+- [x] T5 — Module consistency checks (`sonnet`) — `b900c9d` (35 stable error `code`s for T8 to assert on; added unwritten-flag-read + revealExit-not-hidden checks)
 - [ ] T6 — Adventure loader with injected reader (`sonnet`)
 - [ ] T7 — `validate-module` CLI (`sonnet`)
 - [ ] T8 — Validator golden tests (`sonnet`) *(parallel-safe with T9)*
