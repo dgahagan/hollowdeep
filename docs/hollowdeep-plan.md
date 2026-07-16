@@ -1,6 +1,8 @@
 # Hollowdeep — Adventure Design Plan
 
-**Status:** DRAFT — in progress (started 2026-07-16)
+**Status:** DRAFT — fiction, map regions, treasures, creatures, scoring, secrets
+and the maze are settled. Outstanding: the room-by-room graph, the puzzle
+chains, and the three open questions in §10.
 **Phase:** 2 (content). Blocks: all Hollowdeep authoring, Phase B art, v1.
 **Settled by:** [PROJECT-BRIEF.md](PROJECT-BRIEF.md) §2 and §9 — decisions there
 are not re-litigated here.
@@ -102,42 +104,198 @@ maxScore  ==  Σ treasures (carryPoints + depositPoints)  +  Σ milestones.point
 
 ---
 
-## 3. The map
+## 3. The fiction
 
-*To be designed. Region structure first, then the graph.*
+Settled 2026-07-16: **something was down there first.**
 
-## 4. Treasures and their puzzles
+The miners of Weir's Landing followed a good seam east and, ninety-odd years
+ago, broke through into a chamber that had been closed deliberately — walled,
+from a side that was not theirs. Half of them did not come back up that night.
+The town did not re-open the workings and did not explain; it sealed the adit,
+wrote the men off, and kept the name.
 
-*To be designed — twelve, each with a puzzle or a risk.*
+Three things follow, and they are the spine of the design:
 
-## 5. Creatures
+1. **The cave is real all the way down.** Water, rock, timber, and gravity do
+   most of the killing. Nothing is haunted. The strangeness is *specific*, and
+   it is behind one particular hole in one particular wall.
+2. **The deeper you go, the less the things you find match each other.** The
+   miners' own leavings are ordinary and sad. Past the breach the objects are
+   made for hands that are not shaped like ours — and they are not decorated,
+   they are *used*. Tools, not idols.
+3. **The seal is the question and the answer.** The endgame is finding out which
+   side it was built on, and by whom. The narrator never says the word the
+   player is reaching for.
 
-*To be designed — the stalker, the thief, and the static life of the cave.*
+**Voice note.** The temptation here is portent, and portent would kill this
+narrator. The dry register does the work: the horror is that these are
+somebody's ordinary tools, left tidy, and they are the wrong shape. The narrator
+remarks on the *tidiness*.
 
-## 6. Scoring — the 350
+## 4. The map
 
-*To be computed, and it must reconcile exactly. See §2.*
+**58 locations** across four regions plus the endgame — inside the brief's
+55–65, and sized so each region carries a distinct feel without padding.
 
-## 7. Magic words and secrets
+```
+  A. WEIR'S LANDING (surface, 7)
+       repository: the assay office — where treasure goes
+       │  the adit, its seal cracked
+       ▼
+  B. THE WORKINGS (16)  ── timber, rails, tools. Man-made and legible.
+       the miners' own leavings. Tier-1 treasures.
+       │  the pump gave out; below here is flooded, or was
+       ▼
+  C. THE NATURAL CAVERN (16)  ── karst. The workings broke into it.
+       includes THE MAZE (§9). Tier-2 treasures.
+       │  a hole in a wall that somebody else closed
+       ▼
+  D. PAST THE BREACH (14)  ── older, tidier, wrong. Tier-3 treasures.
+       │
+       ▼
+  E. THE SEAL (5)  ── the endgame. What it was for, and which side it was built on.
+```
 
-*To be designed — original words in the xyzzy tradition, ≥1 hidden area, the
-"last lousy point".*
+The critical path runs A→B→C→(maze)→D→E. Each boundary is a **milestone** (§7)
+and each is gated by a puzzle rather than a door, so the score curve and the
+difficulty curve are the same curve.
 
-## 8. The maze
+*Room-by-room graph: next pass. Region shape and the critical path settle first
+— the graph is authoring detail and cheap to change; these are not.*
 
-*To be designed. It is on the critical path (brief §9, decision 4) and it must
-be fair: droppable items mark rooms, and Phase 3's auto-map helps once rooms are
-distinguishable. `twisty-1`/`twisty-2` in test-cave share one `artId` — the same
-trick applies here, and the format supports it.*
+## 5. Treasures
 
-## 9. Open questions
+Twelve, in three tiers of four. The tier is the depth, the depth is the value,
+and the value is the arithmetic (§7) — so the tiers are structure, not flavour.
+
+**Tier 1 — the workings.** Ordinary, and sad rather than glamorous. What people
+drop when they run.
+
+| # | Treasure | The puzzle or the risk |
+|---|---|---|
+| 1 | The payroll tin | Wages nobody collected. *Findable*, not puzzling — the first treasure must arrive inside ten minutes (brief §8) |
+| 2 | A pocket of cut garnets | Behind a stull you have to be willing to pull out |
+| 3 | The assayer's button | A bead of gold in the office; the office is locked and the key is somewhere honest |
+| 4 | The foreman's watch | Stopped at the hour. On him. |
+
+**Tier 2 — the natural cavern.** The mine's later, greedier reach.
+
+| # | Treasure | The puzzle or the risk |
+|---|---|---|
+| 5 | Silver flowstone | A sheet of native silver; taking it is a noise problem (see §6, the stalker) |
+| 6 | Cave pearls | A nest of them in a gour pool. Water. |
+| 7 | The Weir nugget | The thing the town is named for, and it was never in the assay ledger |
+| 8 | A miner's cache | Someone hid this and did not come back for it. Reachable only from the maze. |
+
+**Tier 3 — past the breach.** Not decorated. *Used.*
+
+| # | Treasure | The puzzle or the risk |
+|---|---|---|
+| 9 | A bronze tool | The grip is wrong, and it is worn smooth by a hand that held it that way for years |
+| 10 | A tally, of sorts | Marks cut into a plate. They are counting something. The narrator does not say what. |
+| 11 | The warm stone | It has no reason to be warm. It is not warm *because* of anything. |
+| 12 | *The thing the seal was for* | The endgame treasure. Taking it is the last decision the game asks. |
+
+## 6. Creatures
+
+Three behaviours exist and no more (§2), so these are cast to fit them exactly
+rather than described and then wedged in.
+
+**The stalker — `behavior: stalker`.** Not an animal, exactly, and the design
+never says what it is. It wakes at depth (`spawn.afterTurn` + `spawn.if`), walks
+the cavern on `moveEvery`, and rolls `aggression` when it shares a room.
+
+Its `wardOff` is the design decision here. Light is the obvious choice and the
+wrong one: the lamp is already mandatory, so warding by lamplight makes the ward
+free and the stalker decorative. **It is warded by an item you have to choose to
+carry** — one that costs you a hand against the carry limit. The tension is a
+real trade, every trip.
+
+**The thief — `behavior: thief`.** Something acquisitive that has had ninety
+years and no competition. It takes **all** carried treasure once, after
+`stealAfterTurns`, and stashes it at one location; recovering the hoard is a
+detour the walkthrough must take.
+
+It draws **no RNG** — the schema refuses `aggression` on a thief. That is what
+makes "the walkthrough wins at every seed" achievable, and it is not negotiable
+(design plan §8, and T19/T23 rest on it).
+
+**Static life — `behavior: static`.** Blind fish in the sump, bats in the adit,
+whatever lives on the flowstone. They exist to be examined and to make the cave
+inhabited. One of them should be past the breach, and it should be **ordinary** —
+the joke is that something down there is just a newt.
+
+## 7. Scoring — the 350
+
+Computed, not rounded. `checkConsistency` enforces
+`maxScore == Σ treasures (carry+deposit) + Σ milestones`, and a module that
+misses it **will not load**.
+
+| Tier | n | carry | deposit | each | subtotal |
+|---|---|---|---|---|---|
+| Workings | 4 | 5 | 10 | 15 | 60 |
+| Cavern | 4 | 10 | 15 | 25 | 100 |
+| Past the breach | 4 | 15 | 25 | 40 | 160 |
+| **Treasures** | **12** | | | | **320** |
+
+| Milestone | Points |
+|---|---|
+| Enter the cave | 5 |
+| Reach the breach | 9 |
+| Get past the seal | 15 |
+| **The last lousy point** | **1** |
+| **Milestones** | **30** |
+
+**Total: 350.** ✓
+
+The last lousy point is a *literal one-point milestone*, so the joke is
+mechanical rather than decorative: a completionist finishing on 349 has exactly
+one thing left to find. Achievements award nothing (they cannot — §2). The death
+penalty is a deduction and is not in this table.
+
+## 8. Magic words and secrets
+
+**The magic words are real miners' vocabulary.** Cornish and Welsh workings had
+`kibble` (the hoist bucket), `gunnis` (a stope worked open to daylight), `winze`
+(an internal shaft), `stull` (a timber). To a modern player these are
+indistinguishable from magic nonsense — which is the joke, and it is an homage to
+`xyzzy` without borrowing a syllable of it. They are also words the miners
+*actually said*, so the fiction pays for them: the cave has heard them before.
+
+- **KIBBLE** — the hoist word. Moves you the way the bucket did: bidirectional,
+  and which way depends on where you say it (`atLocation` exists for exactly
+  this; test-cave's `zeeble` is the same shape).
+- **GUNNIS** — the second word, and the way into the hidden area.
+
+Neither is ever surfaced in the UI (FR-1.9, and it is *enforced* — `suggestions`
+never completes a magic word). Both are **discoverable**: scratched on a stull,
+and in the foreman's tally book. So `read` sits on the critical path for
+secrets, and a player who examines things is paid for it.
+
+**The hidden area** is reached by `GUNNIS` and holds nothing needed to win — only
+the last lousy point, and the answer to a question the game never asks aloud.
+
+## 9. The maze
+
+On the critical path (brief §9, decision 4), and **fair** — which is a design
+obligation, not a disclaimer.
+
+- **Six rooms**, sharing one `artId` and one description, exactly as test-cave's
+  `twisty-1`/`twisty-2` already do. The engine lists dropped items on the floor,
+  which is the classic solution: the player marks the rooms themselves.
+- **Solvable without mapping.** One room has a draught, named in its
+  description. Following it out is the intended path; mapping is the *fallback*,
+  not the tax.
+- **It pays.** Treasure 8 (the miner's cache) is inside, so the maze is worth
+  solving properly rather than merely escaping.
+- Phase 3's auto-map makes it kinder once rooms are distinguished — but the maze
+  must be fair **without** it, because Phase 2 ships first.
+
+## 10. Open questions
 
 Each of these blocks authoring, and each is the human's call.
 
-1. **The fiction of the deep** — what actually happened the night the miners
-   were swallowed, and what is down there now. Drives the regions, the
-   treasures, the endgame, and the entire tone. **See the discussion attached to
-   this draft.**
+1. ~~**The fiction of the deep.**~~ **Settled 2026-07-16** — see §3.
 2. **Hints** — grow the format an eleventh document, or cut FR-7.2 from Phase 2?
    It is [S], so cutting is legitimate. Deciding *now* is what matters: a hint
    system retrofitted after 12 puzzles are authored is 12 puzzles re-read.
