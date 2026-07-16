@@ -1,0 +1,174 @@
+[
+  {
+    "id": "reveal-key",
+    "once": true,
+    "on": { "type": "search", "target": "tree-trunk" },
+    "do": [
+      { "kind": "print", "text": "You put your arm into the hollow up to the shoulder, think briefly about what else lives in hollow trees, and close your hand on something small and cold. An iron key." },
+      { "kind": "moveItem", "item": "iron-key", "to": "hollow-tree" },
+      { "kind": "setFlag", "flag": "tree-searched" }
+    ]
+  },
+  {
+    "id": "tree-empty",
+    "on": { "type": "search", "target": "tree-trunk" },
+    "if": [{ "flag": "tree-searched" }],
+    "do": [{ "kind": "print", "text": "The hollow is empty now. It gave up its one secret and seems relieved." }]
+  },
+  {
+    "id": "grate-opened",
+    "once": true,
+    "on": { "type": "open", "target": "grate" },
+    "do": [
+      { "kind": "print", "text": "The grate swings up with a shriek that goes down the hole ahead of you and does not come back." },
+      { "kind": "setFlag", "flag": "grate-open" }
+    ]
+  },
+  {
+    "id": "grate-note",
+    "once": true,
+    "on": { "type": "flagSet", "target": "grate-open" },
+    "do": [{ "kind": "print", "text": "Below, the dark waits with the patience of something that has done this before." }]
+  },
+  {
+    "id": "learn-zeeble",
+    "once": true,
+    "on": { "type": "read", "target": "wall-carving" },
+    "do": [
+      { "kind": "setFlag", "flag": "zeeble-known" },
+      { "kind": "print", "text": "You say it once under your breath to be sure of it. The word sits in your mouth like a pebble. You will not forget it now." }
+    ]
+  },
+  {
+    "id": "find-hatch",
+    "once": true,
+    "on": { "type": "search", "target": "rusted-door" },
+    "do": [
+      { "kind": "print", "text": "Under the rust there is an outline, and under the outline there are hinges. It is a hatch. It has been a hatch this whole time." },
+      { "kind": "revealExit", "location": "grotto", "dir": "down" }
+    ]
+  },
+  {
+    "id": "oil-the-door",
+    "on": { "type": "use", "target": "rusted-door" },
+    "if": [{ "hasItem": "oil-flask", "notFlag": "door-oiled" }],
+    "do": [
+      { "kind": "print", "text": "You work the oil into the hinges. The rust gives up its grudge slowly, and then all at once." },
+      { "kind": "setFlag", "flag": "door-oiled" }
+    ]
+  },
+  {
+    "id": "door-already-oiled",
+    "on": { "type": "use", "target": "rusted-door" },
+    "if": [{ "flag": "door-oiled" }],
+    "do": [{ "kind": "print", "text": "The hinges are already slick. More oil would just be showing off." }]
+  },
+  {
+    "id": "packrat-arms",
+    "on": { "type": "take" },
+    "if": [{ "hasItem": "silver-chalice" }, { "hasItem": "jade-idol" }],
+    "do": [{ "kind": "setFlag", "flag": "packrat-armed" }]
+  },
+  {
+    "id": "packrat-disarms",
+    "on": { "type": "drop" },
+    "if": [{ "atLocation": "shed" }],
+    "do": [{ "kind": "clearFlag", "flag": "packrat-armed" }]
+  },
+  {
+    "id": "first-treasure-award",
+    "once": true,
+    "on": { "type": "take" },
+    "if": [{ "hasItem": "silver-chalice" }, { "hasItem": "jade-idol" }],
+    "do": [{ "kind": "award", "achievement": "first-treasure" }]
+  },
+  {
+    "id": "zeeble-descend",
+    "on": { "type": "word", "word": "zeeble" },
+    "if": [{ "flag": "zeeble-known", "atLocation": "road" }],
+    "do": [
+      { "kind": "printId", "id": "zeeble-descend-text" },
+      { "kind": "teleport", "to": "entry-hall" }
+    ]
+  },
+  {
+    "id": "zeeble-ascend",
+    "on": { "type": "word", "word": "zeeble" },
+    "if": [{ "flag": "zeeble-known", "atLocation": "entry-hall" }],
+    "do": [
+      { "kind": "printId", "id": "zeeble-ascend-text" },
+      { "kind": "teleport", "to": "road" }
+    ]
+  },
+  {
+    "id": "jump-ledge",
+    "on": { "type": "verb", "target": "jump" },
+    "if": [{ "atLocation": "ledge" }],
+    "do": [{ "kind": "die", "messageId": "ledge-death" }]
+  },
+  {
+    "id": "wake-the-rat",
+    "once": true,
+    "on": { "type": "enter", "target": "grotto" },
+    "do": [{ "kind": "activateCreature", "creature": "cave-rat" }]
+  },
+  {
+    "id": "grotto-rat-hint",
+    "on": { "type": "enter", "target": "grotto" },
+    "if": [{ "creatureAt": { "creature": "cave-rat", "location": "grotto" } }],
+    "do": [{ "kind": "print", "text": "Something in the moss-light stops washing its face and looks at you with frank professional interest." }]
+  },
+  {
+    "id": "shelf-note",
+    "on": { "type": "enter", "target": "shed" },
+    "if": [{ "itemAt": { "item": "silver-chalice", "location": "shed" } }],
+    "do": [{ "kind": "print", "text": "The chalice sits on the shelf where you left it, looking almost respectable." }]
+  },
+  {
+    "id": "maze-mutter",
+    "on": { "type": "enter", "target": "twisty-1" },
+    "if": [{ "chance": 0.3 }],
+    "do": [{ "kind": "print", "text": "Somewhere behind you, or possibly ahead of you, something small dislodges a pebble and declines to explain itself." }]
+  },
+  {
+    "id": "surface-again",
+    "once": true,
+    "on": { "type": "enter", "target": "road" },
+    "if": [{ "visited": "deep-vault" }],
+    "do": [{ "kind": "print", "text": "The sky is an outrage after all that stone. You had forgotten it was up there, doing that." }]
+  },
+  {
+    "id": "lamp-nudge",
+    "once": true,
+    "on": { "type": "turnStart", "turn": 12 },
+    "do": [{ "kind": "print", "text": "A thought, unbidden: whatever is down there, it has never needed a lamp." }]
+  },
+  {
+    "id": "victory-on-chalice",
+    "on": { "type": "drop", "target": "silver-chalice" },
+    "if": [{ "atLocation": "shed", "itemAt": { "item": "jade-idol", "location": "shed" } }],
+    "do": [{ "kind": "setFlag", "flag": "both-deposited" }]
+  },
+  {
+    "id": "victory-on-idol",
+    "on": { "type": "drop", "target": "jade-idol" },
+    "if": [{ "atLocation": "shed", "itemAt": { "item": "silver-chalice", "location": "shed" } }],
+    "do": [{ "kind": "setFlag", "flag": "both-deposited" }]
+  },
+  {
+    "id": "win-clean",
+    "once": true,
+    "on": { "type": "flagSet", "target": "both-deposited" },
+    "if": [{ "deathsAtMost": 0 }],
+    "do": [{ "kind": "award", "achievement": "no-deaths" }]
+  },
+  {
+    "id": "win",
+    "once": true,
+    "on": { "type": "flagSet", "target": "both-deposited" },
+    "do": [
+      { "kind": "printId", "id": "victory-text" },
+      { "kind": "endGame", "victory": true }
+    ]
+  }
+]

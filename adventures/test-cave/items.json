@@ -1,0 +1,134 @@
+[
+  {
+    "id": "brass-lamp",
+    "names": ["lamp", "lantern"],
+    "adjectives": ["brass"],
+    "brief": "A brass lamp sits on the shelf, waiting to be useful.",
+    "description": "A brass carbide lamp, dented, honest, and heavier than it looks. It has clearly been down a hole before and has come back every time.",
+    "artId": "brass-lamp",
+    "portable": true,
+    "initialLocation": "shed",
+    "lightSource": true
+  },
+  {
+    "id": "oil-flask",
+    "names": ["flask", "oil", "bottle"],
+    "adjectives": ["oil", "tin"],
+    "brief": "A flask of lamp oil leans in the corner.",
+    "description": "A flat tin flask, three-quarters full of oil. It sloshes with the particular smugness of a thing you will need later.",
+    "artId": "oil-flask",
+    "portable": true,
+    "initialLocation": "shed"
+  },
+  {
+    "id": "tin-cup",
+    "names": ["cup"],
+    "adjectives": ["tin", "dented"],
+    "brief": "A dented tin cup hangs from a nail.",
+    "description": "A tin cup, dented, tea-stained, and worth precisely nothing. It is here to be confused with better things.",
+    "artId": "tin-cup",
+    "portable": true,
+    "initialLocation": "shed"
+  },
+  {
+    "id": "tree-trunk",
+    "names": ["tree", "trunk"],
+    "adjectives": ["hollow", "dead"],
+    "brief": "The hollow tree stands here.",
+    "description": "Split from root to shoulder. The hollow inside is dark, dry, and exactly the shape of somewhere people hide things.",
+    "artId": "tree-trunk",
+    "portable": false,
+    "initialLocation": "hollow-tree"
+  },
+  {
+    "id": "iron-key",
+    "names": ["key"],
+    "adjectives": ["iron", "rusty"],
+    "brief": "An iron key lies here.",
+    "description": "A stubby iron key gone orange with rust. The teeth are still good, which is the only part that has to be.",
+    "artId": "iron-key",
+    "portable": true,
+    "initialLocation": "nowhere"
+  },
+  {
+    "id": "grate",
+    "names": ["grate", "grating"],
+    "adjectives": ["steel", "iron"],
+    "brief": "A steel grate is set into the floor.",
+    "description": "Steel bars in a steel frame, bolted into the rock and fitted with a lock that has outlived whoever turned it last.",
+    "artId": "grate",
+    "portable": false,
+    "initialLocation": "cave-mouth",
+    "container": {
+      "open": false,
+      "locked": true,
+      "keyId": "iron-key",
+      "capacity": 0
+    }
+  },
+  {
+    "id": "wall-carving",
+    "names": ["carving", "letters", "inscription"],
+    "adjectives": ["worn", "old"],
+    "brief": "A carving has been cut beneath the water.",
+    "description": "Letters cut deep beneath the running water, worn soft at the edges but perfectly readable. Something has been scratched around them, later and in more of a hurry.",
+    "artId": "wall-carving",
+    "portable": false,
+    "initialLocation": "grotto",
+    "readText": "SAY ZEEBLE AND THE HILL FORGETS THE DISTANCE. IT WORKS BOTH WAYS. THAT IS THE PART PEOPLE FORGET."
+  },
+  {
+    "id": "rusted-door",
+    "names": ["door", "hatch"],
+    "adjectives": ["rusted", "rusty", "iron"],
+    "brief": "A rusted door lies flat in the floor.",
+    "description": "An iron door set flush into the grotto floor, so thoroughly rusted that door and floor have reached an understanding. The hinges want oil more than they want anything.",
+    "artId": "rusted-door",
+    "portable": false,
+    "initialLocation": "grotto"
+  },
+  {
+    "id": "silver-chalice",
+    "names": ["chalice", "cup", "goblet"],
+    "adjectives": ["silver"],
+    "brief": "A silver chalice stands in a niche, catching the moss-light.",
+    "description": "A silver chalice, tarnished to the colour of weather. Whoever left it here did not leave it as an offering; they left it because it was heavy and they were in a hurry.",
+    "artId": "silver-chalice",
+    "portable": true,
+    "initialLocation": "grotto",
+    "treasure": {
+      "carryPoints": 20,
+      "depositPoints": 25
+    }
+  },
+  {
+    "id": "wooden-box",
+    "names": ["box", "chest"],
+    "adjectives": ["wooden", "small"],
+    "brief": "A small wooden box sits against the wall.",
+    "description": "A box of black wood, banded in iron, with a keyhole that has been waiting a long time for company.",
+    "artId": "wooden-box",
+    "portable": false,
+    "initialLocation": "deep-vault",
+    "container": {
+      "open": false,
+      "locked": true,
+      "keyId": "iron-key",
+      "capacity": 2
+    }
+  },
+  {
+    "id": "jade-idol",
+    "names": ["idol", "figure"],
+    "adjectives": ["jade", "green"],
+    "brief": "A jade idol squats in the box, looking pleased with itself.",
+    "description": "A squat jade figure with its hands on its knees, carved by someone who had never seen the thing they were carving and was not going to let that stop them.",
+    "artId": "jade-idol",
+    "portable": true,
+    "initialLocation": "wooden-box",
+    "treasure": {
+      "carryPoints": 20,
+      "depositPoints": 25
+    }
+  }
+]

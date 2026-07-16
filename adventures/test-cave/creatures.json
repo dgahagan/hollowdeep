@@ -1,0 +1,44 @@
+[
+  {
+    "id": "cave-rat",
+    "names": ["rat", "cave rat"],
+    "description": "A rat the size of a well-fed terrier, with the flat unbothered stare of something that has never once been the smaller animal in the room.",
+    "artId": "cave-rat",
+    "behavior": "stalker",
+    "spawn": {
+      "locations": ["twisty-1", "twisty-2", "grotto"],
+      "afterTurn": 30
+    },
+    "moveEvery": 3,
+    "aggression": 0.35,
+    "wardOff": {
+      "itemIds": ["brass-lamp"]
+    },
+    "deathMessageId": "rat-death"
+  },
+  {
+    "id": "shadow-packrat",
+    "names": ["packrat", "shadow", "rat"],
+    "description": "Something small and acquisitive, mostly outline. It has the shape of an animal and the professional manner of a bailiff.",
+    "artId": "shadow-packrat",
+    "behavior": "thief",
+    "spawn": {
+      "locations": ["twisty-2"],
+      "if": [{ "flag": "packrat-armed" }]
+    },
+    "stealsTreasure": true,
+    "stashLocation": "twisty-2",
+    "stealAfterTurns": 6,
+    "deathMessageId": "packrat-taunt"
+  },
+  {
+    "id": "pale-newt",
+    "names": ["newt", "salamander"],
+    "description": "A blind newt the colour of a fingernail, draped over the stone with its chin in the damp. It has been here longer than the grate and intends to outlast it.",
+    "artId": "pale-newt",
+    "behavior": "static",
+    "spawn": {
+      "locations": ["entry-hall"]
+    }
+  }
+]

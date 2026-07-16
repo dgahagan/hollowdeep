@@ -1,6 +1,11 @@
 # Foundation Design Plan — Engine Core, Module Format, Minimal UI
 
-**Status:** READY (2026-07-15) — reviewed and signed off; cleared to implement.
+**Status:** **IMPLEMENTED (2026-07-16)** — executed via
+[`foundation-implementation-plan.md`](foundation-implementation-plan.md); all 27
+tasks committed on `feat/foundation` and all four exit criteria met. Decisions and
+deviations made along the way are recorded in
+[`foundation-execution-notes.md`](foundation-execution-notes.md); where this plan
+and the code disagree, **the code is authoritative** and the notes explain why.
 **Covers:** SCOPE.md Phase 0 + Phase 1
 **Execution:** [foundation-implementation-plan.md](foundation-implementation-plan.md) — run it with `/run-plan`
 **Related:** [PROJECT-BRIEF.md](PROJECT-BRIEF.md) · [REQUIREMENTS.md](REQUIREMENTS.md) · [SCOPE.md](SCOPE.md) · [orchestration-playbook.md](orchestration-playbook.md)

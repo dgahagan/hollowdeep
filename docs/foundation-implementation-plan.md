@@ -4,6 +4,8 @@
 
 Execution plan for [`docs/foundation-plan.md`](foundation-plan.md) (the WHAT/WHY);
 rules live in [`docs/orchestration-playbook.md`](orchestration-playbook.md).
+Decisions and deviations made while executing this plan are recorded in
+[`docs/foundation-execution-notes.md`](foundation-execution-notes.md).
 
 > **Cleared to run (2026-07-15).** The design plan is signed off as READY and its
 > §8/§9 thief contradiction is resolved (deterministic theft — see T9/T19/T23).
@@ -172,6 +174,11 @@ full gate applies to every task.
   attainable points; `repositoryLocation` exists.
   **Errors carry `{ document, id, field, message }`** — the design plan requires
   errors that name all three.
+  *T4 note:* attainable points = treasure `carryPoints + depositPoints` +
+  `scoring.milestones[].points`. Milestones are declarative (`when: Condition[]`)
+  precisely so this sum is derivable from data. A positive `addScore` effect
+  sits outside that accounting, so treat one in a `once: false` event as an
+  error (unbounded score) and count `once: true` ones toward the sum.
   Walkthrough-command parsing is checked in T7 (it needs the parser, which does
   not exist yet) — leave a `TODO(T13)` and wire it in T13's task.
 - **Acceptance:** `npm run gate` green. Unit tests cover each check firing on a
@@ -621,7 +628,15 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 
 - **Files:** `src/app/ScenePanel.tsx`, `TranscriptPanel.tsx`,
   `CommandInput.tsx`, `ActionBar.tsx`, `InventoryPanel.tsx`, `StatusBar.tsx`,
-  `src/app/App.tsx` (compose), `src/app/app.css`
+  `src/app/App.tsx` (compose), `src/app/app.css`, **`src/app/useGame.ts`**
+- **Plan gap, folded in here (found 2026-07-16):** `useGame` exposes `state`,
+  `scene`, `actions`, `submit` — and **no transcript**. `step` returns
+  `OutputEvent[]`, T24's hook discards them, and no task owns adding them, so
+  `TranscriptPanel` has nothing to render. Design plan §6 lists both the panel
+  and the hook's shape and never reconciles the two. T25 therefore also owns
+  `useGame.ts`: accumulate the turn's `OutputEvent[]` into a transcript the hook
+  exposes. Keep the events **structured** — the union exists (types.ts) so the
+  UI can style a death differently from a score notice without parsing prose.
 - **Does:** design plan §6. `ScenePanel` renders the placeholder SVG for the
   scene's `artId` with **alt text = the location's brief** (NFR-5);
   `TranscriptPanel` scrolls, styling command echoes distinctly from narration;
@@ -662,9 +677,9 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 
 **T27 — Authoring guide, docs refresh, and closeout** · `opus`
 
-- **Files:** `docs/module-format.md` (new), `CLAUDE.md`,
+- **Files:** `docs/module-format.md` (new), `docs/PLAYING.md` (new), `CLAUDE.md`,
   `docs/foundation-plan.md` (status), `docs/SCOPE.md` (deliverables checklist),
-  `README.md` (new)
+  `README.md` (**landed early — revisit, don't recreate**)
 - **Does:**
   - `docs/module-format.md` — the engine↔content contract: every document, every
     field, every `Condition`/`Effect` variant, the version handshake, worked
@@ -675,7 +690,19 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
     with the real commands and layout.
   - Mark `docs/foundation-plan.md` **IMPLEMENTED**; tick Phase 0/1 items in
     `docs/SCOPE.md` §6.
-  - `README.md` — what this is, how to run it, how to run the gate.
+  - `docs/PLAYING.md` — **the player's guide** (human-requested 2026-07-16,
+    deferred to here deliberately). The command language, the verb list, the
+    shortcuts, saving and loading, and what the game expects of the player.
+    Write it against the **running UI** from T24–T26 — the reason it is here and
+    not earlier is that until the UI lands there is nothing a player can run, and
+    a guide to something unrunnable is fiction. Drive the real thing and
+    transcribe it; do not describe it from the source. `meta.ts`'s `help` text is
+    the engine's own short version and must agree with this doc.
+  - `README.md` — **already exists** (written 2026-07-16, ahead of this task).
+    It is accurate as of T22. Update rather than rewrite: replace the "Status:
+    the engine works; the game is not playable yet" section, drop the "Today: a
+    placeholder title card" caveat from `npm run dev`, add the How-to-play
+    pointer to `docs/PLAYING.md`, and refresh the test count and feature table.
 - **Acceptance:** `npm run gate` green; all four design-plan exit criteria
   demonstrably met and stated in the closeout report; every Progress Tracker box
   ticked.
@@ -686,33 +713,42 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 
 ## Progress Tracker
 
-- [ ] T1 — Initialize git repository and docs baseline (`haiku`)
-- [ ] T2 — Scaffold Vite + React + TypeScript (`sonnet`)
-- [ ] T3 — ESLint flat config with engine-purity guards (`sonnet`)
-- [ ] T4 — Adventure module schemas (zod, v1) (`opus`)
-- [ ] T5 — Module consistency checks (`sonnet`)
-- [ ] T6 — Adventure loader with injected reader (`sonnet`)
-- [ ] T7 — `validate-module` CLI (`sonnet`)
-- [ ] T8 — Validator golden tests (`sonnet`) *(parallel-safe with T9)*
-- [ ] T9 — Author the test-cave module (`opus`)
-- [ ] T10 — Placeholder art for test-cave (`haiku`)
-- [ ] T11 — Game state, RNG, and createGame (`opus`)
-- [ ] T12 — Effect application choke point (`opus`)
-- [ ] T13 — Parser (`opus`)
-- [ ] T14 — Engine facade and turn pipeline (`opus`)
-- [ ] T15 — Actions: movement, senses, meta (`sonnet`)
-- [ ] T16 — Actions: handling and containers (`sonnet`)
-- [ ] T17 — Actions: lamp and combat (`sonnet`)
-- [ ] T18 — Light and darkness system (`sonnet`)
-- [ ] T19 — Creature system (`sonnet`)
-- [ ] T20 — Scoring and achievements (`sonnet`)
-- [ ] T21 — Save, load, and migrations (`opus`)
-- [ ] T22 — Scene view, UI actions, and suggestions (`opus`)
-- [ ] T23 — Scripted walkthrough test (`opus`)
-- [ ] T24 — App shell, adventure loading, and game hook (`sonnet`)
-- [ ] T25 — Game panels (`sonnet`)
-- [ ] T26 — Save dialog and keyboard shortcuts (`sonnet`)
-- [ ] T27 — Authoring guide, docs refresh, and closeout (`opus`)
+- [x] T1 — Initialize git repository and docs baseline (`haiku`) — `a6d6237` (pre-satisfied by the existing docs baseline; `feat/foundation` branched from it)
+- [x] T2 — Scaffold Vite + React + TypeScript (`sonnet`) — `3ee784a`
+- [x] T3 — ESLint flat config with engine-purity guards (`sonnet`) — `533ff4a` (also retired `--passWithNoTests`; see note 1)
+- [x] T4 — Adventure module schemas (zod, v1) (`opus`) — `2564b25` (Effect is a discriminated union; Verb takes `patterns[]`; milestones declarative via `when`; added `common.ts`, `manifest.carryLimit`, `manifest.lamp`. `stealAfterTurns` is in — T19 need not add it.)
+- [x] T5 — Module consistency checks (`sonnet`) — `b900c9d` (35 stable error `code`s for T8 to assert on; added unwritten-flag-read + revealExit-not-hidden checks)
+- [x] T6 — Adventure loader with injected reader (`sonnet`) — `36f8f9c` (exports `ENGINE_VERSION` + `checkSemverRange`; `ModuleLoadError` carries a `LoadError[]` for T7 to group)
+- [x] T7 — `validate-module` CLI (`sonnet`) — `5c7133f` (globs `adventures/*` per the playbook; both T2 bootstrap placeholders now retired — the gate is honest end to end)
+- [x] T8 — Validator golden tests (`sonnet`) — `c3634e4` (run serially *before* T9, not in parallel: the gate globs `adventures/*`, so a half-authored test-cave in the tree would turn `validate` red and block this commit)
+- [x] T9 — Author the test-cave module (`opus`) — `5a4ef1e` (11 locations; 100 pts = 20+25 ×2 treasures + 10 grate. Surfaced 5 schema gaps + a trigger-target hole in T5 — see execution notes. Ships placeholder art ahead of T10 so the gate stays green.)
+- [x] T10 — Placeholder art for test-cave (`haiku`) — `431caad` (generator reads artIds from the module, never hardcoded; idempotency + delete/regenerate verified)
+- [x] T11 — Game state, RNG, and createGame (`opus`) — `601edbf` (state.ts holds the safe accessors — downstream tasks must use them, not `!`. Added CreatureState.activatedTurn/hasStolen, the scoring ledgers, lampWarned, lastCommand, verbose.)
+- [x] T12 — Effect application choke point (`opus`) — `00e3d7f` (**trigger guards evaluate against a snapshot** — sequential guards broke 3 of test-cave's 6 trigger-sharing event pairs; `setFlag` cascades into `flagSet` triggers, transition-only, depth-bounded. See execution notes.)
+- [x] T13 — Parser (`opus`) — `9ebd3e2` (core verbs un-removable by construction; closed exit hides contents; dark limits scope to inventory; Damerau typo suggestions. Closed T5's TODO(T13) — walkthrough head-word check only, nouns are state-dependent.)
+- [x] T14 — Engine facade and turn pipeline (`opus`) — `8d30cbc` (wired `verb` triggers, which event.ts had promised T14 would do; death handling lives here not in the `die` effect; added `phrase` to Disambiguation/PendingQuestion. `ENGINE_VERSION` now canonical here — closes T6's TODO(T14).)
+- [x] T15 — Actions: movement, senses, meta (`sonnet`) — `9f726f7` (`back` honours `oneWay`; `enter <noun>` refuses rather than guessing. **`use` has no handler in any task — T16 must take it**, or test-cave's `oil door with flask` can never fire its `use` trigger.)
+- [x] T16 — Actions: handling and containers (`sonnet`) — `9305886` (took the `use` verb, which the plan assigns to no task; without it test-cave's `oil door with flask` is inert and T23 fails. Refuses container self-nesting — it permanently destroyed the container and its contents; unreachable in test-cave, certain in Hollowdeep.)
+- [x] T17 — Actions: lamp and combat (`sonnet`) — `714833f` (`give` gates on the offered item, not on whether the player is warded generally — the latter let a carried lit lamp make the rat accept and destroy any item, lamp included. Accepted gifts land on the floor, not `nowhere`: `wardOff` claims no consumption and `nowhere` is unrecoverable. Fuel burn stays T18's.)
+- [x] T18 — Light and darkness system (`sonnet`) — `43cf8c6` (**schema change, human-approved**: added `manifest.lamp.warnMessageId`/`exhaustMessageId`. Lamp had no string ids while `manifest.darkness` had two, so fuel prose was hardcoded in the engine — including the word "lamp", which an FR-6.1 torch adventure would have been stuck with. Required fields, so every fixture module gained them.)
+- [x] T19 — Creature system (`sonnet`) — `5ae7309` (no schema work — T4 already shipped `stealAfterTurns`, contra the task text. Thief verified bit-identical across six seeds, the property T23 rests on. RNG order documented in the file header.)
+- [x] T20 — Scoring and achievements (`sonnet`) — `95367e2` (`rankFor` was order-dependent: the same table written best-first crowned a zero score "Master". Death penalty left in `handleDeath`, tested not reimplemented. **No `systems/achievements.ts`** — the `award` effect already does all of it; the plan's file list was wrong.)
+- [x] T21 — Save, load, and migrations (`opus`) — `aae79da` (named `saveGame`/`loadGame` per design plan §5.1 and this task's own acceptance, not the task text's stale `toSave`/`fromSave`. `toGameState` rebuilds field-by-field so a new `GameState` field is a compile error here. `engineVersion`/`adventureVersion` recorded, not enforced — see notes.)
+- [x] T22 — Scene view, UI actions, and suggestions (`opus`) — `688e3c4` (the FR-2.7 round-trip found three real bugs: ambiguous `examine cup`, `take` offered with hands full, and suggestions built from the module's verbs only — core verbs ship in-engine, so `ta` never completed. `engine.ts` needed no change; `view.ts` is standalone.)
+- [x] T23 — Scripted walkthrough test (`opus`) — `f962707` (**exit criterion #2 met**: 100/100, rank, both achievements, 0 deaths — verified at 2000 seeds. Walkthrough data fixed in three places: room-name assertions the transcript never had, a theft expectation two steps late, and the rank asserted as prose. Seed-independence is asserted as identical **outcome**, not transcript — `maze-mutter` is deliberate `chance` ambience.)
+- [x] T24 — App shell, adventure loading, and game hook (`sonnet`) — `51e715a` (autosave is an effect on **committed** state, not a side effect in the `setState` updater — React may discard an updater's result, and a save outlives the session. `listArt` deliberately omitted in the browser: a directory cannot be listed over HTTP. Verified in a real browser; a refusal writes no autosave.)
+- [x] T25 — Game panels (`sonnet`) — `aeac041` (**exit criterion #3, first half**: walkable by typing and clicking, verified in-browser; a click puts the same command in the transcript as typing. Folded in the transcript plan gap — `state` + `transcript` are one `useState` so they cannot commit apart. Also closed a spoiler leak: `describeScene` handed over `artId` in the dark and the panel drew the room.)
+- [x] T26 — Save dialog and keyboard shortcuts (`sonnet`) — `c5328cd` (**exit criterion #3, second half**: save → reload → load → play on, verified in Playwright; the lamp stayed lit across the round trip. `Ctrl+S` is exempt from the text-entry guard — it cannot collide with typing, and guarding it handed the player Chrome's save-page dialog in the *normal* case. `useGame.load` resets the transcript: `GameState` has no transcript and must never gain one.)
+- [x] T27 — Authoring guide, docs refresh, and closeout (`opus`) — `4ccc8cb` (`docs/module-format.md` + `docs/PLAYING.md` written; `PLAYING.md` transcribed from the running game, not from source — it caught an invented disambiguation quote. `CLAUDE.md` no longer claims "No Code Yet" or a `hints` document that never existed. `SCOPE.md` §6 ticked only where the **v1** bar is met, not the Phase 0+1 one. Design plan marked IMPLEMENTED. **All four exit criteria demonstrated — see below.**)
+
+### Exit criteria — demonstrated 2026-07-16
+
+| # | Criterion | Evidence |
+|---|---|---|
+| 1 | `npm run gate` green | typecheck, lint, **679 tests / 23 files**, validate (test-cave: 11 locations, 11 items, 3 creatures), build — all pass |
+| 2 | test-cave completes to max score via the seeded walkthrough | `tests/walkthrough.test.ts` 12/12: 100/100, rank "Master of the Test Cave", both achievements, 0 deaths, at 5 pinned seeds — and verified out-of-band at **2000 consecutive seeds** |
+| 3 | playable in the browser by typing *and* clicking, save → reload → load → continue | Driven in Playwright against the built output: typed to Tin Shed; clicked **West** and the transcript echoed `w`; saved at turn 4; **full page reload** → fresh game at turn 0; loaded → turn 4 with lamp and flask restored; played on to Hollow Tree at turn 7 |
+| 4 | engine source has zero React/DOM imports, lint-enforced | `eslint src/engine src/loader.ts` exits 0; 0 react imports; every `window`/`localStorage`/`Date.now` hit in the engine is comment prose *about* the rule. `tests/lint-guards.test.ts` 12/12 proves the rules fire — mutation-checked in T3 (removing the guard block fails 6 of 12) |
 
 **Done when:** every box above is ticked with its commit SHA, `npm run gate` is
 green on `feat/foundation`, and all four design-plan exit criteria hold —
@@ -730,6 +766,9 @@ Cross-task consequences worth holding in mind:
 1. **The gate is not green until it exists.** T2 ships placeholder `validate`
    and `--passWithNoTests` deliberately. Both are replaced (T7, T4's first
    tests). If either survives past its task, the gate is lying.
+   *Update (T3):* `--passWithNoTests` is already gone — T3's `lint-guards.test.ts`
+   turned out to be the first test file, earlier than this note assumed, so the
+   flag was retired there. The `validate` placeholder still stands until T7.
 2. **`noUncheckedIndexedAccess` will bite every engine task.** `GameState` is
    `Record`-heavy (`itemLocations`, `itemState`, `flags`, `creatures`) and every
    lookup is `T | undefined` under this flag. Expect subagents to reach for `!`

@@ -115,14 +115,27 @@ with engine work after the world data stabilizes.
 
 ## 6. Deliverables Checklist (v1)
 
+These are **v1** deliverables. Phase 0+1 (`docs/foundation-plan.md`) is complete
+as of 2026-07-16; the boxes below tick only where the v1 bar is actually met.
+
 - [ ] `docs/` — brief, requirements, scope (these), Hollowdeep design doc,
       module-format authoring guide, art-pipeline guide
-- [ ] Engine package (headless TS) with test suite
+      — *brief/requirements/scope done; `module-format.md` + `PLAYING.md` +
+      `README.md` landed with Phase 0+1. **Hollowdeep design doc** and
+      **art-pipeline guide** outstanding.*
+- [x] Engine package (headless TS) with test suite — Phase 0+1: parser, turn
+      loop, actions, systems, scoring, save/load with migrations, scene view;
+      679 tests incl. a scripted walkthrough that wins at every seed
 - [ ] Web app (React) — all [M] UI features
-- [ ] `adventures/test-cave/` — reference module
+      — *the minimal wiring UI is done and playable (scene, transcript, input,
+      action buttons, inventory, status, save dialog, shortcuts). The remaining
+      [M] UI features (auto-map, journal, hints, settings, onboarding,
+      adventure-select, achievements UI) are Phase 3.*
+- [x] `adventures/test-cave/` — reference module — 11 locations, 11 items,
+      3 creatures; exercises every engine feature; format reference (FR-6.5)
 - [ ] `adventures/hollowdeep/` — full adventure data + art manifest + finals
 - [ ] Art pipeline tooling (generator driver, request builder, contact sheets,
-      optimizer)
+      optimizer) — *placeholder SVGs only so far; the loading path is real*
 - [ ] Tagged v1.0 static build, playable end-to-end
 
 ## 7. Document History
