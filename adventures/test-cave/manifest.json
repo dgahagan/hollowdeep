@@ -27,5 +27,6 @@
     "deathChance": 0.3,
     "warningMessageId": "dark-warning",
     "deathMessageId": "dark-death"
-  }
+  },
+  "artFormat": "webp"
 }

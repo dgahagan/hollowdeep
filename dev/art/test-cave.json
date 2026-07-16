@@ -1,0 +1,124 @@
+{
+  "_readme": [
+    "Art manifest for test-cave \u2014 the source of truth for its illustrations (CLAUDE.md's Art Pipeline).",
+    "Committed; the renders are not (they are ~800KB each and reproducible from this file).",
+    "",
+    "`style` is appended to every subject prompt. It owns the MEDIUM ONLY \u2014 no lighting, no mood.",
+    "An earlier version put lighting in here and it overrode every subject: interiors came out as",
+    "overcast landscapes. Each subject states its own light. See style.md for the three prompting",
+    "bugs this shape fixes.",
+    "",
+    "Prompts carry the VISUAL FACTS from the adventure's own prose and drop the jokes. 'waiting with",
+    "the patience of furniture' is the narrator's voice, not something a painter can paint. Prompt",
+    "the observation, never the conclusion the reader should reach.",
+    "",
+    "Regenerate:  npx tsx tools/art/build-request.ts dev/art/test-cave.json > /tmp/req.json",
+    "             distrobox-host-exec ~/pixelart-venv/bin/python tools/art/host_gen.py /tmp/req.json"
+  ],
+  "style": " Painted in oils on canvas, with visible brushwork and a matte, unvarnished surface. Muted, earthy, desaturated colour. Recorded plainly and observationally, as the thing is, without drama. Not digital art, not concept art, not a videogame asset, no rim lighting, no gloss, nothing polished. No text, no lettering, no numbers, no signature.",
+  "gen_w": 1024,
+  "gen_h": 576,
+  "seeds": [
+    1,
+    2,
+    3
+  ],
+  "subjects": {
+    "road": {
+      "prompt": "A dirt road that simply ends at the foot of a wooded hill. A small tin-roofed shed stands to one side; a dead hollow tree leans on the other. Further along, the hillside opens into a stony gap. Warm late-afternoon light, long grass, nobody about.",
+      "chosen_seed": 1
+    },
+    "shed": {
+      "prompt": "The inside of a small tin shed, dim and close. An empty wooden trophy shelf runs along the back wall. Bare planks, corrugated metal, dust in the air. Warm daylight through a single small window.",
+      "chosen_seed": 2
+    },
+    "hollow-tree": {
+      "prompt": "A dead tree still standing, bark grey and peeling, its trunk split open from root to head. The split is a narrow dark gap about the width of an arm. Ordinary daylight, undergrowth around the base.",
+      "chosen_seed": 2
+    },
+    "cave-mouth": {
+      "prompt": "A cave entrance in a hillside, an opening of grey stone narrowing as it goes down. A heavy steel grate is bolted flat into the rock floor where it narrows. Daylight outside, darkness below the bars.",
+      "chosen_seed": 2
+    },
+    "entry-hall": {
+      "prompt": "A low stone hall underground, directly beneath a heavy steel grate. Daylight falls through the bars overhead in hard stripes across the dusty floor, leaving the corners black. The hall runs away into darkness. The near wall is bare worn stone. No writing, no letters, no inscription, no symbols.",
+      "chosen_seed": 3
+    },
+    "low-passage": {
+      "prompt": "A crawlspace in rock, the ceiling pressing down almost to the floor. A very small circle of lamplight on wet stone; everything beyond it is complete darkness. Cramped, tight, no horizon.",
+      "chosen_seed": 2
+    },
+    "twisty": {
+      "prompt": "A cramped natural limestone cave passage, raw uncut rock, lit by a lamp just out of frame. The walls are irregular wet stone with no straight lines. Identical passages branch away into darkness with nothing to tell them apart. Not brick, not masonry, not a tunnel, not built by anyone.",
+      "chosen_seed": 3
+    },
+    "ledge": {
+      "prompt": "A narrow rock ledge where the floor simply stops. A shaft climbs far away above toward a small distant circle of daylight. Below the ledge is a sheer drop into darkness. Cold dim light from above.",
+      "chosen_seed": 1
+    },
+    "grotto": {
+      "prompt": "An underground chamber. Water sheets down the far wall over thick moss, throwing a cold green light across wet stone. Set flush into the floor in the foreground lies a flat iron door, heavily rusted, with a recessed ring handle. The walls are bare wet rock. No writing, no letters, no inscription.",
+      "chosen_seed": 1
+    },
+    "deep-vault": {
+      "prompt": "A tiny dry stone room, barely larger than a coffin, hollowed by hand. A single black wooden box banded with iron sits on the floor. Still, dry, airless. Warm lamplight from one side, darkness in the corners.",
+      "chosen_seed": 1
+    },
+    "brass-lamp": {
+      "prompt": "A dented brass carbide lamp with soot-marked glass, standing on a rough plank shelf inside a dim tin shed. Close up. Warm dim interior light from one side. A working object that has been used hard.",
+      "chosen_seed": 1
+    },
+    "oil-flask": {
+      "prompt": "A flat rectangular tin flask for lamp oil, bare unpainted metal, dented and scratched, with a small screw cap. Lying on rough wood. Close up, dim warm interior light. Completely unlabelled \u2014 no paper label, no printing, no writing of any kind on it.",
+      "chosen_seed": 1
+    },
+    "tin-cup": {
+      "prompt": "A cheap dented tin cup, stained brown inside, sitting on a wooden shelf. Close up. Dim interior light. Entirely worthless and ordinary.",
+      "chosen_seed": 1
+    },
+    "tree-trunk": {
+      "prompt": "Close on the split trunk of a dead tree, bark grey and flaking, opened from root to head. Inside the split the hollow is dry and completely dark. Flat outdoor daylight.",
+      "chosen_seed": 1
+    },
+    "iron-key": {
+      "prompt": "A short stubby iron key gone orange with rust, lying on dark wood. Close up. Dim light. The teeth are still sharp and clean where the rust has not reached.",
+      "chosen_seed": 1
+    },
+    "grate": {
+      "prompt": "A heavy steel grate of thick bars in a steel frame, bolted into bare rock, closed with a large old padlock. Seen from above. Daylight on the bars, darkness between them.",
+      "chosen_seed": 1
+    },
+    "wall-carving": {
+      "prompt": "Extreme close up on wet grey stone under a thin film of running water. Deep angular grooves have been chiselled into it long ago and worn soft at the edges \u2014 abstract cut marks and notches, weathered, not any alphabet and not readable as words. Shallower scratches cross them, made later and in a hurry. Cold green light.",
+      "chosen_seed": 3
+    },
+    "rusted-door": {
+      "prompt": "A flat iron door set into a stone floor, seen from above, rusted so completely that the door and the floor have almost become one surface. A recessed ring handle and heavy hinges caked orange. Cold damp light.",
+      "chosen_seed": 2
+    },
+    "silver-chalice": {
+      "prompt": "A silver chalice, heavily tarnished to a dull grey, standing on wet stone. Close up. Cold green light from mossy water nearby. Beautiful once, neglected now, not displayed.",
+      "chosen_seed": 3
+    },
+    "wooden-box": {
+      "prompt": "A box of black wood banded with iron straps, closed, with a single iron keyhole. Sitting on a dry stone floor. Close up. Warm lamplight from one side.",
+      "chosen_seed": 1
+    },
+    "jade-idol": {
+      "prompt": "A small squat figure carved from green jade, sitting with its hands on its knees. The carving is crude and the proportions are wrong, as though carved from a description rather than from life. Close up on dark wood. Warm lamplight.",
+      "chosen_seed": 3
+    },
+    "cave-rat": {
+      "prompt": "Underground on wet limestone, deep shadow all around. A lamp just out of frame throws a warm circle of light. In it sits a rat, unusually large \u2014 the size of a small dog \u2014 with wet grey-brown fur and a plain flat stare. Not snarling, not posed, entirely uninterested in being looked at. Darkness closes in beyond the light.",
+      "chosen_seed": 1
+    },
+    "shadow-packrat": {
+      "prompt": "A small animal in near-darkness, seen only as a silhouette at the very edge of lamplight, its shape suggesting a rat or a marten but never fully resolving. Only the faint gleam of one eye and a hint of wet fur. Mostly shadow, half-turned away, already leaving.",
+      "chosen_seed": 1
+    },
+    "pale-newt": {
+      "prompt": "A small blind newt the pale colour of a fingernail, draped motionless over damp stone with its chin resting in the wet. Close up. No visible eyes. Cold dim light. Utterly still, unbothered.",
+      "chosen_seed": 2
+    }
+  }
+}
