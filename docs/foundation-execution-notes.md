@@ -349,6 +349,36 @@ combinator) but it is a schema-version bump and a documented contract change,
 so it was left alone rather than smuggled into T9. Decide it deliberately
 before Phase 2 content authoring starts.
 
+### `creature.deathMessageId` is overloaded, and undocumented (T19)
+
+`deathMessageId` is the only message field a creature has, and it carries **no
+doc comment** — unlike almost every other field in the schemas. T9's content
+already uses it two different ways: the rat's is the message shown when it
+kills you; the packrat's (`packrat-taunt`) is the message shown when it **robs**
+you. A thief can never kill, so the field is unambiguous *per creature* and
+T19's engine reads it correctly for both — no bug, and no prose is wrong.
+
+But the name lies for half its uses, and a field with no docstring being read
+two ways is how T17's `give` bug started. **For T27's authoring guide:** either
+document `deathMessageId` as "the message this creature is defined by — its
+kill for a stalker, its theft for a thief", or split it (`theftMessageId`)
+before Hollowdeep authors against the wrong reading. Not fixed here: it changes
+no behavior, and renaming a content field mid-plan buys nothing.
+
+### The thief is dodgeable by timing (T19) — decided, not a bug
+
+If `stealAfterTurns` elapses while the player happens to be carrying nothing,
+the theft fires, takes zero items, prints nothing, and marks `hasStolen` — so
+it never comes back. A player can beat the packrat once, by accident or by
+timing.
+
+This is the honest consequence of "the theft is deterministic and draws no
+RNG", which is a deliberate, documented decision (design plan §8) protecting
+T23. The alternative — waiting until the player *has* something — would make
+theft timing depend on player behavior in a way no `stealAfterTurns` value
+describes. Worth a deliberate look for Hollowdeep, where a dodgeable thief may
+or may not be the intent.
+
 ### `addScore` can silently break `maxScore` accounting (T4/T5)
 
 T5 counts positive `addScore` in `once: true` events toward attainable points

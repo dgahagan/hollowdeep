@@ -711,7 +711,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T16 — Actions: handling and containers (`sonnet`) — `9305886` (took the `use` verb, which the plan assigns to no task; without it test-cave's `oil door with flask` is inert and T23 fails. Refuses container self-nesting — it permanently destroyed the container and its contents; unreachable in test-cave, certain in Hollowdeep.)
 - [x] T17 — Actions: lamp and combat (`sonnet`) — `714833f` (`give` gates on the offered item, not on whether the player is warded generally — the latter let a carried lit lamp make the rat accept and destroy any item, lamp included. Accepted gifts land on the floor, not `nowhere`: `wardOff` claims no consumption and `nowhere` is unrecoverable. Fuel burn stays T18's.)
 - [x] T18 — Light and darkness system (`sonnet`) — `43cf8c6` (**schema change, human-approved**: added `manifest.lamp.warnMessageId`/`exhaustMessageId`. Lamp had no string ids while `manifest.darkness` had two, so fuel prose was hardcoded in the engine — including the word "lamp", which an FR-6.1 torch adventure would have been stuck with. Required fields, so every fixture module gained them.)
-- [ ] T19 — Creature system (`sonnet`)
+- [x] T19 — Creature system (`sonnet`) — `5ae7309` (no schema work — T4 already shipped `stealAfterTurns`, contra the task text. Thief verified bit-identical across six seeds, the property T23 rests on. RNG order documented in the file header.)
 - [ ] T20 — Scoring and achievements (`sonnet`)
 - [ ] T21 — Save, load, and migrations (`opus`)
 - [ ] T22 — Scene view, UI actions, and suggestions (`opus`)
