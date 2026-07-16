@@ -187,6 +187,34 @@ a feature has to emit are easy to leave out, because nothing references them
 until the code that prints them exists. When adding a system, ask what it will
 need to say before asking what it needs to know.
 
+### T20 — `systems/achievements.ts` does not exist, and shouldn't
+
+The plan lists it as a T20 file. There is nothing for it to do. Every
+achievement is awarded by the `award` Effect, applied at events.ts's single
+choke point, from an ordinary content event — test-cave's `first-treasure-award`
+fires on `take`, `win-clean` on the `both-deposited` `flagSet` with a
+`deathsAtMost: 0` guard. Both are content, in the same Condition/Effect
+vocabulary as everything else. `engine.ts` rightly carries no `TODO(T20)` for
+achievements, only for scoring's tick and the rank.
+
+`Achievement` also deliberately has no `when: Condition[]` the way `Milestone`
+does, and must not gain one: a second condition-evaluation path duplicating
+`fireTriggers`/`evalConditions` is two implementations of one rule — the exact
+hazard the choke point exists to prevent.
+
+**T20's achievement deliverable is its tests**, which is what the acceptance
+bullet actually asks for ("`first-treasure` and `no-deaths` award under the
+right conditions and not otherwise"). The reasoning above now lives in
+`tests/engine/achievements.test.ts`'s header.
+
+A first draft did ship the file, with read-side view helpers implementing
+`hidden`. They were cut: nothing in `src/` called them, and the file's own
+header noted the design plan puts achievements UI in **Phase 3, explicitly out
+of scope**. Implementing `hidden` in a function with no caller does not close
+that gap — `hidden` means nothing until something renders it, so it closes
+where it is consumed, shaped by a real caller. **A schema field being
+unimplemented is not, by itself, a reason to implement it now.**
+
 ### T3 — `--passWithNoTests` retired early
 
 Orchestrator note 1 scheduled its death for "T4's first tests". T3's
@@ -453,6 +481,38 @@ diff review, and fell out of playing the thing for one minute:
 
 **The rule:** after each action task, walk the cave. Tests check the cases
 someone thought of; playing surfaces the ones nobody did.
+
+### Vary the fixture along the axis nobody varied (T20)
+
+`rankFor` seeded `best` with `ranks[0]` before checking whether `ranks[0]`
+qualified. The same rank table written **best-first** — which nothing in
+`zScoring` forbids — handed every score the top rank:
+
+```
+best-first: score 0 -> Master of the Test Cave
+```
+
+A player who scored zero, crowned Master, at the one moment the game owes them
+an honest verdict.
+
+There *was* a boundary test, and a good one: "resolves a synthetic table at
+every boundary, not just the middle of a band". It passed. Its synthetic table
+was **also ascending** — the fixture and the real content shared the one
+property that hid the bug, so testing more values along the score axis could
+never find it. The bug wasn't at a band edge; it was in the seed.
+
+**The rule:** when a schema permits something content happens not to do
+(unsorted tables, empty arrays, a portable container, a light source not called
+a lamp), the fixture inherits the content's habits and the test inherits the
+blind spot. Ask what the schema *allows* that every fixture happens to avoid,
+then build one that does it. Compare: T16's container cycle needed a portable
+container test-cave doesn't have; T18's lamp prose needed an adventure whose
+light isn't a lamp. Same shape, three times now.
+
+**The corollary:** if a data structure's meaning must not depend on its order,
+test it shuffled. `zScoring`'s own `.refine` comments already name
+order-dependence as the hazard ("which one wins would depend on array order") —
+the schema was defending against it while the engine quietly relied on it.
 
 **The `brief` trap generalizes.** Three handlers so far have reached for
 `brief` because it is the shortest human-readable string on an `Item`. It is
