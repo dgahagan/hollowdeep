@@ -215,6 +215,52 @@ that gap — `hidden` means nothing until something renders it, so it closes
 where it is consumed, shaped by a real caller. **A schema field being
 unimplemented is not, by itself, a reason to implement it now.**
 
+### T21 — `saveGame`/`loadGame`, not `toSave`/`fromSave`
+
+The task text says `toSave`/`fromSave`. Design plan §5.1 says
+`saveGame(state): SaveBlob`, and T21's own acceptance bullet says
+`loadGame(saveGame(s))`. Two of three agree, including the one that is a
+testable contract. Used `saveGame`/`loadGame`.
+
+### T21 — `engineVersion` and `adventureVersion` are recorded, not enforced
+
+Both sit in the blob; neither gates a load. Deliberate, and the reasoning is
+worth keeping because the opposite is superficially attractive:
+
+- **`engineVersion`** is the loader's job, not the save's. `loadAdventure`
+  already checks `manifest.engineVersion` against `ENGINE_VERSION` before a
+  module exists to load a save *into*. Re-checking here would refuse saves the
+  format says are fine, on a question already answered upstream.
+- **`adventureVersion`** is a genuine judgement call. Content can change under
+  a save in ways no version number adjudicates. An equality check refuses
+  working saves after a typo fix; a permissive read allows a save referencing a
+  location a later version deleted. **We take the permissive side**, because
+  `saveVersion` guards the *shape* — the thing that corrupts silently — while
+  missing content fails loudly on its own.
+
+**Where this bites:** Hollowdeep, once content ships and then changes under
+live saves. A deleted location or a renamed item id will produce a state
+pointing at nothing. If that turns out to matter, the fix is a
+`checkStateAgainstModule(module, state)` returning typed errors — a
+*consistency* check, like T5's, not a version equality test. Deliberately not
+built now: no content is live, and guessing at the failure modes before seeing
+one would be inventing rules.
+
+### T21 — the round-trip property is trivially true on a fresh game
+
+`loadGame(saveGame(s))` deep-equals `s` passes on `createGame`'s output even if
+the save system **drops entire fields**: nearly every collection is empty, every
+optional absent, the RNG untouched. There is nothing to lose, so nothing is
+lost. This is why T21's acceptance says "across a played walkthrough" — and the
+first draft of that fixture still never advanced the RNG (the lamp was lit
+before entering the one dark room, so darkness never rolled). A guard test
+asserting the fixture is non-trivial caught it immediately; without it, the
+strongest test in the file would have been quietly weightless.
+
+**The rule:** when a property is only interesting on non-trivial input, test
+that the input is non-trivial. Otherwise the fixture decays and takes the
+property's meaning with it, silently, at a green gate.
+
 ### T3 — `--passWithNoTests` retired early
 
 Orchestrator note 1 scheduled its death for "T4's first tests". T3's

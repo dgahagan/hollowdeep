@@ -713,7 +713,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T18 — Light and darkness system (`sonnet`) — `43cf8c6` (**schema change, human-approved**: added `manifest.lamp.warnMessageId`/`exhaustMessageId`. Lamp had no string ids while `manifest.darkness` had two, so fuel prose was hardcoded in the engine — including the word "lamp", which an FR-6.1 torch adventure would have been stuck with. Required fields, so every fixture module gained them.)
 - [x] T19 — Creature system (`sonnet`) — `5ae7309` (no schema work — T4 already shipped `stealAfterTurns`, contra the task text. Thief verified bit-identical across six seeds, the property T23 rests on. RNG order documented in the file header.)
 - [x] T20 — Scoring and achievements (`sonnet`) — `95367e2` (`rankFor` was order-dependent: the same table written best-first crowned a zero score "Master". Death penalty left in `handleDeath`, tested not reimplemented. **No `systems/achievements.ts`** — the `award` effect already does all of it; the plan's file list was wrong.)
-- [ ] T21 — Save, load, and migrations (`opus`)
+- [x] T21 — Save, load, and migrations (`opus`) — `aae79da` (named `saveGame`/`loadGame` per design plan §5.1 and this task's own acceptance, not the task text's stale `toSave`/`fromSave`. `toGameState` rebuilds field-by-field so a new `GameState` field is a compile error here. `engineVersion`/`adventureVersion` recorded, not enforced — see notes.)
 - [ ] T22 — Scene view, UI actions, and suggestions (`opus`)
 - [ ] T23 — Scripted walkthrough test (`opus`)
 - [ ] T24 — App shell, adventure loading, and game hook (`sonnet`)
