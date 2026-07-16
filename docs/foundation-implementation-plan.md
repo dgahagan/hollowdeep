@@ -709,7 +709,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T14 — Engine facade and turn pipeline (`opus`) — `8d30cbc` (wired `verb` triggers, which event.ts had promised T14 would do; death handling lives here not in the `die` effect; added `phrase` to Disambiguation/PendingQuestion. `ENGINE_VERSION` now canonical here — closes T6's TODO(T14).)
 - [x] T15 — Actions: movement, senses, meta (`sonnet`) — `9f726f7` (`back` honours `oneWay`; `enter <noun>` refuses rather than guessing. **`use` has no handler in any task — T16 must take it**, or test-cave's `oil door with flask` can never fire its `use` trigger.)
 - [x] T16 — Actions: handling and containers (`sonnet`) — `9305886` (took the `use` verb, which the plan assigns to no task; without it test-cave's `oil door with flask` is inert and T23 fails. Refuses container self-nesting — it permanently destroyed the container and its contents; unreachable in test-cave, certain in Hollowdeep.)
-- [ ] T17 — Actions: lamp and combat (`sonnet`)
+- [x] T17 — Actions: lamp and combat (`sonnet`) — `714833f` (`give` gates on the offered item, not on whether the player is warded generally — the latter let a carried lit lamp make the rat accept and destroy any item, lamp included. Accepted gifts land on the floor, not `nowhere`: `wardOff` claims no consumption and `nowhere` is unrecoverable. Fuel burn stays T18's.)
 - [ ] T18 — Light and darkness system (`sonnet`)
 - [ ] T19 — Creature system (`sonnet`)
 - [ ] T20 — Scoring and achievements (`sonnet`)

@@ -233,6 +233,45 @@ That is what makes the containment graph capable of cycles at all, and the
 check has to live in the handlers that build those edges — the schema cannot
 express it and the validator cannot see runtime state.
 
+### T17 — `give` asked the right question of the wrong subject (a real bug)
+
+`isWardedOff` answers **"is the player warded?"** That is exactly right for
+`attack`: a lit lamp wards the rat off regardless of what you swing. Under
+`give` it meant carrying a lit lamp made the rat accept — and destroy — *any*
+item offered:
+
+```
+> give flask to rat      (rat's wardOff.itemIds is ['brass-lamp'] and nothing else)
+    You set the flask down for the rat, which accepts the tribute...
+flask location: nowhere
+```
+
+The flask was annihilated by a rat with no interest in it, and the
+`"has no interest whatsoever"` refusal was unreachable while carrying a lit
+lamp — which, in a dark cave, is always. `give lamp to rat` destroyed the only
+light source permanently: dark cave, no lamp, unwinnable.
+
+`give` has to ask a different question — **does the creature want THIS item?**
+Same field, different subject.
+
+**Two lessons worth more than the fix:**
+
+- **A shared helper is not a shared question.** `attack`/`throw`/`give` all
+  consult `wardOff`, which made one predicate look like the obvious
+  factoring. Three verbs reading one field were asking three different things
+  of it. The subagent's own comment argued no item-specific check was needed
+  because the general carrying check cannot produce **false negatives** — true,
+  and beside the point. The bug was **false positives**. Worth checking, when a
+  guard is reused across verbs, that they're asking the same question and not
+  merely reading the same data.
+- **Don't invent mechanics out of fields that don't claim them.** Accepted
+  gifts were moved to `nowhere`, on the reasoning that a creature given
+  something consumes it. `schema/creature.ts` has no gift, tribute, or
+  creature-inventory concept anywhere — `wardOff` claims only to ward off. The
+  invented mechanic bought an unrecoverable state. Gifts now land at the
+  creature's location. **When the schema is silent, the engine does the
+  recoverable thing.**
+
 ## Latent issues — noted, not fixed
 
 Things that are correct for this plan but will bite later. Recorded here rather
