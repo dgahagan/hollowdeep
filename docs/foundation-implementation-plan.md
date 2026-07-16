@@ -697,7 +697,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T4 — Adventure module schemas (zod, v1) (`opus`) — `2564b25` (Effect is a discriminated union; Verb takes `patterns[]`; milestones declarative via `when`; added `common.ts`, `manifest.carryLimit`, `manifest.lamp`. `stealAfterTurns` is in — T19 need not add it.)
 - [x] T5 — Module consistency checks (`sonnet`) — `b900c9d` (35 stable error `code`s for T8 to assert on; added unwritten-flag-read + revealExit-not-hidden checks)
 - [x] T6 — Adventure loader with injected reader (`sonnet`) — `36f8f9c` (exports `ENGINE_VERSION` + `checkSemverRange`; `ModuleLoadError` carries a `LoadError[]` for T7 to group)
-- [ ] T7 — `validate-module` CLI (`sonnet`)
+- [x] T7 — `validate-module` CLI (`sonnet`) — `5c7133f` (globs `adventures/*` per the playbook; both T2 bootstrap placeholders now retired — the gate is honest end to end)
 - [ ] T8 — Validator golden tests (`sonnet`) *(parallel-safe with T9)*
 - [ ] T9 — Author the test-cave module (`opus`)
 - [ ] T10 — Placeholder art for test-cave (`haiku`)
