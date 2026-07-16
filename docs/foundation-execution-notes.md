@@ -320,6 +320,61 @@ asks only for prefix-filtered suggestions over currently-valid vocabulary, and
 the UI does not wire this until Phase 3. Worth revisiting there, with a real
 input box to feel it against.
 
+### T23 — the room name is not in the transcript, and never was
+
+The walkthrough asserted room names ("Tin Shed", "Entry Hall") on six arrival
+steps. The transcript has never contained them. Not an engine bug — a settled
+design decision the content author (T9) did not know about:
+
+- Design plan §6 gives the location name to **`ScenePanel`**, and `SceneView`
+  carries a `name` field precisely so the UI can render it.
+- `movement.ts`'s `moveDescription` and `senses.ts`'s `lookHandler` both print
+  the description alone. Both were reviewed and committed that way.
+- **The 1977 original had no name header either.** It printed a long or short
+  description, which is exactly what test-cave's `brief` fields imitate ("You
+  are at the end of a road before a small brick building.").
+
+Three independent sources agree, so this was not ambiguous and the walkthrough
+was corrected rather than the engine. The assertions now use distinctive
+substrings of the text the engine really prints — and two of them land on the
+`brief`, because those rooms are revisits, which pins the brief-on-revisit rule
+as a bonus.
+
+**Worth noticing:** the content author and the engine author were the same
+agent, days apart, and still disagreed about the format. Content written
+against an unbuilt engine encodes assumptions about it, and T23 is where they
+get audited. That is the whole reason the plan schedules an end-to-end test
+against real content rather than trusting unit tests plus a walkthrough that
+nobody runs.
+
+### T23 — seed-independence means the OUTCOME, not the transcript
+
+The first version of the test asserted identical transcripts at every seed, on
+the reasoning that nothing on the winning path may draw. It failed immediately
+— and it was **the test that was wrong**.
+
+`maze-mutter` is a `chance: 0.3` ambient line on entering the maze ("something
+small dislodges a pebble and declines to explain itself"). It fires in about
+half of all runs and does nothing but print. So the walkthrough path really does
+consume RNG, by design, and the prose legitimately differs between seeds.
+
+NFR-4 promises **completability** does not depend on luck. It never promised the
+cave would be silent about it. Demanding identical transcripts would have been
+demanding that content may not have atmosphere — a rule nobody wrote, enforced
+by accident, that would have been "fixed" by deleting a good piece of writing.
+
+The assertion now compares **material outcome** across seeds — score, rank,
+achievements, deaths, item locations, milestones — which still catches the bug
+§8 exists to prevent (mutation-checked: make the theft time on the seed and it
+fails at once), while permitting deliberate randomness. A companion test asserts
+that the flavour *is* seed-dependent, so the weaker comparison cannot quietly
+become unnecessary without someone noticing.
+
+**The rule:** before strengthening an assertion because it *feels* like the
+system should be that deterministic, check what the requirement actually
+promised. An over-strong test does not fail safe — it fails toward deleting the
+feature that contradicts it.
+
 ### T3 — `--passWithNoTests` retired early
 
 Orchestrator note 1 scheduled its death for "T4's first tests". T3's
