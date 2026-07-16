@@ -616,6 +616,65 @@ describe('checkConsistency — dangling references', () => {
     ).toBe(true);
   });
 
+  it('flags prose borrowed verbatim from the 1977 game', () => {
+    // The real bug: test-cave shipped this line and nothing caught it —
+    // not the schema, not 40 rules, not 681 tests. Prose has no type.
+    const broken = mutate((m) => {
+      const road = m.locations.find((l) => l.id === 'road');
+      if (road) road.brief = 'You are at the end of a road before a small brick building.';
+    });
+    const errors = checkConsistency(broken, validArtFiles).filter((e) => e.code === 'borrowed-source-text');
+    expect(errors.length).toBe(1);
+    expect(errors[0]?.document).toBe('locations.json');
+    expect(errors[0]?.field).toBe('brief');
+    // The message must name the source, or the author cannot act on it.
+    expect(errors[0]?.message).toContain('Colossal Cave Adventure (1977)');
+  });
+
+  it('catches borrowed text wherever prose lives, not just in locations', () => {
+    const inStrings = mutate((m) => {
+      m.strings['dark-warning'] = 'A hollow voice says "fool".';
+    });
+    expect(
+      checkConsistency(inStrings, validArtFiles).some((e) => e.code === 'borrowed-source-text'),
+    ).toBe(true);
+
+    const inItem = mutate((m) => {
+      const lamp = m.items.find((i) => i.id === 'lamp');
+      if (lamp) lamp.description = 'You are likely to be eaten by a grue.';
+    });
+    expect(
+      checkConsistency(inItem, validArtFiles).some((e) => e.code === 'borrowed-source-text'),
+    ).toBe(true);
+  });
+
+  it('is not fooled by capitalisation or line breaks', () => {
+    const broken = mutate((m) => {
+      const road = m.locations.find((l) => l.id === 'road');
+      if (road) road.full = 'You are in a MAZE of twisty little\n   passages, all alike. Truly.';
+    });
+    expect(
+      checkConsistency(broken, validArtFiles).some((e) => e.code === 'borrowed-source-text'),
+    ).toBe(true);
+  });
+
+  it('stays silent on ordinary English — the property that keeps it switched on', () => {
+    // A check that cries wolf gets turned off, and then it defends nothing.
+    // "It is pitch dark" is the plain phrasing for the situation and must NOT
+    // flag; test-cave's own darkness warning opens with exactly that.
+    const innocent = mutate((m) => {
+      m.strings['dark-warning'] =
+        'It is pitch dark. You are likely to put a foot somewhere you cannot take it back from.';
+      const road = m.locations.find((l) => l.id === 'road');
+      if (road) road.full = 'The road ends at a hill. A shed stands to the east and a dead tree leans north.';
+      const cave = m.locations.find((l) => l.id === 'cave');
+      if (cave) cave.full = 'Passages wind away in every direction and none of them look any different.';
+    });
+    expect(
+      checkConsistency(innocent, validArtFiles).filter((e) => e.code === 'borrowed-source-text'),
+    ).toEqual([]);
+  });
+
   it('flags a dangling manifest.lamp.warnMessageId', () => {
     const broken = mutate((m) => {
       m.manifest.lamp.warnMessageId = 'no-such-string';

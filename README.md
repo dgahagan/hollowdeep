@@ -137,4 +137,13 @@ causes are not obvious from the code.
 
 ## License
 
-Not yet chosen.
+[MIT](LICENSE) — code, content, and docs.
+
+Two notes on the art, since it is generated rather than drawn:
+
+- The illustrations under `adventures/*/art/` were produced locally with
+  **FLUX.2-klein-4B**. Redistributing them may depend on that model's own
+  licence as well as this one; check the model card before publishing them
+  anywhere that matters. Nothing here has verified it.
+- The prompts and seeds are committed (`dev/art/`), so the art is reproducible
+  from source rather than being an opaque binary blob.

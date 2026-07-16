@@ -451,6 +451,40 @@ attached one. Order-dependent probes are a trap. `target.dispatchEvent(ev)`
 returns `false` iff some listener called `preventDefault()` — an
 order-independent measurement of the only thing that matters.
 
+### Post-merge — the three known gaps, closed (2026-07-16)
+
+The three items this document had been carrying as "decide before Phase 2".
+
+**1. `Condition.all`** — the format could not express "flag a AND flag b". Fixed
+additively; `ENGINE_VERSION` 1.0.0 → 1.1.0. `all` holds **leaves only**, because
+`[{all:[a,b]}, {all:[c,d]}]` is disjunctive normal form and DNF expresses any
+boolean formula — nesting adds no power, only tree. The recursive version was
+tried first and abandoned for a better reason than taste: **the probe lied.** A
+recursive getter parsed and inferred fine under `tsx`, which does not typecheck;
+`tsc` rejects the circular inference outright. *Probe the layer the gate checks,
+not the one that is easy to run.*
+
+**2. Borrowed prose** — now a consistency rule (`borrowed-source-text`,
+`schema/borrowed-text.ts`). Verified against the real bug by re-introducing the
+five lines: all three call sites flagged, naming the source and §9.
+
+The honest scope: **it cannot prove originality**, and nothing can except a
+person who has read the source. It catches the failure that actually happened —
+famous lines are famous because they are memorable, which is exactly why they
+arrive unbidden while writing in the genre, and they are a short finite list.
+
+The curation rule is the load-bearing part. **Only phrases distinctive enough
+to be quotation.** "It is pitch dark" is deliberately absent: it is the plain
+English for the situation, and a check that flags ordinary sentences gets
+switched off, after which it defends nothing. There is a test asserting the
+check stays silent on innocent prose, and it is as important as the ones
+asserting it fires.
+
+**3. LICENSE** — MIT, human's choice. The README notes that the generated art
+may also depend on FLUX.2-klein's own licence; **that was not verified** (the
+local model cache holds weights only, no licence file) and wants checking before
+the art is published anywhere.
+
 ### T3 — `--passWithNoTests` retired early
 
 Orchestrator note 1 scheduled its death for "T4's first tests". T3's

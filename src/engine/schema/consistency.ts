@@ -7,6 +7,7 @@ import {
   type ModuleDocumentName,
 } from './index';
 import { commandSyntaxError } from '../parser/parse';
+import { findBorrowedPhrases } from './borrowed-text';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Module consistency checks (design plan §4.2, layer 2).
@@ -74,7 +75,8 @@ export type ConsistencyErrorCode =
   | 'orphan-location'
   | 'missing-art-file'
   | 'max-score-mismatch'
-  | 'unbounded-score-effect';
+  | 'unbounded-score-effect'
+  | 'borrowed-source-text';
 
 /**
  * A single consistency error. `document`/`id`/`field` together pinpoint the
@@ -672,6 +674,55 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
           message: `location "${location.id}" is not reachable from startLocation "${manifest.startLocation}"`,
         });
       }
+    }
+  }
+
+  // ── borrowed prose ────────────────────────────────────────────────────
+  //
+  // The project's first locked decision is "no text from the 1977 game". Nothing
+  // else in this file can check prose, and prose is where that decision is kept
+  // or broken. See borrowed-text.ts for what this can and cannot prove — it is
+  // a backstop for famous lines, not evidence of originality.
+  const checkProse = (
+    document: ModuleDocumentName,
+    id: string,
+    field: string,
+    text: string | undefined,
+  ): void => {
+    if (text === undefined) return;
+    for (const found of findBorrowedPhrases(text)) {
+      push({
+        code: 'borrowed-source-text',
+        document,
+        id,
+        field,
+        message: `"${found.phrase}" is from ${found.source}. This adventure is original, not a port — write it in its own voice (PROJECT-BRIEF §9).`,
+      });
+    }
+  };
+  for (const location of module.locations) {
+    checkProse('locations.json', location.id, 'name', location.name);
+    checkProse('locations.json', location.id, 'brief', location.brief);
+    checkProse('locations.json', location.id, 'full', location.full);
+    for (const [i, scenery] of (location.scenery ?? []).entries()) {
+      checkProse('locations.json', location.id, `scenery[${i}].description`, scenery.description);
+      checkProse('locations.json', location.id, `scenery[${i}].readText`, scenery.readText);
+    }
+  }
+  for (const item of module.items) {
+    checkProse('items.json', item.id, 'brief', item.brief);
+    checkProse('items.json', item.id, 'description', item.description);
+    checkProse('items.json', item.id, 'readText', item.readText);
+  }
+  for (const creature of module.creatures) {
+    checkProse('creatures.json', creature.id, 'description', creature.description);
+  }
+  for (const [stringId, text] of Object.entries(module.strings)) {
+    checkProse('strings.json', stringId, 'value', text);
+  }
+  for (const event of module.events) {
+    for (const [i, effect] of event.do.entries()) {
+      if (effect.kind === 'print') checkProse('events.json', event.id, `do[${i}].text`, effect.text);
     }
   }
 
