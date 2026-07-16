@@ -4,6 +4,7 @@ import type { Command } from '../parser/parse';
 import { MOVEMENT_HANDLERS } from './movement';
 import { SENSES_HANDLERS } from './senses';
 import { META_HANDLERS } from './meta';
+import { HANDLING_HANDLERS } from './handling';
 
 /**
  * What an action handler returns.
@@ -39,24 +40,28 @@ export function acted(state: GameState, events: OutputEvent[]): ActionResult {
 /**
  * The dispatch table: verb id → handler.
  *
- * T15 registers movement/senses/meta; T16–T17 add the rest. A verb with no
- * entry here falls through to engine.ts's stub, which nudges rather than
- * throwing — a half-built engine should still be playable enough to test the
- * pipeline around it.
+ * T15 registered movement/senses/meta; T16 adds handling (take/drop/put/
+ * open/close/lock/unlock) plus `use` (a scope addition to T16 — see the
+ * doc comment on `useHandler` in handling.ts); T17 adds lamp/combat. A verb
+ * with no entry here falls through to engine.ts's stub, which nudges rather
+ * than throwing — a half-built engine should still be playable enough to
+ * test the pipeline around it.
  *
- * This file and `movement.ts`/`senses.ts`/`meta.ts` import each other
- * (they need `ActionHandler`/`refuse`/`acted` from here; this file needs
- * their handler maps to populate `HANDLERS`). That's a deliberate cycle, not
- * an accident: `refuse`/`acted` are `function` declarations, which are fully
- * hoisted and initialized the instant this module starts evaluating — before
- * the imports below even run — so the other files always see live bindings,
- * never a temporal-dead-zone `undefined`. See eslint.config.js: there is no
- * `import/no-cycle` rule guarding against this pattern.
+ * This file and `movement.ts`/`senses.ts`/`meta.ts`/`handling.ts` import each
+ * other (they need `ActionHandler`/`refuse`/`acted` from here; this file
+ * needs their handler maps to populate `HANDLERS`). That's a deliberate
+ * cycle, not an accident: `refuse`/`acted` are `function` declarations,
+ * which are fully hoisted and initialized the instant this module starts
+ * evaluating — before the imports below even run — so the other files
+ * always see live bindings, never a temporal-dead-zone `undefined`. See
+ * eslint.config.js: there is no `import/no-cycle` rule guarding against this
+ * pattern.
  */
 export const HANDLERS: Partial<Record<string, ActionHandler>> = {
   ...MOVEMENT_HANDLERS,
   ...SENSES_HANDLERS,
   ...META_HANDLERS,
+  ...HANDLING_HANDLERS,
 };
 
 export function handlerFor(verb: string): ActionHandler | undefined {
