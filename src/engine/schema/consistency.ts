@@ -6,6 +6,7 @@ import {
   type GameEvent,
   type ModuleDocumentName,
 } from './index';
+import { commandSyntaxError } from '../parser/parse';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Module consistency checks (design plan §4.2, layer 2).
@@ -21,9 +22,11 @@ import {
 // at load time per FR-6.2) and the CLI validator (T7). Landing it alone and
 // first is what lets both build on the same notion of "consistent."
 //
-// TODO(T13): walkthrough command parsing needs the parser, which does not
-// exist yet. `module.walkthrough.steps[].cmd` is deliberately NOT parsed
-// here — T13 wires that check in once `parse()` exists.
+// Walkthrough commands are syntax-checked here (T13). Only their HEAD — that
+// the first word is a verb, direction, or magic word. Noun resolution is
+// state-dependent (`take key` is unparseable until `search tree` puts the key
+// in the world), so a validator with no game state cannot judge it without
+// being wrong about correct content. T23 catches the rest by playing it.
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
@@ -64,6 +67,7 @@ export type ConsistencyErrorCode =
   | 'dangling-condition-visited'
   | 'dangling-condition-at-location'
   | 'dangling-trigger-target'
+  | 'unparseable-walkthrough-command'
   | 'unwritten-flag-read'
   | 'orphan-location'
   | 'missing-art-file'
@@ -670,6 +674,20 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
       });
     }
   }
+
+  // ── walkthrough commands parse (design plan §4.2) ────────────────────────
+  module.walkthrough.steps.forEach((step, i) => {
+    const error = commandSyntaxError(module, step.cmd);
+    if (error !== undefined) {
+      push({
+        code: 'unparseable-walkthrough-command',
+        document: 'walkthrough.json',
+        id: `step ${i + 1}`,
+        field: 'cmd',
+        message: `"${step.cmd}" cannot be parsed: ${error}`,
+      });
+    }
+  });
 
   // ── maxScore reconciliation ──────────────────────────────────────────────
   let attainable = 0;
