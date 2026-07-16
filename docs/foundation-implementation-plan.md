@@ -628,7 +628,15 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 
 - **Files:** `src/app/ScenePanel.tsx`, `TranscriptPanel.tsx`,
   `CommandInput.tsx`, `ActionBar.tsx`, `InventoryPanel.tsx`, `StatusBar.tsx`,
-  `src/app/App.tsx` (compose), `src/app/app.css`
+  `src/app/App.tsx` (compose), `src/app/app.css`, **`src/app/useGame.ts`**
+- **Plan gap, folded in here (found 2026-07-16):** `useGame` exposes `state`,
+  `scene`, `actions`, `submit` — and **no transcript**. `step` returns
+  `OutputEvent[]`, T24's hook discards them, and no task owns adding them, so
+  `TranscriptPanel` has nothing to render. Design plan §6 lists both the panel
+  and the hook's shape and never reconciles the two. T25 therefore also owns
+  `useGame.ts`: accumulate the turn's `OutputEvent[]` into a transcript the hook
+  exposes. Keep the events **structured** — the union exists (types.ts) so the
+  UI can style a death differently from a score notice without parsing prose.
 - **Does:** design plan §6. `ScenePanel` renders the placeholder SVG for the
   scene's `artId` with **alt text = the location's brief** (NFR-5);
   `TranscriptPanel` scrolls, styling command echoes distinctly from narration;
