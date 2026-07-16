@@ -327,8 +327,23 @@ diff review, and fell out of playing the thing for one minute:
   portable container to reach, which test-cave has none of, so it took
   deliberately synthesizing one.
 
+- **T15 (again, found during T16)** — `inventory` printed each item's `brief`
+  too: "You are carrying: A brass lamp sits on the shelf, waiting to be
+  useful." There *was* a test, and it passed: it matched `/lamp/i`, which the
+  name and the brief both satisfy. A test that cannot distinguish the right
+  field from the wrong one is not coverage. Fixed in `3f3e1fe` (separate
+  commit — T15's file, not T16's lane).
+
 **The rule:** after each action task, walk the cave. Tests check the cases
 someone thought of; playing surfaces the ones nobody did.
+
+**The `brief` trap generalizes.** Three handlers so far have reached for
+`brief` because it is the shortest human-readable string on an `Item`. It is
+not a name — it is the adventure's prose for one situation (an item lying in a
+room), and every other use puts the engine's frame around the narrator's
+sentence. When T22's `SceneView` and T25's panels need to name an item, they
+want `names[0]`. Worth a line in T27's authoring guide: `names[0]` is the
+canonical name, `brief` is in-room only, `description` is for `examine`.
 
 ### Drive the CLI, don't trust the paste
 
