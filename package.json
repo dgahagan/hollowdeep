@@ -11,9 +11,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "lint": "node -e \"console.log('lint: TODO(T3) - eslint flat config not wired yet'); process.exit(0)\"",
-    "//lint": "TODO(T3): replace with the real ESLint flat config (typescript-eslint + react + engine-purity/determinism guards).",
-    "test": "vitest run --passWithNoTests",
+    "lint": "eslint .",
+    "test": "vitest run",
     "validate": "node -e \"console.log('no modules yet')\"",
     "//validate": "TODO(T7): replace with the real validate-module CLI (tsx tools/validate-module.ts, defaulting to a glob over adventures/*).",
     "gate": "npm run typecheck && npm run lint && npm run test && npm run validate && npm run build"
@@ -27,7 +26,12 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.2.0",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.64.0",
     "vite": "^7.3.6",
     "vitest": "^4.1.10"
   }
