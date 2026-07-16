@@ -4,6 +4,8 @@
 
 Execution plan for [`docs/foundation-plan.md`](foundation-plan.md) (the WHAT/WHY);
 rules live in [`docs/orchestration-playbook.md`](orchestration-playbook.md).
+Decisions and deviations made while executing this plan are recorded in
+[`docs/foundation-execution-notes.md`](foundation-execution-notes.md).
 
 > **Cleared to run (2026-07-15).** The design plan is signed off as READY and its
 > §8/§9 thief contradiction is resolved (deterministic theft — see T9/T19/T23).
