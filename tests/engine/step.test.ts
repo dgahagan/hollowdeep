@@ -29,19 +29,34 @@ function at(locationId: string): GameState {
 }
 
 /**
- * A command that actually consumes a turn at this point in the build.
+ * A command that consumes a turn and changes nothing else.
  *
- * T15–T17 have not landed, so no core verb has a handler yet and every one of
- * them refuses without spending a turn. The two paths that DO complete a turn
- * are magic words and `verb`-triggered events, so the pipeline tests drive
- * those rather than pretending `wait` works. `zeeble` at the road teleports to
- * entry-hall — noisy, but it is a real consumed turn.
+ * `wait` is exactly that, which makes it the honest instrument for testing the
+ * pipeline's turn accounting without a handler's side effects in the way.
  */
-const CONSUMING_COMMAND = 'zeeble';
+const CONSUMING_COMMAND = 'wait';
 
 /** State where `zeeble` will actually fire (it is guarded on having read the carving). */
 function zeebleReady(locationId = 'road'): GameState {
   return { ...at(locationId), flags: { ...start.flags, 'zeeble-known': true } };
+}
+
+/**
+ * A module with a verb that has no handler and no event listening for it.
+ *
+ * Built rather than borrowed: every core verb now has a handler (T15–T17), so
+ * there is no longer a real verb that exercises the "nothing answers this"
+ * branch. Reaching for whichever verb happens to be unimplemented today is how
+ * a test quietly stops testing anything the moment that verb lands.
+ */
+function moduleWithUnansweredVerb(): AdventureModule {
+  return {
+    ...module_,
+    vocabulary: {
+      ...module_.vocabulary,
+      verbs: [...module_.vocabulary.verbs, { id: 'pirouette', words: ['pirouette'], patterns: ['V'] }],
+    },
+  };
 }
 
 function texts(events: { text: string }[]): string {
@@ -138,11 +153,13 @@ describe('step — turn counting', () => {
   });
 
   it('does not advance for a verb with no handler and no event', () => {
-    // No handlers exist yet (T15-T17), so every core verb refuses. It must
-    // refuse WITHOUT charging a turn — an engine that billed a turn for a verb
-    // it has not implemented would burn the player's lamp for nothing.
-    const { state } = step(module_, start, 'look');
+    // The player asked for something the world has no answer to. It must
+    // refuse WITHOUT charging a turn — otherwise a verb nobody implemented
+    // burns the player's lamp for nothing.
+    const unanswered = moduleWithUnansweredVerb();
+    const { state, events } = step(unanswered, start, 'pirouette');
     expect(state.turn).toBe(start.turn);
+    expect(texts(events)).toContain('Nothing happens');
   });
 });
 
