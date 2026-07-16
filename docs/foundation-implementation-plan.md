@@ -5,11 +5,10 @@
 Execution plan for [`docs/foundation-plan.md`](foundation-plan.md) (the WHAT/WHY);
 rules live in [`docs/orchestration-playbook.md`](orchestration-playbook.md).
 
-> **Blocker before running:** `docs/foundation-plan.md` is still marked
-> **DRAFT — awaiting review**, and its own header says to mark it READY before
-> running `/impl-plan`. This plan was written against the draft as-is. Sign the
-> design plan off (and resolve the two open questions in §5 below) before
-> `/run-plan` touches anything.
+> **Cleared to run (2026-07-15).** The design plan is signed off as READY and its
+> §8/§9 thief contradiction is resolved (deterministic theft — see T9/T19/T23).
+> The two remaining open questions below are **T9's to settle, not blockers**:
+> the orchestrator should decide them in-task and state the choice in T9's commit.
 
 ---
 
@@ -749,11 +748,13 @@ Cross-task consequences worth holding in mind:
    it in engine code. The timestamp is a parameter. This is the first place the
    purity rule costs ergonomics; it will not be the last.
 
-## Open questions for the human (resolve before `/run-plan`)
+## Open questions
 
-1. **The design plan is DRAFT.** Its header says to mark it READY before
-   running `/impl-plan`. Sign it off or amend it — this plan is built on it as
-   written.
+Both are **T9's call** — decide in-task, state the choice in the commit, and
+don't stop for them. Neither blocks `/run-plan`.
+
+1. ~~**The design plan is DRAFT.**~~ **RESOLVED 2026-07-15** — reviewed and
+   marked READY. No action needed.
 
 2. ~~**Seed-independent walkthrough vs. a thieving creature.**~~ **RESOLVED
    2026-07-15 — deterministic thief.** The theft now fires on a trigger with a
@@ -765,10 +766,24 @@ Cross-task consequences worth holding in mind:
 3. **test-cave location count.** Design plan §8 says "10 locations" and then
    tables 11 (`road`, `shed`, `hollow-tree`, `cave-mouth`, `entry-hall`,
    `low-passage`, `twisty-1`, `twisty-2`, `ledge`, `grotto`, `deep-vault`).
-   FR-6.5 says 5–10 rooms. Assuming the **table** is authoritative (11) and the
-   prose count is stale; say otherwise if not.
+   FR-6.5 says 5–10 rooms.
+   **Default: build all 11 from the table** — the prose count is stale, and each
+   room in the table is carrying a distinct engine feature, so dropping one to
+   satisfy an approximate range would cost coverage. Fix §8's prose to "11" in
+   passing. test-cave stays this size permanently: it is a fixture, not a small
+   Hollowdeep, and it gets *worse* at both its jobs (fast fixture, readable
+   format reference) as it grows.
 
 4. **`maxScore: 100` must be constructible.** T5 enforces `maxScore` = sum of
-   attainable points. With 2 treasures (carry + deposit) plus a grate milestone
-   and a death penalty, the split is unspecified. T9 will pick a split that sums
-   to exactly 100 unless you have one in mind.
+   attainable points. With 2 treasures (carry + deposit) plus the grate
+   milestone, the split is unspecified.
+   **Default: 20 carry + 25 deposit per treasure (= 90), grate milestone 10,
+   total 100.** Achievements award no points, and the death penalty is a
+   *deduction* that must not count toward `maxScore`.
+   **Corollary the orchestrator must not miss:** §8 gives test-cave a `no-deaths`
+   achievement awarded at victory *and* a lethal `jump` at `ledge`. These are
+   only compatible if **the walkthrough never dies** — it is the clean happy
+   path, scoring 100/100 and earning both achievements. The `ledge` death,
+   reincarnation, and score penalty are therefore exercised by **unit tests
+   (T15/T20), never by `walkthrough.json`**. Adding a death to the walkthrough
+   would silently cost the `no-deaths` achievement and break T23's assertion.

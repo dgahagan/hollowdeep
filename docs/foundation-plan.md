@@ -1,8 +1,13 @@
 # Foundation Design Plan — Engine Core, Module Format, Minimal UI
 
-**Status:** DRAFT (2026-07-15) — awaiting review; mark READY before running `/impl-plan docs/foundation-plan.md`
+**Status:** READY (2026-07-15) — reviewed and signed off; cleared to implement.
 **Covers:** SCOPE.md Phase 0 + Phase 1
+**Execution:** [foundation-implementation-plan.md](foundation-implementation-plan.md) — run it with `/run-plan`
 **Related:** [PROJECT-BRIEF.md](PROJECT-BRIEF.md) · [REQUIREMENTS.md](REQUIREMENTS.md) · [SCOPE.md](SCOPE.md) · [orchestration-playbook.md](orchestration-playbook.md)
+
+**Amendments since draft:** the thief was made deterministic (§4.1 `stealAfterTurns`,
+§8, §9) to resolve a contradiction between §8's RNG-driven theft and §9's
+seed-independent walkthrough requirement — see the rationale note in §8.
 
 ---
 
