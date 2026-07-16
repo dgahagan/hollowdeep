@@ -135,6 +135,9 @@ Creature = { id, names, description, artId,
              moveEvery?, aggression?,          // stalker: attack chance per encounter turn
              wardOff?: { itemIds?, verbIds? }, // e.g. throw pebble, carry lit lamp
              stealsTreasure?, stashLocation?,  // thief
+             stealAfterTurns?,                 // thief: turns after spawn until the theft.
+                                               // DETERMINISTIC — the thief consumes no RNG.
+                                               // See §8 note on the Woods pirate.
              deathMessageId? }
 
 // events.json — the general trigger system (FR-1.8)
@@ -319,11 +322,27 @@ the module-format documentation-by-example. 10 locations:
 | `grotto` | Treasure #1 silver chalice; **stalker** cave rat (ward off: lit lamp); carving teaches `zeeble` |
 | `deep-vault` | Behind rusted door: oil it with flask (VNPN: `oil door with flask`). Treasure #2 jade idol in a **locked box** (iron key) — container + lock reuse |
 
-Plus: **thief** "shadow packrat" (activates after treasure #1 is carried;
-steals one treasure, stashes in `twisty-2`), scoring (carry + deposit points,
+Plus: **thief** "shadow packrat" — activates when the player first carries a
+treasure (`spawn.if`), then **deterministically** steals *all* carried treasure
+`stealAfterTurns` later and stashes it in `twisty-2`, once per game. Scoring (carry + deposit points,
 milestone for opening the grate, death penalty, 3 ranks, maxScore 100), two
 achievements (`first-treasure`, `no-deaths` awarded at victory), walkthrough
 reaching 100/100. Victory = both treasures deposited.
+
+**Why the thief is deterministic** (decided 2026-07-15). This mirrors Woods'
+pirate rather than diverging from it. In the 1977 game the theft is *guaranteed*
+— the pirate's chest only materializes once he robs you, and the chest is itself
+a treasure, so a perfect score is impossible without being robbed. Only his
+*timing* was random; the theft, the stash location, and recoverability were all
+fixed. Random timing buys tension; it must never gate completability. Making
+the steal deterministic keeps the fixture's walkthrough valid at every seed
+(§9) and leaves the cave rat's `aggression` roll as the only RNG the
+walkthrough must survive. The thief consumes **no** RNG — see the documented
+draw order in `systems/creatures.ts`.
+
+*Ordering trap, for Hollowdeep later:* visiting the stash before the theft finds
+it empty. Harmless for a human who wanders back; fatal for a fixed command list.
+Determinism sidesteps it here; Hollowdeep's maze design must face it.
 
 ## 9. Testing strategy (NFR-4)
 
@@ -334,8 +353,11 @@ reaching 100/100. Victory = both treasures deposited.
 - **Walkthrough** (`tests/walkthrough.test.ts`): drives
   `adventures/test-cave/walkthrough.json` through `step()`, asserts per-step
   `expect` substrings, final score, rank, achievements. Deterministic via fixed
-  seed. A second run with a different seed asserts completability is
-  seed-independent (walkthrough must not depend on luck).
+  seed. The same run at ≥2 further seeds must also reach 100/100 — completability
+  is seed-independent (the walkthrough must not depend on luck). This holds
+  because the thief is deterministic (§8) and the cave rat's `aggression` roll
+  is wardable; if a seed ever fails, that is a **content or engine bug**, not a
+  reason to weaken the assertion.
 - **Validator**: golden tests — a set of deliberately-broken module fragments
   each producing its specific consistency error.
 - No component/browser tests in this plan (Phase 3 owns UI testing); `useGame`

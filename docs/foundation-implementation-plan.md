@@ -253,6 +253,12 @@ full gate applies to every task.
   see §5 Open Questions). Plus the shadow-packrat thief, the cave-rat stalker,
   both treasures, the `zeeble` magic word, scoring to `maxScore: 100`, two
   achievements, and `walkthrough.json` reaching 100/100.
+- **The thief is deterministic** (design plan §8, decided 2026-07-15): activate
+  via `spawn.if` on first treasure carried, steal *all* carried treasure
+  `stealAfterTurns` later, stash in `twisty-2`, once per game, **consuming no
+  RNG**. The walkthrough must always detour to `twisty-2` to recover. This is
+  what makes T23's multi-seed assertion satisfiable — do not give the thief a
+  chance roll.
 - **Design-sensitive:** this is simultaneously the test fixture, the
   format-documentation-by-example (FR-6.5), and the thing that must exercise
   **every** engine feature — if a feature is not in test-cave, it is untested.
@@ -462,17 +468,27 @@ full gate applies to every task.
 - **Files:** `src/engine/systems/creatures.ts`, `tests/engine/creatures.test.ts`
 - **Does:** the three data-driven behaviors from design plan §4.1 —
   `stalker` (spawn gating, `moveEvery`, `aggression` roll per encounter turn,
-  `wardOff`), `thief` (activates on trigger, `stealsTreasure`, stashes at
-  `stashLocation`), `static`. Behavior is **parameterized, never scripted**
-  (FR-1.7).
+  `wardOff`), `thief` (activates via `spawn.if`/`afterTurn`, steals **all**
+  carried treasure `stealAfterTurns` later, stashes at `stashLocation`, fires
+  once per game), `static`. Behavior is **parameterized, never scripted**
+  (FR-1.7). Add `stealAfterTurns` to the creature schema (T4) — a mechanical
+  consequence of the 2026-07-15 deterministic-thief decision; note it in the
+  commit.
+- **The thief draws no RNG.** Its theft is fully deterministic (design plan §8):
+  timing from `stealAfterTurns`, target = all carried treasure, destination =
+  `stashLocation`. The stalker is the only creature that rolls. Getting this
+  wrong doesn't fail here — it fails in T23, at a distance, as a flaky seed.
 - **Critical:** design plan §10 requires the RNG consumption order within the
   tick to be **fixed and documented in this file's header** so tests can force
   outcomes by seed. Do it — T23's seed-independence test depends on it, and
   changing the order later silently breaks every seeded test in the suite.
 - **Acceptance:** `npm run gate` green. Tests by forced seed: stalker spawns
   only after `afterTurn`, moves on schedule, attacks per `aggression`, is warded
-  by a lit lamp; thief activates on first treasure carried, steals exactly one,
-  stashes it in `twisty-2`; RNG order matches the documented header.
+  by a lit lamp; RNG order matches the documented header. Thief tests need **no**
+  seed forcing — assert it activates on first treasure carried, steals all
+  carried treasure exactly `stealAfterTurns` later, stashes in `twisty-2`, never
+  fires twice, and **produces identical results across several seeds** (the
+  regression guard for its no-RNG property).
 - **Commit:** `feat(engine): add data-driven creature behaviors`
 - **Deps:** T18
 
@@ -550,18 +566,20 @@ full gate applies to every task.
 - **Files:** `tests/walkthrough.test.ts`
 - **Does:** design plan §9 — drives `adventures/test-cave/walkthrough.json`
   through `step()`, asserting per-step `expect` substrings, then final score
-  (100), rank, and achievements. Deterministic via a fixed seed. **Plus a second
-  run at a different seed asserting completability is seed-independent** — the
+  (100), rank, and achievements. Deterministic via a fixed seed. **Plus runs at
+  ≥2 further seeds asserting completability is seed-independent** — the
   walkthrough must not depend on luck.
 - **Expect this to fight back.** This is the first time the whole engine runs
   end to end against real content; it is where T9's walkthrough authoring and
   T12–T20's semantics get reconciled. Fixing the walkthrough data is in scope.
   Fixing engine bugs it surfaces is in scope. **Silently loosening the
-  assertions to make it pass is not** — if the seed-independence run cannot be
-  made to pass, that is the §5 Open Question below, and it is a stop-and-ask,
-  not a judgment call.
+  assertions to make it pass is not.** Per design plan §8/§9 this test is now
+  *known satisfiable*: the thief consumes no RNG and the stalker is wardable, so
+  a seed that fails is a real content or engine bug — most likely a stray RNG
+  draw in the thief path (T19) or an unwarded rat encounter the walkthrough
+  should have prevented. Debug it; don't dilute the assertion.
 - **Acceptance:** `npm run gate` green; walkthrough reaches 100/100 with the
-  expected rank and both achievements at ≥2 distinct seeds. This is design plan
+  expected rank and both achievements at ≥3 distinct seeds. This is design plan
   exit criterion #2 and NFR-4.
 - **Commit:** `test: add scripted walkthrough test for test-cave`
 - **Deps:** T22
@@ -737,24 +755,12 @@ Cross-task consequences worth holding in mind:
    running `/impl-plan`. Sign it off or amend it — this plan is built on it as
    written.
 
-2. **Seed-independent walkthrough vs. a thieving creature (design plan §8 vs
-   §9).** §9 requires a second walkthrough run at a different seed to also
-   complete, asserting completability "must not depend on luck". But §8's shadow
-   packrat steals a treasure and stashes it in `twisty-2` on an RNG-driven
-   schedule, and §8's cave rat attacks on an `aggression` roll. A fixed command
-   list cannot reach 100/100 under both seeds unless one of these holds:
-   - the thief's steal is **deterministic** in test-cave (fires on a trigger,
-     not a chance roll) and the walkthrough always detours to `twisty-2` to
-     recover the treasure; **or**
-   - the seed-independence run asserts something weaker than the full
-     walkthrough — e.g. "no step errors and the game remains winnable" rather
-     than "these exact commands score 100".
-
-   These are meaningfully different tests. My recommendation: make test-cave's
-   thief trigger-deterministic (it is a fixture, not a game — its job is to
-   exercise the thief code path reproducibly) and keep the strict assertion at
-   both seeds, with the cave rat's `aggression` the only genuine RNG the
-   walkthrough must survive. **This needs your call before T9 authors the data.**
+2. ~~**Seed-independent walkthrough vs. a thieving creature.**~~ **RESOLVED
+   2026-07-15 — deterministic thief.** The theft now fires on a trigger with a
+   fixed `stealAfterTurns` delay and consumes no RNG; the walkthrough always
+   detours to `twisty-2`. This mirrors Woods' pirate, where only the *timing*
+   was random and completability never depended on luck. Design plan §4.1, §8,
+   and §9 were amended; T9, T19, and T23 carry the spec. No action needed.
 
 3. **test-cave location count.** Design plan §8 says "10 locations" and then
    tables 11 (`road`, `shed`, `hollow-tree`, `cave-mouth`, `entry-hall`,
