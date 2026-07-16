@@ -704,7 +704,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T9 — Author the test-cave module (`opus`) — `5a4ef1e` (11 locations; 100 pts = 20+25 ×2 treasures + 10 grate. Surfaced 5 schema gaps + a trigger-target hole in T5 — see execution notes. Ships placeholder art ahead of T10 so the gate stays green.)
 - [x] T10 — Placeholder art for test-cave (`haiku`) — `431caad` (generator reads artIds from the module, never hardcoded; idempotency + delete/regenerate verified)
 - [x] T11 — Game state, RNG, and createGame (`opus`) — `601edbf` (state.ts holds the safe accessors — downstream tasks must use them, not `!`. Added CreatureState.activatedTurn/hasStolen, the scoring ledgers, lampWarned, lastCommand, verbose.)
-- [ ] T12 — Effect application choke point (`opus`)
+- [x] T12 — Effect application choke point (`opus`) — `00e3d7f` (**trigger guards evaluate against a snapshot** — sequential guards broke 3 of test-cave's 6 trigger-sharing event pairs; `setFlag` cascades into `flagSet` triggers, transition-only, depth-bounded. See execution notes.)
 - [ ] T13 — Parser (`opus`)
 - [ ] T14 — Engine facade and turn pipeline (`opus`)
 - [ ] T15 — Actions: movement, senses, meta (`sonnet`)

@@ -138,6 +138,45 @@ not sufficient for parallel safety. The gate is a shared resource.
 
 ---
 
+### T12 — trigger guards evaluate against a snapshot (a real bug, caught by a test)
+
+**The rule:** when a trigger fires, *every* matching event's guard is evaluated
+against the state as it was when the trigger fired. Only then do the surviving
+events apply their effects, in order. **Guards decide together; effects happen
+in sequence.**
+
+The first implementation did the obvious thing — check each guard against
+whatever the previous event just did — and a test caught it bouncing the player
+back to the road on `zeeble`. A sweep of test-cave found the same bug in three
+of the six trigger-sharing event pairs:
+
+| Trigger | Sequential guards (wrong) |
+|---|---|
+| `word: zeeble` | descend moves you to entry-hall → ascend's `atLocation: entry-hall` guard now passes → bounced back |
+| `search tree-trunk` | reveal-key sets `tree-searched` → "the hollow is empty now" fires in the same turn |
+| `use rusted-door` | oil-the-door sets `door-oiled` → "the hinges are already slick" fires in the same turn |
+
+Each is a pair of **mutually exclusive** events, which is a completely ordinary
+way to author content. A snapshot keeps them exclusive. Sequential guards would
+force an author to reason about the relative order of every event sharing a
+trigger — spooky action a data file must not have.
+
+**This generalizes:** any adventure will write "do X, else say why not" as two
+events on one trigger with opposite guards. It has to work.
+
+### T12 — `setFlag` cascades into `flagSet` triggers
+
+`flagSet` triggers had no one firing them, which made test-cave's `win` (on
+`flagSet both-deposited`) unreachable from `victory-on-idol` (which sets it).
+`applyEffects` now cascades, with two limits:
+
+- **Transition only** — re-setting an already-set flag does not re-fire.
+  `packrat-arms` re-sets its flag on every take; announcing that each time is
+  noise at best and a loop at worst.
+- **Depth-bounded (8)** — two events that set each other's flags would hang the
+  engine, and the validator would accept them. An engine that stops beats one
+  that hangs. test-cave's deepest real chain is 2.
+
 ## Latent issues — noted, not fixed
 
 Things that are correct for this plan but will bite later. Recorded here rather
