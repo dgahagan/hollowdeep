@@ -687,7 +687,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 ## Progress Tracker
 
 - [x] T1 — Initialize git repository and docs baseline (`haiku`) — `a6d6237` (pre-satisfied by the existing docs baseline; `feat/foundation` branched from it)
-- [ ] T2 — Scaffold Vite + React + TypeScript (`sonnet`)
+- [x] T2 — Scaffold Vite + React + TypeScript (`sonnet`) — `3ee784a`
 - [ ] T3 — ESLint flat config with engine-purity guards (`sonnet`)
 - [ ] T4 — Adventure module schemas (zod, v1) (`opus`)
 - [ ] T5 — Module consistency checks (`sonnet`)
