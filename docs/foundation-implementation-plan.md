@@ -698,7 +698,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T5 — Module consistency checks (`sonnet`) — `b900c9d` (35 stable error `code`s for T8 to assert on; added unwritten-flag-read + revealExit-not-hidden checks)
 - [x] T6 — Adventure loader with injected reader (`sonnet`) — `36f8f9c` (exports `ENGINE_VERSION` + `checkSemverRange`; `ModuleLoadError` carries a `LoadError[]` for T7 to group)
 - [x] T7 — `validate-module` CLI (`sonnet`) — `5c7133f` (globs `adventures/*` per the playbook; both T2 bootstrap placeholders now retired — the gate is honest end to end)
-- [ ] T8 — Validator golden tests (`sonnet`) *(parallel-safe with T9)*
+- [x] T8 — Validator golden tests (`sonnet`) — `c3634e4` (run serially *before* T9, not in parallel: the gate globs `adventures/*`, so a half-authored test-cave in the tree would turn `validate` red and block this commit)
 - [ ] T9 — Author the test-cave module (`opus`)
 - [ ] T10 — Placeholder art for test-cave (`haiku`)
 - [ ] T11 — Game state, RNG, and createGame (`opus`)
