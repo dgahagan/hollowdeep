@@ -705,7 +705,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T10 — Placeholder art for test-cave (`haiku`) — `431caad` (generator reads artIds from the module, never hardcoded; idempotency + delete/regenerate verified)
 - [x] T11 — Game state, RNG, and createGame (`opus`) — `601edbf` (state.ts holds the safe accessors — downstream tasks must use them, not `!`. Added CreatureState.activatedTurn/hasStolen, the scoring ledgers, lampWarned, lastCommand, verbose.)
 - [x] T12 — Effect application choke point (`opus`) — `00e3d7f` (**trigger guards evaluate against a snapshot** — sequential guards broke 3 of test-cave's 6 trigger-sharing event pairs; `setFlag` cascades into `flagSet` triggers, transition-only, depth-bounded. See execution notes.)
-- [ ] T13 — Parser (`opus`)
+- [x] T13 — Parser (`opus`) — `9ebd3e2` (core verbs un-removable by construction; closed exit hides contents; dark limits scope to inventory; Damerau typo suggestions. Closed T5's TODO(T13) — walkthrough head-word check only, nouns are state-dependent.)
 - [ ] T14 — Engine facade and turn pipeline (`opus`)
 - [ ] T15 — Actions: movement, senses, meta (`sonnet`)
 - [ ] T16 — Actions: handling and containers (`sonnet`)
