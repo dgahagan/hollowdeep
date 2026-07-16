@@ -287,11 +287,30 @@ with no engine handler and no matching event is a nudge that costs no turn.
 | `creatureAt` | `{creature, location}` — a creature is somewhere |
 | `deathsAtMost` | the player has died at most N times |
 | `chance` | a seeded roll, 0..1 — **the only field that consumes RNG** |
+| `all` | every listed condition holds — the AND (needs `engineVersion ^1.1.0`) |
 
-> **Known limit:** each field appears once per condition, so **"flag A *and* flag
-> B" is inexpressible**. `[{flag:'a'},{flag:'b'}]` ORs. Route around it with a
-> trigger that supplies half the test, or an intermediate flag. This is the
-> format's sharpest edge; it is on the list to fix with a schema bump.
+Each field appears once per condition, so `{flag:'a', flag:'b'}` is not JSON and
+`[{flag:'a'},{flag:'b'}]` ORs. **`all` is how you AND**, and it is the only way
+to test two of the same field — two flags, or two `itemAt`s, which is how you
+ask whether both treasures are home:
+
+```json
+"if": [{ "all": [
+  { "itemAt": { "item": "silver-chalice", "location": "shed" } },
+  { "itemAt": { "item": "jade-idol", "location": "shed" } }
+]}]
+```
+
+`all` holds plain conditions and **does not nest**. That costs nothing:
+`[{all:[a,b]}, {all:[c,d]}]` is `(a∧b) ∨ (c∧d)` — disjunctive normal form, which
+expresses any boolean formula — and `{all:[{all:[a,b]},c]}` would only ever mean
+`{all:[a,b,c]}`. There is no `not` (use `notFlag`) and no `any` (the array
+already ORs).
+
+> **Inside `all`, evaluation short-circuits at the first false**, so a `chance`
+> after a failed sibling never draws. `all` is also evaluated *before* the
+> condition's own `chance`. Both are observable through seeded tests — worth
+> knowing if you put a roll in one.
 
 **Guards see a snapshot.** Every event sharing a trigger is judged against the
 state as it was when the trigger fired, then the survivors apply in order. So

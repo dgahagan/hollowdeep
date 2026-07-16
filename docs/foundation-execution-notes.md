@@ -625,7 +625,7 @@ path), and the design plan §4.2 explicitly specifies the BFS over exits.
 properly is awkward — a `teleport` effect is global (an event can fire
 anywhere), so there is no single source node for the edge.
 
-### Conditions cannot AND two of the same field (T9) — **the big one for Hollowdeep**
+### ~~Conditions cannot AND two of the same field (T9)~~ — **FIXED 2026-07-16, `Condition.all`**
 
 The composition rule is "fields within one Condition AND together; a
 `Condition[]` ORs". But each field appears **once** per condition. So:
@@ -641,11 +641,11 @@ test (`on: drop silver-chalice` + `if: [{atLocation: 'shed', itemAt: {item:
 'jade-idol', location: 'shed'}}]`), so only one `itemAt` is ever needed. That
 trick works because a trigger names one entity — it does not generalize.
 
-**Hollowdeep will hit this immediately** — any puzzle gated on two flags. The
-fix is small (`flags?: string[]` meaning all-of, or an `all?: Condition[]`
-combinator) but it is a schema-version bump and a documented contract change,
-so it was left alone rather than smuggled into T9. Decide it deliberately
-before Phase 2 content authoring starts.
+**Fixed after the merge**: `Condition.all` (ENGINE_VERSION 1.1.0). Kept here
+because the *diagnosis* is the durable part — a field that appears once per
+condition cannot be ANDed with itself, and no amount of array nesting fixes
+that. See the post-merge entry above for the shape that was chosen and why it
+does not nest.
 
 ### `creature.deathMessageId` is overloaded, and undocumented (T19)
 
