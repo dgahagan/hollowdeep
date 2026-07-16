@@ -4,6 +4,7 @@ import { parse, type Command, type ParseResult } from './parser/parse';
 import { tokenize } from './parser/tokenize';
 import { clearFlag, isFlagSet, itemLocation, setItemLocation } from './state';
 import { DIED_THIS_TURN, fireTriggers } from './systems/events';
+import { creatureTick } from './systems/creatures';
 import { lightTick } from './systems/light';
 import { handlerFor, type ActionResult } from './actions';
 
@@ -173,7 +174,9 @@ function worldTick(module: AdventureModule, state: GameState): [GameState, Outpu
   current = afterEvents;
   output.push(...events);
 
-  // TODO(T19): creature tick — stalker movement/attacks, thief theft.
+  const [afterCreatures, creatureEvents] = creatureTick(module, current);
+  current = afterCreatures;
+  output.push(...creatureEvents);
 
   const [afterLight, lightEvents] = lightTick(module, current);
   current = afterLight;
