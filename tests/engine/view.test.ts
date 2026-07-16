@@ -74,7 +74,7 @@ describe('describeScene — visibility is a spoiler boundary', () => {
     expect(visited?.toName).toBe(module_.locations.find((l) => l.id === 'shed')?.name);
   });
 
-  it('a dark room leaks nothing at all — no items, no creatures, no exits', () => {
+  it('a dark room leaks nothing at all — no items, no creatures, no exits, no picture', () => {
     // low-passage is `light: "dark"`; this state carries no lit lamp.
     const scene = describeScene(module_, at('low-passage'));
     expect(scene.dark).toBe(true);
@@ -82,12 +82,18 @@ describe('describeScene — visibility is a spoiler boundary', () => {
     expect(scene.creatures).toEqual([]);
     expect(scene.exits).toEqual([]);
     expect(scene.description).toBe(module_.strings[module_.manifest.darkness.warningMessageId]);
+
+    // The illustration is the most literal thing you cannot see in the dark.
+    // Omitted, not blanked — a UI cannot draw what it was not given.
+    expect(scene.artId).toBeUndefined();
+    expect('artId' in scene).toBe(false);
   });
 
   it('the same dark room shows everything once lit — so the emptiness was the dark, not the room', () => {
     const scene = describeScene(module_, lit('low-passage'));
     expect(scene.dark).toBe(false);
     expect(scene.exits.length).toBeGreaterThan(0);
+    expect(scene.artId).toBe(module_.locations.find((l) => l.id === 'low-passage')?.artId);
     expect(scene.description).not.toBe(module_.strings[module_.manifest.darkness.warningMessageId]);
   });
 });

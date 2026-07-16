@@ -163,10 +163,18 @@ export interface SceneCreature {
 export interface SceneView {
   locationId: string;
   name: string;
-  artId: string;
-  /** Full or brief, depending on `visited` and `verbose`. */
+  /**
+   * The location's illustration — **absent when `dark`**.
+   *
+   * A picture of the room is the one thing a player in the dark most plainly
+   * cannot see, so the engine does not hand it over. It is optional rather than
+   * always-present for that reason alone: a UI cannot render what it was not
+   * given, which is the point (view.ts's `describeScene`).
+   */
+  artId?: string;
+  /** Brief, or full in verbose mode. The darkness warning when `dark`. */
   description: string;
-  /** Dark and unlit: the player sees nothing, and `items` is empty. */
+  /** Dark and unlit: the player sees nothing, and `items`/`creatures`/`exits`/`artId` are all empty. */
   dark: boolean;
   items: SceneItem[];
   creatures: SceneCreature[];

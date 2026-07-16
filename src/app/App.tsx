@@ -1,16 +1,23 @@
-import { useEffect, useState, type FormEvent } from 'react';
+import { useEffect, useState } from 'react';
 import type { AdventureModule } from '../engine/schema';
 import { loadAdventure } from '../loader';
 import { fetchReader } from './fetchReader';
 import { ErrorBoundary } from './ErrorBoundary';
 import { useGame } from './useGame';
+import { ScenePanel } from './ScenePanel';
+import { TranscriptPanel } from './TranscriptPanel';
+import { CommandInput } from './CommandInput';
+import { ActionBar } from './ActionBar';
+import { InventoryPanel } from './InventoryPanel';
+import { StatusBar } from './StatusBar';
+import './app.css';
 
-// The app shell (design plan §6, T24): load an adventure behind an error
-// boundary, then hand it to `useGame`. Deliberately plain — Phase 3 (T25/T26)
-// replaces this layout with real panels; what has to survive is the wiring
-// pattern this file demonstrates: ONE `submit(input)` call is the entire
-// write path, whether the input came from typing or (once T25 adds buttons)
-// a click.
+// The app shell (design plan §6, T24/T25): load an adventure behind an error
+// boundary, then hand it to `useGame` and the game panels. Deliberately
+// plain — Phase 3 replaces this layout wholesale; what has to survive is the
+// wiring pattern this file demonstrates: ONE `submit(input)` call is the
+// entire write path, whether the input came from typing (CommandInput) or
+// clicking (ActionBar/InventoryPanel) — FR-2.7's "clicking IS typing".
 
 const ADVENTURE_BASE_DIR = 'adventures/test-cave';
 
@@ -73,32 +80,33 @@ function AdventureGate({ baseDir }: { baseDir: string }) {
 }
 
 function Game({ module }: { module: AdventureModule }) {
-  const { state, scene, submit } = useGame(module);
-  const [input, setInput] = useState('');
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>): void {
-    event.preventDefault();
-    const command = input.trim();
-    if (command === '') return;
-    submit(command);
-    setInput('');
-  }
+  const { state, scene, actions, transcript, submit } = useGame(module);
 
   return (
-    <main>
-      <h1>{module.manifest.title}</h1>
-      <h2>{scene.name}</h2>
-      <p>{scene.description}</p>
-      <p>
-        Turn {state.turn} · Score {state.score}
-      </p>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Command
-          <input value={input} onChange={(event) => setInput(event.target.value)} autoFocus />
-        </label>
-        <button type="submit">Go</button>
-      </form>
+    <main className="game">
+      <header className="game__header">
+        <h1>{module.manifest.title}</h1>
+        <StatusBar module={module} state={state} scene={scene} />
+      </header>
+
+      <div className="game__body">
+        <div className="game__main">
+          <ScenePanel module={module} scene={scene} />
+          <TranscriptPanel entries={transcript} />
+          <CommandInput onSubmit={submit} />
+        </div>
+
+        <aside className="game__sidebar">
+          <ActionBar actions={actions} onAction={submit} />
+          <InventoryPanel actions={actions} onAction={submit} />
+        </aside>
+      </div>
+
+      {state.ended && (
+        <p className="game__ended">
+          {state.ended.victory ? 'Victory!' : 'Game over.'} Final rank: {state.ended.rank}
+        </p>
+      )}
     </main>
   );
 }

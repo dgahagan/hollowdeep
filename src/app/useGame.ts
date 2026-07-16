@@ -1,14 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import type { AdventureModule } from '../engine/schema';
-import type { GameState, SceneView, UIAction } from '../engine/types';
+import type { GameState, OutputEvent, SceneView, UIAction } from '../engine/types';
 import { createGame, step } from '../engine/engine';
 import { describeScene, availableActions } from '../engine/view';
 import { saveGame, serializeSave } from '../engine/save';
 import { writeAutosave } from './storage';
 
-// The engine wiring pattern (design plan §6, T24). This is the one piece of
-// this task meant to survive Phase 3's UI rewrite wholesale — everything else
-// here is throwaway markup.
+// The engine wiring pattern (design plan §6, T24/T25). This is the one piece
+// of this task meant to survive Phase 3's UI rewrite wholesale — everything
+// else here is throwaway markup.
 //
 // Deliberately thin, and deliberately left UNTESTED (design plan §9): there
 // is no jsdom/@testing-library in this project, and a hook this size is not
@@ -21,7 +21,38 @@ export interface UseGameResult {
   state: GameState;
   scene: SceneView;
   actions: UIAction[];
+  /** Every `OutputEvent` from every CONSUMED turn, oldest first (T25). */
+  transcript: OutputEvent[];
   submit: (input: string) => void;
+}
+
+/**
+ * `step` returns `{state, events}`, and T24's hook discarded `events` — there
+ * was no transcript to put them in yet. T25 adds one, and the interesting
+ * part is where it lives.
+ *
+ * `state` and `transcript` are ONE React state value, not two `useState`
+ * calls, and that is load-bearing, not a style choice. T24's comment above
+ * `submit` already establishes the rule this has to keep: the `setState`
+ * updater must be PURE — React may invoke it more than once (StrictMode does
+ * this on every mount on purpose) or invoke it and then discard the result
+ * entirely, so nothing inside the updater may have a side effect, and the
+ * updater must be a deterministic function of its previous value and the
+ * input. Bundling `transcript` into the same object the updater returns
+ * keeps both properties: appending `result.events` to `previous.transcript`
+ * is exactly as pure as computing `result.state` was, because it depends on
+ * nothing but the two arguments already in scope. A second, independent
+ * `useState` for the transcript would break this the moment its setter was
+ * called from inside `submit` alongside the state setter — two updates that
+ * must commit together would be two updates that COULD be observed apart
+ * (an interrupted render sees new state with a stale or missing transcript
+ * entry), and "committed but only partially" is precisely the bug T24's
+ * autosave discipline exists to rule out. One object, one updater, one
+ * commit.
+ */
+interface Session {
+  state: GameState;
+  transcript: OutputEvent[];
 }
 
 /**
@@ -40,19 +71,20 @@ export interface UseGameResult {
  * initializer callback runs exactly once, on mount.
  */
 export function useGame(module: AdventureModule, seed?: number): UseGameResult {
-  const [state, setState] = useState<GameState>(() => createGame(module, seed ?? Date.now()));
+  const [session, setSession] = useState<Session>(() => ({
+    state: createGame(module, seed ?? Date.now()),
+    transcript: [],
+  }));
 
-  // The `setState` updater is PURE — `step` and nothing else. React may
-  // invoke an updater more than once (StrictMode does this on every mount,
-  // deliberately, to surface exactly this class of bug) or invoke one and
-  // then discard the result entirely (an interrupted or replayed render).
-  // Autosaving from inside the updater would write for renders that never
-  // actually happen — and a save is the one thing here that outlives the
-  // session, so that is the wrong direction to be wrong in. The write moved
-  // to the effect below, which only runs for state that ACTUALLY COMMITTED.
+  // The `setState` updater is PURE — `step` plus a pure array append, and
+  // nothing else. See the `Session` comment above for why the transcript
+  // rides along in the same object rather than a sibling `useState`.
   const submit = useCallback(
     (input: string) => {
-      setState((previous) => step(module, previous, input).state);
+      setSession((previous) => {
+        const result = step(module, previous.state, input);
+        return { state: result.state, transcript: [...previous.transcript, ...result.events] };
+      });
     },
     [module],
   );
@@ -69,22 +101,23 @@ export function useGame(module: AdventureModule, seed?: number): UseGameResult {
   // `createGame`'s initial state, before the player has done anything.
   const savedTurn = useRef<number | null>(null);
   useEffect(() => {
-    if (savedTurn.current === state.turn) return;
-    savedTurn.current = state.turn;
-    if (state.turn === 0) return;
+    if (savedTurn.current === session.state.turn) return;
+    savedTurn.current = session.state.turn;
+    if (session.state.turn === 0) return;
 
-    const blob = saveGame(module, state, Date.now());
+    const blob = saveGame(module, session.state, Date.now());
     // A write failure (quota exceeded, private browsing) must not take the
     // game down with it — storage.ts swallows the error and reports
     // success/failure. A dropped autosave costs recoverability for this one
     // turn, not the turn itself.
-    writeAutosave(module.manifest.id, state.turn, serializeSave(blob));
-  }, [module, state]);
+    writeAutosave(module.manifest.id, session.state.turn, serializeSave(blob));
+  }, [module, session.state]);
 
   return {
-    state,
-    scene: describeScene(module, state),
-    actions: availableActions(module, state),
+    state: session.state,
+    scene: describeScene(module, session.state),
+    actions: availableActions(module, session.state),
+    transcript: session.transcript,
     submit,
   };
 }

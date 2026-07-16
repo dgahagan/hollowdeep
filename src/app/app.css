@@ -1,0 +1,295 @@
+/* Deliberately plain (design plan §6, T25): Phase 3 replaces this layout
+   wholesale. What has to survive is legibility and keyboard-usability, not
+   visual polish — see the file-level comment in App.tsx. */
+
+:root {
+  color-scheme: dark;
+  --bg: #1b1b20;
+  --panel-bg: #232329;
+  --border: #3a3a44;
+  --text: #e4e0d6;
+  --text-muted: #9a9aa6;
+  --accent: #d7b56d;
+  --danger: #d9705a;
+  --success: #7cb87c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.game {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.game__header h1 {
+  margin: 0 0 0.5rem;
+  font-size: 1.5rem;
+}
+
+.game__ended {
+  padding: 0.75rem;
+  background: var(--panel-bg);
+  border: 1px solid var(--accent);
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* Status bar */
+
+.status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+}
+
+.status-bar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.status-bar__label {
+  color: var(--text-muted);
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+}
+
+.status-bar__lamp-gauge {
+  display: inline-block;
+  width: 80px;
+  height: 10px;
+  background: #111;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.status-bar__lamp-fill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.status-bar__lamp--low .status-bar__lamp-fill {
+  background: var(--danger);
+}
+
+.status-bar__lamp--out .status-bar__lamp-fill {
+  background: #555;
+  width: 0 !important;
+}
+
+/* Body layout */
+
+.game__body {
+  display: flex;
+  gap: 1rem;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.game__main {
+  flex: 2 1 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.game__sidebar {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Scene panel */
+
+.scene-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem;
+}
+
+.scene-panel__art {
+  max-width: 100%;
+  height: auto;
+  border-radius: 3px;
+  display: block;
+}
+
+/* The dark plate: what a room looks like when you cannot look at it. Holds the
+   image's footprint so the panel does not jump as the lamp goes on and off. */
+.scene-panel__art--dark {
+  aspect-ratio: 512 / 288;
+  width: 512px;
+  background: #0b0b0d;
+  border: 1px solid #26262b;
+}
+
+.scene-panel__name {
+  margin: 0.5rem 0 0.25rem;
+}
+
+.scene-panel__description {
+  margin: 0;
+}
+
+/* Transcript */
+
+.transcript-panel {
+  background: #141417;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem;
+  height: 260px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9rem;
+}
+
+.transcript-panel__hint {
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.transcript-entry {
+  margin: 0 0 0.4rem;
+  white-space: pre-wrap;
+}
+
+.transcript-entry--command-echo {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.transcript-entry--command-echo::before {
+  content: '> ';
+}
+
+.transcript-entry--death,
+.transcript-entry--game-over {
+  color: var(--danger);
+  font-weight: bold;
+}
+
+.transcript-entry--score,
+.transcript-entry--achievement {
+  color: var(--success);
+}
+
+.transcript-entry--question {
+  color: var(--accent);
+  font-style: italic;
+}
+
+/* Command input */
+
+.command-input {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.command-input label {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+.command-input input {
+  flex: 1;
+  padding: 0.5rem;
+  background: #101013;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+/* Action bar + inventory */
+
+.action-bar,
+.inventory-panel {
+  background: var(--panel-bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.75rem;
+}
+
+.action-bar h3,
+.inventory-panel h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.action-bar__group + .action-bar__group {
+  margin-top: 0.75rem;
+}
+
+.action-bar__buttons,
+.inventory-panel__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.action-bar__hint,
+.inventory-panel__hint {
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0;
+}
+
+/* Buttons + focus */
+
+button {
+  background: #2c2c33;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.35rem 0.6rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #3a3a44;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transcript-panel {
+    scroll-behavior: auto;
+  }
+}

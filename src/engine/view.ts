@@ -137,10 +137,23 @@ export function describeScene(module: AdventureModule, state: GameState): SceneV
   const dark = !canSee(module, state);
 
   if (dark) {
+    // `artId` is OMITTED, not blanked. The first version of this returned it,
+    // and the panel dutifully drew the room's illustration — over a caption
+    // saying it was pitch dark. The engine had carefully emptied `items`,
+    // `creatures`, and `exits` and then handed over a picture of the place.
+    //
+    // Today's placeholder art only has the room's name on it, so the leak is
+    // small; Phase B ships a painterly illustration of every location, at which
+    // point drawing one for a room the player cannot see is simply showing them
+    // the room. And per this file's own header, the boundary belongs here
+    // rather than in a component — Phase 3 replaces the UI wholesale, and a
+    // rule that lives only in `ScenePanel.tsx` is a rule the rewrite can forget.
+    //
+    // `name` deliberately stays: the player walked here and knows which room
+    // this is. What they cannot do is look at it.
     return {
       locationId: location.id,
       name: location.name,
-      artId: location.artId,
       description: module.strings[module.manifest.darkness.warningMessageId] ?? '',
       dark: true,
       items: [],
