@@ -119,6 +119,34 @@ generator (`tools/gen-placeholder-art.ts`) and regenerates them properly.
 Same root cause as the T8/T9 ordering note below: **the gate couples tasks that
 the plan treats as independent.**
 
+### T16 — `use` had no owner in any task (a plan gap)
+
+The plan never assigns the `use` verb a handler: T15 is movement/senses/meta,
+T16 is handling/containers, T17 is lamp/combat. `use` falls through all three.
+**T16 took it**, in `handling.ts`.
+
+Not a judgement call — verified against the real engine before assigning it:
+
+```
+oil door with flask -> Nothing happens.
+door-oiled flag set? false
+turn consumed? false
+```
+
+`use` is a trigger type in the schema and test-cave authors against it, so the
+gap is load-bearing rather than cosmetic. Unhandled, `oil-the-door` and
+`door-already-oiled` can never fire, `door-oiled` never sets, the hidden
+`grotto → deep-vault` exit stays shut, the jade idol is unreachable, and
+`walkthrough.json` — which asserts `{"cmd": "oil door with flask", "expect":
+"The rust gives up its grudge"}` — fails at T23. Filling in a verb the schema
+already promises is a mechanical consequence of T16, not new scope.
+
+The handler is deliberately thin: fire the trigger, consume a turn if content
+answers, nudge if it doesn't. There is no generic "using" mechanic and should
+not be — what `use` *does* is entirely the adventure's business. `search`
+(senses.ts) is the same shape, and differs only in that its "nothing of
+interest" fallback is itself an answer, so it still costs a turn.
+
 ### T3 — `--passWithNoTests` retired early
 
 Orchestrator note 1 scheduled its death for "T4's first tests". T3's
@@ -176,6 +204,34 @@ events on one trigger with opposite guards. It has to work.
 - **Depth-bounded (8)** — two events that set each other's flags would hang the
   engine, and the validator would accept them. An engine that stops beats one
   that hangs. test-cave's deepest real chain is 2.
+
+### T16 — a container could be put inside itself (a real bug, caught by driving it)
+
+`put box in box` succeeded, leaving the box located **at itself**: carried by no
+one, in no room, reachable by no scope resolution, and taking its contents with
+it. Permanent item loss from one legal command. The transitive case (`put sack
+in bag` when `bag` is inside `sack`) orphaned both.
+
+No test would have found this, and neither would a reading of the diff — the
+handler looks right. It surfaced from **driving the engine**, the same way
+T15's prose bug did.
+
+test-cave cannot trigger it (both its containers are non-portable), which is
+exactly why it was worth fixing now rather than filing: nothing downstream in
+this plan would ever have gone red, and Hollowdeep will certainly ship a
+portable sack. Fixed in `putHandler` by walking the containment chain upward
+from the destination and refusing if it reaches the item — bounded against
+cycles, so a corrupt state cannot hang the walk.
+
+**Counted as in-scope for T16, not scope creep:** "container nesting" is one of
+T16's stated acceptance criteria, and a cycle is a nesting case — the
+degenerate one.
+
+**The generalizable bit:** `moveItem` treats item ids and location ids as one
+flat namespace, so "inside item X" and "in room X" are the same kind of edge.
+That is what makes the containment graph capable of cycles at all, and the
+check has to live in the handlers that build those edges — the schema cannot
+express it and the validator cannot see runtime state.
 
 ## Latent issues — noted, not fixed
 
@@ -258,6 +314,21 @@ Zod 4's `z.record(enum, value)` requires **every** enum key. Exits are
 probe caught what would otherwise have been a bug in every location in the
 game. (`tseslint.configs.disableTypeChecked` is likewise a single config
 object, not an array.)
+
+### Drive the game, not just the test suite
+
+Two of the three real bugs found so far were invisible to unit tests and to
+diff review, and fell out of playing the thing for one minute:
+
+- **T15** — `look` printed "You can see An iron key lies here." Every test
+  passed; item `brief` is already a complete sentence in the narrator's voice,
+  so wrapping it in engine prose is the engine talking over the adventure.
+- **T16** — `put box in box` destroyed the box and its contents. Needed a
+  portable container to reach, which test-cave has none of, so it took
+  deliberately synthesizing one.
+
+**The rule:** after each action task, walk the cave. Tests check the cases
+someone thought of; playing surfaces the ones nobody did.
 
 ### Drive the CLI, don't trust the paste
 
