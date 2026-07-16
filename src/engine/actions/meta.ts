@@ -23,12 +23,29 @@ import { acted, refuse, type ActionHandler } from './index';
 // before a Command ever reaches the handler table (T14); adding a handler for
 // verb id `again` here would be dead code shadowing a case that can't occur.
 
+/**
+ * Lists carried items by their canonical name (`names[0]`, per item.ts), NOT
+ * by `brief`. `brief` is documented in the schema as "one line shown when the
+ * item is listed **in a room**", and it is written to be exactly that — an
+ * in-situ sentence in the narrator's voice ("A brass lamp sits on the shelf,
+ * waiting to be useful."). Read out of an inventory it describes furniture you
+ * are somehow holding: "You are carrying: A brass lamp sits on the shelf,
+ * waiting to be useful. A flask of lamp oil leans in the corner."
+ *
+ * Sibling of the `look` fix in senses.ts: `brief` is the adventure's prose for
+ * one specific situation, and the engine's job is to use it there and nowhere
+ * else.
+ */
 export const inventoryHandler: ActionHandler = (module, state) => {
   const items = carriedItems(module, state);
   if (items.length === 0) {
     return refuse(state, 'You are empty-handed.');
   }
-  return refuse(state, `You are carrying: ${items.map((item) => item.brief).join(' ')}`);
+  // `names` is `.min(1)` in the schema, so a first element always exists —
+  // `?? item.id` satisfies noUncheckedIndexedAccess without a `!`, and degrades
+  // to something legible rather than "undefined" if that ever changes.
+  const names = items.map((item) => item.names[0] ?? item.id);
+  return refuse(state, `You are carrying: ${names.join(', ')}.`);
 };
 
 export const scoreHandler: ActionHandler = (module, state) => {

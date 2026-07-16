@@ -76,6 +76,22 @@ describe('inventory — consumes no turn (checking your pockets is free)', () =>
     expect(result.consumesTurn).toBe(false);
   });
 
+  it('lists items by name, never by their in-room `brief`', () => {
+    const carrying = setItemLocation(setItemLocation(start, 'brass-lamp', 'inventory'), 'oil-flask', 'inventory');
+    const out = texts(act(carrying, 'inventory'));
+
+    // The bug this pins: `brief` is the adventure's line for an item lying in
+    // a room ("A brass lamp sits on the shelf, waiting to be useful."), so
+    // listing inventory with it tells the player their carried lamp is on a
+    // shelf somewhere. Matching /lamp/i alone cannot catch that — the word
+    // appears in both the name and the brief — so assert the in-situ prose is
+    // absent, which is the part only the wrong field produces.
+    expect(out).not.toMatch(/sits on the shelf/i);
+    expect(out).not.toMatch(/leans in the corner/i);
+    expect(out).toContain('lamp');
+    expect(out).toContain('flask');
+  });
+
   it('the shortcut `i` behaves identically', () => {
     const result = act(start, 'i');
     expect(texts(result)).toMatch(/empty-handed/i);
