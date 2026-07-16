@@ -40,6 +40,8 @@ const rawValidModule = {
       itemId: 'lamp',
       startFuel: 100,
       warnAt: [20],
+      warnMessageId: 'lamp-low',
+      exhaustMessageId: 'lamp-dead',
       refuel: { itemId: 'oil-flask', amount: 50 },
     },
     darkness: {
@@ -218,6 +220,8 @@ const rawValidModule = {
     { id: 'first-treasure', name: 'Magpie', description: 'Pick up your first treasure.' },
   ],
   strings: {
+    'lamp-low': 'The lamp is getting dim.',
+    'lamp-dead': 'The lamp goes out.',
     'dark-warning': 'It is pitch dark.',
     'dark-death': 'You stumble and fall.',
     'reveal-msg': 'A section of the floor grinds aside, revealing a passage down.',
@@ -603,6 +607,34 @@ describe('checkConsistency — dangling references', () => {
         document: 'manifest.json',
         id: 'manifest',
         field: 'lamp.refuel.itemId',
+      }),
+    ).toBe(true);
+  });
+
+  it('flags a dangling manifest.lamp.warnMessageId', () => {
+    const broken = mutate((m) => {
+      m.manifest.lamp.warnMessageId = 'no-such-string';
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'dangling-lamp-warn-message',
+        document: 'manifest.json',
+        id: 'manifest',
+        field: 'lamp.warnMessageId',
+      }),
+    ).toBe(true);
+  });
+
+  it('flags a dangling manifest.lamp.exhaustMessageId', () => {
+    const broken = mutate((m) => {
+      m.manifest.lamp.exhaustMessageId = 'no-such-string';
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'dangling-lamp-exhaust-message',
+        document: 'manifest.json',
+        id: 'manifest',
+        field: 'lamp.exhaustMessageId',
       }),
     ).toBe(true);
   });

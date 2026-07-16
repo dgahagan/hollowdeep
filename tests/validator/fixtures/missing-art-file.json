@@ -8,7 +8,15 @@
     "repositoryLocation": "shed",
     "maxScore": 20,
     "carryLimit": 5,
-    "lamp": { "itemId": "lamp", "startFuel": 50, "warnAt": [10] },
+    "lamp": {
+      "itemId": "lamp",
+      "startFuel": 50,
+      "warnAt": [
+        10
+      ],
+      "warnMessageId": "lamp-low",
+      "exhaustMessageId": "lamp-dead"
+    },
     "darkness": {
       "deathChance": 0.1,
       "warningMessageId": "dark-warning",
@@ -23,7 +31,14 @@
       "full": "A dusty road running past a shed and a cave mouth.",
       "artId": "road",
       "light": "lit",
-      "exits": { "e": { "to": "shed" }, "n": { "to": "cave" } }
+      "exits": {
+        "e": {
+          "to": "shed"
+        },
+        "n": {
+          "to": "cave"
+        }
+      }
     },
     {
       "id": "shed",
@@ -32,7 +47,11 @@
       "full": "A small shed, its door hanging loose.",
       "artId": "shed",
       "light": "lit",
-      "exits": { "w": { "to": "road" } }
+      "exits": {
+        "w": {
+          "to": "road"
+        }
+      }
     },
     {
       "id": "cave",
@@ -41,13 +60,22 @@
       "full": "A dark, damp cave.",
       "artId": "cave",
       "light": "dark",
-      "exits": { "s": { "to": "road" }, "e": { "to": "shed" } }
+      "exits": {
+        "s": {
+          "to": "road"
+        },
+        "e": {
+          "to": "shed"
+        }
+      }
     }
   ],
   "items": [
     {
       "id": "lamp",
-      "names": ["lamp"],
+      "names": [
+        "lamp"
+      ],
       "brief": "A brass lamp lies here.",
       "description": "A dependable brass lamp.",
       "artId": "lamp",
@@ -57,30 +85,50 @@
     },
     {
       "id": "idol",
-      "names": ["idol"],
+      "names": [
+        "idol"
+      ],
       "brief": "A jade idol lies here.",
       "description": "A small jade idol, cool to the touch.",
       "artId": "idol",
       "portable": true,
       "initialLocation": "shed",
-      "treasure": { "carryPoints": 10, "depositPoints": 10 }
+      "treasure": {
+        "carryPoints": 10,
+        "depositPoints": 10
+      }
     }
   ],
   "creatures": [],
-  "vocabulary": { "verbs": [], "noiseWords": [], "magicWords": [] },
+  "vocabulary": {
+    "verbs": [],
+    "noiseWords": [],
+    "magicWords": []
+  },
   "events": [],
   "scoring": {
     "milestones": [],
     "deathPenalty": 0,
-    "ranks": [{ "minScore": 0, "title": "Wanderer" }]
+    "ranks": [
+      {
+        "minScore": 0,
+        "title": "Wanderer"
+      }
+    ]
   },
   "achievements": [],
   "strings": {
     "dark-warning": "It is pitch dark.",
-    "dark-death": "You stumble and fall."
+    "dark-death": "You stumble and fall.",
+    "lamp-low": "The lamp is getting dim.",
+    "lamp-dead": "The lamp goes out."
   },
   "walkthrough": {
-    "steps": [{ "cmd": "look" }],
+    "steps": [
+      {
+        "cmd": "look"
+      }
+    ],
     "expectedScore": 20
   }
 }

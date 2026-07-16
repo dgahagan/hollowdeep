@@ -57,6 +57,8 @@ export type ConsistencyErrorCode =
   | 'dangling-lamp-item'
   | 'lamp-item-not-light-source'
   | 'dangling-lamp-refuel-item'
+  | 'dangling-lamp-warn-message'
+  | 'dangling-lamp-exhaust-message'
   | 'dangling-darkness-warning-message'
   | 'dangling-darkness-death-message'
   | 'dangling-condition-has-item'
@@ -585,6 +587,25 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
       id: 'manifest',
       field: 'lamp.refuel.itemId',
       message: `lamp.refuel.itemId "${manifest.lamp.refuel.itemId}" is not a known item`,
+    });
+  }
+
+  if (!stringIds.has(manifest.lamp.warnMessageId)) {
+    push({
+      code: 'dangling-lamp-warn-message',
+      document: 'manifest.json',
+      id: 'manifest',
+      field: 'lamp.warnMessageId',
+      message: `lamp.warnMessageId "${manifest.lamp.warnMessageId}" is not a known string`,
+    });
+  }
+  if (!stringIds.has(manifest.lamp.exhaustMessageId)) {
+    push({
+      code: 'dangling-lamp-exhaust-message',
+      document: 'manifest.json',
+      id: 'manifest',
+      field: 'lamp.exhaustMessageId',
+      message: `lamp.exhaustMessageId "${manifest.lamp.exhaustMessageId}" is not a known string`,
     });
   }
 

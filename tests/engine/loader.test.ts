@@ -31,7 +31,7 @@ function validRaw(): Record<string, unknown> {
       repositoryLocation: 'shed',
       maxScore: 20,
       carryLimit: 5,
-      lamp: { itemId: 'lamp', startFuel: 50, warnAt: [10] },
+      lamp: { itemId: 'lamp', startFuel: 50, warnAt: [10], warnMessageId: 'lamp-low', exhaustMessageId: 'lamp-dead' },
       darkness: {
         deathChance: 0.1,
         warningMessageId: 'dark-warning',
@@ -90,6 +90,8 @@ function validRaw(): Record<string, unknown> {
     },
     achievements: [],
     strings: {
+      'lamp-low': 'The lamp is getting dim.',
+      'lamp-dead': 'The lamp goes out.',
       'dark-warning': 'It is pitch dark.',
       'dark-death': 'You stumble and fall.',
     },

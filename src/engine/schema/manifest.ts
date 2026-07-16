@@ -19,6 +19,20 @@ export const zLampConfig = z
     startFuel: z.number().int().nonnegative(),
     /** Fuel levels that trigger a warning, each firing once. FR-1.4. */
     warnAt: z.array(z.number().int().nonnegative()).default([]),
+    /**
+     * `strings.json` id: shown each time a `warnAt` threshold is crossed.
+     *
+     * One string serves every threshold rather than one per level, matching
+     * the 1977 original's single repeated "Your lamp is getting dim" — the
+     * escalation the player feels comes from the warnings arriving closer
+     * together, not from the text changing. It also means the string cannot
+     * name a specific number, which is deliberate: the string table has no
+     * interpolation, and inventing some for one message would be a large
+     * mechanism bought for a small line.
+     */
+    warnMessageId: zId,
+    /** `strings.json` id: shown when the lamp runs dry and goes out. */
+    exhaustMessageId: zId,
     /** The refuel mechanic (FR-1.4). Omit for an adventure without one. */
     refuel: z
       .strictObject({

@@ -10,7 +10,13 @@
   "lamp": {
     "itemId": "brass-lamp",
     "startFuel": 200,
-    "warnAt": [40, 15, 5],
+    "warnAt": [
+      40,
+      15,
+      5
+    ],
+    "warnMessageId": "lamp-low",
+    "exhaustMessageId": "lamp-dead",
     "refuel": {
       "itemId": "oil-flask",
       "amount": 120,

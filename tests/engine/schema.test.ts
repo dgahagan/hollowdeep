@@ -76,6 +76,8 @@ const validManifest = {
     itemId: 'brass-lamp',
     startFuel: 200,
     warnAt: [50, 20],
+    warnMessageId: 'lamp-low',
+    exhaustMessageId: 'lamp-dead',
     refuel: { itemId: 'oil-flask', amount: 100 },
   },
   darkness: {
