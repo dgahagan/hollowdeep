@@ -172,6 +172,11 @@ full gate applies to every task.
   attainable points; `repositoryLocation` exists.
   **Errors carry `{ document, id, field, message }`** — the design plan requires
   errors that name all three.
+  *T4 note:* attainable points = treasure `carryPoints + depositPoints` +
+  `scoring.milestones[].points`. Milestones are declarative (`when: Condition[]`)
+  precisely so this sum is derivable from data. A positive `addScore` effect
+  sits outside that accounting, so treat one in a `once: false` event as an
+  error (unbounded score) and count `once: true` ones toward the sum.
   Walkthrough-command parsing is checked in T7 (it needs the parser, which does
   not exist yet) — leave a `TODO(T13)` and wire it in T13's task.
 - **Acceptance:** `npm run gate` green. Unit tests cover each check firing on a
@@ -689,7 +694,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T1 — Initialize git repository and docs baseline (`haiku`) — `a6d6237` (pre-satisfied by the existing docs baseline; `feat/foundation` branched from it)
 - [x] T2 — Scaffold Vite + React + TypeScript (`sonnet`) — `3ee784a`
 - [x] T3 — ESLint flat config with engine-purity guards (`sonnet`) — `533ff4a` (also retired `--passWithNoTests`; see note 1)
-- [ ] T4 — Adventure module schemas (zod, v1) (`opus`)
+- [x] T4 — Adventure module schemas (zod, v1) (`opus`) — `2564b25` (Effect is a discriminated union; Verb takes `patterns[]`; milestones declarative via `when`; added `common.ts`, `manifest.carryLimit`, `manifest.lamp`. `stealAfterTurns` is in — T19 need not add it.)
 - [ ] T5 — Module consistency checks (`sonnet`)
 - [ ] T6 — Adventure loader with injected reader (`sonnet`)
 - [ ] T7 — `validate-module` CLI (`sonnet`)
