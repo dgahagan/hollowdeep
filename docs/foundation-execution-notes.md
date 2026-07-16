@@ -375,6 +375,42 @@ system should be that deterministic, check what the requirement actually
 promised. An over-strong test does not fail safe — it fails toward deleting the
 feature that contradicts it.
 
+### T25 — the dark room had a picture of itself (a real bug, and a good lesson)
+
+`describeScene`'s dark branch carefully emptied `items`, `creatures`, and
+`exits` — then returned `artId: location.artId`. `ScenePanel` drew the room's
+illustration above a caption reading "It is pitch dark."
+
+Three things worth keeping from this one:
+
+**1. The subagent reasoned correctly from a false premise.** Its comment:
+
+> `scene.artId` is already `location.artId` in BOTH the lit and dark branches
+> … the engine never swaps in a "can't-see-the-room" placeholder image for
+> darkness — so the accompanying alt text naming what the (already-shown) art
+> depicts discloses nothing the image isn't already showing.
+
+That is *valid*. It observed the engine's behaviour, inferred the behaviour was
+intended, and built on it — including making the accessibility story worse, on
+the grounds that the leak already existed. **"The engine already does X" is
+evidence about the code, not about the design.** When downstream work leans on
+an upstream behaviour, that is the moment to check the behaviour was chosen.
+
+**2. TypeScript caught nothing, and could not have.** `` `${scene.artId}.svg` ``
+happily interpolates `undefined` — a template literal accepts it silently. The
+fix would have shipped `/art/undefined.svg` and a broken image with a green
+typecheck. Found by driving the browser and looking at the dark room, which is
+now four for four on bugs no test and no diff review caught.
+
+**3. The boundary belongs in the engine, per `view.ts`'s own header** — "rather
+than in a component that a later redesign (Phase 3 replaces this UI wholesale)
+could quietly forget". So `SceneView.artId` became **optional and omitted** when
+dark rather than being filtered in `ScenePanel`: a UI cannot render what it was
+not given. The rule that the file argued for was the rule the file broke.
+
+The leak was small today (placeholder art carries only the room's name) and
+large soon: Phase B ships a painterly illustration of every location.
+
 ### T3 — `--passWithNoTests` retired early
 
 Orchestrator note 1 scheduled its death for "T4's first tests". T3's
