@@ -23,8 +23,16 @@ export const zContainer = z
     locked: z.boolean().default(false),
     /** Item id that locks/unlocks this. Required when `locked` is true. */
     keyId: zId.optional(),
-    /** Maximum number of items held. */
-    capacity: z.number().int().positive(),
+    /**
+     * Maximum number of items held.
+     *
+     * `0` is legal and meaningful: `container` is where open/closed/locked
+     * state lives, so it is also how a *door* is modelled — §8's grate is
+     * openable, lockable, and holds nothing. Relaxed from positive to
+     * nonnegative during T9 (2026-07-16) when that turned out to be the only
+     * way to express the grate.
+     */
+    capacity: z.number().int().nonnegative(),
   })
   // A locked container with no key is unopenable — always an authoring bug,
   // and one that presents as an unwinnable game rather than an error.

@@ -7,21 +7,55 @@ import { zEffect } from './effects';
  * What fires an event (FR-1.8). `target` narrows the trigger to one entity;
  * without it the trigger matches any subject of that type.
  *
- * Which extra field applies depends on `type`:
+ * `target` is deliberately polymorphic — what it names depends on `type`, as
+ * §4.1's sketch already established (a location for `enter`, an item for
+ * `take`, a flag for `flagSet`):
  *   - `enter` → `target` is a location id
- *   - `take`/`drop`/`use`/`read`/`open` → `target` is an item id
+ *   - `take`/`drop`/`use`/`read`/`open`/`search` → `target` is an item id
+ *   - `verb` → `target` is a verb id
  *   - `turnStart` → `turn` is the turn number
  *   - `flagSet` → `target` is a flag id
  *   - `word` → `word` is the magic word (FR-1.9)
+ *
+ * Two types were added during T9 (2026-07-16), both forced by §8's own
+ * content rather than invented:
+ *   - **`search`** — §8 gives `hollow-tree` a `search tree` event revealing
+ *     the iron key. It parallels take/drop/use/read/open exactly (target is
+ *     the item searched).
+ *   - **`verb`** — §8 gives `ledge` a `jump` hazard. `jump` is intransitive,
+ *     so no noun-bearing trigger fits, and it is not a magic word (those are
+ *     never surfaced in the UI, FR-1.9). `verb` fires on a verb id and is the
+ *     general answer for any adventure-defined verb the engine has no core
+ *     handler for. Engine contract for T13/T14: after dispatch, fire `verb`
+ *     triggers; a verb with no handler and no matching event is a nudge.
  */
 export const zTrigger = z
   .strictObject({
-    type: z.enum(['enter', 'take', 'drop', 'use', 'read', 'open', 'turnStart', 'flagSet', 'word']),
+    type: z.enum([
+      'enter',
+      'take',
+      'drop',
+      'use',
+      'read',
+      'open',
+      'search',
+      'verb',
+      'turnStart',
+      'flagSet',
+      'word',
+    ]),
     target: zId.optional(),
     turn: z.number().int().nonnegative().optional(),
     word: z.string().min(1).optional(),
   })
   .superRefine((t, ctx) => {
+    if (t.type === 'verb' && t.target === undefined) {
+      ctx.addIssue({
+        code: 'custom',
+        path: ['target'],
+        message: 'a verb trigger needs the verb id it fires on',
+      });
+    }
     if (t.type === 'turnStart' && t.turn === undefined) {
       ctx.addIssue({
         code: 'custom',

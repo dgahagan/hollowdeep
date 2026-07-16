@@ -1,0 +1,14 @@
+[
+  {
+    "id": "first-treasure",
+    "name": "Magpie",
+    "description": "Pick up your first treasure.",
+    "hidden": false
+  },
+  {
+    "id": "no-deaths",
+    "name": "Unhurried",
+    "description": "Finish the cave without dying once.",
+    "hidden": false
+  }
+]

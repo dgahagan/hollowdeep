@@ -1,0 +1,21 @@
+{
+  "verbs": [
+    {
+      "id": "use",
+      "words": ["use", "oil", "apply", "pour", "grease"],
+      "patterns": ["VN", "VNPN"]
+    },
+    {
+      "id": "jump",
+      "words": ["jump", "leap"],
+      "patterns": ["V"]
+    }
+  ],
+  "noiseWords": ["the", "a", "an", "some", "please"],
+  "magicWords": [
+    {
+      "word": "zeeble",
+      "eventId": "zeeble-descend"
+    }
+  ]
+}

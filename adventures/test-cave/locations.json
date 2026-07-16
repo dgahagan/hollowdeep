@@ -1,0 +1,179 @@
+[
+  {
+    "id": "road",
+    "name": "End of Road",
+    "brief": "You are at the end of a road before a small brick building.",
+    "full": "The road gives up here, at the foot of a hill, having apparently thought better of the whole enterprise. A tin-roofed shed stands to the east. A hollow tree leans north. West, the hill opens into a stony mouth that the road pointedly does not acknowledge.",
+    "artId": "road",
+    "light": "lit",
+    "exits": {
+      "e": { "to": "shed" },
+      "n": { "to": "hollow-tree" },
+      "w": { "to": "cave-mouth" }
+    },
+    "scenery": [
+      {
+        "names": ["road", "hill"],
+        "description": "Gravel, weeds, and the distinct impression that nobody has driven here in years."
+      }
+    ]
+  },
+  {
+    "id": "shed",
+    "name": "Tin Shed",
+    "brief": "You are inside a tin shed.",
+    "full": "The shed smells of hot metal and older mistakes. A trophy shelf runs along the back wall, empty, waiting with the patience of furniture. Whatever you bring back belongs here.",
+    "artId": "shed",
+    "light": "lit",
+    "exits": {
+      "w": { "to": "road" },
+      "out": { "to": "road" }
+    },
+    "scenery": [
+      {
+        "names": ["shelf", "trophy shelf", "wall"],
+        "description": "A plank at chest height, scored with the outlines of things that are not on it.",
+        "readText": "Someone has burned four words into the plank: BRING IT BACK HERE."
+      }
+    ]
+  },
+  {
+    "id": "hollow-tree",
+    "name": "Hollow Tree",
+    "brief": "You are standing beside a hollow tree.",
+    "full": "The tree died standing up and has not yet been told. Its trunk is split from root to shoulder, and the gap is dark and about the width of a searching arm.",
+    "artId": "hollow-tree",
+    "light": "lit",
+    "exits": {
+      "s": { "to": "road" }
+    }
+  },
+  {
+    "id": "cave-mouth",
+    "name": "Cave Mouth",
+    "brief": "You are at the mouth of a cave.",
+    "full": "The hill opens here into a throat of grey stone. A steel grate is set into the floor where the throat narrows, bolted down by someone with strong opinions about who goes below.",
+    "artId": "cave-mouth",
+    "light": "lit",
+    "exits": {
+      "e": { "to": "road" },
+      "down": {
+        "to": "entry-hall",
+        "if": [{ "flag": "grate-open" }],
+        "blockedMessage": "The grate is shut, and it is a serious grate. It does not rattle when you pull it; it simply declines."
+      }
+    }
+  },
+  {
+    "id": "entry-hall",
+    "name": "Entry Hall",
+    "brief": "You are in a low hall beneath the grate.",
+    "full": "Daylight falls through the grate overhead in bars, which is enough to see by and not nearly enough to be comforting. The hall runs north into the hill. A carving has been cut into the near wall, deep and unhurried.",
+    "artId": "entry-hall",
+    "light": "lit",
+    "exits": {
+      "up": { "to": "cave-mouth" },
+      "n": { "to": "low-passage" }
+    },
+    "scenery": [
+      {
+        "names": ["carving", "wall", "inscription"],
+        "description": "Letters a hand deep, cut by someone who expected to be read eventually and was in no rush about it.",
+        "readText": "THE WORD IS KEPT BELOW, WHERE THE WATER SHINES. SAY IT AND THE HILL FORGETS THE DISTANCE."
+      }
+    ]
+  },
+  {
+    "id": "low-passage",
+    "name": "Low Passage",
+    "brief": "You are crawling along a low passage.",
+    "full": "The ceiling comes down to meet you and keeps coming. This is a passage in the sense that a keyhole is a door. It is utterly dark down here, and the dark has opinions.",
+    "artId": "low-passage",
+    "light": "dark",
+    "exits": {
+      "s": { "to": "entry-hall" },
+      "n": { "to": "twisty-1" }
+    }
+  },
+  {
+    "id": "twisty-1",
+    "name": "Twisty Passages",
+    "brief": "You are in a maze of twisty little passages, all alike.",
+    "full": "You are in a maze of twisty little passages, all alike. Every wall is the same wall. You have the strong sense that you have been here before, and the stronger sense that this proves nothing.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "s": { "to": "low-passage" },
+      "n": { "to": "twisty-2" },
+      "e": { "to": "ledge" }
+    }
+  },
+  {
+    "id": "twisty-2",
+    "name": "Twisty Passages",
+    "brief": "You are in a maze of twisty little passages, all alike.",
+    "full": "You are in a maze of twisty little passages, all alike. Every wall is the same wall. A draught comes from the west, carrying a smell of wet stone and something faintly, unaccountably smug.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "s": { "to": "twisty-1" },
+      "w": { "to": "grotto" },
+      "down": {
+        "to": "low-passage",
+        "oneWay": true,
+        "blockedMessage": "The chute is a one-way argument."
+      }
+    }
+  },
+  {
+    "id": "ledge",
+    "name": "Narrow Ledge",
+    "brief": "You are on a narrow ledge above a black drop.",
+    "full": "The floor stops. A shaft climbs away above you toward a coin of daylight, close enough to look reachable and far enough to be a lie. Below the ledge there is a drop, and below the drop there is nothing you would care to meet at speed.",
+    "artId": "ledge",
+    "light": "lit",
+    "exits": {
+      "w": { "to": "twisty-1" }
+    },
+    "scenery": [
+      {
+        "names": ["shaft", "daylight", "drop", "coin"],
+        "description": "The daylight is perhaps forty feet up. You are an optimist, but you are not forty feet of optimist."
+      }
+    ]
+  },
+  {
+    "id": "grotto",
+    "name": "Shining Grotto",
+    "brief": "You are in a grotto lit by shining moss.",
+    "full": "Water sheets down the far wall and the moss answers it, throwing a cold green light over everything. A carving has been cut beneath the water, worn but legible. In the floor, a rusted door lies flat, sealed by decades of its own indignation.",
+    "artId": "grotto",
+    "light": "lit",
+    "exits": {
+      "e": { "to": "twisty-2" },
+      "down": {
+        "to": "deep-vault",
+        "hidden": true,
+        "if": [{ "flag": "door-oiled" }],
+        "blockedMessage": "The door does not budge. Rust has made it part of the floor."
+      }
+    },
+    "scenery": [
+      {
+        "names": ["water", "moss", "wall"],
+        "description": "The moss glows the green of an old radio dial. The water is very cold and entirely uninterested in you."
+      }
+    ]
+  },
+  {
+    "id": "deep-vault",
+    "name": "Deep Vault",
+    "brief": "You are in a small dry vault.",
+    "full": "A room the size of a generous coffin, dry as a receipt. Someone hollowed this out and fitted it with a box, and then — this is the part that should worry you — someone locked the box and left.",
+    "artId": "deep-vault",
+    "light": "dark",
+    "exits": {
+      "up": { "to": "grotto" }
+    }
+  }
+]

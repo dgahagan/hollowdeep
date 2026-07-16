@@ -115,6 +115,14 @@ describe('zCondition', () => {
     expect(zCondition.safeParse({ chance: 0.25 }).success).toBe(true);
   });
 
+  // Added in T9: §8's `zeeble` teleports road<->entry-hall, one word whose
+  // effect depends on which end you say it from. `visited` cannot express
+  // that — it stays true forever once true.
+  it('accepts atLocation, which asks where the player is', () => {
+    const cond: Condition = zCondition.parse({ atLocation: 'ledge' });
+    expect(cond.atLocation).toBe('ledge');
+  });
+
   it('rejects an empty condition rather than treating it as always-true', () => {
     expect(zCondition.safeParse({}).success).toBe(false);
   });
@@ -299,6 +307,29 @@ describe('zItem', () => {
     ).toBe(true);
   });
 
+  // `container` is where open/closed/locked state lives, so it is also how a
+  // door is modelled — §8's grate is openable, lockable, and holds nothing.
+  it('accepts a capacity-0 container (an openable that holds nothing, e.g. a grate)', () => {
+    expect(
+      zItem.safeParse({
+        ...validItem,
+        id: 'grate',
+        portable: false,
+        container: { open: false, locked: true, keyId: 'iron-key', capacity: 0 },
+      }).success,
+    ).toBe(true);
+  });
+
+  it('rejects a negative capacity', () => {
+    expect(
+      zItem.safeParse({
+        ...validItem,
+        id: 'grate',
+        container: { open: false, capacity: -1 },
+      }).success,
+    ).toBe(false);
+  });
+
   it('rejects a locked container with no key (nothing could ever open it)', () => {
     expect(
       zItem.safeParse({
@@ -437,7 +468,7 @@ describe('zEvent', () => {
   const validEvent = {
     id: 'reveal-key',
     once: true,
-    on: { type: 'search', target: 'tree' },
+    on: { type: 'excavate', target: 'tree' },
     do: [{ kind: 'moveItem', item: 'iron-key', to: 'hollow-tree' }],
   };
 
@@ -451,7 +482,9 @@ describe('zEvent', () => {
   });
 
   it('accepts each trigger type the design plan lists', () => {
-    const types = ['enter', 'take', 'drop', 'use', 'read', 'open', 'flagSet'];
+    // `search` and `verb` were added in T9 — §8's `search tree` and `jump`
+    // hazard have no other expression. See event.ts.
+    const types = ['enter', 'take', 'drop', 'use', 'read', 'open', 'search', 'verb', 'flagSet'];
     for (const type of types) {
       expect(
         zEvent.safeParse({
@@ -492,6 +525,12 @@ describe('zEvent', () => {
     expect(
       zEvent.safeParse({ id: 'e', on: { type: 'word' }, do: [{ kind: 'print', text: 'x' }] })
         .success,
+    ).toBe(false);
+  });
+
+  it('rejects a verb trigger with no target verb', () => {
+    expect(
+      zEvent.safeParse({ id: 'e', on: { type: 'verb' }, do: [{ kind: 'die' }] }).success,
     ).toBe(false);
   });
 

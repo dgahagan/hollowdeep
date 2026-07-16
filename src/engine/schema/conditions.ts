@@ -27,12 +27,40 @@ export const zCondition = z
     notFlag: zId.optional(),
     /** Item id the player must be carrying. */
     hasItem: zId.optional(),
+    /**
+     * Location the player must currently be in.
+     *
+     * Added during T9 (2026-07-16): §4.1's sketch has `itemAt` and
+     * `creatureAt` but no way to ask where the *player* is, and §8's own
+     * content cannot be expressed without it — `zeeble` teleports
+     * road↔entry-hall, which is one word whose effect depends entirely on
+     * which end you say it from. `visited` is not a substitute (it stays true
+     * forever once true).
+     */
+    atLocation: zId.optional(),
     /** Item must be at this location (or `inventory`/`nowhere`/a container id). */
     itemAt: z.strictObject({ item: zId, location: zId }).optional(),
     /** Creature must be at this location. */
     creatureAt: z.strictObject({ creature: zId, location: zId }).optional(),
     /** Location the player must have visited. */
     visited: zId.optional(),
+    /**
+     * Player must have died no more than this many times.
+     *
+     * Added during T9 (2026-07-16). §8 requires a `no-deaths` achievement
+     * awarded at victory, and nothing else could express it: `deaths` lives in
+     * GameState where content cannot see it, and the alternative — having the
+     * engine hardcode "award the achievement called `no-deaths`" — would make
+     * engine code reference one specific adventure's content, which the
+     * playbook forbids outright. Setting a flag from the `die` effect does not
+     * work either: darkness and creature kills are engine-driven and never
+     * touch content effects, so a player eaten by the rat would still collect
+     * the achievement.
+     *
+     * `0` means "never died". Generalized to a count so an adventure can offer
+     * "finish with at most two deaths" without another schema change.
+     */
+    deathsAtMost: z.number().int().nonnegative().optional(),
     /** Probability 0..1, drawn from the seeded RNG in GameState. */
     chance: z.number().min(0).max(1).optional(),
   })

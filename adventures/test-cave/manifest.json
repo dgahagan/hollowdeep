@@ -1,0 +1,25 @@
+{
+  "id": "test-cave",
+  "title": "The Test Cave",
+  "version": "1.0.0",
+  "engineVersion": "^1.0.0",
+  "startLocation": "road",
+  "repositoryLocation": "shed",
+  "maxScore": 100,
+  "carryLimit": 5,
+  "lamp": {
+    "itemId": "brass-lamp",
+    "startFuel": 200,
+    "warnAt": [40, 15, 5],
+    "refuel": {
+      "itemId": "oil-flask",
+      "amount": 120,
+      "consumesItem": true
+    }
+  },
+  "darkness": {
+    "deathChance": 0.3,
+    "warningMessageId": "dark-warning",
+    "deathMessageId": "dark-death"
+  }
+}

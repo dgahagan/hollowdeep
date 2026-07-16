@@ -638,7 +638,80 @@ describe('checkConsistency — dangling references', () => {
 
 // ─── condition reference checks ─────────────────────────────────────────────
 
+// Added in T9. A trigger's `target` is a reference like any other, and a
+// typo'd one is the quietest bug available: the event simply never fires and
+// the content reads as though it should.
+describe('checkConsistency — trigger targets', () => {
+  it('flags an enter trigger naming an unknown location', () => {
+    const broken = mutate((m) => {
+      const event = m.events[0];
+      if (event) event.on = { type: 'enter', target: 'no-such-place' };
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'dangling-trigger-target',
+        document: 'events.json',
+        field: 'on.target',
+      }),
+    ).toBe(true);
+  });
+
+  it('flags a search trigger naming an unknown item', () => {
+    const broken = mutate((m) => {
+      const event = m.events[0];
+      if (event) event.on = { type: 'search', target: 'no-such-item' };
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'dangling-trigger-target',
+        document: 'events.json',
+        field: 'on.target',
+      }),
+    ).toBe(true);
+  });
+
+  it('flags a verb trigger naming a verb the module never declares', () => {
+    const broken = mutate((m) => {
+      const event = m.events[0];
+      if (event) event.on = { type: 'verb', target: 'pirouette' };
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'dangling-trigger-target',
+        document: 'events.json',
+        field: 'on.target',
+      }),
+    ).toBe(true);
+  });
+
+  it('accepts a verb trigger naming a declared verb', () => {
+    const ok = mutate((m) => {
+      m.vocabulary.verbs.push({ id: 'jump', words: ['jump'], patterns: ['V'] });
+      const event = m.events[0];
+      if (event) event.on = { type: 'verb', target: 'jump' };
+    });
+    expect(
+      checkConsistency(ok, validArtFiles).filter((e) => e.code === 'dangling-trigger-target'),
+    ).toEqual([]);
+  });
+});
+
 describe('checkConsistency — condition references', () => {
+  it('flags condition.atLocation naming an unknown location', () => {
+    const broken = mutate((m) => {
+      const milestone = m.scoring.milestones[0];
+      if (milestone?.when[0]) milestone.when[0].atLocation = 'no-such-place';
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'dangling-condition-at-location',
+        document: 'scoring.json',
+        id: 'vault-milestone',
+        field: 'when[0].atLocation',
+      }),
+    ).toBe(true);
+  });
+
   it('flags condition.hasItem naming an unknown item', () => {
     const broken = mutate((m) => {
       const milestone = m.scoring.milestones[0];

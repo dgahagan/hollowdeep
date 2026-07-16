@@ -62,6 +62,8 @@ export type ConsistencyErrorCode =
   | 'dangling-condition-creature-at-creature'
   | 'dangling-condition-creature-at-location'
   | 'dangling-condition-visited'
+  | 'dangling-condition-at-location'
+  | 'dangling-trigger-target'
   | 'unwritten-flag-read'
   | 'orphan-location'
   | 'missing-art-file'
@@ -120,6 +122,7 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
   const eventIds = new Set(module.events.map((e) => e.id));
   const achievementIds = new Set(module.achievements.map((a) => a.id));
   const stringIds = new Set(Object.keys(module.strings));
+  const moduleVerbIds = new Set(module.vocabulary.verbs.map((v) => v.id));
   const artBaseNames = new Set(artFiles.map(artBaseName));
 
   /** A `to`/`initialLocation` value: a location id, a container item id, `inventory`, or `nowhere`. */
@@ -199,6 +202,15 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
         id,
         field: `${fieldPrefix}.visited`,
         message: `condition references unknown location "${cond.visited}"`,
+      });
+    }
+    if (cond.atLocation !== undefined && !locationIds.has(cond.atLocation)) {
+      push({
+        code: 'dangling-condition-at-location',
+        document,
+        id,
+        field: `${fieldPrefix}.atLocation`,
+        message: `condition references unknown location "${cond.atLocation}"`,
       });
     }
     // `chance` draws from the RNG and names nothing — no reference to check.
@@ -432,15 +444,71 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
     }
   }
 
-  for (const event of module.events) {
-    if (event.on.type === 'flagSet' && event.on.target !== undefined) {
-      flagReads.push({
-        flag: event.on.target,
+  // A trigger's `target` is a reference like any other, and a typo'd one is
+  // the quietest possible bug: the event simply never fires, and the content
+  // reads as if it should. What `target` names depends on `type` (see
+  // event.ts) — hence the switch rather than one lookup.
+  function checkTriggerTarget(event: GameEvent): void {
+    const target = event.on.target;
+    if (target === undefined) return;
+    const bad = (message: string): void => {
+      push({
+        code: 'dangling-trigger-target',
         document: 'events.json',
         id: event.id,
         field: 'on.target',
+        message,
       });
+    };
+
+    switch (event.on.type) {
+      case 'enter':
+        if (!locationIds.has(target)) bad(`enter trigger references unknown location "${target}"`);
+        break;
+      case 'take':
+      case 'drop':
+      case 'use':
+      case 'read':
+      case 'open':
+      case 'search':
+        if (!itemIds.has(target)) {
+          bad(`${event.on.type} trigger references unknown item "${target}"`);
+        }
+        break;
+      case 'verb':
+        // TODO(T13): core verbs ship in-engine (parser/vocab.ts), which does
+        // not exist yet — so a `verb` trigger naming a core verb cannot be
+        // resolved here. Only module-declared verbs are checked; T13 should
+        // widen this to core verbs ∪ module verbs.
+        if (!moduleVerbIds.has(target)) {
+          bad(
+            `verb trigger references verb "${target}", which is not declared in vocabulary.json (note: core verbs are not yet checkable — see TODO(T13))`,
+          );
+        }
+        break;
+      case 'flagSet':
+        // Not a dangling reference — flags have no declaration site. Recorded
+        // as a read so the unwritten-flag-read check below covers it.
+        flagReads.push({
+          flag: target,
+          document: 'events.json',
+          id: event.id,
+          field: 'on.target',
+        });
+        break;
+      case 'turnStart':
+      case 'word':
+        // Neither uses `target`; the schema carries `turn`/`word` instead.
+        break;
+      default: {
+        const exhaustive: never = event.on.type;
+        throw new Error(`checkConsistency: unhandled trigger type ${String(exhaustive)}`);
+      }
     }
+  }
+
+  for (const event of module.events) {
+    checkTriggerTarget(event);
     checkConditions(event.if, 'events.json', event.id, 'if');
     event.do.forEach((effect, i) => {
       checkEffect(effect, event, i);
