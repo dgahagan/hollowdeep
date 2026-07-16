@@ -147,6 +147,46 @@ not be — what `use` *does* is entirely the adventure's business. `search`
 (senses.ts) is the same shape, and differs only in that its "nothing of
 interest" fallback is itself an answer, so it still costs a turn.
 
+### T18 — `manifest.lamp` gains `warnMessageId` + `exhaustMessageId` (schema change, **human-approved**)
+
+The sixth schema gap that only real content revealed, and the first one
+escalated rather than decided in-flight — it sets Hollowdeep's authoring
+contract, so it was the human's call.
+
+`zDarknessConfig` has always declared `warningMessageId` **and**
+`deathMessageId`: every string it needs comes from the adventure.
+`zLampConfig` declared none. So T18's fuel warning and burnout text had
+nowhere to live but the engine:
+
+> The lamp gutters, flares once, and goes out. It is bone dry.
+
+Narrative prose, in the narrator's voice, hardcoded in `light.ts` — and it
+hardcodes the word **"lamp"**. An adventure lit by a torch, a candle, or a
+phosphorescent mushroom gets *"The lamp gutters"*, and the only way to fix it
+is to edit the engine. That is **FR-6.1** ("adding an adventure must require
+zero engine changes") failing outright, not a style quibble. The two halves of
+one system were asymmetric for no reason.
+
+**Decided:** one `warnMessageId` serves every `warnAt` threshold rather than
+one string per level. This matches the 1977 original, whose single repeated
+"Your lamp is getting dim" let the escalation come from the warnings arriving
+closer together rather than from changing text. It also means the string never
+names a number, which sidesteps inventing interpolation for the string table
+(it has none) to serve one line. FR-1.4 only asks for "clear warnings at
+defined thresholds".
+
+**Both fields are required, not optional.** A default would mean the engine
+still owns a fallback line, which is the bug. Cost: every fixture module in the
+suite gained the two fields — mechanical, and exactly the kind of breakage a
+required field *should* cause while there is one real adventure and it lives in
+this repo.
+
+**The bit worth remembering:** the gap was invisible until a task needed to
+*say* something. Schemas get audited for the data a feature reads; the strings
+a feature has to emit are easy to leave out, because nothing references them
+until the code that prints them exists. When adding a system, ask what it will
+need to say before asking what it needs to know.
+
 ### T3 — `--passWithNoTests` retired early
 
 Orchestrator note 1 scheduled its death for "T4's first tests". T3's
@@ -345,6 +385,14 @@ implementation (neutering `checkConsistency` to `return []` fails 37 of 44; the
 
 **The rule:** when a test suite exists to enforce a contract, prove it fails
 when the contract is removed. A green suite is not evidence until then.
+
+**It caught a fresh one in T18.** Two new `checkConsistency` rules (the lamp
+message ids) were added along with a green gate at 537 — and deleting both
+rules outright failed **zero** tests. The rules were real, the gate was green,
+and nothing whatsoever held them in place. Tests added; the same mutation now
+fails exactly its two. Note the timing: this was a rule *I* added minutes
+earlier and would have sworn was covered. Write the check and the test that
+kills it in the same sitting, or the check is decoration.
 
 ### Probe the library API before writing against it
 
