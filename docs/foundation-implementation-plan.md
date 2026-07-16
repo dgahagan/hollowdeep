@@ -688,7 +688,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 
 - [x] T1 — Initialize git repository and docs baseline (`haiku`) — `a6d6237` (pre-satisfied by the existing docs baseline; `feat/foundation` branched from it)
 - [x] T2 — Scaffold Vite + React + TypeScript (`sonnet`) — `3ee784a`
-- [ ] T3 — ESLint flat config with engine-purity guards (`sonnet`)
+- [x] T3 — ESLint flat config with engine-purity guards (`sonnet`) — `533ff4a` (also retired `--passWithNoTests`; see note 1)
 - [ ] T4 — Adventure module schemas (zod, v1) (`opus`)
 - [ ] T5 — Module consistency checks (`sonnet`)
 - [ ] T6 — Adventure loader with injected reader (`sonnet`)
@@ -730,6 +730,9 @@ Cross-task consequences worth holding in mind:
 1. **The gate is not green until it exists.** T2 ships placeholder `validate`
    and `--passWithNoTests` deliberately. Both are replaced (T7, T4's first
    tests). If either survives past its task, the gate is lying.
+   *Update (T3):* `--passWithNoTests` is already gone — T3's `lint-guards.test.ts`
+   turned out to be the first test file, earlier than this note assumed, so the
+   flag was retired there. The `validate` placeholder still stands until T7.
 2. **`noUncheckedIndexedAccess` will bite every engine task.** `GameState` is
    `Record`-heavy (`itemLocations`, `itemState`, `flags`, `creatures`) and every
    lookup is `T | undefined` under this flag. Expect subagents to reach for `!`
