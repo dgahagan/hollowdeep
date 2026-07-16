@@ -68,6 +68,20 @@ export default tseslint.config(
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
+
+      // Allow the `_`-prefix convention for deliberately unused bindings, and
+      // the rest-sibling omit idiom (`const { full: _full, ...rest } = valid`)
+      // — the tidiest way to build a "missing required field" fixture from a
+      // valid one without retyping it.
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
     },
   },
 
