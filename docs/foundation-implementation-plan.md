@@ -702,7 +702,7 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T7 — `validate-module` CLI (`sonnet`) — `5c7133f` (globs `adventures/*` per the playbook; both T2 bootstrap placeholders now retired — the gate is honest end to end)
 - [x] T8 — Validator golden tests (`sonnet`) — `c3634e4` (run serially *before* T9, not in parallel: the gate globs `adventures/*`, so a half-authored test-cave in the tree would turn `validate` red and block this commit)
 - [x] T9 — Author the test-cave module (`opus`) — `5a4ef1e` (11 locations; 100 pts = 20+25 ×2 treasures + 10 grate. Surfaced 5 schema gaps + a trigger-target hole in T5 — see execution notes. Ships placeholder art ahead of T10 so the gate stays green.)
-- [ ] T10 — Placeholder art for test-cave (`haiku`)
+- [x] T10 — Placeholder art for test-cave (`haiku`) — `431caad` (generator reads artIds from the module, never hardcoded; idempotency + delete/regenerate verified)
 - [ ] T11 — Game state, RNG, and createGame (`opus`)
 - [ ] T12 — Effect application choke point (`opus`)
 - [ ] T13 — Parser (`opus`)
