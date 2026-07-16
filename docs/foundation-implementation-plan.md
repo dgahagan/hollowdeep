@@ -739,7 +739,16 @@ Nothing here is meant to survive Phase 3 except the engine wiring pattern
 - [x] T24 — App shell, adventure loading, and game hook (`sonnet`) — `51e715a` (autosave is an effect on **committed** state, not a side effect in the `setState` updater — React may discard an updater's result, and a save outlives the session. `listArt` deliberately omitted in the browser: a directory cannot be listed over HTTP. Verified in a real browser; a refusal writes no autosave.)
 - [x] T25 — Game panels (`sonnet`) — `aeac041` (**exit criterion #3, first half**: walkable by typing and clicking, verified in-browser; a click puts the same command in the transcript as typing. Folded in the transcript plan gap — `state` + `transcript` are one `useState` so they cannot commit apart. Also closed a spoiler leak: `describeScene` handed over `artId` in the dark and the panel drew the room.)
 - [x] T26 — Save dialog and keyboard shortcuts (`sonnet`) — `c5328cd` (**exit criterion #3, second half**: save → reload → load → play on, verified in Playwright; the lamp stayed lit across the round trip. `Ctrl+S` is exempt from the text-entry guard — it cannot collide with typing, and guarding it handed the player Chrome's save-page dialog in the *normal* case. `useGame.load` resets the transcript: `GameState` has no transcript and must never gain one.)
-- [ ] T27 — Authoring guide, docs refresh, and closeout (`opus`)
+- [x] T27 — Authoring guide, docs refresh, and closeout (`opus`) — `PENDING` (`docs/module-format.md` + `docs/PLAYING.md` written; `PLAYING.md` transcribed from the running game, not from source — it caught an invented disambiguation quote. `CLAUDE.md` no longer claims "No Code Yet" or a `hints` document that never existed. `SCOPE.md` §6 ticked only where the **v1** bar is met, not the Phase 0+1 one. Design plan marked IMPLEMENTED. **All four exit criteria demonstrated — see below.**)
+
+### Exit criteria — demonstrated 2026-07-16
+
+| # | Criterion | Evidence |
+|---|---|---|
+| 1 | `npm run gate` green | typecheck, lint, **679 tests / 23 files**, validate (test-cave: 11 locations, 11 items, 3 creatures), build — all pass |
+| 2 | test-cave completes to max score via the seeded walkthrough | `tests/walkthrough.test.ts` 12/12: 100/100, rank "Master of the Test Cave", both achievements, 0 deaths, at 5 pinned seeds — and verified out-of-band at **2000 consecutive seeds** |
+| 3 | playable in the browser by typing *and* clicking, save → reload → load → continue | Driven in Playwright against the built output: typed to Tin Shed; clicked **West** and the transcript echoed `w`; saved at turn 4; **full page reload** → fresh game at turn 0; loaded → turn 4 with lamp and flask restored; played on to Hollow Tree at turn 7 |
+| 4 | engine source has zero React/DOM imports, lint-enforced | `eslint src/engine src/loader.ts` exits 0; 0 react imports; every `window`/`localStorage`/`Date.now` hit in the engine is comment prose *about* the rule. `tests/lint-guards.test.ts` 12/12 proves the rules fire — mutation-checked in T3 (removing the guard block fails 6 of 12) |
 
 **Done when:** every box above is ticked with its commit SHA, `npm run gate` is
 green on `feat/foundation`, and all four design-plan exit criteria hold —

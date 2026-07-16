@@ -2,12 +2,28 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Status: Planning Phase — No Code Yet
+## Project Status: Foundation complete; Hollowdeep content not started
 
 This is "Hollowdeep" (working title): an original browser-based adventure game
-in the spirit of *Colossal Cave Adventure*, currently in the documentation/design
-stage. There is no build system, test suite, or source code yet — update this
-file with the real commands once the Vite scaffold lands.
+in the spirit of *Colossal Cave Adventure*. The engine, the `test-cave`
+reference adventure, and a minimal playable browser UI are done and on
+`feat/foundation` (Phase 0+1, `docs/foundation-plan.md`). **Hollowdeep's own
+content is Phase 2 and does not exist yet** — `test-cave` is a fixture, not a
+small Hollowdeep.
+
+```bash
+npm install
+npm run dev      # play test-cave
+npm run gate     # typecheck && lint && test && validate && build — must be green before any commit
+```
+
+| Command | Does |
+|---|---|
+| `npm run gate` | The whole verification gate. If it is red, nothing else matters. |
+| `npm test` | Vitest (679 tests, 23 files) |
+| `npm run validate` | Validate every adventure in `adventures/`; takes paths as argv |
+| `npm run dev` / `build` / `preview` | Vite |
+| `npm run typecheck` / `lint` | tsc / ESLint |
 
 ## Read These First
 
@@ -24,12 +40,12 @@ file with the real commands once the Vite scaffold lands.
 - **Art:** painterly AI illustrations for every location/item/creature, shipped as **real image files** (WebP/AVIF) — explicitly NOT the JSON text-grid sprite encoding used in bards-tale-clone.
 - **v1 ships silent** (no audio); achievements are in scope alongside classic point scoring; the maze is on the critical path; narrator voice is dry/wry like the original.
 
-## Planned Architecture (from the requirements)
+## Architecture (as built)
 
 - **Engine ≠ UI:** the game core (world model, parser, turn loop, scoring, save/load) is headless TypeScript with no React/DOM imports, fully testable without a browser. React is presentation only.
-- **Engine ≠ content:** adventures are self-contained, schema-validated data modules (locations, items, creatures, events, vocabulary, hints, art manifest). Adding an adventure must require zero engine changes. A tiny `test-cave` module serves as the format reference and test fixture.
+- **Engine ≠ content:** adventures are self-contained, schema-validated data modules. Adding an adventure must require zero engine changes. A tiny `test-cave` module serves as the format reference and test fixture. The format is **ten JSON documents plus `art/`** — manifest, locations, items, creatures, events, strings, vocabulary, scoring, achievements, walkthrough. (Hints are Phase 3 and are **not** in the format; the art manifest belongs to the Phase B art pipeline, not to a module.) `docs/module-format.md` is the contract.
 - **Determinism:** the turn loop is deterministic given a seed — required for the automated full-walkthrough test.
-- **Saves:** versioned JSON in `localStorage`, namespaced per adventure, with migration on version bumps; plus file export/import.
+- **Saves:** versioned JSON in `localStorage`, namespaced per adventure (`cave.<adventureId>.slot.<n>` / `.auto.<0..4>`), with a migration registry on version bumps. Loading a save that cannot be honoured raises a **typed** `SaveError` the UI presents — never silent corruption. (File export/import, FR-5.4, is Phase 3 and not built.)
 
 ## Art Pipeline
 

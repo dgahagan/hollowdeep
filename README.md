@@ -8,23 +8,26 @@ Vite + React + TypeScript, static-only, no backend, no runtime AI.
 
 ---
 
-## Status: the engine works; the game is not playable yet
+## Status
 
-The game engine is complete and tested. **The browser UI is not built**, so
-`npm run dev` currently serves a placeholder title card, not a game. The panels,
-input box, and save dialog are the next tasks (T24–T26 of
-[`docs/foundation-implementation-plan.md`](docs/foundation-implementation-plan.md)),
-and this README gains a "How to play" section when they land.
+The foundation is complete: the engine, the `test-cave` reference adventure, and
+a minimal browser UI you can actually play. Hollowdeep — the real adventure — is
+Phase 2, and a proper UI is Phase 3.
 
-What exists and works today:
+```bash
+npm install
+npm run dev
+```
+
+Then play. See **[docs/PLAYING.md](docs/PLAYING.md)** for how to talk to the cave.
 
 | | |
 |---|---|
 | **Engine** | Parser, turn loop, movement, item handling, containers, lamp and fuel, darkness, creatures, combat, scoring, ranks, achievements, save/load with migrations, scene view |
-| **`test-cave`** | A small complete adventure — 11 locations, 11 items, 3 creatures — used as the format reference and test fixture |
+| **`test-cave`** | A small complete adventure — 11 locations, 11 items, 3 creatures — the format reference and test fixture |
+| **UI** | Scene, transcript, command input, action buttons, inventory, status bar, save dialog. Plain on purpose; Phase 3 replaces it. |
 | **Validator** | `npm run validate` checks any adventure against the schema and 40 consistency rules |
-| **Tests** | 667 across 22 files |
-| **UI** | A title card |
+| **Tests** | 679 across 23 files, including a scripted walkthrough that wins at every seed |
 
 ## Requirements
 
@@ -38,7 +41,7 @@ npm install
 
 | Command | What it does |
 |---|---|
-| `npm run dev` | Vite dev server. **Today: a placeholder title card.** |
+| `npm run dev` | Play it |
 | `npm run gate` | **The one that matters.** typecheck → lint → test → validate → build. Everything must be green before a commit. |
 | `npm test` | Vitest, once |
 | `npm run validate` | Validate every adventure in `adventures/` |
@@ -111,14 +114,16 @@ unreachable:
 npm run validate -- adventures/my-cave
 ```
 
-A full authoring guide is planned for T27. Until then, `test-cave` plus the
-schema files are the documentation — the schemas carry the reasoning in their
-comments, and they are the source of truth for both validation and types.
+**[docs/module-format.md](docs/module-format.md) is the authoring guide** — every
+document, every field, every `Condition` and `Effect`, with worked examples from
+test-cave. Its bar is that a second adventure can be authored from it alone.
 
 ## Documentation
 
 | | |
 |---|---|
+| [`docs/PLAYING.md`](docs/PLAYING.md) | **How to play** — the command language, verbs, shortcuts, saving |
+| [`docs/module-format.md`](docs/module-format.md) | **How to author an adventure** — the engine↔content contract |
 | [`docs/PROJECT-BRIEF.md`](docs/PROJECT-BRIEF.md) | Vision, goals, and the settled decisions |
 | [`docs/REQUIREMENTS.md`](docs/REQUIREMENTS.md) | Numbered requirements, MoSCoW-tagged |
 | [`docs/SCOPE.md`](docs/SCOPE.md) | Phase plan and deliverables |
