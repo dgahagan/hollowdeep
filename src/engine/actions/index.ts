@@ -5,6 +5,8 @@ import { MOVEMENT_HANDLERS } from './movement';
 import { SENSES_HANDLERS } from './senses';
 import { META_HANDLERS } from './meta';
 import { HANDLING_HANDLERS } from './handling';
+import { LAMP_HANDLERS } from './lamp';
+import { COMBAT_HANDLERS } from './combat';
 
 /**
  * What an action handler returns.
@@ -42,10 +44,11 @@ export function acted(state: GameState, events: OutputEvent[]): ActionResult {
  *
  * T15 registered movement/senses/meta; T16 adds handling (take/drop/put/
  * open/close/lock/unlock) plus `use` (a scope addition to T16 — see the
- * doc comment on `useHandler` in handling.ts); T17 adds lamp/combat. A verb
- * with no entry here falls through to engine.ts's stub, which nudges rather
- * than throwing — a half-built engine should still be playable enough to
- * test the pipeline around it.
+ * doc comment on `useHandler` in handling.ts); T17 adds lamp (light/
+ * extinguish/refuel) and combat (attack/throw/give). A verb with no entry
+ * here falls through to engine.ts's stub, which nudges rather than throwing
+ * — a half-built engine should still be playable enough to test the
+ * pipeline around it.
  *
  * This file and `movement.ts`/`senses.ts`/`meta.ts`/`handling.ts` import each
  * other (they need `ActionHandler`/`refuse`/`acted` from here; this file
@@ -62,6 +65,8 @@ export const HANDLERS: Partial<Record<string, ActionHandler>> = {
   ...SENSES_HANDLERS,
   ...META_HANDLERS,
   ...HANDLING_HANDLERS,
+  ...LAMP_HANDLERS,
+  ...COMBAT_HANDLERS,
 };
 
 export function handlerFor(verb: string): ActionHandler | undefined {
