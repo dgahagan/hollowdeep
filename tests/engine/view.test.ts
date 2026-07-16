@@ -45,19 +45,23 @@ describe('describeScene — visibility is a spoiler boundary', () => {
     expect(scene.exits.map((e) => e.dir).sort()).toEqual(['e', 'n', 'w']);
   });
 
-  it('shows the full description on first sight and the brief one on a revisit', () => {
-    // NOT `road`: createGame marks the start location visited, so a fresh game
-    // is already past its first sight of it.
+  it('captions the scene with the brief, and the full text only in verbose mode', () => {
+    // The panel is a caption, not narration: movement.ts already put the full
+    // text in the transcript on arrival.
     const location = module_.locations.find((l) => l.id === 'shed');
-    expect(describeScene(module_, at('shed')).description).toBe(location?.full);
-    expect(describeScene(module_, at('shed', { visited: [...start.visited, 'shed'] })).description).toBe(
-      location?.brief,
-    );
+    expect(describeScene(module_, at('shed')).description).toBe(location?.brief);
+    expect(describeScene(module_, at('shed', { verbose: true })).description).toBe(location?.full);
   });
 
-  it('shows the full description on a revisit in verbose mode', () => {
-    const scene = describeScene(module_, at('shed', { visited: [...start.visited, 'shed'], verbose: true }));
-    expect(scene.description).toBe(module_.locations.find((l) => l.id === 'shed')?.full);
+  it('does not depend on whether the room has been visited — it always has been', () => {
+    // Pins WHY there is no "full on first sight" branch here. The `teleport`
+    // effect marks the room visited before the turn ends and `createGame` marks
+    // the start location, so `hasVisited(state, state.locationId)` is true for
+    // every state a real game can reach. A test asserting the unvisited case
+    // would be asserting behaviour no player can ever see.
+    const unvisited = describeScene(module_, at('shed'));
+    const visited = describeScene(module_, at('shed', { visited: [...start.visited, 'shed'] }));
+    expect(unvisited.description).toBe(visited.description);
   });
 
   it('names an exit destination only once it has been visited', () => {

@@ -149,10 +149,24 @@ export function describeScene(module: AdventureModule, state: GameState): SceneV
     };
   }
 
-  // Full on first sight or in verbose mode, brief on a revisit — the same rule
-  // movement.ts applies to arrival text, so the panel and the transcript never
-  // disagree about which description this room gets.
-  const description = state.verbose || !hasVisited(state, location.id) ? location.full : location.brief;
+  // `brief`, unless the player asked for `verbose`.
+  //
+  // This looked like it should mirror movement.ts's "full on first sight, brief
+  // on a revisit" rule, and an earlier version did — but that rule cannot be
+  // expressed here. movement.ts captures `wasVisited` BEFORE moving; by the
+  // time anyone calls `describeScene`, the turn is over and the `teleport`
+  // effect has already run `markVisited` (systems/events.ts), so
+  // `hasVisited(state, state.locationId)` is **always true** for the room you
+  // are standing in. `createGame` marks the start location too. A
+  // `!hasVisited` branch here is unreachable by construction, and it was only
+  // ever "covered" by a test that built a state — standing somewhere never
+  // visited — that no game can produce.
+  //
+  // Which leaves the honest behaviour, and it is also the right one: the full
+  // text is NARRATION, and movement.ts already put it in the transcript on
+  // arrival. The scene panel is a caption for where you are now, so it gets the
+  // brief — and `verbose` still means what it says everywhere else.
+  const description = state.verbose ? location.full : location.brief;
 
   const items: SceneItem[] = itemsAt(module, state, state.locationId).map((item) => ({
     id: item.id,
