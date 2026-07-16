@@ -130,6 +130,7 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
   const stringIds = new Set(Object.keys(module.strings));
   const moduleVerbIds = new Set(module.vocabulary.verbs.map((v) => v.id));
   const artBaseNames = new Set(artFiles.map(artBaseName));
+  const artFileNames = new Set(artFiles);
 
   /** A `to`/`initialLocation` value: a location id, a container item id, `inventory`, or `nowhere`. */
   const isItemLocation = (value: string): boolean =>
@@ -664,14 +665,24 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
   }
 
   // ── art files ─────────────────────────────────────────────────────────
+  //
+  // Checked against the EXACT filename the UI will request —
+  // `<artId>.<manifest.artFormat>` — not against any-extension-will-do. The
+  // loose version let a module ship `.webp` while `ScenePanel` asked for
+  // `.svg`: green gate, broken images. A validator that accepts what the app
+  // cannot load is worse than no validator, because it is trusted.
   const checkArt = (document: ModuleDocumentName, id: string, artId: string): void => {
-    if (!artBaseNames.has(artId)) {
+    const filename = `${artId}.${manifest.artFormat}`;
+    if (!artFileNames.has(filename)) {
+      const other = artBaseNames.has(artId);
       push({
         code: 'missing-art-file',
         document,
         id,
         field: 'artId',
-        message: `artId "${artId}" has no matching file (checked for "${artId}.<ext>")`,
+        message: other
+          ? `artId "${artId}" has no "${filename}" — a file for it exists in another format, but manifest.artFormat is "${manifest.artFormat}"`
+          : `artId "${artId}" has no matching file (expected "${filename}")`,
       });
     }
   };

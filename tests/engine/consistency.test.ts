@@ -235,11 +235,16 @@ const rawValidModule = {
 
 const validModule: AdventureModule = zAdventureModule.parse(rawValidModule);
 
+// One format, matching the fixture manifest's `artFormat` (defaults to 'svg').
+// An earlier version deliberately mixed .svg/.png/.webp to prove the artId
+// match was extension-agnostic — which turned out to be the bug, not a feature:
+// the UI can only request ONE extension, so a validator that accepts any of
+// them passes modules the app cannot load.
 const validArtFiles = [
   'road.svg',
   'shed.svg',
-  'cave.png',
-  'vault.webp',
+  'cave.svg',
+  'vault.svg',
   'lamp.svg',
   'oil-flask.svg',
   'idol.svg',
@@ -943,11 +948,32 @@ describe('checkConsistency — art files', () => {
     ).toBe(true);
   });
 
-  it('matches an artId against any file extension', () => {
-    // validArtFiles already mixes .svg/.png/.webp; a clean run proves the
-    // match is extension-agnostic.
+  it('matches an artId against the format the manifest declares', () => {
     expect(
       checkConsistency(validModule, validArtFiles).some((e) => e.code === 'missing-art-file'),
+    ).toBe(false);
+  });
+
+  it('flags art shipped in a format the manifest does not declare', () => {
+    // THE BUG THIS CLOSES: the check used to accept any extension, so a module
+    // shipping .webp while the UI asked for .svg validated green and served
+    // broken images. A validator that passes what the app cannot load is worse
+    // than none, because it is believed.
+    const webpFiles = validArtFiles.map((f) => f.replace(/\.svg$/, '.webp'));
+    const errors = checkConsistency(validModule, webpFiles).filter((e) => e.code === 'missing-art-file');
+    expect(errors.length).toBeGreaterThan(0);
+    // And it says WHY, rather than just "missing" — the file is right there.
+    expect(errors[0]?.message).toContain('another format');
+  });
+
+  it('accepts that same webp art once the manifest declares webp', () => {
+    const webpModule = zAdventureModule.parse({
+      ...rawValidModule,
+      manifest: { ...rawValidModule.manifest, artFormat: 'webp' },
+    });
+    const webpFiles = validArtFiles.map((f) => f.replace(/\.svg$/, '.webp'));
+    expect(
+      checkConsistency(webpModule, webpFiles).some((e) => e.code === 'missing-art-file'),
     ).toBe(false);
   });
 });

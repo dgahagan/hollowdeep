@@ -1,12 +1,16 @@
 import type { AdventureModule } from '../engine/schema';
 import type { SceneView } from '../engine/types';
 
-// Placeholder art panel (design plan §6, T25). Renders the SVG committed
-// under `adventures/<id>/art/<artId>.svg` (T10), published to
-// `/adventures/<id>/art/<artId>.svg` by `vite.config.ts`'s copy-adventures
-// plugin. Every file in `adventures/test-cave/art/` is `.svg` — the extension
-// is hardcoded on that basis, same as T10's generator hardcodes it on the
-// write side.
+// The scene's art panel (design plan §6, T25). Renders the file committed under
+// `adventures/<id>/art/<artId>.<format>`, published to
+// `/adventures/<id>/art/...` by `vite.config.ts`'s copy-adventures plugin.
+//
+// The extension comes from `manifest.artFormat`, never a hardcoded `.svg`. It
+// cannot be discovered at runtime — a browser loads art by URL and cannot list
+// a directory over HTTP — so the adventure declares it, and `checkConsistency`
+// verifies the files match what was declared. Hardcoding `.svg` here (which an
+// earlier version did) meant a module shipping WebP validated green and served
+// broken images.
 //
 // **In the dark there is no picture.** `describeScene` omits `artId` entirely
 // when `dark` (src/engine/view.ts), because a picture of the room is the one
@@ -39,7 +43,7 @@ export function ScenePanel({ module, scene }: ScenePanelProps) {
       ) : (
         <img
           className="scene-panel__art"
-          src={`/adventures/${module.manifest.id}/art/${scene.artId}.svg`}
+          src={`/adventures/${module.manifest.id}/art/${scene.artId}.${module.manifest.artFormat}`}
           alt={altText}
           width={512}
           height={288}

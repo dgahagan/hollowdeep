@@ -69,6 +69,23 @@ export const zManifest = z.strictObject({
   /** Stable adventure id; namespaces saves (`cave.<id>.slot.<n>`). */
   id: zId,
   title: z.string().min(1),
+  /**
+   * The file extension every `artId` in this module resolves to, e.g.
+   * `art/<artId>.webp`. One format per adventure, declared once.
+   *
+   * It has to be declared rather than discovered: the browser loads art by URL
+   * and **cannot list a directory over HTTP**, so nothing at runtime can find
+   * out what extension a file has — it can only ask for one. Before this
+   * existed, `ScenePanel` hardcoded `.svg` while `checkConsistency` matched an
+   * artId against *any* extension, so a module shipping `.webp` validated green
+   * and then showed broken images. The two now agree because they read the same
+   * field.
+   *
+   * `svg` is the default because that is what the placeholder generator writes
+   * (`tools/gen-placeholder-art.ts`); real adventures ship `webp` or `avif`
+   * (PROJECT-BRIEF §9).
+   */
+  artFormat: z.enum(['svg', 'webp', 'avif', 'png']).default('svg'),
   /** This adventure's version. Recorded in saves; a bump can require migration. */
   version: zSemver,
   /**
