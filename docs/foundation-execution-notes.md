@@ -411,6 +411,46 @@ not given. The rule that the file argued for was the rule the file broke.
 The leak was small today (placeholder art carries only the room's name) and
 large soon: Phase B ships a painterly illustration of every location.
 
+### T26 — the guard that broke the thing it was guarding
+
+T26's brief says "shortcuts must not fire while the command input has focus."
+Read as a blanket, that includes `Ctrl+S` — and the first implementation did
+exactly that, arguing a uniform rule is easier for a player to learn. Measured
+in a real browser:
+
+```
+input focused : Ctrl+S -> defaultPrevented: false, dialog open: false
+body  focused : Ctrl+S -> defaultPrevented: true,  dialog open: true
+```
+
+The command input autofocuses and is the primary interface, so **the broken
+case was the normal case**. Worse than a dead shortcut: with no
+`preventDefault()`, the keystroke falls through to the browser, so a player
+mid-command who reaches for Ctrl+S gets Chrome's *"Save page as…"* dialog. The
+implementation's own comment said `preventDefault()` was there to stop precisely
+that — the guard just returned before it.
+
+**The rule had one purpose: a bare letter typed into the input must not also be
+a command.** `l` in "light lamp" is the entire hazard. `Ctrl+S` cannot collide
+with typing — you cannot type an `s` with Ctrl held — so the blanket reading
+bought nothing the narrow one didn't, and cost the shortcut its only useful
+moment. The uniformity argument doesn't survive contact either: what a player
+learns from it is "Ctrl+S works, except while I'm doing the thing I do
+constantly."
+
+**The general shape:** a guard written to prevent a *collision* was applied to
+an input that cannot collide. When a rule is phrased as a place ("not while X
+has focus") but its reason is a mechanism ("letters are ambiguous with typing"),
+the place will eventually include something the mechanism doesn't cover. Check
+the reason, not the phrasing.
+
+**On measuring it:** the first probe listener gave an inconsistent reading,
+because `useKeyboard`'s effect deps are inline closures, so it re-subscribes on
+every render and the app's listener can end up registered *after* an externally
+attached one. Order-dependent probes are a trap. `target.dispatchEvent(ev)`
+returns `false` iff some listener called `preventDefault()` — an
+order-independent measurement of the only thing that matters.
+
 ### T3 — `--passWithNoTests` retired early
 
 Orchestrator note 1 scheduled its death for "T4's first tests". T3's
