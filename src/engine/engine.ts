@@ -21,8 +21,14 @@ import { handlerFor, type ActionResult } from './actions';
  * `manifest.engineVersion` range at load (design plan §10).
  *
  * This is the canonical definition; `src/loader.ts` imports it from here.
+ *
+ * **1.1.0** — added `Condition.all` (schema/conditions.ts). A minor bump, by
+ * semver, because it is additive: every 1.0.0 module still loads, and
+ * test-cave's `^1.0.0` is satisfied by 1.1.0. The bump is what lets a module
+ * that NEEDS `all` say so — declaring `^1.1.0` gets a clean refusal from an
+ * older engine instead of a strict-mode parse error about an unknown key.
  */
-export const ENGINE_VERSION = '1.0.0';
+export const ENGINE_VERSION = '1.1.0';
 
 export { createGame } from './state';
 export type { GameState, OutputEvent, SceneView, StepResult, UIAction } from './types';

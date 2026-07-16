@@ -221,6 +221,17 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
       });
     }
     // `chance` draws from the RNG and names nothing — no reference to check.
+
+    // Recurse into `all`, or every id inside one is unchecked: a typo'd item in
+    // `{all: [{hasItem: 'lmap'}]}` would sail past the validator and then
+    // silently never match at runtime — the quietest possible bug, and exactly
+    // the hole T9 found when trigger targets were going unvalidated. `all`
+    // holds leaves only (schema/conditions.ts), so this bottoms out at once.
+    if (cond.all !== undefined) {
+      cond.all.forEach((sub, i) => {
+        checkCondition(sub, document, id, `${fieldPrefix}.all[${i}]`);
+      });
+    }
   }
 
   function checkConditions(

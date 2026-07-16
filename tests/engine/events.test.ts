@@ -4,6 +4,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { loadAdventure } from '../../src/loader';
 import type { AdventureModule, Effect } from '../../src/engine/schema';
 import { EFFECT_KINDS } from '../../src/engine/schema';
+import { zCondition } from '../../src/engine/schema/conditions';
 import type { GameState } from '../../src/engine/types';
 import { createGame, isFlagSet, itemLocation, setFlag, setItemLocation } from '../../src/engine/state';
 import {
@@ -92,6 +93,101 @@ describe('evalCondition — every field the schema allows', () => {
     // One field failing fails the whole condition.
     expect(evalCondition(module_, state, { flag: 'grate-open', hasItem: 'jade-idol' })[0]).toBe(false);
     expect(evalCondition(module_, state, { flag: 'door-oiled', hasItem: 'brass-lamp' })[0]).toBe(false);
+  });
+});
+
+describe('evalCondition — `all` ANDs, which nothing else could express', () => {
+  // The gap this closes: fields appear once per condition, so `{flag:'a',
+  // flag:'b'}` is not JSON and `[{flag:'a'},{flag:'b'}]` ORs. Two flags had no
+  // expression at all before `all`.
+  it('is true only when every child is true', () => {
+    const both = setFlag(setFlag(start, 'a', true), 'b', true);
+    expect(evalCondition(module_, both, { all: [{ flag: 'a' }, { flag: 'b' }] })[0]).toBe(true);
+
+    const onlyA = setFlag(start, 'a', true);
+    expect(evalCondition(module_, onlyA, { all: [{ flag: 'a' }, { flag: 'b' }] })[0]).toBe(false);
+    expect(evalCondition(module_, start, { all: [{ flag: 'a' }, { flag: 'b' }] })[0]).toBe(false);
+  });
+
+  it('really does AND rather than OR — the exact bug it exists to fix', () => {
+    // A bare list of the same two conditions ORs, and passes on one flag. `all`
+    // must not. If this ever passes on one flag, `all` has silently become a
+    // second way to spell the array.
+    const onlyA = setFlag(start, 'a', true);
+    expect(evalConditions(module_, onlyA, [{ flag: 'a' }, { flag: 'b' }])[0]).toBe(true);
+    expect(evalCondition(module_, onlyA, { all: [{ flag: 'a' }, { flag: 'b' }] })[0]).toBe(false);
+  });
+
+  it('ANDs two of the SAME field — two itemAt, which is how you ask if both treasures are home', () => {
+    const treasures = module_.items.filter((i) => i.treasure !== undefined).map((i) => i.id);
+    expect(treasures.length).toBe(2);
+    const repo = module_.manifest.repositoryLocation;
+
+    const bothHome = treasures.reduce((s, id) => setItemLocation(s, id, repo), start);
+    const oneHome = setItemLocation(start, treasures[0] ?? '', repo);
+    const cond = { all: treasures.map((item) => ({ itemAt: { item, location: repo } })) };
+
+    expect(evalCondition(module_, bothHome, cond)[0]).toBe(true);
+    expect(evalCondition(module_, oneHome, cond)[0]).toBe(false);
+  });
+
+  it('composes with the array into OR-of-ANDs', () => {
+    // [{all:[a,b]}, {all:[c,d]}] === (a AND b) OR (c AND d) — disjunctive
+    // normal form, which is why `all` needs no nesting to be complete.
+    const dnf = [
+      { all: [{ flag: 'a' }, { flag: 'b' }] },
+      { all: [{ flag: 'c' }, { flag: 'd' }] },
+    ];
+    const cd = setFlag(setFlag(start, 'c', true), 'd', true);
+    expect(evalConditions(module_, cd, dnf)[0]).toBe(true);
+    const aOnly = setFlag(start, 'a', true);
+    expect(evalConditions(module_, aOnly, dnf)[0]).toBe(false);
+  });
+
+  it('short-circuits: a chance after a failed child never draws', () => {
+    // The RNG-order contract. If `all` evaluated every child, a guard that
+    // fails on a flag would still perturb the sequence and every seeded test
+    // in the suite would shift under it.
+    const [hit, next] = evalCondition(module_, start, {
+      all: [{ flag: 'never-set' }, { chance: 0.5 }],
+    });
+    expect(hit).toBe(false);
+    expect(next.rng).toBe(start.rng);
+  });
+
+  it("threads RNG through a child exactly as a bare chance would", () => {
+    // A child's draw must land in the same place in the sequence as the same
+    // draw outside `all` — otherwise `all` silently shifts every seeded test.
+    const bare = evalCondition(module_, start, { chance: 0.5 });
+    const wrapped = evalCondition(module_, start, { all: [{ chance: 0.5 }] });
+    expect(wrapped[0]).toBe(bare[0]);
+    expect(wrapped[1].rng).toBe(bare[1].rng);
+  });
+
+  it('the outer chance draws AFTER all, seeing the advanced rng', () => {
+    // Needs a state whose first draw PASSES, or `all` short-circuits and the
+    // outer chance correctly never draws at all — which would make this test
+    // seed-dependent, the one thing this suite must never be. So find such a
+    // seed rather than assume one.
+    const passing = (() => {
+      for (let seed = 0; seed < 200; seed++) {
+        const s = createGame(module_, seed);
+        if (evalCondition(module_, s, { chance: 0.5 })[0]) return s;
+      }
+      throw new Error('no seed under 200 passes a 0.5 chance — implausible; check rollChance');
+    })();
+
+    const oneDraw = evalCondition(module_, passing, { chance: 0.5 })[1].rng;
+    const [, twoDraws] = evalCondition(module_, passing, { all: [{ chance: 0.5 }], chance: 0.5 });
+    expect(twoDraws.rng).not.toBe(oneDraw);
+    expect(twoDraws.rng).not.toBe(passing.rng);
+  });
+
+  it('the schema rejects an empty all, and nesting', () => {
+    expect(zCondition.safeParse({ all: [] }).success).toBe(false);
+    // `all` holds leaves only: DNF is already complete, so a tree buys nothing.
+    expect(zCondition.safeParse({ all: [{ all: [{ flag: 'a' }] }] }).success).toBe(false);
+    expect(zCondition.safeParse({ all: [{ flag: 'a' }, { flag: 'b' }] }).success).toBe(true);
   });
 });
 

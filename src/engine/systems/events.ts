@@ -79,12 +79,12 @@ import {
  * a flag never perturbs the sequence.
  */
 export function evalCondition(
-  // Unused today: every condition field is answerable from state alone. The
-  // parameter stays because the design plan fixes this signature and every
-  // caller already threads the module — dropping it now would mean changing
-  // the public shape back the first time a condition needs content (a
-  // `treasure?` test, say).
-  _module: AdventureModule,
+  // Only used to recurse through `all` today: every leaf field is answerable
+  // from state alone. The parameter stays because the design plan fixes this
+  // signature and every caller already threads the module — dropping it would
+  // mean changing the public shape back the first time a condition needs
+  // content (a `treasure?` test, say).
+  module: AdventureModule,
   state: GameState,
   cond: Condition,
 ): [boolean, GameState] {
@@ -106,13 +106,32 @@ export function evalCondition(
     }
   }
 
-  // Last, and only if everything else passed — see the note above.
-  if (cond.chance !== undefined) {
-    const [hit, rng] = rollChance(state.rng, cond.chance);
-    return [hit, { ...state, rng }];
+  // `all` ANDs its children (schema/conditions.ts). Evaluated BEFORE `chance`
+  // so the "chance is drawn last, and only if everything else passed" rule
+  // below still holds for the condition as a whole — a nested `chance` that
+  // fails must not have cost the outer one a draw it never needed.
+  //
+  // State threads through the children because one of them may itself roll:
+  // each child sees the RNG the previous child left, and the outer `chance`
+  // below sees what `all` left. Short-circuits at the first false, so a
+  // `chance` after a failed child does NOT draw — observable through seeded
+  // tests, and the same rule `evalConditions` already applies to its OR.
+  let current = state;
+  if (cond.all !== undefined) {
+    for (const sub of cond.all) {
+      const [hit, next] = evalCondition(module, current, sub);
+      current = next;
+      if (!hit) return [false, current];
+    }
   }
 
-  return [true, state];
+  // Last, and only if everything else passed — see the note above.
+  if (cond.chance !== undefined) {
+    const [hit, rng] = rollChance(current.rng, cond.chance);
+    return [hit, { ...current, rng }];
+  }
+
+  return [true, current];
 }
 
 /**
