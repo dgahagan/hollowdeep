@@ -349,7 +349,7 @@ accessibility + tablet + performance passes, docs closeout.
 ## Progress Tracker
 
 - [x] T1 — Tokens, themes, typography, shell (`opus`, human) — `8ad9187` (faces pinned: Literata + JetBrains Mono; fonts in `public/fonts/` for preload, see commit body)
-- [ ] T2 — Settings + persistence layers (`sonnet`)
+- [x] T2 — Settings + persistence layers (`sonnet`) — `35fee75`
 - [ ] T3 — Transcript/input upgrades, shortcuts (`sonnet`)
 - [ ] T4 — Auto-map (`opus`)
 - [ ] T5 — Scene panel: preload, flicker (`sonnet`)
