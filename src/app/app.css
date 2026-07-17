@@ -794,6 +794,131 @@ kbd {
   align-self: flex-start;
 }
 
+/* ---- Adventure select (AdventureSelect.tsx, T9) ---- */
+
+.select {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 3rem;
+}
+
+.select__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.select__title {
+  margin: 0;
+  font-size: 2.4rem;
+  letter-spacing: 0.02em;
+}
+
+.select__subtitle {
+  margin: 0.4rem 0 0;
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.select__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.select-card {
+  display: flex;
+  gap: 1.25rem;
+  background: var(--surface-1);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.select-card__cover {
+  flex: 0 0 200px;
+}
+
+.select-card__cover-img,
+.select-card__cover-plate {
+  width: 200px;
+  aspect-ratio: 16 / 9;
+  border-radius: 6px;
+  display: block;
+  object-fit: cover;
+}
+
+.select-card__cover-plate {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.select-card__body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.select-card__title {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.select-card__blurb {
+  margin: 0;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.select-card__progress {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+}
+
+.select-card__error {
+  margin: 0;
+  color: var(--danger);
+}
+
+.select-card__actions {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.select-card__continue {
+  border-color: var(--accent);
+}
+
+.select-card__hardcore {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+}
+
+/* Tablet floor (FR-3.8): stack the cover above the body on narrow widths. */
+@media (max-width: 640px) {
+  .select-card {
+    flex-direction: column;
+  }
+  .select-card__cover,
+  .select-card__cover-img,
+  .select-card__cover-plate {
+    width: 100%;
+    flex-basis: auto;
+  }
+}
+
 /* ---- Motion ---- */
 
 @media (prefers-reduced-motion: reduce) {

@@ -25,10 +25,19 @@ import { StatusBar } from './StatusBar';
 import { SaveDialog } from './SaveDialog';
 import { SettingsPanel } from './SettingsPanel';
 import { MapOverlay } from './MapOverlay';
-import { loadSettings, loadSidecar, saveSettings, TEXT_SCALE_BY_STEP, type Settings } from './uiState';
+import {
+  loadSettings,
+  loadSidecar,
+  saveSettings,
+  setAdventureHardcore,
+  TEXT_SCALE_BY_STEP,
+  type Settings,
+} from './uiState';
 import { DeathModal } from './DeathModal';
 import { JournalPanel } from './JournalPanel';
 import { HintsPanel } from './HintsPanel';
+import { AdventureSelect } from './AdventureSelect';
+import type { GameState } from '../engine/types';
 import './fonts.css';
 import './theme.css';
 import './app.css';
@@ -42,28 +51,16 @@ import './app.css';
 // (ActionBar/InventoryPanel) — FR-2.7's "clicking IS typing".
 
 /**
- * Adventures this dev build knows how to find on disk (`adventures/<id>`).
- * Not Phase 3's adventure-select screen — just enough to let `?adventure=`
- * pick Hollowdeep or fall back to the `test-cave` fixture without a select
- * UI or any chrome. T9 replaces this with the real front door.
+ * Adventures this build knows how to find on disk (`adventures/<id>`). The
+ * real front door is `AdventureSelect` (T9); this list is now only the guard
+ * for a `?adventure=<id>` deep link — a typo'd id lands on the error path in
+ * `useAdventure` rather than a raw fetch failure.
  */
 const KNOWN_ADVENTURE_IDS = ['hollowdeep', 'test-cave'] as const;
 type KnownAdventureId = (typeof KNOWN_ADVENTURE_IDS)[number];
 
-const DEFAULT_ADVENTURE_ID: KnownAdventureId = 'hollowdeep';
-
 function isKnownAdventureId(id: string): id is KnownAdventureId {
   return (KNOWN_ADVENTURE_IDS as readonly string[]).includes(id);
-}
-
-/**
- * Which adventure to load: `?adventure=<id>` in the URL, defaulting to
- * Hollowdeep. Reads `window.location.search` directly rather than a router —
- * this is a dev convenience, not the Phase 3 select screen, so there's
- * nothing else in the URL to coordinate with.
- */
-function adventureIdFromLocation(): string {
-  return new URLSearchParams(window.location.search).get('adventure') ?? DEFAULT_ADVENTURE_ID;
 }
 
 type LoadState =
@@ -122,7 +119,7 @@ function useAdventure(id: string): LoadState {
   return state;
 }
 
-function AdventureGate({ id }: { id: string }) {
+function AdventureGate({ id, resume }: { id: string; resume: GameState | null }) {
   const adventure = useAdventure(id);
 
   if (adventure.status === 'error') {
@@ -141,7 +138,10 @@ function AdventureGate({ id }: { id: string }) {
 
   return (
     <OverlayProvider>
-      <Game module={adventure.module} />
+      {/* `key` forces a fresh Game (and a fresh useGame session) whenever the
+          adventure changes, so switching titles from the select screen never
+          leaks one game's state into another. */}
+      <Game key={id} module={adventure.module} resume={resume} />
     </OverlayProvider>
   );
 }
@@ -238,17 +238,32 @@ function SettingsProvider({ children }: { children: ReactNode }) {
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;
 }
 
-function Game({ module }: { module: AdventureModule }) {
+function Game({ module, resume }: { module: AdventureModule; resume: GameState | null }) {
   // Hardcore (T6, ui-plan §5): read ONCE, at mount, from the per-adventure
-  // sidecar — set by the new-game flow (T9) and locked for the run. A lazy
-  // useState initializer rather than a plain call so a sidecar write during
-  // play (journal notes share the object) can never flip the mode mid-run.
+  // sidecar — set by the new-game flow (T9, `setAdventureHardcore`) BEFORE
+  // this component mounts, and never re-read, so the mode is locked for the
+  // run. A lazy useState initializer rather than a plain call so a sidecar
+  // write during play (journal notes share the object) can never flip it.
   const [hardcore] = useState(() => loadSidecar(module.manifest.id).hardcore);
   const { state, scene, actions, transcript, submit, load, pendingDeath, dismissDeath } = useGame(module, {
     hardcore,
   });
   const overlays = useOverlays();
   const { settings } = useSettings();
+
+  // Continue-from-autosave (T9, ui-plan §7): if the select screen handed us a
+  // resume state, adopt it once on mount. `load` is the same swap the save
+  // dialog uses; running it in an effect (not during render) keeps useGame's
+  // updater pure. The `key` on Game (AdventureGate) guarantees a fresh mount
+  // per navigation, so this fires exactly once per continue and never re-runs
+  // for a later turn's re-render.
+  const resumedRef = useRef(false);
+  useEffect(() => {
+    if (resume !== null && !resumedRef.current) {
+      resumedRef.current = true;
+      load(resume);
+    }
+  }, [resume, load]);
 
   // T26's `i` shortcut moves focus to the inventory panel rather than
   // "doing" anything by itself — `InventoryPanel`'s own buttons are already
@@ -408,11 +423,46 @@ function Game({ module }: { module: AdventureModule }) {
   );
 }
 
+/**
+ * Where the app is right now (T9, ui-plan §7): the adventure-select front
+ * door, or in a specific adventure — optionally resuming a saved state.
+ * `?adventure=<id>` deep-links straight to `game` (decision 3: the param
+ * survives as a dev/link shortcut past the screen); a clean URL starts at
+ * `select`.
+ */
+type Route = { screen: 'select' } | { screen: 'game'; id: string; resume: GameState | null };
+
+function initialRoute(): Route {
+  const params = new URLSearchParams(window.location.search);
+  const deepLink = params.get('adventure');
+  // A deep link goes straight in with no resume — the autosave ring is still
+  // there for a manual load, but a URL is a "start here" instruction, not a
+  // "resume" one, and matches the pre-T9 dev behavior the param preserved.
+  if (deepLink !== null) return { screen: 'game', id: deepLink, resume: null };
+  return { screen: 'select' };
+}
+
 export default function App() {
+  const [route, setRoute] = useState<Route>(initialRoute);
+
   return (
     <SettingsProvider>
       <ErrorBoundary>
-        <AdventureGate id={adventureIdFromLocation()} />
+        {route.screen === 'select' ? (
+          <AdventureSelect
+            onNewGame={(id, hardcore) => {
+              // The one write that sets a run's mode, BEFORE Game mounts and
+              // reads it (ui-plan §12.2). A fresh run has no resume state.
+              setAdventureHardcore(id, hardcore);
+              setRoute({ screen: 'game', id, resume: null });
+            }}
+            onContinue={(id, state) => {
+              setRoute({ screen: 'game', id, resume: state });
+            }}
+          />
+        ) : (
+          <AdventureGate id={route.id} resume={route.resume} />
+        )}
       </ErrorBoundary>
     </SettingsProvider>
   );

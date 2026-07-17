@@ -255,3 +255,18 @@ export function saveSidecar(adventureId: string, sidecar: AdventureUiState, stor
   if (store === undefined) return false;
   return safeSet(store, sidecarKeyFor(adventureId), JSON.stringify(sidecar));
 }
+
+/**
+ * Set the per-adventure hardcore flag — the ONE write that decides a run's
+ * mode (T9, ui-plan §12.2). Called exactly once per playthrough, by the
+ * new-game flow, BEFORE the game mounts (Game reads the flag once at mount
+ * and never re-reads it, so the mode is locked the instant play begins). A
+ * read-modify-write so it never clobbers a note the player left in the same
+ * sidecar object. There is deliberately no in-game path that flips it back:
+ * "set at new-game and locked thereafter" is enforced by the absence of any
+ * other caller, not by a guard here.
+ */
+export function setAdventureHardcore(adventureId: string, hardcore: boolean, storage?: StorageLike): boolean {
+  const current = loadSidecar(adventureId, storage);
+  return saveSidecar(adventureId, { ...current, hardcore }, storage);
+}
