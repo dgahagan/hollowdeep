@@ -467,7 +467,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The word lands somewhere below, and the hill obliges."
+        "text": "The word goes down the winze the way it went for ninety years — a working word, said where the work is. The dark obliges, and the world exchanges one end of the chain for the other."
       },
       {
         "kind": "teleport",
@@ -489,7 +489,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The word lands somewhere above, and the hill obliges."
+        "text": "You give the winze the hoist word from the receiving end, and the dark hauls away. When it settles, you are at the head of the chain instead of its foot."
       },
       {
         "kind": "teleport",
@@ -676,7 +676,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The word wants machinery, and there is none of that here."
+        "text": "A good word, and wasted here. It wants machinery — a chain, a bucket, a winze to work in. The cave has heard it before and knows exactly where it applies."
       }
     ]
   },
@@ -694,7 +694,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The word opens a way that was always there, if you knew to ask."
+        "text": "The foreman wrote it twice and underlined it, and now you see why: the word is a place. The dark folds its arms and looks the other way, and when you have your bearings again there is grass, and a slope, and sky — actual sky — overhead."
       },
       {
         "kind": "teleport",
@@ -713,6 +713,10 @@
         "kind": "revealExit",
         "location": "the-gunnis",
         "dir": "down"
+      },
+      {
+        "kind": "award",
+        "achievement": "the-answer"
       }
     ]
   },
@@ -730,11 +734,208 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The word closes the distance the other way."
+        "text": "You trade the sky back for the dark, the way the word has always traded. The broken drift resumes around you, foreman and all."
       },
       {
         "kind": "teleport",
         "to": "broken-drift"
+      }
+    ]
+  },
+  {
+    "id": "gunnis-elsewhere",
+    "on": {
+      "type": "word",
+      "word": "gunnis"
+    },
+    "if": [
+      {
+        "atLocation": "coach-road"
+      },
+      {
+        "atLocation": "main-street"
+      },
+      {
+        "atLocation": "chapel"
+      },
+      {
+        "atLocation": "general-store"
+      },
+      {
+        "atLocation": "assay-office"
+      },
+      {
+        "atLocation": "tailings-path"
+      },
+      {
+        "atLocation": "adit-mouth"
+      },
+      {
+        "atLocation": "behind-the-seal"
+      },
+      {
+        "atLocation": "adit-drift"
+      },
+      {
+        "atLocation": "lamp-room"
+      },
+      {
+        "atLocation": "stables"
+      },
+      {
+        "atLocation": "junction"
+      },
+      {
+        "atLocation": "timekeepers-nook"
+      },
+      {
+        "atLocation": "foremans-office"
+      },
+      {
+        "atLocation": "shaft-head"
+      },
+      {
+        "atLocation": "pump-room"
+      },
+      {
+        "atLocation": "ore-chute"
+      },
+      {
+        "atLocation": "long-drift"
+      },
+      {
+        "atLocation": "magazine"
+      },
+      {
+        "atLocation": "stull-gallery"
+      },
+      {
+        "atLocation": "winze-ladderway"
+      },
+      {
+        "atLocation": "shaft-foot"
+      },
+      {
+        "atLocation": "breakthrough"
+      },
+      {
+        "atLocation": "low-crawl"
+      },
+      {
+        "atLocation": "cathedral"
+      },
+      {
+        "atLocation": "gallery-of-veils"
+      },
+      {
+        "atLocation": "gour-pools"
+      },
+      {
+        "atLocation": "black-river"
+      },
+      {
+        "atLocation": "river-strand"
+      },
+      {
+        "atLocation": "midden"
+      },
+      {
+        "atLocation": "breach-wall"
+      },
+      {
+        "atLocation": "twisty-1"
+      },
+      {
+        "atLocation": "twisty-2"
+      },
+      {
+        "atLocation": "twisty-3"
+      },
+      {
+        "atLocation": "twisty-4"
+      },
+      {
+        "atLocation": "twisty-5"
+      },
+      {
+        "atLocation": "twisty-6"
+      },
+      {
+        "atLocation": "beyond-the-breach"
+      },
+      {
+        "atLocation": "dressed-gallery"
+      },
+      {
+        "atLocation": "toolroom"
+      },
+      {
+        "atLocation": "store-rooms"
+      },
+      {
+        "atLocation": "closed-row"
+      },
+      {
+        "atLocation": "tally-chamber"
+      },
+      {
+        "atLocation": "worked-face"
+      },
+      {
+        "atLocation": "long-stair"
+      },
+      {
+        "atLocation": "undercroft"
+      },
+      {
+        "atLocation": "cistern"
+      },
+      {
+        "atLocation": "warm-gallery"
+      },
+      {
+        "atLocation": "deep-cut"
+      },
+      {
+        "atLocation": "quiet-gallery"
+      },
+      {
+        "atLocation": "antechamber"
+      },
+      {
+        "atLocation": "seal-gate"
+      },
+      {
+        "atLocation": "keepers-stair"
+      },
+      {
+        "atLocation": "keepers-walk"
+      },
+      {
+        "atLocation": "watch-room"
+      },
+      {
+        "atLocation": "the-vault"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "A real word, and the cave knows it — but it names a place, and it does its trading from particular ground. Said here, it is only vocabulary."
+      }
+    ]
+  },
+  {
+    "id": "the-answer-award",
+    "on": {
+      "type": "enter",
+      "target": "the-gunnis"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "the-answer"
       }
     ]
   },
