@@ -44,8 +44,8 @@
       "assayer's button",
       "button"
     ],
-    "brief": "[draft] a bead of gold, exactly where the assay left it",
-    "description": "[draft] a bead of gold, cast off by the assay office's own process",
+    "brief": "A gold assay button sits here, small and entirely sure of itself.",
+    "description": "A bead of refined gold no bigger than a waistcoat button — the honest leavings of an honest assay. Gold does not tarnish, and it has not bothered to start.",
     "artId": "assay-button",
     "portable": true,
     "initialLocation": "nowhere",
@@ -238,8 +238,8 @@
       "lantern",
       "lamp"
     ],
-    "brief": "[draft] your brass lantern, ready to hand",
-    "description": "[draft] a brass lantern, dented, honest, and the only light you brought",
+    "brief": "Your brass lantern sits here, which is rarely where it should be.",
+    "description": "Dented brass, clean glass, an honest wick. It is the only opinion you carry that the dark is known to respect.",
     "artId": "brass-lantern",
     "portable": true,
     "initialLocation": "inventory",
@@ -271,8 +271,8 @@
       "canary",
       "cage"
     ],
-    "brief": "[draft] a caged canary, had on credit",
-    "description": "[draft] a canary in a cage, mining-true, and a hand you will wish you had free",
+    "brief": "A caged canary is here, watching you professionally.",
+    "description": "A tin cage and a yellow bird with the alert look of a good employee. Canaries went below so the miners would know what the air was doing before it did it to them. This one knows the work, according to the man who has yet to be paid for it.",
     "artId": "canary-cage",
     "portable": true,
     "initialLocation": "general-store",
@@ -285,8 +285,8 @@
     "names": [
       "key"
     ],
-    "brief": "[draft] a key, hung beneath the board",
-    "description": "[draft] a small brass key for the assay office door",
+    "brief": "A small brass key lies here, out of work.",
+    "description": "Brass, small, well made, with ASSAY stamped on the bow. Somebody oiled it before hanging it up for the last time, which is the kind of thing this town does.",
     "artId": "key-office",
     "portable": true,
     "initialLocation": "chapel",
@@ -406,8 +406,8 @@
     "names": [
       "door"
     ],
-    "brief": "[draft] the assay office door, shut fast",
-    "description": "[draft] a door with a good lock and a keyhole that has seen better decades",
+    "brief": "The assay office door stands on the east corner, taking its lock seriously.",
+    "description": "A good door with a better lock. The keyhole's polish says it was turned twice a day for years, and then not at all.",
     "artId": "office-door",
     "portable": false,
     "initialLocation": "main-street",
@@ -504,8 +504,8 @@
     "names": [
       "bench"
     ],
-    "brief": "[draft] the assay bench, dusty and bare",
-    "description": "[draft] a bench built for weighing small, valuable things",
+    "brief": "The assay bench runs along the wall, dust keeping the ledger now.",
+    "description": "Built stout, for weighing small heavy things. The dust lies even and undisturbed across the top — except along the seam at the wall, where it isn't.",
     "artId": "assay-bench",
     "portable": false,
     "initialLocation": "assay-office"

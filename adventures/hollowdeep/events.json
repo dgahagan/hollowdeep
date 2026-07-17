@@ -9,11 +9,30 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The office door gives, and Main Street is behind you now."
+        "text": "The door swings in on a room that has been holding its breath for ninety years. The hinges do not complain; somebody thorough oiled them before locking up for good."
       },
       {
         "kind": "setFlag",
         "flag": "office-door-open"
+      }
+    ]
+  },
+  {
+    "id": "canary-on-credit",
+    "on": {
+      "type": "take",
+      "target": "canary-cage"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "general-store"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The storekeeper does not stop you. \"On credit,\" he says, as though the terms were settled years ago and you are merely late. \"The bird knows the work. Settle up when you're rich.\""
       }
     ]
   },
@@ -500,7 +519,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] A bead of gold has rolled into the seam where the bench meets the wall."
+        "text": "You run a hand along the seam where the bench meets the wall and come up with somebody's rounding error: a bead of assay gold, rolled out of reach and written off a lifetime ago."
       },
       {
         "kind": "moveItem",

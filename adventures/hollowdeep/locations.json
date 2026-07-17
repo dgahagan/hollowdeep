@@ -2,8 +2,8 @@
   {
     "id": "coach-road",
     "name": "Coach Road",
-    "brief": "[draft] You are at coach road, and the coach road does not care.",
-    "full": "[draft] This is Coach Road, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are on the coach road, above a town that has stopped expecting anyone.",
+    "full": "The coach road comes down out of the hills with the businesslike air of a road that used to matter. Below, in a fold of the valley, sits Weir's Landing — a town considerably smaller than its name and quieter than either. You have a lantern, empty pockets, and a rumor, which is one more rumor than anyone here wants. The road goes on east into town whether you do or not.",
     "artId": "coach-road",
     "light": "lit",
     "exits": {
@@ -15,8 +15,8 @@
   {
     "id": "main-street",
     "name": "Main Street",
-    "brief": "[draft] You are at main street, and the main street does not care.",
-    "full": "[draft] This is Main Street, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are on Main Street, which is still here, which is somehow worse.",
+    "full": "Main Street still has its buildings, which is the surprising part. The chapel keeps its footing to the north and the general store faces it from the south, both weathered to the same patient gray. East, on the corner, the assay office waits with its shutters squared as if the morning shift were merely late. A path climbs northeast toward the old tailings. Ninety years of nobody has been kinder to this street than it had any right to be.",
     "artId": "main-street",
     "light": "lit",
     "exits": {
@@ -36,7 +36,7 @@
             "flag": "office-door-open"
           }
         ],
-        "blockedMessage": "[draft] The assay office door is locked fast."
+        "blockedMessage": "The assay office is locked, and the lock means it. Keys in a town like this do not travel far."
       },
       "ne": {
         "to": "tailings-path"
@@ -46,8 +46,8 @@
   {
     "id": "chapel",
     "name": "The Chapel",
-    "brief": "[draft] You are at the chapel, and the the chapel does not care.",
-    "full": "[draft] This is The Chapel, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the chapel, under the memorial board.",
+    "full": "A plain chapel, swept by weather if nothing else. One wall carries the memorial board: two columns of names carved close together, the date cut once at the top as if it did not bear repeating. Beneath the board, on an honest nail, hangs a key.",
     "artId": "chapel",
     "light": "lit",
     "exits": {
@@ -62,15 +62,15 @@
           "board",
           "names"
         ],
-        "description": "[draft] A board of carved names, and a key hanging beneath it."
+        "description": "Two columns of names and one bad night. The carving is careful and unornamented — the town said what it had to say and then stopped saying it. The nail beneath was added later, for the assay office key, on the reasoning that the office belonged to these men more than to anyone left standing."
       }
     ]
   },
   {
     "id": "general-store",
     "name": "General Store",
-    "brief": "[draft] You are at general store, and the general store does not care.",
-    "full": "[draft] This is General Store, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the general store, under the storekeeper's patient eye.",
+    "full": "The general store is open, in the sense that its door is. The shelves hold whatever ninety years could not spoil and nobody came back for, arranged with the neatness of a man who has had time. The storekeeper watches you from behind the counter. By the door hangs a caged canary, yellow as a warning nobody painted.",
     "artId": "general-store",
     "light": "lit",
     "exits": {
@@ -82,8 +82,8 @@
   {
     "id": "assay-office",
     "name": "Assay Office",
-    "brief": "[draft] You are at assay office, and the assay office does not care.",
-    "full": "[draft] This is Assay Office, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the assay office, where things get weighed.",
+    "full": "One room that used to be the whole town's arithmetic. Scales, a stout bench, and small scorched rings on the wood where crucibles stood and cooled. Everything the Hollowdeep ever gave up came through this room to be weighed, entered, and believed. There is space on the books for more.",
     "artId": "assay-office",
     "light": "lit",
     "exits": {
@@ -95,8 +95,8 @@
   {
     "id": "tailings-path",
     "name": "Tailings Path",
-    "brief": "[draft] You are at tailings path, and the tailings path does not care.",
-    "full": "[draft] This is Tailings Path, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are on the tailings path, above the town.",
+    "full": "The path climbs the spoil heaps along the old tramway grade. From up here the town arranges itself into what it actually is: one street, three roofs that matter, and a hole in a hillside that paid for all of it. The grade runs up toward the adit mouth.",
     "artId": "tailings-path",
     "light": "lit",
     "exits": {
@@ -113,7 +113,7 @@
             "flag": "gunnis-known"
           }
         ],
-        "blockedMessage": "[draft] The scree slope you have in mind is not one you have found yet.",
+        "blockedMessage": "The spoil rises that way in a long gray slope with no argument for climbing it. If there is a path up through the scree, you have not learned it.",
         "hidden": true
       }
     }
@@ -121,8 +121,8 @@
   {
     "id": "adit-mouth",
     "name": "The Adit Mouth",
-    "brief": "[draft] You are at the adit mouth, and the the adit mouth does not care.",
-    "full": "[draft] This is The Adit Mouth, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are at the adit mouth, before the cracked seal.",
+    "full": "The adit drives straight into the hill, and across its mouth stands the seal: dressed stone, mortared with intent, built by people who wanted the matter understood. It has cracked. One edge has slumped away, leaving a gap of dark exactly wide enough to pass — an invitation or a warning, depending on which way you are walking. The town sits below and behind you, not watching.",
     "artId": "adit-mouth",
     "light": "lit",
     "exits": {

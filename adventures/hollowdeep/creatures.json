@@ -86,7 +86,7 @@
     "names": [
       "storekeeper"
     ],
-    "description": "[draft] The storekeeper, the only person in Weir's Landing still willing to talk to you.",
+    "description": "He has the settled look of a man who stopped waiting for customers some while back and moved on to waiting in general. He will sell you what you can carry, and he recommends the canary — on credit, he says, since money coming up out of that ground is a better bet than money going down into it.",
     "artId": "storekeeper",
     "behavior": "static",
     "spawn": {
