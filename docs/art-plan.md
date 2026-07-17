@@ -52,25 +52,30 @@ palette/pixel-related, which this project explicitly does not do.
    and every target browser (NFR-2, last two versions) decodes WebP. AVIF
    buys ~20% at these sizes and a second encode path; not worth it. The
    schema already accepts `webp` — no engine change.
-4. **test-cave keeps its placeholder SVGs.** It is a format fixture, not a
-   small Hollowdeep; real art there would be ~30 generations of pure cost.
-   (Confirmed — §9.1.)
+4. **test-cave is already done and stays as-is.** *(Corrected 2026-07-17:
+   the draft said "keeps its placeholder SVGs", but `25249c5` had already
+   shipped test-cave 24 real WebP finals at 79 KB average.)* The intent of
+   the decision — spend nothing further on the fixture — stands: test-cave's
+   art, manifest (`dev/art/test-cave.json`), and suffix are frozen; this plan
+   touches Hollowdeep only.
 
 ## 2. Constraints and givens
 
-- **The generator must be rewritten.** bards-tale-clone's `host_gen.py` /
-  `pixelcore.py` are gone from its working tree (only a `.pyc` survives) and a
-  host-side search found nothing recoverable. The contract is fully documented
-  (request JSON in, images out, load-model-once, skip-existing, fixed seeds)
-  and the rewrite is bounded (~100 lines). It lives in **this repo** under
-  `tools/art/`, so Hollowdeep never again depends on a sibling project's
-  working tree. If the original turns up on the host later, it informs the
-  rewrite; it does not replace it.
-- **The bridge:** the agent runs in a distrobox without GPU access; every
-  generation run is `distrobox-host-exec` → host Python venv → `tools/art/
-  host_gen.py` reading a request file. First task of the implementation plan
-  is proving this bridge end-to-end with one throwaway image (the venv on the
-  host may also need creating — bounded, documented, one-time).
+- **The generator is already rebuilt and proven.** *(Corrected 2026-07-17
+  — this plan's draft predated a repo check.)* `tools/art/host_gen.py` was
+  rewritten in-repo (`f4673b8`) against the documented bards-tale-clone
+  contract, and `25249c5` used it to produce test-cave's 24 shipping WebP
+  finals — so the whole bridge (distrobox → `distrobox-host-exec` →
+  `~/pixelart-venv/bin/python` → host GPU) is production-proven, not
+  theoretical. `tools/art/build-request.ts` (manifest → request expansion,
+  `chosen_seed`-aware) exists too. What remains to build: audit,
+  contact-sheet, and optimize tools, plus a `validate:art` gate step.
+  Distilled-model settings (8 steps, guidance 2.5) are pinned in the driver.
+- **The prompting lessons are banked.** `dev/art/style.md` records the three
+  traps the first pass hit (tag soup vs prose for a Qwen3 encoder; "digital
+  illustration" buying glossy render; adjectives summoning fantasy art —
+  *prompt the observation, never the conclusion*). Hollowdeep's prompts and
+  suffix candidates start from these, not from zero.
 - **No crush, no palettes, no tiling.** This pipeline ends at "optimize and
   commit the raster." The palette-quantization, sub-palette, and text-grid
   import machinery of the precedent is explicitly out (brief §9). FLUX's
@@ -128,32 +133,35 @@ style-development task:
 
 ## 5. The art manifest
 
-`adventures/hollowdeep/art-manifest.json` — committed, and the source of truth
-(FR-4.2). It is **not** one of the module's eleven documents: the module
-loader never reads it, the art tooling owns it (`module-format.md` stays
-true — adding an adventure still means eleven documents; art production is a
-separate concern with its own contract). A schema + validator lives in
-`tools/art/` and runs in the gate via a new `npm run validate:art`.
+`dev/art/hollowdeep.json` — committed, and the source of truth (FR-4.2),
+following the `dev/art/test-cave.json` precedent already on main. It is
+**not** one of the module's eleven documents: the module loader never reads
+it, the art tooling owns it (`module-format.md` stays true — adding an
+adventure still means eleven documents; art production is a separate concern
+with its own contract). The existing manifest shape (global `style`,
+`gen_w`/`gen_h`, default `seeds`, per-subject `prompt`/`seeds`/`chosen_seed`)
+is **extended** for what Hollowdeep needs — per-class style suffixes and
+per-subject dims — and `build-request.ts` grows to match, staying backward-
+compatible with test-cave's file. A schema + validator lives in `tools/art/`
+and runs in the gate via a new `npm run validate:art`.
 
 ```json
 {
-  "styleSuffixes": {
-    "scene": "<locked verbatim by §4>",
-    "item": "…", "creature": "…", "marquee": "…"
-  },
-  "subjects": [
-    {
-      "id": "cathedral",
-      "artClass": "scene",
-      "subject": "vast limestone cavern vault, single warm lantern glow …",
-      "dims": [1024, 640],
-      "seedsGenerated": [3, 7, 11, 17, 23, 42],
-      "chosenSeed": 17,
+  "styles": { "scene": "<locked verbatim by §4>", "item": "…", "creature": "…", "marquee": "…" },
+  "dims":   { "scene": [1024, 640], "item": [640, 640], "creature": [640, 800], "marquee": [1344, 768] },
+  "seeds":  [1, 2, 3, 5, 8, 13],
+  "subjects": {
+    "cathedral": {
+      "class": "scene",
+      "prompt": "A cavern vault a single lantern cannot find the top of …",
+      "chosen_seed": 5,
       "notes": "echo foreshadow — keep the ceiling lost in dark"
     }
-  ]
+  }
 }
 ```
+
+(Prose prompts, per style.md lesson 1 — sentences, not tag soup.)
 
 Rules carried over from the precedent: subject prompts carry the art
 direction (never anyone's memory); every seed ever generated is recorded; a
