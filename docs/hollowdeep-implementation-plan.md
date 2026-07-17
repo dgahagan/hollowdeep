@@ -473,7 +473,7 @@ markers inside its own region.
 - [x] T5 — Regions D & E: past the breach, the seal (`opus`) — `e5dec1f`
 - [x] T6 — Magic words and the gunnis (`opus`) — `11c81bc`
 - [x] T7 — Endgame: two endings, ranks, achievements (`opus`) — `8c687b2`
-- [ ] T8 — Hint ladders (`opus`)
+- [x] T8 — Hint ladders (`opus`) — `eb88fe1`
 - [ ] T9 — Walkthrough + per-adventure harness (`opus`)
 - [ ] T10 — Content integration tests (`sonnet`)
 - [ ] T11 — Dev app loads Hollowdeep (`sonnet`)
