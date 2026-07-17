@@ -4,12 +4,821 @@
       "cmd": "e"
     },
     {
+      "cmd": "n"
+    },
+    {
+      "cmd": "take key"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "unlock door with key"
+    },
+    {
+      "cmd": "open door",
+      "expect": "holding its breath for ninety years"
+    },
+    {
+      "cmd": "drop key"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "search bench",
+      "expect": "somebody's rounding error"
+    },
+    {
+      "cmd": "take button"
+    },
+    {
+      "cmd": "drop button",
+      "expect": "Achievement unlocked: On the Books."
+    },
+    {
       "cmd": "w"
     },
     {
-      "cmd": "look"
+      "cmd": "s"
+    },
+    {
+      "cmd": "take canary",
+      "expect": "On credit"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "ne"
+    },
+    {
+      "cmd": "u"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "light lamp",
+      "expect": "throwing a wobbly gold circle"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "take gad"
+    },
+    {
+      "cmd": "take handle"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "use pump",
+      "expect": "resuming a long marriage"
+    },
+    {
+      "cmd": "use pump",
+      "expect": "the stunned gurgle of an argument lost"
+    },
+    {
+      "cmd": "drop handle"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "drop gad"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "take tin"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "search desk"
+    },
+    {
+      "cmd": "take key"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "read stull",
+      "expect": [
+        "KIBBLE",
+        "works at the shaft"
+      ]
+    },
+    {
+      "cmd": "unlock door with key"
+    },
+    {
+      "cmd": "open door"
+    },
+    {
+      "cmd": "drop key"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "use stull",
+      "expect": "six good breaths"
+    },
+    {
+      "cmd": "take garnets"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "search foreman",
+      "expect": "more apology than efficiency"
+    },
+    {
+      "cmd": "take watch"
+    },
+    {
+      "cmd": "read book",
+      "expect": "underlined hard enough to tear the paper"
+    },
+    {
+      "cmd": "gunnis",
+      "expect": [
+        "actual sky",
+        "You score 1"
+      ]
+    },
+    {
+      "cmd": "d"
+    },
+    {
+      "cmd": "sw"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "drop tin"
+    },
+    {
+      "cmd": "drop garnets"
+    },
+    {
+      "cmd": "drop watch"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "ne"
+    },
+    {
+      "cmd": "u"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "take gad"
+    },
+    {
+      "cmd": "kibble",
+      "expect": "one end of the chain for the other"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "use seam",
+      "expect": "a gait changes"
+    },
+    {
+      "cmd": "take flowstone"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "take pearls",
+      "expect": "five turns of the glass"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "use pothole"
+    },
+    {
+      "cmd": "drop gad"
+    },
+    {
+      "cmd": "take nugget",
+      "expect": "the gour pools taking their room back"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "n",
+      "expect": "your pockets are lighter"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "e",
+      "expect": [
+        "shine with shine",
+        "Achievement unlocked: Everything You Carried."
+      ]
+    },
+    {
+      "cmd": "take flowstone"
+    },
+    {
+      "cmd": "take pearls"
+    },
+    {
+      "cmd": "take nugget"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "kibble"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "d"
+    },
+    {
+      "cmd": "sw"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "drop flowstone"
+    },
+    {
+      "cmd": "drop pearls"
+    },
+    {
+      "cmd": "drop nugget"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "ne"
+    },
+    {
+      "cmd": "u"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "take keg"
+    },
+    {
+      "cmd": "take fuse"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "kibble"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "d"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "use keg",
+      "expect": "snug as a stone in an arch"
+    },
+    {
+      "cmd": "use fuse",
+      "expect": "All it wants now is a light"
+    },
+    {
+      "cmd": "light fuse",
+      "expect": "The draught becomes a wind, and then a door"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "take cache",
+      "expect": "You score 10"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "take tool"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "search stacks",
+      "expect": "as though the counting were not considered finished"
+    },
+    {
+      "cmd": "take plate"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "d"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "use mechanism",
+      "expect": "Your hand makes do"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "drop cache"
+    },
+    {
+      "cmd": "drop plate"
+    },
+    {
+      "cmd": "take stone",
+      "expect": "You score 15"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "u"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "u"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "kibble"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "d"
+    },
+    {
+      "cmd": "sw"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "drop tool"
+    },
+    {
+      "cmd": "drop stone"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "ne"
+    },
+    {
+      "cmd": "u"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "kibble"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "d"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "d"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "take cache"
+    },
+    {
+      "cmd": "take plate"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "d"
+    },
+    {
+      "cmd": "d"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "s",
+      "expect": [
+        "Nothing stops you taking it",
+        "Achievement unlocked: The Bird Went Too."
+      ]
+    },
+    {
+      "cmd": "take thing",
+      "expect": [
+        "a fact with mass",
+        "You score 15"
+      ]
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "u"
+    },
+    {
+      "cmd": "u"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "u"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "s"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "u"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "n"
+    },
+    {
+      "cmd": "kibble"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "d"
+    },
+    {
+      "cmd": "sw"
+    },
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "drop cache"
+    },
+    {
+      "cmd": "drop plate"
+    },
+    {
+      "cmd": "drop thing",
+      "expect": [
+        "The books balance. That is what books are for.",
+        "Achievement unlocked: The Full Ledger.",
+        "You have won."
+      ]
     }
   ],
   "expectedScore": 350,
-  "expectedAchievements": []
+  "expectedRank": "Proprietor of the Hollowdeep",
+  "expectedAchievements": [
+    "on-the-books",
+    "the-answer",
+    "everything-you-carried",
+    "the-bird-went-too",
+    "unhurried",
+    "nobody-asked",
+    "the-full-ledger"
+  ]
 }
