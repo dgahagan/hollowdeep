@@ -348,7 +348,7 @@ accessibility + tablet + performance passes, docs closeout.
 
 ## Progress Tracker
 
-- [ ] T1 — Tokens, themes, typography, shell (`opus`, human)
+- [x] T1 — Tokens, themes, typography, shell (`opus`, human) — `8ad9187` (faces pinned: Literata + JetBrains Mono; fonts in `public/fonts/` for preload, see commit body)
 - [ ] T2 — Settings + persistence layers (`sonnet`)
 - [ ] T3 — Transcript/input upgrades, shortcuts (`sonnet`)
 - [ ] T4 — Auto-map (`opus`)
