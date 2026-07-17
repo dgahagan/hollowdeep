@@ -356,7 +356,7 @@ accessibility + tablet + performance passes, docs closeout.
 - [x] T6 — Death modal, hardcore, undo (`opus`) — `ba34fea` (vignette contract: `marquee-death-<messageId minus '-death'>.webp` — Phase B names files to match)
 - [x] T7 — Journal + hints panels (`sonnet`) — `a869969` (hints opens from a header button — FR-2.8 has no free key for it)
 - [x] T8 — Save metadata + export/import (`sonnet`) — `8dab033` (named slots enveloped; the autosave ring stays raw engine saves forever)
-- [ ] T9 — Adventure select + new-game flow (`opus`)
+- [x] T9 — Adventure select + new-game flow (`opus`) — `9c684ed` (blurbs are UI copy in the registry; hardcore locked via `setAdventureHardcore` written pre-mount)
 - [ ] T10 — Help, onboarding, stats (`sonnet`)
 - [ ] T11 — Accessibility/tablet/perf pass (`sonnet`)
 - [ ] T12 — Integration smoke + docs closeout (`opus`)
