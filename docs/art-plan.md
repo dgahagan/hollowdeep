@@ -1,0 +1,232 @@
+# Phase B — Art Production Design Plan
+
+**Status:** DRAFT — for review (2026-07-17). Style direction, the unseen-creature
+treatment, format, and tooling ownership are settled (decisions logged below);
+the verbatim style suffix is deliberately NOT settled here — locking it is this
+plan's first deliverable, from test batches, with human sign-off.
+**Phase:** B (parallel track; SCOPE §3). Blocks: v1. Does not block Phase 3 —
+the UI consumes whatever `manifest.artFormat` names, so the two tracks merge
+cleanly in either order (one coordination point, §7).
+**Settled by:** [PROJECT-BRIEF.md](PROJECT-BRIEF.md) §9 (real image files, no
+JSON pixel grids), [REQUIREMENTS.md](REQUIREMENTS.md) FR-4.1–FR-4.6,
+[SCOPE.md](SCOPE.md) Phase B.
+**Branch:** `feat/art` once READY; `/impl-plan` turns this into the task graph.
+
+This is the WHAT/WHY. The bards-tale-clone pipeline
+(`~/work/personal/fable/bards-tale-clone/docs/art-pipeline.md`) is the working
+precedent; this plan keeps its manifest-first discipline and drops everything
+palette/pixel-related, which this project explicitly does not do.
+
+---
+
+## 1. What is already decided
+
+| | |
+|---|---|
+| **Model** | FLUX.2-klein-4B, locally, on the host RTX 5080. No cloud, no APIs (FR-4.2) |
+| **Assets** | Real image files, lazy-loaded; never JSON text grids (brief §9) |
+| **Source of truth** | A committed per-adventure art manifest; regeneration is idempotent and seed-deterministic (FR-4.2, FR-4.4) |
+| **Budget** | ≤ 150 KB per location image at delivered resolution (FR-4.3) |
+| **Coherence** | One verbatim style suffix per art class; subject prompts vary, style strings never do (FR-4.1) |
+| **Review** | Contact sheets, ~6–10 seeds per subject, `chosen_seed` recorded (FR-4.5) |
+| **Alt text** | Already handled — the engine feeds each scene's `brief` as the image's accessible name; art adds nothing here |
+
+**Settled 2026-07-17 (this plan's Q&A):**
+
+1. **The look is lamplit oil, dark.** Moody oil-painting chiaroscuro: most of
+   every frame in darkness, the subject picked out in warm lantern light.
+   It matches the narrator's register (the horror is tidiness, seen by one
+   lamp), it makes the lamp — the game's central object — the literal light
+   source of the art, and it hides diffusion artifacts where the game already
+   says nothing can be seen. Surface scenes (region A, the gunnis) get the
+   same palette under overcast daylight, so the two lit worlds read as one
+   painting.
+2. **The thief and the stalker get indirect art.** The content says the thief
+   is "never a portrait" and the stalker is never fully seen; the art obeys.
+   Thief: its work — drag-marks into the dark, the midden's sorted shine.
+   Stalker: a wrongness at the edge of the lamp's circle, mostly negative
+   space. These two prompts are the style's hardest test and belong in the
+   style-development batch (§4).
+3. **WebP, and only WebP.** `manifest.artFormat` is a single value per module
+   and every target browser (NFR-2, last two versions) decodes WebP. AVIF
+   buys ~20% at these sizes and a second encode path; not worth it. The
+   schema already accepts `webp` — no engine change.
+4. **test-cave keeps its placeholder SVGs.** It is a format fixture, not a
+   small Hollowdeep; real art there would be ~30 generations of pure cost.
+   (Assumption 1, §9 — confirm.)
+
+## 2. Constraints and givens
+
+- **The generator must be rewritten.** bards-tale-clone's `host_gen.py` /
+  `pixelcore.py` are gone from its working tree (only a `.pyc` survives) and a
+  host-side search found nothing recoverable. The contract is fully documented
+  (request JSON in, images out, load-model-once, skip-existing, fixed seeds)
+  and the rewrite is bounded (~100 lines). It lives in **this repo** under
+  `tools/art/`, so Hollowdeep never again depends on a sibling project's
+  working tree. If the original turns up on the host later, it informs the
+  rewrite; it does not replace it.
+- **The bridge:** the agent runs in a distrobox without GPU access; every
+  generation run is `distrobox-host-exec` → host Python venv → `tools/art/
+  host_gen.py` reading a request file. First task of the implementation plan
+  is proving this bridge end-to-end with one throwaway image (the venv on the
+  host may also need creating — bounded, documented, one-time).
+- **No crush, no palettes, no tiling.** This pipeline ends at "optimize and
+  commit the raster." The palette-quantization, sub-palette, and text-grid
+  import machinery of the precedent is explicitly out (brief §9). FLUX's
+  inability to tile is irrelevant — nothing here tiles.
+- **~1.5 s per image** on the 5080 changes curation economics: generate wide
+  (6–10 seeds), judge contact sheets, never nurse a single image.
+- **The validate glob is merciless, atomically.** `missing-art-file` checks
+  `art/<artId>.<artFormat>` for every artId. Flipping `artFormat` to `webp`
+  therefore requires every artId's final image in the same commit — the swap
+  is one atomic integration commit at the end, not a drip (§7).
+
+## 3. The subjects — what actually gets painted
+
+The module today ships **97 artIds** (58 locations sharing one maze artId ⇒ 53
+scene ids, plus items and creatures). Phase B adds four marquee subjects.
+Roughly:
+
+| Class | Count | Examples |
+|---|---|---|
+| `scene` | ~53 | every location; the six twisty rooms share `twisty` (§9's fairness — identical rooms look identical) |
+| `item` | ~36 | treasures, tools, keys, scenery items events hang on |
+| `creature` | 6 | storekeeper, bats, blind fish, newt as portraits; **thief and stalker indirect** (decision 2) |
+| `marquee` | 4 | title screen; ending-A epilogue; ending-B epilogue; one death vignette (FR-4.1's "death/ending art") |
+| **Total** | **~99** | |
+
+UI accents (FR-4.1's tail) stay CSS/procedural and belong to Phase 3 — a
+generated texture is the wrong tool for a border.
+
+The definitive subject list is derived from the module by a tool, not by hand:
+`tools/art/audit.ts` diffs `art-manifest.json` against every `artId` the
+module references, so a content change that adds an artId fails loudly in the
+art pipeline too.
+
+## 4. The style suffix — locked by contact sheet, not by prose
+
+The single highest-leverage decision is the verbatim suffix string, and it
+cannot be settled in a document — it has to be settled by looking. The
+style-development task:
+
+1. Draft 3–5 candidate suffixes in the lamplit-oil direction (varying on:
+   oil-on-canvas vs oil-on-board texture, edge darkness, brush visibility,
+   color temperature of the lamp light).
+2. Pick **six probe subjects** that span the space: one town exterior
+   (main-street), one timbered interior (long-drift), one karst cavern
+   (cathedral), one past-the-breach interior (toolroom), one item
+   (brass-lantern), one hard case (the stalker's indirect portrait).
+3. Generate every candidate suffix × probe × 6 seeds; contact-sheet the lot
+   **at delivered scale** (the precedent's standing rule — verdicts come from
+   what ships, never from raw renders).
+4. Human picks. The winning suffix strings (one per art class — scene, item,
+   creature, marquee share a family but differ in framing language) are
+   recorded in the manifest **verbatim and frozen**. Changing a suffix after
+   subjects are finaled reopens every finaled subject; that is the point of
+   freezing it.
+
+## 5. The art manifest
+
+`adventures/hollowdeep/art-manifest.json` — committed, and the source of truth
+(FR-4.2). It is **not** one of the module's eleven documents: the module
+loader never reads it, the art tooling owns it (`module-format.md` stays
+true — adding an adventure still means eleven documents; art production is a
+separate concern with its own contract). A schema + validator lives in
+`tools/art/` and runs in the gate via a new `npm run validate:art`.
+
+```json
+{
+  "styleSuffixes": {
+    "scene": "<locked verbatim by §4>",
+    "item": "…", "creature": "…", "marquee": "…"
+  },
+  "subjects": [
+    {
+      "id": "cathedral",
+      "artClass": "scene",
+      "subject": "vast limestone cavern vault, single warm lantern glow …",
+      "dims": [1024, 640],
+      "seedsGenerated": [3, 7, 11, 17, 23, 42],
+      "chosenSeed": 17,
+      "notes": "echo foreshadow — keep the ceiling lost in dark"
+    }
+  ]
+}
+```
+
+Rules carried over from the precedent: subject prompts carry the art
+direction (never anyone's memory); every seed ever generated is recorded; a
+`chosenSeed` plus the manifest reproduces any shipped image bit-for-bit
+(FR-4.4).
+
+**Dims by class** (generation size; multiples FLUX likes):
+`scene` 1024×640 (8:5), `item` 640×640, `creature` 640×800 (4:5), `marquee`
+1344×768. Delivered files are downscaled to ≤ 2× their largest on-screen
+display size — the exact numbers are the one Phase 3 coordination point (§7)
+and live in the manifest, not in tool code.
+
+## 6. The workflow, end to end
+
+```
+audit (artIds ⇄ manifest)                        tools/art/audit.ts
+  → request builder (pending subjects → JSON)    tools/art/build-request.ts
+  → generate on host (idempotent, seeded)        distrobox-host-exec → tools/art/host_gen.py
+  → contact sheets (HTML, delivered scale)       tools/art/contact-sheet.ts
+  → human verdicts                               art-review/art-review.md (append-only log)
+  → record chosenSeed in manifest
+  → optimize (resize + cwebp, budget-checked)    tools/art/optimize.ts
+  → commit finals to adventures/hollowdeep/art/*.webp
+  → flip manifest.artFormat "svg" → "webp" (one atomic commit, §2)
+```
+
+- Raw candidates live under `dev/art-candidates/` — **gitignored**; only
+  chosen, optimized finals are committed.
+- `optimize.ts` enforces the budget: a scene over 150 KB fails the run and
+  names the file (quality step-down is a recorded decision, not a silent one).
+- The review log records every verdict *including rejections with reasons* —
+  the precedent's "too cute" purge is the cautionary tale worth the paper
+  trail. Ties go to a NEEDS-HUMAN list.
+
+## 7. Integration and coordination with Phase 3
+
+- The engine and UI already consume `art/<artId>.<artFormat>` — the flip is
+  data-only. **One atomic commit** swaps `artFormat` and lands all ~99 finals
+  (plus deleting the placeholder SVGs); the gate's `missing-art-file` check
+  makes a partial swap impossible to commit, which is a feature.
+- **Coordination point (the only one):** delivered pixel sizes should be
+  ≥ 2× the scene panel's largest rendered size. If Phase 3 lands first, read
+  the real numbers from its layout; if Phase B lands first, deliver at the
+  §5 defaults (generous) and let `optimize.ts` re-emit smaller later — the
+  manifest and raws make that a re-run, not a re-decision.
+- The four marquee images have no `artId` consumer yet (title/endings/death
+  are Phase 3 screens). They are generated, curated, and committed under
+  `adventures/hollowdeep/art/marquee-*.webp` on this track; Phase 3 wires
+  them. Shipping unreferenced files is deliberate — curation is the long
+  pole, wiring is trivial.
+
+## 8. Deliverables & exit criteria (SCOPE Phase B, restated)
+
+1. `tools/art/` — generator (host), request builder, audit, contact-sheet,
+   optimizer; `npm run validate:art` in the gate.
+2. Locked style suffixes, chosen from test batches by the human (§4).
+3. `adventures/hollowdeep/art-manifest.json` — complete over every artId +
+   marquees, every subject with recorded seeds and a `chosenSeed`.
+4. `art-review/art-review.md` — the verdict log.
+5. ~99 optimized WebP finals committed; `artFormat: "webp"`; every scene
+   ≤ 150 KB; gate green.
+6. `docs/art-pipeline.md` — the how-it-works guide (SCOPE §6's outstanding
+   docs deliverable), written at closeout from what actually happened.
+
+**Exit:** every subject has a chosen, optimized, style-consistent final wired
+into the game (SCOPE), `npm run dev` shows painterly Hollowdeep end to end,
+and a fresh clone can regenerate any image from the manifest alone.
+
+## 9. Assumptions for the human to confirm
+
+1. **test-cave stays on placeholder SVGs** (decision 4). Say so now if the
+   fixture should be painted too (~+30 subjects).
+2. **WebP-only** is acceptable (decision 3); AVIF/fallbacks stay out.
+3. **The death vignette is one image**, not eight — the eight deaths share a
+   single "the cave, which has seen this before" painting. Per-death art is
+   a [C]-shaped idea that can ride a later pass.
+4. **Marquee art lands unreferenced** until Phase 3 wires the screens (§7).
