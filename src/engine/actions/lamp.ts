@@ -1,7 +1,7 @@
 import type { AdventureModule, Item } from '../schema';
 import type { Target } from '../parser/parse';
 import { findItem, getItemState, isCarrying, setItemState } from '../state';
-import { applyEffects } from '../systems/events';
+import { applyEffects, fireTriggers } from '../systems/events';
 import { ITEM_NOWHERE, type GameState, type OutputEvent } from '../types';
 import { acted, refuse, type ActionHandler } from './index';
 
@@ -70,6 +70,19 @@ export const lightHandler: ActionHandler = (module, state, command) => {
     return refuse(state, 'Light what?');
   }
   if (!isTheLamp(module, command.target)) {
+    // "light X" for anything that isn't the lamp falls through to X's `use`
+    // events — content's transitive verbs ride `use` (hollowdeep-plan §12's
+    // idiom: pull/pry/fit/light/seal), and `light`/`ignite` being core verbs
+    // must not swallow "light the fuse" before the adventure can hear it.
+    // Only if no event fires does the player get the flat refusal.
+    if (command.target.kind === 'item') {
+      const [next, events] = fireTriggers(module, state, { type: 'use', target: command.target.id });
+      if (events.length > 0) {
+        return acted(next, events);
+      }
+      // `next`, not `state`: same chance-draw reasoning as useHandler.
+      return refuse(next, `You can't light the ${command.noun}.`);
+    }
     return refuse(state, `You can't light the ${command.noun}.`);
   }
 
