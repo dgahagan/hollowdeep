@@ -4,13 +4,27 @@
       "id": "grate-opened",
       "points": 10,
       "description": "Opened the grate and got below. The cave does not count you as a visitor until you are inside it.",
-      "when": [{ "flag": "grate-open" }]
+      "when": [
+        {
+          "flag": "grate-open"
+        }
+      ]
     }
   ],
   "deathPenalty": 10,
+  "hintPenalty": 5,
   "ranks": [
-    { "minScore": 0, "title": "Tourist" },
-    { "minScore": 45, "title": "Spelunker" },
-    { "minScore": 100, "title": "Master of the Test Cave" }
+    {
+      "minScore": 0,
+      "title": "Tourist"
+    },
+    {
+      "minScore": 45,
+      "title": "Spelunker"
+    },
+    {
+      "minScore": 100,
+      "title": "Master of the Test Cave"
+    }
   ]
 }

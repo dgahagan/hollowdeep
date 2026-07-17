@@ -8,6 +8,7 @@ import {
   zCreature,
   zEffect,
   zEvent,
+  zHints,
   zId,
   zItem,
   zLocation,
@@ -125,6 +126,13 @@ describe('zCondition', () => {
     expect(cond.atLocation).toBe('ledge');
   });
 
+  // Added with schema v2 — mirrors deathsAtMost exactly (hints-timers plan §5.3).
+  it('accepts hintsAtMost and rejects a negative one', () => {
+    const cond: Condition = zCondition.parse({ hintsAtMost: 0 });
+    expect(cond.hintsAtMost).toBe(0);
+    expect(zCondition.safeParse({ hintsAtMost: -1 }).success).toBe(false);
+  });
+
   it('rejects an empty condition rather than treating it as always-true', () => {
     expect(zCondition.safeParse({}).success).toBe(false);
   });
@@ -142,7 +150,7 @@ describe('zCondition', () => {
 // ─── effects ─────────────────────────────────────────────────────────────────
 
 describe('zEffect', () => {
-  it('accepts every variant in the frozen v1 union', () => {
+  it('accepts every variant in the frozen v2 union', () => {
     const effects: Effect[] = [
       zEffect.parse({ kind: 'print', text: 'The grate creaks open.' }),
       zEffect.parse({ kind: 'printId', id: 'dark-warning' }),
@@ -156,6 +164,7 @@ describe('zEffect', () => {
       zEffect.parse({ kind: 'award', achievement: 'first-treasure' }),
       zEffect.parse({ kind: 'endGame', victory: true }),
       zEffect.parse({ kind: 'activateCreature', creature: 'shadow-packrat' }),
+      zEffect.parse({ kind: 'startTimer', timer: 'roof-fall', turns: 6 }),
     ];
     expect(effects).toHaveLength(EFFECT_KINDS.length);
     expect(effects.map((e) => e.kind)).toEqual([...EFFECT_KINDS]);
@@ -163,7 +172,7 @@ describe('zEffect', () => {
 
   // The freeze is the point: this is the tripwire for someone adding a variant
   // ad hoc instead of bumping the schema version (see effects.ts banner).
-  it('has exactly the 12 frozen v1 kinds', () => {
+  it('has exactly the 13 frozen v2 kinds', () => {
     expect([...EFFECT_KINDS]).toEqual([
       'print',
       'printId',
@@ -177,7 +186,13 @@ describe('zEffect', () => {
       'award',
       'endGame',
       'activateCreature',
+      'startTimer',
     ]);
+  });
+
+  it('rejects a startTimer with zero or fractional turns', () => {
+    expect(zEffect.safeParse({ kind: 'startTimer', timer: 'roof-fall', turns: 0 }).success).toBe(false);
+    expect(zEffect.safeParse({ kind: 'startTimer', timer: 'roof-fall', turns: 1.5 }).success).toBe(false);
   });
 
   it('defaults setFlag value to true', () => {
@@ -485,8 +500,9 @@ describe('zEvent', () => {
 
   it('accepts each trigger type the design plan lists', () => {
     // `search` and `verb` were added in T9 — §8's `search tree` and `jump`
-    // hazard have no other expression. See event.ts.
-    const types = ['enter', 'take', 'drop', 'use', 'read', 'open', 'search', 'verb', 'flagSet'];
+    // hazard have no other expression. `timerExpired` arrived with schema v2
+    // (its target is a timer id). See event.ts.
+    const types = ['enter', 'take', 'drop', 'use', 'read', 'open', 'search', 'verb', 'flagSet', 'timerExpired'];
     for (const type of types) {
       expect(
         zEvent.safeParse({
@@ -536,6 +552,12 @@ describe('zEvent', () => {
     ).toBe(false);
   });
 
+  it('rejects a timerExpired trigger with no target timer', () => {
+    expect(
+      zEvent.safeParse({ id: 'e', on: { type: 'timerExpired' }, do: [{ kind: 'die' }] }).success,
+    ).toBe(false);
+  });
+
   it('rejects an event that does nothing', () => {
     expect(zEvent.safeParse({ id: 'e', on: { type: 'enter', target: 'road' }, do: [] }).success).toBe(
       false,
@@ -578,6 +600,7 @@ describe('zScoring', () => {
   const validScoring = {
     milestones: [{ id: 'grate-opened', points: 10, when: [{ flag: 'grate-open' }] }],
     deathPenalty: 10,
+    hintPenalty: 5,
     ranks: [
       { minScore: 0, title: 'Tourist' },
       { minScore: 50, title: 'Spelunker' },
@@ -616,6 +639,67 @@ describe('zScoring', () => {
 
   it('rejects a negative death penalty (it is a deduction, stored positive)', () => {
     expect(zScoring.safeParse({ ...validScoring, deathPenalty: -10 }).success).toBe(false);
+  });
+
+  it('rejects a missing or negative hint penalty (same deduction rules as deathPenalty)', () => {
+    const { hintPenalty: _h, ...noHintPenalty } = validScoring;
+    expect(zScoring.safeParse(noHintPenalty).success).toBe(false);
+    expect(zScoring.safeParse({ ...validScoring, hintPenalty: -5 }).success).toBe(false);
+  });
+});
+
+// ─── hints ───────────────────────────────────────────────────────────────────
+
+describe('zHints', () => {
+  const validHints = {
+    noHintMessageId: 'no-hints',
+    hints: [
+      {
+        id: 'pump-gate',
+        when: [{ all: [{ visited: 'shaft-head' }, { notFlag: 'pump-drained' }] }],
+        ladder: ['A nudge.', 'A hint.', 'The solution.'],
+      },
+    ],
+  };
+
+  it('accepts a full ladder', () => {
+    const hints = zHints.parse(validHints);
+    expect(hints.hints[0]?.ladder).toHaveLength(3);
+  });
+
+  it('accepts the minimal legal document — required, but may be empty', () => {
+    expect(zHints.parse({ noHintMessageId: 'no-hints', hints: [] }).hints).toEqual([]);
+  });
+
+  it('rejects a missing noHintMessageId (an adventure may offer no hints, but not silently)', () => {
+    expect(zHints.safeParse({ hints: [] }).success).toBe(false);
+  });
+
+  it('rejects an empty ladder', () => {
+    expect(
+      zHints.safeParse({
+        ...validHints,
+        hints: [{ id: 'x', when: [{ flag: 'f' }], ladder: [] }],
+      }).success,
+    ).toBe(false);
+  });
+
+  it('rejects a hint with no when clause (an always-available hint is a typo)', () => {
+    expect(
+      zHints.safeParse({
+        ...validHints,
+        hints: [{ id: 'x', when: [], ladder: ['A nudge.'] }],
+      }).success,
+    ).toBe(false);
+  });
+
+  it('rejects an unknown key', () => {
+    expect(
+      zHints.safeParse({
+        ...validHints,
+        hints: [{ id: 'x', when: [{ flag: 'f' }], ladder: ['A nudge.'], until: [] }],
+      }).success,
+    ).toBe(false);
   });
 });
 
@@ -740,11 +824,13 @@ describe('zAdventureModule', () => {
     scoring: {
       milestones: [],
       deathPenalty: 10,
+      hintPenalty: 5,
       ranks: [{ minScore: 0, title: 'Tourist' }],
     },
     achievements: [],
     strings: { 'dark-warning': 'It is pitch dark.', 'dark-death': 'You fall.' },
     walkthrough: { steps: [{ cmd: 'look' }], expectedScore: 0 },
+    hints: { noHintMessageId: 'dark-warning', hints: [] },
   };
 
   it('assembles a whole module', () => {
@@ -764,7 +850,7 @@ describe('zAdventureModule', () => {
   });
 
   it('rejects an unknown document', () => {
-    expect(zAdventureModule.safeParse({ ...minimalModule, hints: [] }).success).toBe(false);
+    expect(zAdventureModule.safeParse({ ...minimalModule, journal: [] }).success).toBe(false);
   });
 
   it('maps every document filename to a schema', () => {
@@ -773,6 +859,7 @@ describe('zAdventureModule', () => {
         'achievements.json',
         'creatures.json',
         'events.json',
+        'hints.json',
         'items.json',
         'locations.json',
         'manifest.json',

@@ -27,7 +27,7 @@ Then play. See **[docs/PLAYING.md](docs/PLAYING.md)** for how to talk to the cav
 | **`test-cave`** | A small complete adventure — 11 locations, 11 items, 3 creatures — the format reference and test fixture |
 | **UI** | Scene, transcript, command input, action buttons, inventory, status bar, save dialog. Plain on purpose; Phase 3 replaces it. |
 | **Validator** | `npm run validate` checks any adventure against the schema and 40 consistency rules |
-| **Tests** | 679 across 23 files, including a scripted walkthrough that wins at every seed |
+| **Tests** | 747 across 25 files, including a scripted walkthrough that wins at every seed |
 
 ## Requirements
 

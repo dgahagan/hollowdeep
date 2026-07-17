@@ -81,6 +81,15 @@ export interface EndState {
  *   - `lampWarned` — each `warnAt` threshold fires exactly once (FR-1.4).
  *   - `lastCommand` — `again`/`g` replays the last *consumed* command (FR-2.3).
  *   - `verbose` — the verbose/brief description toggle (FR-2.3).
+ *
+ * Added at SAVE_VERSION 2 (hints-timers plan §4.3, §5.3):
+ *   - `timers` — timer id → the turn its expiry fires. The thief's
+ *     elapsed-turn arithmetic, generalized; an entry is removed when it fires.
+ *   - `hintsUsed` — total hint rungs revealed, ever. Read by the penalty math
+ *     and `Condition.hintsAtMost` (which exists for the same reason
+ *     `deathsAtMost` does).
+ *   - `hintsRevealed` — hint id → rungs revealed. What lets selection skip
+ *     exhausted ladders, and what the Phase 3 hints panel will redisplay.
  */
 export interface GameState {
   /** mulberry32 state. Advances on every draw; see rng.ts. */
@@ -99,9 +108,15 @@ export interface GameState {
   visited: string[];
   firedEvents: string[];
   creatures: Record<string, CreatureState>;
+  /** timer id → expiry turn. See the SAVE_VERSION 2 note above. */
+  timers: Record<string, number>;
 
   score: number;
   deaths: number;
+  /** Total hint rungs revealed. See the SAVE_VERSION 2 note above. */
+  hintsUsed: number;
+  /** hint id → rungs revealed (0..ladder.length). See the SAVE_VERSION 2 note above. */
+  hintsRevealed: Record<string, number>;
   achievements: string[];
   scoredCarry: string[];
   scoredDeposit: string[];
@@ -129,7 +144,13 @@ export type OutputEvent =
   | { kind: 'score'; text: string; points: number; total: number }
   | { kind: 'achievement'; text: string; achievementId: string }
   | { kind: 'question'; text: string; options: string[] }
-  | { kind: 'game-over'; text: string; victory: boolean; score: number; rank: string };
+  | { kind: 'game-over'; text: string; victory: boolean; score: number; rank: string }
+  /**
+   * A hint rung revealed by the `hint` verb (hints-timers plan §5.3).
+   * `rung` is 1-based — the Nth rung of `hintId`'s ladder just shown. Additive;
+   * not save state, and the UI can style it distinctly once Phase 3 wants to.
+   */
+  | { kind: 'hint'; text: string; hintId: string; rung: number };
 
 /** What `step` returns: a NEW state plus the turn's output. Never mutates. */
 export interface StepResult {

@@ -161,4 +161,31 @@ describe('validator golden tests — broken fixtures', () => {
       field: 'initialLocation',
     });
   });
+
+  it('unstarted-timer-expiry.json: a timerExpired trigger names a timer no startTimer ever starts', () => {
+    // Mutation: trap-springs' trigger target is "phantom-timer" instead of
+    // "trap-timer" — arm-trap only ever starts "trap-timer", so the listener
+    // can never hear. The reverse (arm-trap's own started timer, unheard by
+    // anything) stays legal, which valid.json's own timer pair proves.
+    const module = loadFixture('unstarted-timer-expiry');
+    const errors = checkConsistency(module, BASE_ART_FILES);
+    expectExactlyOneError(errors, {
+      code: 'unstarted-timer-expiry',
+      document: 'events.json',
+      id: 'trap-springs',
+      field: 'on.target',
+    });
+  });
+
+  it('dangling-no-hint-message.json: noHintMessageId resolves to no known string', () => {
+    // Mutation: hints.noHintMessageId is "no-such-string" instead of "no-hints".
+    const module = loadFixture('dangling-no-hint-message');
+    const errors = checkConsistency(module, BASE_ART_FILES);
+    expectExactlyOneError(errors, {
+      code: 'dangling-no-hint-message',
+      document: 'hints.json',
+      id: 'hints',
+      field: 'noHintMessageId',
+    });
+  });
 });

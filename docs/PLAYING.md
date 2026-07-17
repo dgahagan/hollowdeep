@@ -60,7 +60,8 @@ one, so what you learn here transfers.
 (`offer`) · `use`
 
 **Bookkeeping:** `inventory` (`i`, `inv`) · `score` · `wait` (`z`) · `again`
-(`g`, repeats your last real command) · `verbose` · `brief` · `help`
+(`g`, repeats your last real command) · `verbose` · `brief` · `help` · `hint`
+(`hints`)
 
 `verbose` gives you the full description of a room every time; `brief` goes back
 to the short one for places you have already been. `help` prints a short version
@@ -101,9 +102,10 @@ trapped in one.
 ## Turns
 
 A turn passes only when something actually happens. Walking, taking, and looking
-cost a turn. A typo, a refusal, a question, and checking your `inventory` or
-`score` cost nothing. This matters because your lamp burns fuel per turn — the
-cave never bills you for a mistake.
+cost a turn. A typo, a refusal, a question, checking your `inventory` or
+`score`, and asking for a `hint` cost nothing. This matters because your lamp
+burns fuel per turn — the cave never bills you for a mistake, and it never bills
+you for being stuck.
 
 ## Light
 
@@ -161,3 +163,8 @@ always works.
 `look` again. `examine` everything, including things that sound like scenery.
 `search` what looks like it has an inside. Read what has writing on it. The cave
 rewards paying attention to its prose — the descriptions are not decoration.
+
+Still stuck? Type `hint`. Each hint starts as a nudge and gets more direct the
+more you ask, and every one costs a few points — it costs points, never turns,
+so asking mid-crisis will not make the crisis worse. Finishing without asking at
+all is the kind of thing achievements are made of.

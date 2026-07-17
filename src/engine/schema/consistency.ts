@@ -76,7 +76,9 @@ export type ConsistencyErrorCode =
   | 'missing-art-file'
   | 'max-score-mismatch'
   | 'unbounded-score-effect'
-  | 'borrowed-source-text';
+  | 'borrowed-source-text'
+  | 'unstarted-timer-expiry'
+  | 'dangling-no-hint-message';
 
 /**
  * A single consistency error. `document`/`id`/`field` together pinpoint the
@@ -142,6 +144,14 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
 
   const flagReads: FlagRead[] = [];
   const flagWrites = new Set<string>();
+
+  // A `timerExpired` target that no `startTimer` anywhere names is the same
+  // typo shape as `unwritten-flag-read` — a listener that can never hear. The
+  // reverse (a `startTimer` nobody listens for) is legal, exactly like a flag
+  // set and never read, so only the started set is collected; unheard timers
+  // are never flagged.
+  const startedTimers = new Set<string>();
+  const timerExpiredTargets: Array<{ timer: string; event: GameEvent }> = [];
 
   function checkCondition(
     cond: Condition,
@@ -444,6 +454,12 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
         break;
       case 'endGame':
         break;
+      case 'startTimer':
+        // `timer` is an implicit namespace like flags — no declaration site,
+        // so nothing to resolve here. Collected so the unstarted-timer-expiry
+        // check (below) can audit timerExpired targets against it.
+        startedTimers.add(effect.timer);
+        break;
       case 'activateCreature':
         if (!creatureIds.has(effect.creature)) {
           push({
@@ -520,6 +536,13 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
       case 'word':
         // Neither uses `target`; the schema carries `turn`/`word` instead.
         break;
+      case 'timerExpired':
+        // `target` is a timer id — an implicit namespace, like flags. Not
+        // dangling by itself (there is no declaration site to check against
+        // here); recorded so the unstarted-timer-expiry check below can audit
+        // it against the startTimer effects collected above.
+        timerExpiredTargets.push({ timer: target, event });
+        break;
       default: {
         const exhaustive: never = event.on.type;
         throw new Error(`checkConsistency: unhandled trigger type ${String(exhaustive)}`);
@@ -551,6 +574,25 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
   // ── scoring.json (milestone conditions) ──────────────────────────────────
   for (const milestone of module.scoring.milestones) {
     checkConditions(milestone.when, 'scoring.json', milestone.id, 'when');
+  }
+
+  // ── hints.json ───────────────────────────────────────────────────────────
+  // Same grammar as everywhere else: `when` runs through the shared
+  // checkConditions (dangling itemAt/creatureAt/atLocation/visited refs, and
+  // flag reads register in `flagReads` so unwritten-flag-read covers them
+  // too, exactly like a milestone's `when`). `noHintMessageId` is a
+  // strings.json reference, checked the same way manifest's message ids are.
+  for (const hint of module.hints.hints) {
+    checkConditions(hint.when, 'hints.json', hint.id, 'when');
+  }
+  if (!stringIds.has(module.hints.noHintMessageId)) {
+    push({
+      code: 'dangling-no-hint-message',
+      document: 'hints.json',
+      id: 'hints',
+      field: 'noHintMessageId',
+      message: `noHintMessageId "${module.hints.noHintMessageId}" is not a known string`,
+    });
   }
 
   // ── manifest.json ────────────────────────────────────────────────────────
@@ -725,6 +767,11 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
       if (effect.kind === 'print') checkProse('events.json', event.id, `do[${i}].text`, effect.text);
     }
   }
+  for (const hint of module.hints.hints) {
+    hint.ladder.forEach((rung, i) => {
+      checkProse('hints.json', hint.id, `ladder[${i}]`, rung);
+    });
+  }
 
   // ── art files ─────────────────────────────────────────────────────────
   //
@@ -765,6 +812,25 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
         id: read.id,
         field: read.field,
         message: `flag "${read.flag}" is read but never set by any setFlag/clearFlag effect`,
+      });
+    }
+  }
+
+  // ── timers: every timerExpired target must be started somewhere ─────────
+  // `timer` has no declaration site — a timer id only ever comes into being
+  // via a `startTimer` effect (collected above). A `timerExpired` trigger
+  // naming one no `startTimer` anywhere names can never fire, which is a
+  // typo indistinguishable from working content until it doesn't. The
+  // reverse — a `startTimer` nobody listens for — is legal, like a flag set
+  // and never read, so it is deliberately not checked here.
+  for (const { timer, event } of timerExpiredTargets) {
+    if (!startedTimers.has(timer)) {
+      push({
+        code: 'unstarted-timer-expiry',
+        document: 'events.json',
+        id: event.id,
+        field: 'on.target',
+        message: `timerExpired trigger references timer "${timer}", which no startTimer effect ever starts`,
       });
     }
   }
@@ -839,4 +905,5 @@ function checkDuplicateIds(
   checkOne('events.json', module.events);
   checkOne('achievements.json', module.achievements);
   checkOne('scoring.json', module.scoring.milestones);
+  checkOne('hints.json', module.hints.hints);
 }

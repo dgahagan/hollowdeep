@@ -354,14 +354,37 @@ Carried from design plan §11 — do not create tasks for these:
 
 ## Progress Tracker
 
-- [ ] T1 — Schema v2: new vocabulary, 11th document, version bumps, catch-up (`opus`)
-- [ ] T2 — GameState fields and the 1 → 2 save migration (`opus`)
-- [ ] T3 — The timer system (`opus`)
-- [ ] T4 — The hint verb, selection rule, and hintsAtMost (`sonnet`)
-- [ ] T5 — Validator additions and golden fixtures (`sonnet`)
-- [ ] T6 — test-cave exercises everything (`opus`)
-- [ ] T7 — Integration tests against the real fixture (`sonnet`)
-- [ ] T8 — Documentation and closeout (`opus`)
+- [x] T1 — Schema v2: new vocabulary, 11th document, version bumps, catch-up (`opus`) — `57871c0` (startTimer stub is a no-op, not a throw — the frozen-union coverage test asserts every effect applies cleanly; T3 replaces it. Loader-test handshake case moved to ^9.0.0, since ^2.0.0 now matches.)
+- [x] T2 — GameState fields and the 1 → 2 save migration (`opus`) — `e0dcf8c` (v0Blob re-fabricated as a true v0 — missing all four latter-day fields — so the old v0 test now exercises the 0→1→2 chain for free)
+- [x] T3 — The timer system (`opus`) — `fac0ce2` (expiry fires on *strictly-past*, not at-or-past — the design plan's §4.3 parenthetical about increment order was wrong for action effects, and strict-past is what keeps its stated n-further-moves contract exact. Tick-armed timers count from the next turn; documented. **Finding:** useHandler treats output-less use events as refusals while keeping their state mutations — pre-existing, flagged for the human, not fixed here.)
+- [x] T4 — The hint verb, selection rule, and hintsAtMost (`sonnet`) — `dce5efb` (handler lives in meta.ts beside the other free verbs; lookupString exported from events.ts rather than duplicated; no app change needed — TranscriptPanel has no exhaustive kind switch)
+- [x] T5 — Validator additions and golden fixtures (`sonnet`) — `0a7c4d6` (hints `when` routed through the existing checkConditions, so dangling refs and flag reads came for free — verified by test, not assumed; document-level error id is `hints`, matching the `manifest` convention)
+- [x] T6 — test-cave exercises everything (`opus`) — `c59db06` (the walked-away bee guard is a 10-way atLocation OR — the condition grammar has no complement of atLocation, a real expressibility note for Hollowdeep's garnet chain, which was sketched with the same "else" shape)
+- [x] T7 — Integration tests against the real fixture (`sonnet`) — `72239b8` (score deltas asserted against a no-hints control run of the same commands rather than hardcoded; no surprises — real content matched the pinned arithmetic first try)
+- [x] T8 — Documentation and closeout (`opus`) — `ad14f10` (help/PLAYING.md agreement verified by driving the running game; all six Hollowdeep preconditions verified — see the closeout note below)
+
+### Closeout — 2026-07-17
+
+All five design-plan exit criteria demonstrated:
+
+| # | Criterion | Evidence |
+|---|---|---|
+| 1 | Gate green, seeded tests unchanged | typecheck, lint, **747 tests / 25 files**, validate, build — all pass; no pre-existing seeded test was re-pinned at any task |
+| 2 | test-cave walkthrough 100/100 with **three** achievements | `tests/walkthrough.test.ts` at all 5 pinned seeds: 100/100, rank, `first-treasure` + `no-deaths` + `no-hints`, 0 deaths |
+| 3 | v1 and chained v0 saves migrate | `save.test.ts`: played v1 blob → SAVE_VERSION 2, loses nothing; v0 blob chains 0→1→2; mid-swarm round-trip fires on schedule |
+| 4 | Fixture grep non-empty | `startTimer`/`timerExpired`/`hintsAtMost` in `adventures/test-cave/events.json`; two ladders in `hints.json`; `hint` driven by integration tests |
+| 5 | Hollowdeep preconditions pass as written | 1: `startTimer` in effects.ts ✓ · 2: `timerExpired` in event.ts ✓ · 3: `hintsAtMost` in conditions.ts ✓ · 4: `hints.json` in MODULE_DOCUMENTS + `hintPenalty` in scoring schema ✓ · 5: `SAVE_VERSION = 2` with a real 1→2 migration ✓ · 6: `hint` core verb in vocab.ts, gate green ✓ |
+
+Findings for the human (also in the T3/T6 tick notes): **(a)** `useHandler`
+decides turn consumption by output length, so a `use` event firing only
+silent effects mutates state, consumes no turn, and prints "Nothing
+happens." — pre-existing, now a documented authoring rule ("arming events
+must print"), but arguably worth an engine fix before Hollowdeep authoring.
+**(b)** The condition grammar has no complement of `atLocation`; "the player
+left" guards are an OR-list of every other room — fine at test-cave's 11
+rooms, verbose at Hollowdeep's 58 (the garnet/gour chains each need one).
+Worth a decision before Phase 2: accept the OR-list idiom, or design a
+`notAtLocation` field (a schema change with its own process).
 
 **Done when:** every box is ticked with its commit SHA, `npm run gate` is
 green on `feat/hints-timers`, all five design-plan exit criteria hold (gate

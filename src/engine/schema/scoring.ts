@@ -37,6 +37,12 @@ export const zScoring = z
     milestones: z.array(zMilestone).default([]),
     /** Subtracted per death. A deduction — it never counts toward `maxScore`. */
     deathPenalty: z.number().int().nonnegative(),
+    /**
+     * Subtracted per hint rung revealed (FR-7.2: "each step costing points",
+     * FR-1.5). A deduction, exactly like `deathPenalty` — it never counts
+     * toward `maxScore`, and the score floors at 0.
+     */
+    hintPenalty: z.number().int().nonnegative(),
     ranks: z.array(zRank).min(1),
   })
   // A rank table with no floor leaves a low scorer rankless at the one moment

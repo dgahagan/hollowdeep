@@ -88,6 +88,16 @@ const LEAF_FIELDS = {
      * "finish with at most two deaths" without another schema change.
      */
     deathsAtMost: z.number().int().nonnegative().optional(),
+    /**
+     * Player must have revealed at most this many hint rungs (total, ever).
+     *
+     * Added with schema v2 (2026-07-17). A copy of `deathsAtMost`'s reasoning
+     * verbatim: FR-1.12's no-hint achievement is content, `hintsUsed` is
+     * engine state content cannot see, and the engine must not hardcode any
+     * specific adventure's achievement. `0` means "never asked"; generalized
+     * to a count for the same reason `deathsAtMost` was.
+     */
+    hintsAtMost: z.number().int().nonnegative().optional(),
     /** Probability 0..1, drawn from the seeded RNG in GameState. */
     chance: z.number().min(0).max(1).optional(),
 } as const;

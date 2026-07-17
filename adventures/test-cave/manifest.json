@@ -2,7 +2,7 @@
   "id": "test-cave",
   "title": "The Test Cave",
   "version": "1.0.0",
-  "engineVersion": "^1.0.0",
+  "engineVersion": "^2.0.0",
   "startLocation": "road",
   "repositoryLocation": "shed",
   "maxScore": 100,

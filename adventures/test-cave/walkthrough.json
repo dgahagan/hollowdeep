@@ -129,6 +129,7 @@
   "expectedRank": "Master of the Test Cave",
   "expectedAchievements": [
     "first-treasure",
-    "no-deaths"
+    "no-deaths",
+    "no-hints"
   ]
 }

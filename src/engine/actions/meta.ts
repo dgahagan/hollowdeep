@@ -1,19 +1,28 @@
 import { carriedItems } from '../state';
+import { evalConditions, lookupString } from '../systems/events';
 import { acted, refuse, type ActionHandler } from './index';
 
-// inventory / score / wait / verbose / brief / help
-// (foundation-implementation-plan.md T15).
+// inventory / score / wait / verbose / brief / help / hint
+// (foundation-implementation-plan.md T15; `hint` added by hints-timers plan T4).
 //
 // Turn consumption is the interesting decision in this file, and it splits
-// the six verbs cleanly in two:
+// the seven verbs cleanly in two:
 //
-//   FREE (no turn): `inventory`, `score`, `verbose`, `brief`, `help`. Every
-//   one of these is the player checking something about themselves or their
-//   client, not acting on the world — checking your pockets, asking your
-//   score, or changing how much text you're shown costs nothing in every
+//   FREE (no turn): `inventory`, `score`, `verbose`, `brief`, `help`, `hint`.
+//   Every one of these is the player checking something about themselves or
+//   their client, not acting on the world — checking your pockets, asking
+//   your score, or changing how much text you're shown costs nothing in every
 //   classic adventure game, and it matters here specifically because the
 //   lamp burns per consumed turn (T18): a "free" action that quietly billed a
-//   turn would burn fuel for looking at your own inventory.
+//   turn would burn fuel for looking at your own inventory. `hint` joins this
+//   side for a sharper reason than the others: hints exist for the stuck, and
+//   asking for a nudge during a timed hazard (the gour flood, the bee swarm)
+//   must not have the asking itself burn the very turns the hint was meant to
+//   buy back. The penalty is the price the design plan wants paid (FR-7.2);
+//   it is not paid twice by also draining the clock. Note the mechanical
+//   subtlety `hintHandler` below shares with `verbose`/`brief`: a handler can
+//   change state — score, `hintsUsed`, `hintsRevealed` — while still
+//   returning `consumesTurn: false`.
 //
 //   COSTS A TURN: `wait`. It exists FOR the world tick — "let a turn pass and
 //   see what happens" is the entire verb. A wait that consumed no turn would
@@ -85,8 +94,66 @@ export const helpHandler: ActionHandler = (module, state) => {
     'Bare directions work too: n, s, e, w, ne, nw, se, sw, up, down, in, out.',
     'Useful verbs: look (l), examine (x), take, drop, open, close, read, search, inventory (i), wait (z), again (g).',
     'Type `verbose` for full descriptions every time, or `brief` to go back to short ones on places you have seen.',
+    'Stuck? Type `hint` — it costs a few points, and never costs a turn.',
   ].join(' ');
   return refuse(state, text);
+};
+
+/**
+ * `hint` — reveal the next rung of the first available ladder (design plan
+ * §5.2).
+ *
+ * Selection scans `module.hints.hints` in DOCUMENT ORDER: the active hint is
+ * the first entry whose `when` holds (the standard OR/`all` grammar via
+ * `evalConditions`) AND whose ladder still has an unrevealed rung
+ * (`hintsRevealed[id] < ladder.length`). Document order is priority order —
+ * author-controlled, no extra syntax.
+ *
+ * `when` may legally contain `chance`, so evaluation threads RNG state
+ * through the scan exactly like every other `evalConditions` caller (the
+ * hollowdeep rule against hint ladders drawing `chance` is content
+ * discipline, not engine law) — including on a MISS: a `chance` that failed
+ * still consumed a draw, and that has to survive into whichever path returns.
+ *
+ * On a hit: `hintsRevealed[id]` and `hintsUsed` both increment by one rung,
+ * the score takes `scoring.hintPenalty` floored at 0 (`deathPenalty`'s exact
+ * shape), and the rung is emitted as a `hint` OutputEvent — never `text`, so
+ * Phase 3 can style it without parsing prose. On a miss: `noHintMessageId`
+ * prints, unconditionally free — being told "no" is not a hint, so nothing
+ * is counted or deducted.
+ */
+export const hintHandler: ActionHandler = (module, state) => {
+  let current = state;
+
+  for (const entry of module.hints.hints) {
+    const [holds, next] = evalConditions(module, current, entry.when);
+    current = next;
+
+    const revealed = current.hintsRevealed[entry.id] ?? 0;
+    if (!holds || revealed >= entry.ladder.length) continue;
+
+    // `revealed < entry.ladder.length` just proved this index exists;
+    // `?? ''` only satisfies noUncheckedIndexedAccess honestly and is never
+    // actually taken given the guard above.
+    const rungText = entry.ladder[revealed] ?? '';
+    const rungNumber = revealed + 1;
+
+    return {
+      state: {
+        ...current,
+        hintsRevealed: { ...current.hintsRevealed, [entry.id]: rungNumber },
+        hintsUsed: current.hintsUsed + 1,
+        score: Math.max(0, current.score - module.scoring.hintPenalty),
+      },
+      events: [{ kind: 'hint', text: rungText, hintId: entry.id, rung: rungNumber }],
+      consumesTurn: false,
+    };
+  }
+
+  // Nothing available: print `noHintMessageId`, change nothing — §5.2's
+  // "being told no is not a hint" (`current` carries any RNG advance from
+  // `chance`s evaluated during the scan above).
+  return refuse(current, lookupString(module, module.hints.noHintMessageId));
 };
 
 export const META_HANDLERS: Record<string, ActionHandler> = {
@@ -96,4 +163,5 @@ export const META_HANDLERS: Record<string, ActionHandler> = {
   verbose: verboseHandler,
   brief: briefHandler,
   help: helpHandler,
+  hint: hintHandler,
 };

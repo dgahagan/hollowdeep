@@ -50,6 +50,13 @@ describe('createGame', () => {
     expect(createGame(module_, 42)).toEqual(createGame(module_, 42));
   });
 
+  it('starts with no timers running and no hints taken (SAVE_VERSION 2 fields)', () => {
+    const state = createGame(module_, 42);
+    expect(state.timers).toEqual({});
+    expect(state.hintsUsed).toBe(0);
+    expect(state.hintsRevealed).toEqual({});
+  });
+
   it('draws no RNG — the seed is simply stored', () => {
     expect(createGame(module_, 42).rng).toBe(42);
     expect(createGame(module_, 999).rng).toBe(999);

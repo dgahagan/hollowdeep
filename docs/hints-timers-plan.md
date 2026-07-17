@@ -1,6 +1,15 @@
 # Hints & Timers — Engine Design Plan
 
-**Status:** READY (2026-07-17)
+**Status:** IMPLEMENTED (2026-07-17) — executed via
+`docs/hints-timers-implementation-plan.md` on `feat/hints-timers`; every §13
+exit criterion demonstrated. One correction found in execution: §4.3's
+parenthetical ("the turn counter has already incremented when effects run")
+is wrong for *action* effects — the increment sits between act and world
+tick. The implementation fires expiries on *strictly-past*, which keeps
+§4.3's bold player-facing contract exact for action-armed timers (the case
+all planned content uses); a timer armed from inside a world-tick event
+counts from the next turn (self-re-arm period n+1). See engine.ts's
+worldTick note.
 **Phase:** engine prerequisite to Phase 2. **Blocks:** all Hollowdeep authoring
 (`docs/hollowdeep-plan.md` status block, §10.2, §10.3) and therefore
 `docs/hollowdeep-implementation-plan.md`'s preconditions.

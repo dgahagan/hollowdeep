@@ -25,7 +25,7 @@ import { ENGINE_VERSION } from './engine';
  * `adventureVersion` (is this the same cave?). Those three answer different
  * questions and are stored separately for that reason.
  */
-export const SAVE_VERSION = 1;
+export const SAVE_VERSION = 2;
 
 /**
  * A save file. Plain JSON, top to bottom — `GameState` is already constrained
@@ -125,9 +125,12 @@ const zGameState = z.strictObject({
   visited: z.array(z.string()),
   firedEvents: z.array(z.string()),
   creatures: z.record(z.string(), zCreatureState),
+  timers: z.record(z.string(), z.number().int()),
 
   score: z.number().int(),
   deaths: z.number().int(),
+  hintsUsed: z.number().int().nonnegative(),
+  hintsRevealed: z.record(z.string(), z.number().int().nonnegative()),
   achievements: z.array(z.string()),
   scoredCarry: z.array(z.string()),
   scoredDeposit: z.array(z.string()),
@@ -197,9 +200,12 @@ function toGameState(raw: z.infer<typeof zGameState>): GameState {
     visited: raw.visited,
     firedEvents: raw.firedEvents,
     creatures: raw.creatures,
+    timers: raw.timers,
 
     score: raw.score,
     deaths: raw.deaths,
+    hintsUsed: raw.hintsUsed,
+    hintsRevealed: raw.hintsRevealed,
     achievements: raw.achievements,
     scoredCarry: raw.scoredCarry,
     scoredDeposit: raw.scoredDeposit,
@@ -261,6 +267,20 @@ export const MIGRATIONS: Record<number, (state: unknown) => unknown> = {
   0: (state) => {
     if (typeof state !== 'object' || state === null) return state;
     return { lampWarned: [], ...(state as Record<string, unknown>) };
+  },
+
+  /**
+   * 1 → 2: add `timers`, `hintsUsed`, `hintsRevealed` (hints-timers plan §6).
+   *
+   * The first migration written for saves that could genuinely exist — v1 is
+   * what the foundation build shipped. The defaults are honest, not guesses:
+   * a v1 save predates relative timers and the hint system entirely, so "no
+   * timers running, no hints ever taken" is the truth of that game, and a
+   * migrated save keeps its shot at the no-hints achievement.
+   */
+  1: (state) => {
+    if (typeof state !== 'object' || state === null) return state;
+    return { timers: {}, hintsUsed: 0, hintsRevealed: {}, ...(state as Record<string, unknown>) };
   },
 };
 

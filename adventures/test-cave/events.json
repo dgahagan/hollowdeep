@@ -144,6 +144,37 @@
     "do": [{ "kind": "print", "text": "A thought, unbidden: whatever is down there, it has never needed a lamp." }]
   },
   {
+    "id": "shake-the-tree",
+    "on": { "type": "use", "target": "tree-trunk" },
+    "do": [
+      { "kind": "print", "text": "You take hold of the trunk and shake it. From somewhere above the split, a low hum starts up — the sound of a committee coming to order, and the agenda is you." },
+      { "kind": "startTimer", "timer": "bee-swarm", "turns": 3 }
+    ]
+  },
+  {
+    "id": "swarm-catches-you",
+    "on": { "type": "timerExpired", "target": "bee-swarm" },
+    "if": [{ "atLocation": "hollow-tree" }],
+    "do": [{ "kind": "die", "messageId": "bee-death" }]
+  },
+  {
+    "id": "swarm-loses-interest",
+    "on": { "type": "timerExpired", "target": "bee-swarm" },
+    "if": [
+      { "atLocation": "road" },
+      { "atLocation": "shed" },
+      { "atLocation": "cave-mouth" },
+      { "atLocation": "entry-hall" },
+      { "atLocation": "low-passage" },
+      { "atLocation": "twisty-1" },
+      { "atLocation": "twisty-2" },
+      { "atLocation": "ledge" },
+      { "atLocation": "grotto" },
+      { "atLocation": "deep-vault" }
+    ],
+    "do": [{ "kind": "print", "text": "Somewhere behind you, a hum rises, circles nothing in particular, and settles back into the tree to wait for the next optimist." }]
+  },
+  {
     "id": "victory-on-chalice",
     "on": { "type": "drop", "target": "silver-chalice" },
     "if": [{ "atLocation": "shed", "itemAt": { "item": "jade-idol", "location": "shed" } }],
@@ -161,6 +192,13 @@
     "on": { "type": "flagSet", "target": "both-deposited" },
     "if": [{ "deathsAtMost": 0 }],
     "do": [{ "kind": "award", "achievement": "no-deaths" }]
+  },
+  {
+    "id": "win-unhinted",
+    "once": true,
+    "on": { "type": "flagSet", "target": "both-deposited" },
+    "if": [{ "hintsAtMost": 0 }],
+    "do": [{ "kind": "award", "achievement": "no-hints" }]
   },
   {
     "id": "win",

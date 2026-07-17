@@ -245,15 +245,30 @@ describe('typed rejections — never a silent repair (FR-5.3)', () => {
 });
 
 describe('migrations', () => {
-  /** A v0 state: today's shape, minus the field v0 predates. */
+  /**
+   * A v0 state: today's shape, minus every field v0 predates — `lampWarned`
+   * (added by migration 0) AND the SAVE_VERSION 2 trio (added by migration 1).
+   * Loading it therefore exercises the CHAIN 0→1→2, which is the first time
+   * the registry's sequencing has more than one link to get wrong.
+   */
   function v0Blob(): Record<string, unknown> {
     const blob = saveGame(module_, { ...createGame(module_, 7), lampWarned: [40] }, AT);
-    const { lampWarned: _lampWarned, ...v0State } = blob.state;
+    const {
+      lampWarned: _lampWarned,
+      timers: _timers,
+      hintsUsed: _hintsUsed,
+      hintsRevealed: _hintsRevealed,
+      ...v0State
+    } = blob.state;
     return { ...blob, saveVersion: 0, state: v0State };
   }
 
-  it('the fabricated v0 blob really is missing the field, or this proves nothing', () => {
-    expect('lampWarned' in (v0Blob()['state'] as object)).toBe(false);
+  it('the fabricated v0 blob really is missing the fields, or this proves nothing', () => {
+    const state = v0Blob()['state'] as object;
+    expect('lampWarned' in state).toBe(false);
+    expect('timers' in state).toBe(false);
+    expect('hintsUsed' in state).toBe(false);
+    expect('hintsRevealed' in state).toBe(false);
   });
 
   it('a v0 blob fails to load without its migration', () => {
@@ -269,9 +284,12 @@ describe('migrations', () => {
     }
   });
 
-  it('migrates a v0 blob to the current version', () => {
+  it('migrates a v0 blob to the current version — the full 0→1→2 chain', () => {
     const loaded = loadGame(module_, v0Blob());
     expect(loaded.lampWarned).toEqual([]);
+    expect(loaded.timers).toEqual({});
+    expect(loaded.hintsUsed).toBe(0);
+    expect(loaded.hintsRevealed).toEqual({});
     expect(loaded.turn).toBe(0);
     expect(loaded.locationId).toBe(module_.manifest.startLocation);
   });
@@ -305,5 +323,78 @@ describe('migrations', () => {
     for (const key of Object.keys(MIGRATIONS)) {
       expect(Number(key)).toBeLessThan(SAVE_VERSION);
     }
+  });
+});
+
+describe('migrations — v1, the shape the foundation build shipped', () => {
+  /**
+   * A v1 state: today's shape minus exactly the SAVE_VERSION 2 trio. Unlike
+   * v0, saves of THIS shape could genuinely exist in a player's localStorage —
+   * v1 is what feat/foundation released — so this is the migration that
+   * carries real weight, built from a *played* state for the same reason the
+   * round-trip test is.
+   */
+  function v1Blob(): Record<string, unknown> {
+    const blob = saveGame(module_, played(), AT);
+    const {
+      timers: _timers,
+      hintsUsed: _hintsUsed,
+      hintsRevealed: _hintsRevealed,
+      ...v1State
+    } = blob.state;
+    return { ...blob, saveVersion: 1, state: v1State };
+  }
+
+  it('the fabricated v1 blob really is missing the trio, or this proves nothing', () => {
+    const state = v1Blob()['state'] as object;
+    expect('timers' in state).toBe(false);
+    expect('hintsUsed' in state).toBe(false);
+    expect('hintsRevealed' in state).toBe(false);
+    expect('lampWarned' in state).toBe(true); // v1 HAD lampWarned — only 2's trio is absent
+  });
+
+  it('a v1 blob fails to load without its migration', () => {
+    const real = MIGRATIONS[1];
+    try {
+      MIGRATIONS[1] = (state) => state;
+      expect(() => loadGame(module_, v1Blob())).toThrow(SaveError);
+    } finally {
+      if (real !== undefined) MIGRATIONS[1] = real;
+    }
+  });
+
+  it('migrates a played v1 blob and loses nothing it had', () => {
+    const original = played();
+    const loaded = loadGame(module_, v1Blob());
+    // The new fields get their honest defaults: no timers running, no hints
+    // ever taken — a migrated save keeps its shot at the no-hints achievement.
+    expect(loaded.timers).toEqual({});
+    expect(loaded.hintsUsed).toBe(0);
+    expect(loaded.hintsRevealed).toEqual({});
+    // And everything v1 actually recorded survives untouched.
+    const { timers: _t, hintsUsed: _h, hintsRevealed: _r, ...rest } = loaded;
+    const { timers: _t2, hintsUsed: _h2, hintsRevealed: _r2, ...expected } = original;
+    expect(rest).toEqual(expected);
+  });
+
+  it('a migrated v1 save is a real, playable state', () => {
+    const loaded = loadGame(module_, v1Blob());
+    const result = step(module_, loaded, 'look');
+    expect(result.state.turn).toBe(loaded.turn + 1);
+  });
+});
+
+describe('round trip — live timers and part-revealed ladders', () => {
+  it('survives serialize → deserialize → load exactly', () => {
+    // The systems that write these fields land in T3/T4; the state is plain
+    // data, so the save layer's obligation to round-trip it exists now.
+    const state: GameState = {
+      ...played(),
+      timers: { 'roof-fall': 12, 'gour-flood': 15 },
+      hintsUsed: 2,
+      hintsRevealed: { 'pump-gate': 2 },
+    };
+    const loaded = deserializeSave(module_, serializeSave(saveGame(module_, state, AT)));
+    expect(loaded).toEqual(state);
   });
 });

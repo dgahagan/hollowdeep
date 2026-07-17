@@ -58,6 +58,9 @@ export const CORE_VERBS: readonly Verb[] = [
   { id: 'verbose', words: ['verbose'], patterns: ['V'] },
   { id: 'brief', words: ['brief'], patterns: ['V'] },
   { id: 'help', words: ['help'], patterns: ['V'] },
+  // FR-7.2 (hints-timers plan §5.2): a core verb so what a player learns in
+  // one adventure transfers to the next, same rule as every other core verb.
+  { id: 'hint', words: ['hint', 'hints'], patterns: ['V'] },
 ];
 
 /** Compass and vertical shortcuts (FR-2.3). A bare direction means `go <dir>`. */

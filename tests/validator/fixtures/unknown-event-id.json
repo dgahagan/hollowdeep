@@ -3,7 +3,7 @@
     "id": "golden-fixture",
     "title": "Golden Fixture",
     "version": "1.0.0",
-    "engineVersion": "^1.0.0",
+    "engineVersion": "^2.0.0",
     "startLocation": "road",
     "repositoryLocation": "shed",
     "maxScore": 20,
@@ -114,6 +114,7 @@
   "scoring": {
     "milestones": [],
     "deathPenalty": 0,
+    "hintPenalty": 5,
     "ranks": [
       {
         "minScore": 0,
@@ -126,7 +127,8 @@
     "dark-warning": "It is pitch dark.",
     "dark-death": "You stumble and fall.",
     "lamp-low": "The lamp is getting dim.",
-    "lamp-dead": "The lamp goes out."
+    "lamp-dead": "The lamp goes out.",
+    "no-hints": "No hints here."
   },
   "walkthrough": {
     "steps": [
@@ -135,5 +137,9 @@
       }
     ],
     "expectedScore": 20
+  },
+  "hints": {
+    "noHintMessageId": "no-hints",
+    "hints": []
   }
 }

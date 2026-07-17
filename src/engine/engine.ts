@@ -27,8 +27,14 @@ import { handlerFor, type ActionResult } from './actions';
  * test-cave's `^1.0.0` is satisfied by 1.1.0. The bump is what lets a module
  * that NEEDS `all` say so — declaring `^1.1.0` gets a clean refusal from an
  * older engine instead of a strict-mode parse error about an unknown key.
+ *
+ * **2.0.0** — hints + timers (hints-timers plan §6). A MAJOR, and honestly
+ * so: `hints.json` is a required eleventh document, so every pre-hints
+ * module fails to load on this engine — calling that minor would make
+ * `^1.0.0` a lie the loader acts on. The additive pieces (`startTimer`,
+ * `timerExpired`, `hintsAtMost`, `scoring.hintPenalty`) ride the same bump.
  */
-export const ENGINE_VERSION = '1.1.0';
+export const ENGINE_VERSION = '2.0.0';
 
 export { createGame } from './state';
 export type { GameState, OutputEvent, SceneView, StepResult, UIAction } from './types';
@@ -166,9 +172,11 @@ function dispatch(module: AdventureModule, state: GameState, command: Command): 
 /**
  * The world's half of a turn (design plan §5.3 step 4).
  *
- * Order is fixed and observable through seeded tests: **events → creatures →
- * light → scoring**. Reordering these changes which draws happen when, which
- * silently rewrites every seeded test in the suite (§10).
+ * Order is fixed and observable through seeded tests: **events (turnStart,
+ * then timer expiries) → creatures → light → scoring**. Reordering these
+ * changes which draws happen when, which silently rewrites every seeded test
+ * in the suite (§10). Timer expiries slot after `turnStart` (the older
+ * mechanism keeps its observed position) and themselves draw no RNG.
  */
 function worldTick(module: AdventureModule, state: GameState): [GameState, OutputEvent[]] {
   let current = state;
@@ -180,6 +188,37 @@ function worldTick(module: AdventureModule, state: GameState): [GameState, Outpu
   });
   current = afterEvents;
   output.push(...events);
+
+  // Timer expiries (hints-timers plan §4.4). Lexicographic id order makes
+  // same-turn multi-expiry deterministic and stated. Delete-then-fire, so an
+  // expiry event may legally `startTimer` its own id — the periodic idiom.
+  // The list is collected up front for the same reason.
+  //
+  // THE ARITHMETIC, pinned. `startTimer` stores `turn-at-effect + turns`, and
+  // an entry fires when the tick's turn is STRICTLY past it. Action effects
+  // run before the turn increments (step stage 3 → 4), so for the design
+  // plan's contract case — a timer armed by a player action — this yields
+  // exactly §4.3's promise: n further consumed turns, expiry during the
+  // n-th's tick, after its action (the n-th move may be the escaping one).
+  // A timer armed from WITHIN a world-tick event (turnStart / a timerExpired
+  // re-arm) runs post-increment instead, so its n counts from the next turn —
+  // a self-re-arming timer has period n+1. That asymmetry is inherent to the
+  // two phases sharing one phase-blind effect; the contract case is the
+  // player-facing one, so it is the one kept exact.
+  const expired = Object.entries(current.timers)
+    .filter(([, expiry]) => expiry < current.turn)
+    .map(([id]) => id)
+    .sort();
+  for (const id of expired) {
+    const { [id]: _gone, ...remaining } = current.timers;
+    current = { ...current, timers: remaining };
+    const [afterTimer, timerEvents] = fireTriggers(module, current, {
+      type: 'timerExpired',
+      target: id,
+    });
+    current = afterTimer;
+    output.push(...timerEvents);
+  }
 
   const [afterCreatures, creatureEvents] = creatureTick(module, current);
   current = afterCreatures;
