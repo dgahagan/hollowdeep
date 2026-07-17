@@ -359,7 +359,7 @@ Carried from design plan §11 — do not create tasks for these:
 - [x] T3 — The timer system (`opus`) — `fac0ce2` (expiry fires on *strictly-past*, not at-or-past — the design plan's §4.3 parenthetical about increment order was wrong for action effects, and strict-past is what keeps its stated n-further-moves contract exact. Tick-armed timers count from the next turn; documented. **Finding:** useHandler treats output-less use events as refusals while keeping their state mutations — pre-existing, flagged for the human, not fixed here.)
 - [x] T4 — The hint verb, selection rule, and hintsAtMost (`sonnet`) — `dce5efb` (handler lives in meta.ts beside the other free verbs; lookupString exported from events.ts rather than duplicated; no app change needed — TranscriptPanel has no exhaustive kind switch)
 - [x] T5 — Validator additions and golden fixtures (`sonnet`) — `0a7c4d6` (hints `when` routed through the existing checkConditions, so dangling refs and flag reads came for free — verified by test, not assumed; document-level error id is `hints`, matching the `manifest` convention)
-- [ ] T6 — test-cave exercises everything (`opus`)
+- [x] T6 — test-cave exercises everything (`opus`) — `c59db06` (the walked-away bee guard is a 10-way atLocation OR — the condition grammar has no complement of atLocation, a real expressibility note for Hollowdeep's garnet chain, which was sketched with the same "else" shape)
 - [ ] T7 — Integration tests against the real fixture (`sonnet`)
 - [ ] T8 — Documentation and closeout (`opus`)
 
