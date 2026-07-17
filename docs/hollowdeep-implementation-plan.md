@@ -469,7 +469,7 @@ markers inside its own region.
 - [x] T1 — Module skeleton: structure, no voice (`sonnet`) — `709542a`
 - [x] T2 — Region A: Weir's Landing (`opus`) — `eb28ee7`
 - [x] T3 — Region B: the Workings (`opus`) — `47eb6e7`
-- [ ] T4 — Region C: cavern, maze, creatures (`opus`)
+- [x] T4 — Region C: cavern, maze, creatures (`opus`) — `57a0cdf`
 - [ ] T5 — Regions D & E: past the breach, the seal (`opus`)
 - [ ] T6 — Magic words and the gunnis (`opus`)
 - [ ] T7 — Endgame: two endings, ranks, achievements (`opus`)
