@@ -280,6 +280,13 @@ function Game({ module }: { module: AdventureModule }) {
   // hiding; this is the only place that class name gets decided.
   const shellClassName = settings.transcriptOnly ? 'shell shell--transcript-only' : 'shell';
 
+  // The scene's lamp-warn tint (T5's `lampWarn` prop, wired here because
+  // App.tsx was outside T5's file list): the SAME derivation StatusBar uses
+  // for its 'low' state — fuel at or under the manifest's highest `warnAt`
+  // threshold but not yet out. Out needs no tint; the dark plate takes over.
+  const warnThreshold = module.manifest.lamp.warnAt.length > 0 ? Math.max(...module.manifest.lamp.warnAt) : 0;
+  const lampWarn = state.lampFuel > 0 && state.lampFuel <= warnThreshold;
+
   return (
     <main className={shellClassName}>
       <header className="shell__header">
@@ -307,7 +314,7 @@ function Game({ module }: { module: AdventureModule }) {
 
       <div className="shell__body">
         <div className="shell__scene-region">
-          <ScenePanel module={module} scene={scene} />
+          <ScenePanel module={module} scene={scene} lampWarn={lampWarn} />
           <ActionBar actions={actions} onAction={submit} />
           <div className="shell__inventory-focus" ref={inventoryFocusRef} tabIndex={-1}>
             <InventoryPanel actions={actions} onAction={submit} />
