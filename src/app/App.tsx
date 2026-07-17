@@ -1,4 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react';
 import type { AdventureModule } from '../engine/schema';
 import { loadAdventure } from '../loader';
 import { fetchReader } from './fetchReader';
@@ -13,6 +22,8 @@ import { ActionBar } from './ActionBar';
 import { InventoryPanel } from './InventoryPanel';
 import { StatusBar } from './StatusBar';
 import { SaveDialog } from './SaveDialog';
+import { SettingsPanel } from './SettingsPanel';
+import { loadSettings, saveSettings, TEXT_SCALE_BY_STEP, type Settings } from './uiState';
 import './fonts.css';
 import './theme.css';
 import './app.css';
@@ -130,30 +141,102 @@ function AdventureGate({ id }: { id: string }) {
   );
 }
 
-type ThemeName = 'dark' | 'light';
+// The permanent settings context (T2, replacing T1's "temporary toggle is
+// fine until T2" `useThemeToggle`). One provider wraps the whole app (see
+// `App` at the bottom of this file) so `SettingsPanel.tsx` — a sibling file
+// that imports `useSettings` from here — and `Game` below both read/write
+// the same live `Settings` object, with every write persisted to
+// `cave.settings` (uiState.ts) on the same render pass.
+//
+// `SettingsPanel` living in its own file but consuming a hook exported from
+// this one makes App.tsx <-> SettingsPanel.tsx mutually importing (App
+// renders <SettingsPanel/>, SettingsPanel calls useSettings from App). That
+// is fine for ES modules — nothing here is touched at module-evaluation
+// time, only inside component bodies, by which point both modules have
+// finished loading — and keeps the file list to exactly what T2 specifies
+// (no extra "context" file).
+
+interface SettingsContextValue {
+  settings: Settings;
+  /** Merge a partial patch into the live settings and persist the result. */
+  updateSettings: (patch: Partial<Settings>) => void;
+}
+
+const SettingsContext = createContext<SettingsContextValue | null>(null);
+
+/** Read/update the global settings. Must be called under `<SettingsProvider>` (mounted once, in `App`). */
+export function useSettings(): SettingsContextValue {
+  const value = useContext(SettingsContext);
+  if (value === null) {
+    throw new Error('useSettings must be used inside <SettingsProvider>');
+  }
+  return value;
+}
 
 /**
- * TEMPORARY theme switch (T1 acceptance: "temporary toggle is fine until
- * T2"). T2's settings panel replaces this with theme = dark/light/system
- * persisted in `cave.settings`; until then the choice lives only in React
- * state and resets on reload. The mechanism it exercises — `data-theme` on
- * <html>, consumed by theme.css — is the permanent one.
+ * Owns the one `Settings` object and the three DOM/CSS side effects it
+ * drives (ui-plan §6): theme -> `data-theme` on `<html>`, text size ->
+ * `--text-scale`, and persistence back to `cave.settings`. Transcript-only
+ * is applied by `Game` itself (a class on the shell element, not a global
+ * document effect) since it only affects markup already inside this
+ * provider's tree; motion + typewriter speed are exposed via context only —
+ * T3/T5 apply them where the animations actually live.
  */
-function useThemeToggle(): [ThemeName, () => void] {
-  const [theme, setTheme] = useState<ThemeName>('dark');
+function SettingsProvider({ children }: { children: ReactNode }) {
+  const [settings, setSettings] = useState<Settings>(() => loadSettings());
 
+  // Persist on every change. Also fires once on mount with the just-loaded
+  // value — a harmless no-op write (same bytes back), not worth special-
+  // casing away.
   useEffect(() => {
-    if (theme === 'dark') delete document.documentElement.dataset.theme;
-    else document.documentElement.dataset.theme = theme;
-  }, [theme]);
+    saveSettings(settings);
+  }, [settings]);
 
-  return [theme, () => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))];
+  // Theme -> `data-theme`. 'light' sets it, 'dark' removes it (theme.css's
+  // :root is the dark theme by default), and 'system' tracks the OS live via
+  // a MediaQueryList 'change' listener rather than reading it once — a
+  // player who leaves the tab open across sunset should not need a reload.
+  useEffect(() => {
+    const root = document.documentElement;
+
+    if (settings.theme === 'light') {
+      root.dataset.theme = 'light';
+      return undefined;
+    }
+    if (settings.theme === 'dark') {
+      delete root.dataset.theme;
+      return undefined;
+    }
+
+    const query = window.matchMedia('(prefers-color-scheme: light)');
+    const applySystemTheme = () => {
+      if (query.matches) root.dataset.theme = 'light';
+      else delete root.dataset.theme;
+    };
+    applySystemTheme();
+    query.addEventListener('change', applySystemTheme);
+    return () => query.removeEventListener('change', applySystemTheme);
+  }, [settings.theme]);
+
+  // Text size -> `--text-scale` (theme.css defines the token and its `1`
+  // default; this is the only place that ever overrides it).
+  useEffect(() => {
+    document.documentElement.style.setProperty('--text-scale', String(TEXT_SCALE_BY_STEP[settings.textSize]));
+  }, [settings.textSize]);
+
+  const updateSettings = useCallback((patch: Partial<Settings>) => {
+    setSettings((current) => ({ ...current, ...patch }));
+  }, []);
+
+  const value = useMemo<SettingsContextValue>(() => ({ settings, updateSettings }), [settings, updateSettings]);
+
+  return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;
 }
 
 function Game({ module }: { module: AdventureModule }) {
   const { state, scene, actions, transcript, submit, load } = useGame(module);
   const overlays = useOverlays();
-  const [theme, toggleTheme] = useThemeToggle();
+  const { settings } = useSettings();
 
   // T26's `i` shortcut moves focus to the inventory panel rather than
   // "doing" anything by itself — `InventoryPanel`'s own buttons are already
@@ -175,13 +258,23 @@ function Game({ module }: { module: AdventureModule }) {
     },
   });
 
+  // Transcript-only (ui-plan §6) collapses the scene column via a class on
+  // the shell root — app.css's `.shell--transcript-only` rules do the actual
+  // hiding; this is the only place that class name gets decided.
+  const shellClassName = settings.transcriptOnly ? 'shell shell--transcript-only' : 'shell';
+
   return (
-    <main className="shell">
+    <main className={shellClassName}>
       <header className="shell__header">
         <h1 className="shell__title">{module.manifest.title}</h1>
         <div className="shell__header-actions">
-          <button type="button" onClick={toggleTheme}>
-            {theme === 'dark' ? 'Parchment' : 'Lamplight'}
+          <button
+            type="button"
+            onClick={() => {
+              overlays.open('settings');
+            }}
+          >
+            Settings
           </button>
           <button
             type="button"
@@ -225,14 +318,17 @@ function Game({ module }: { module: AdventureModule }) {
         }}
         onClose={overlays.close}
       />
+      <SettingsPanel />
     </main>
   );
 }
 
 export default function App() {
   return (
-    <ErrorBoundary>
-      <AdventureGate id={adventureIdFromLocation()} />
-    </ErrorBoundary>
+    <SettingsProvider>
+      <ErrorBoundary>
+        <AdventureGate id={adventureIdFromLocation()} />
+      </ErrorBoundary>
+    </SettingsProvider>
   );
 }
