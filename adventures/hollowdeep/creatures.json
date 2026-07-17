@@ -57,7 +57,7 @@
     "names": [
       "bats"
     ],
-    "description": "[draft] A cloud of bats, disturbed and resettling somewhere just out of sight.",
+    "description": "Small brown bats, hanging in the roof timbers like notes in a ledger nobody balances. They took possession the day the miners left, which makes them the sitting tenants, and they conduct themselves accordingly.",
     "artId": "bats",
     "behavior": "static",
     "spawn": {

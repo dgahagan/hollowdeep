@@ -46,7 +46,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The magazine door gives, and the powder is yours to reach."
+        "text": "The iron door swings on hinges greased against exactly this long a wait. Inside, the dark smells of dry powder and good housekeeping."
       },
       {
         "kind": "setFlag",
@@ -69,7 +69,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The handle seats, and the pump remembers how to be a pump."
+        "text": "The handle drops into its socket with the click of two things resuming a long marriage. The pump is a pump again. It waits, with cast-iron patience, to be asked."
       },
       {
         "kind": "setFlag",
@@ -92,7 +92,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The pump takes hold and the black water below starts to give ground."
+        "text": "You bear down. The pump takes hold — reluctant, then interested, then working — and throws black water into the drainage channel in long gouts. Somewhere below, the winze gives the water back with the stunned gurgle of an argument lost after ninety years of winning it."
       },
       {
         "kind": "setFlag",
@@ -104,6 +104,192 @@
     "id": "keg-death",
     "on": {
       "type": "use",
+      "target": "powder-keg"
+    },
+    "if": [
+      {
+        "atLocation": "coach-road"
+      },
+      {
+        "atLocation": "main-street"
+      },
+      {
+        "atLocation": "chapel"
+      },
+      {
+        "atLocation": "general-store"
+      },
+      {
+        "atLocation": "assay-office"
+      },
+      {
+        "atLocation": "tailings-path"
+      },
+      {
+        "atLocation": "adit-mouth"
+      },
+      {
+        "atLocation": "behind-the-seal"
+      },
+      {
+        "atLocation": "adit-drift"
+      },
+      {
+        "atLocation": "lamp-room"
+      },
+      {
+        "atLocation": "stables"
+      },
+      {
+        "atLocation": "junction"
+      },
+      {
+        "atLocation": "timekeepers-nook"
+      },
+      {
+        "atLocation": "foremans-office"
+      },
+      {
+        "atLocation": "shaft-head"
+      },
+      {
+        "atLocation": "pump-room"
+      },
+      {
+        "atLocation": "ore-chute"
+      },
+      {
+        "atLocation": "long-drift"
+      },
+      {
+        "atLocation": "magazine"
+      },
+      {
+        "atLocation": "stull-gallery"
+      },
+      {
+        "atLocation": "broken-drift"
+      },
+      {
+        "atLocation": "winze-ladderway"
+      },
+      {
+        "atLocation": "the-gunnis"
+      },
+      {
+        "atLocation": "shaft-foot"
+      },
+      {
+        "atLocation": "breakthrough"
+      },
+      {
+        "atLocation": "low-crawl"
+      },
+      {
+        "atLocation": "cathedral"
+      },
+      {
+        "atLocation": "gallery-of-veils"
+      },
+      {
+        "atLocation": "gour-pools"
+      },
+      {
+        "atLocation": "black-river"
+      },
+      {
+        "atLocation": "river-strand"
+      },
+      {
+        "atLocation": "midden"
+      },
+      {
+        "atLocation": "twisty-1"
+      },
+      {
+        "atLocation": "twisty-2"
+      },
+      {
+        "atLocation": "twisty-3"
+      },
+      {
+        "atLocation": "twisty-4"
+      },
+      {
+        "atLocation": "twisty-5"
+      },
+      {
+        "atLocation": "twisty-6"
+      },
+      {
+        "atLocation": "beyond-the-breach"
+      },
+      {
+        "atLocation": "dressed-gallery"
+      },
+      {
+        "atLocation": "toolroom"
+      },
+      {
+        "atLocation": "store-rooms"
+      },
+      {
+        "atLocation": "closed-row"
+      },
+      {
+        "atLocation": "tally-chamber"
+      },
+      {
+        "atLocation": "worked-face"
+      },
+      {
+        "atLocation": "long-stair"
+      },
+      {
+        "atLocation": "undercroft"
+      },
+      {
+        "atLocation": "cistern"
+      },
+      {
+        "atLocation": "warm-gallery"
+      },
+      {
+        "atLocation": "deep-cut"
+      },
+      {
+        "atLocation": "quiet-gallery"
+      },
+      {
+        "atLocation": "antechamber"
+      },
+      {
+        "atLocation": "seal-gate"
+      },
+      {
+        "atLocation": "keepers-stair"
+      },
+      {
+        "atLocation": "keepers-walk"
+      },
+      {
+        "atLocation": "watch-room"
+      },
+      {
+        "atLocation": "the-vault"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "keg-death"
+      }
+    ]
+  },
+  {
+    "id": "fuse-nudge",
+    "on": {
+      "type": "use",
       "target": "fuse-coil"
     },
     "if": [
@@ -113,8 +299,8 @@
     ],
     "do": [
       {
-        "kind": "die",
-        "messageId": "keg-death"
+        "kind": "print",
+        "text": "You have a fuse and, as yet, nothing that wants one. The keg's label suggests the correct order of operations."
       }
     ]
   },
@@ -538,7 +724,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] His watch, stopped, and a book of counts, are where he kept them."
+        "text": "You go through his pockets with more apology than efficiency. His watch, stopped. His tally book, the pencil still in its loop. You are the first person in ninety years to ask him for anything."
       },
       {
         "kind": "moveItem",
@@ -562,7 +748,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] A key, small and iron, is pushed to the back of a drawer."
+        "text": "The drawer sticks, then gives. Pushed to the back, behind requisition forms for timber that never came: a small iron key, tagged MAGAZINE in the clerk's careful hand."
       },
       {
         "kind": "moveItem",
@@ -600,7 +786,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The stull comes free, and the roof clears its throat."
+        "text": "The stull comes free with less argument than you expected, which is the worst sign there is. Overhead, the roof clears its throat. Behind where the timber stood, the garnet seam sits open-handed. You would put it at about six good breaths before the mountain finishes the sentence."
       },
       {
         "kind": "moveItem",
@@ -814,8 +1000,17 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] Somewhere behind you, the mountain sits down."
-      },
+        "text": "From somewhere behind you comes a long, settling roar — the sound of a mountain sitting down. The stull gallery has closed its account."
+      }
+    ]
+  },
+  {
+    "id": "roof-fall-settle",
+    "on": {
+      "type": "timerExpired",
+      "target": "roof-fall"
+    },
+    "do": [
       {
         "kind": "setFlag",
         "flag": "roof-fallen"
@@ -824,11 +1019,32 @@
         "kind": "moveItem",
         "item": "rubble",
         "to": "stull-gallery"
-      },
+      }
+    ]
+  },
+  {
+    "id": "roof-fall-bury",
+    "on": {
+      "type": "timerExpired",
+      "target": "roof-fall"
+    },
+    "if": [
+      {
+        "itemAt": {
+          "item": "cut-garnets",
+          "location": "stull-gallery"
+        }
+      }
+    ],
+    "do": [
       {
         "kind": "moveItem",
         "item": "cut-garnets",
         "to": "nowhere"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "garnets-buried"
       }
     ]
   },
@@ -841,13 +1057,13 @@
     "once": true,
     "if": [
       {
-        "flag": "roof-fallen"
+        "flag": "garnets-buried"
       }
     ],
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The garnets are still in there, and the rubble gives them back."
+        "text": "You pull rubble aside until the rubble becomes gravel and the gravel gives up the goods: the garnet pouch, dusty, dented, and past caring. The mountain kept them, in its way."
       },
       {
         "kind": "moveItem",
@@ -1141,7 +1357,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The throat drops away into nothing you can see the bottom of. This is not a climb; think again."
+        "text": "You lean into the chute throat and understand two things at once: it goes all the way down, and nothing about you is ore. The polish on the timber is the testimony of everything that already went. Consider yourself warned, which is once more than the chute ever warns anybody."
       },
       {
         "kind": "setFlag",

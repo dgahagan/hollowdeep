@@ -5,8 +5,8 @@
       "payroll tin",
       "tin"
     ],
-    "brief": "[draft] wages nobody collected, sitting where they were left",
-    "description": "[draft] a tin box of wages for a shift that never clocked out",
+    "brief": "The payroll tin sits here, still on schedule.",
+    "description": "A japanned tin box with PAYROLL stencilled on the lid, the wages inside counted into paper twists — one twist, one man. Nobody collected. The twists have held their shapes the way the town held its name.",
     "artId": "payroll-tin",
     "portable": true,
     "initialLocation": "timekeepers-nook",
@@ -25,8 +25,8 @@
       "garnets",
       "pocket of garnets"
     ],
-    "brief": "[draft] a pocket of garnets, freed from the rock",
-    "description": "[draft] small dark stones, cut and pocketed by somebody in a hurry",
+    "brief": "A pocket of cut garnets lies here, dark red and unbothered.",
+    "description": "Garnets, cut and pouched — somebody's private venture, worked on shift time with company tools. Dark red, heavy, and honest as far as it goes.",
     "artId": "cut-garnets",
     "portable": true,
     "initialLocation": "nowhere",
@@ -64,8 +64,8 @@
       "foreman's watch",
       "watch"
     ],
-    "brief": "[draft] a stopped watch, on the foreman",
-    "description": "[draft] a pocket watch, stopped at the hour it happened",
+    "brief": "The foreman's watch lies here, stopped and certain.",
+    "description": "Stopped at ten past two, which makes it the mine's official record of the hour. Good silver, better engraving: TO J.H. — TWENTY YEARS — WEIR'S LANDING CONSOLIDATED. The sort of thing a town gives a man instead of the money.",
     "artId": "foremans-watch",
     "portable": true,
     "initialLocation": "nowhere",
@@ -255,8 +255,8 @@
       "flask",
       "oil"
     ],
-    "brief": "[draft] an oil flask, left for whoever needs it",
-    "description": "[draft] a flask of lamp oil, the game's one margin against the dark",
+    "brief": "A flask of lamp oil stands here, full and unclaimed.",
+    "description": "Lamp oil, stoppered and sound. In the deputy's system this was the margin — the flask you carried so that the dark stayed a schedule instead of an event.",
     "artId": "oil-flask",
     "portable": true,
     "initialLocation": "lamp-room",
@@ -299,8 +299,8 @@
     "names": [
       "key"
     ],
-    "brief": "[draft] a key, turned up where it was hidden",
-    "description": "[draft] a small iron key for the magazine door",
+    "brief": "A small iron key lies here, tagged MAGAZINE.",
+    "description": "Small, iron, and serious, with a brass tag stamped MAGAZINE. The clerk who tagged it is past caring. The lock it answers to is not.",
     "artId": "key-magazine",
     "portable": true,
     "initialLocation": "nowhere",
@@ -314,8 +314,8 @@
       "steel gad",
       "gad"
     ],
-    "brief": "[draft] a steel gad, left with the tack",
-    "description": "[draft] a steel gad, made for prying what does not want to move",
+    "brief": "A steel gad lies in the tool crib, wanting work.",
+    "description": "A miner's gad: a foot of forged steel drawn to a chisel point, for prying loose what the rock will not simply hand over. The business end is bright from use. The striking end is mushroomed flat. It has settled opinions about leverage.",
     "artId": "steel-gad",
     "portable": true,
     "initialLocation": "stables",
@@ -329,8 +329,8 @@
       "pump handle",
       "handle"
     ],
-    "brief": "[draft] a pump handle, missing its pump",
-    "description": "[draft] a cast handle, sized for the pump in the room to the north",
+    "brief": "The great pump's handle leans here, far from its work.",
+    "description": "Six feet of ash and iron with a socket collar — unmistakably the pump's missing argument. Some helpful soul carried it up to the stables for mending, and history intervened before anyone carried it back.",
     "artId": "pump-handle",
     "portable": true,
     "initialLocation": "stables",
@@ -344,15 +344,15 @@
       "powder keg",
       "keg"
     ],
-    "brief": "[draft] a keg of powder, labelled in someone's careful hand",
-    "description": "[draft] a keg of blasting powder, labelled NOT WITHOUT A FUSE in a careful hand",
+    "brief": "A powder keg sits here, lettered in a firm warning hand.",
+    "description": "Blasting powder, dry and sound, in a keg built like it knows what it is carrying. Painted across the head, in letters that grow larger as they go: NOT WITHOUT A FUSE, DAVEY.",
     "artId": "powder-keg",
     "portable": true,
     "initialLocation": "magazine",
     "adjectives": [
       "powder"
     ],
-    "readText": "[draft] NOT WITHOUT A FUSE, DAVEY."
+    "readText": "NOT WITHOUT A FUSE, DAVEY. The letters get larger toward the end, as though Davey had a history."
   },
   {
     "id": "fuse-coil",
@@ -361,8 +361,8 @@
       "fuse",
       "coil"
     ],
-    "brief": "[draft] a coil of fuse, beside the keg",
-    "description": "[draft] a coil of slow fuse, exactly as long as somebody thought it should be",
+    "brief": "A coil of safety fuse lies here, wound tidy.",
+    "description": "Safety fuse, coiled by a careful hand. It burns at a walking pace, which is the entire point: the fire keeps its appointment, and you keep your head start.",
     "artId": "fuse-coil",
     "portable": true,
     "initialLocation": "magazine",
@@ -376,15 +376,15 @@
       "tally book",
       "book"
     ],
-    "brief": "[draft] the foreman's tally book",
-    "description": "[draft] a book of counts, kept in a hand that stopped keeping it",
+    "brief": "The foreman's tally book lies here, pencil still in its loop.",
+    "description": "A foreman's tally book: wagons, fathoms, feet of timber, men. The canvas cover has taken the shape of the pocket that carried it.",
     "artId": "tally-book",
     "portable": true,
     "initialLocation": "nowhere",
     "adjectives": [
       "tally"
     ],
-    "readText": "[draft] Among the counts, one word is written twice and underlined: GUNNIS."
+    "readText": "Counts in a firm pencil — wagons, fathoms, feet of timber. Then, on the last used page, written twice and underlined hard enough to tear the paper: GUNNIS."
   },
   {
     "id": "assay-ledger",
@@ -392,14 +392,15 @@
       "assay ledger",
       "ledger"
     ],
-    "brief": "[draft] the assay office's ledger",
-    "description": "[draft] a ledger of everything the office ever weighed, and one thing it never did",
+    "brief": "The assay ledger sits squared to the desk's corner.",
+    "description": "The mine's arithmetic, bound in canvas, heavier than it looks — most honesty is.",
     "artId": "assay-ledger",
     "portable": true,
     "initialLocation": "foremans-office",
     "adjectives": [
       "assay"
-    ]
+    ],
+    "readText": "Weights in, values out, initials, month after month of an honest seam getting honester the deeper it went. The last entries are dated the week of the breach and go unsigned. Nowhere in ninety years of pages is there any mention of a nugget — which, for a town named after one, is either an oversight or a policy."
   },
   {
     "id": "office-door",
@@ -427,8 +428,8 @@
     "names": [
       "door"
     ],
-    "brief": "[draft] the magazine door, shut fast",
-    "description": "[draft] a heavy door, locked the way a powder magazine's door ought to be",
+    "brief": "The magazine's iron door is set into the west wall.",
+    "description": "Iron, riveted, and indifferent to sledgehammers. The lock is bright with oil — the one lock in the mine that was maintained to the very end, because powder does not forgive lapses in housekeeping.",
     "artId": "magazine-door",
     "portable": false,
     "initialLocation": "long-drift",
@@ -449,8 +450,8 @@
       "pump",
       "great pump"
     ],
-    "brief": "[draft] the great pump, seized and silent",
-    "description": "[draft] a pump the size of a room, seized, and missing its handle",
+    "brief": "The great pump stands seized, its handle socket empty.",
+    "description": "Cast iron, riveted, taller than you. The maker's plate says it moved water by the ton and expected to. The socket where its handle seats is empty, and the mechanism is stiff but honest: it wants its handle, and then it wants working.",
     "artId": "pump",
     "portable": false,
     "initialLocation": "pump-room"
@@ -460,8 +461,8 @@
     "names": [
       "stull"
     ],
-    "brief": "[draft] a stull you could pull, if you were willing",
-    "description": "[draft] a single stout timber, set to hold back exactly what you would expect",
+    "brief": "The one stull that matters stands mid-chamber, bearing hard.",
+    "description": "The only timber in the mine still doing real work. It bears against a slab of roof with the strain showing in its grain, and behind it, just out of reach, the garnet seam glitters. Pulling it out would be a decision.",
     "artId": "stull",
     "portable": false,
     "initialLocation": "stull-gallery"
@@ -471,8 +472,8 @@
     "names": [
       "rubble"
     ],
-    "brief": "[draft] a fall of rubble, new and unsettled",
-    "description": "[draft] loose rock, freshly come down, and not yet decided about staying that way",
+    "brief": "Rubble fills the south end of the gallery, floor to what was roof.",
+    "description": "Roof, redistributed. The mountain's counteroffer occupies half the gallery in pieces sized between a fist and a coffin. Things could be under it. Searching it would be work.",
     "artId": "rubble",
     "portable": false,
     "initialLocation": "nowhere"
@@ -482,8 +483,8 @@
     "names": [
       "foreman"
     ],
-    "brief": "[draft] the foreman, still at his post",
-    "description": "[draft] a man who did not leave when the others did, and has not moved since",
+    "brief": "The foreman lies at the edge of the collapse, at his post.",
+    "description": "He was the foreman; the boots and the belt still say so. He lies where the bad night put him, tidy by accident, patient by default. Whatever he was carrying, he is not using it.",
     "artId": "foreman",
     "portable": false,
     "initialLocation": "broken-drift"
@@ -493,8 +494,8 @@
     "names": [
       "desk"
     ],
-    "brief": "[draft] the foreman's desk, drawers shut",
-    "description": "[draft] a desk of dark wood, its drawers shut on whatever he left in them",
+    "brief": "The foreman's desk stands against the wall, drawer shut.",
+    "description": "A clerk's desk gone gray with rock dust. One drawer, stuck in the particular way of drawers with something still in them.",
     "artId": "foremans-desk",
     "portable": false,
     "initialLocation": "foremans-office"
@@ -527,15 +528,15 @@
     "names": [
       "stull"
     ],
-    "brief": "[draft] a stull scratched with a word",
-    "description": "[draft] a stull scratched waist high with a word, plain as a signature",
+    "brief": "One stull here carries writing, scratched deep at waist height.",
+    "description": "An ordinary stull doing its ordinary job, except for the writing. The scratches have the confidence of a man recording a fact.",
     "artId": "scratched-stull",
     "portable": false,
     "initialLocation": "long-drift",
     "adjectives": [
       "scratched"
     ],
-    "readText": "[draft] Scratched deep and plain: KIBBLE."
+    "readText": "One word, scratched deep with a nail and gone over twice: KIBBLE. Beneath it, smaller, in another hand: works at the shaft. Miners wrote the truth where it would be needed. Paper was for the office."
   },
   {
     "id": "chute-throat",
@@ -543,8 +544,8 @@
       "chute",
       "ore chute"
     ],
-    "brief": "[draft] the throat of the ore chute, open and waiting",
-    "description": "[draft] a chute throat that has been waiting ninety years for one more careless thing",
+    "brief": "The chute throat opens in the floor, timber-lined and patient.",
+    "description": "Steep, smooth, and dark all the way down, every plank polished by tonnage. It was built to take ore to the shaft foot the fast way, and it has been waiting ninety years for one more careless thing.",
     "artId": "chute-throat",
     "portable": false,
     "initialLocation": "ore-chute"

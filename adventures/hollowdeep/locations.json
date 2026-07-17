@@ -137,8 +137,8 @@
   {
     "id": "behind-the-seal",
     "name": "Behind the Seal",
-    "brief": "[draft] You are at behind the seal, and the behind the seal does not care.",
-    "full": "[draft] This is Behind the Seal, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are just behind the seal, where the daylight gives up.",
+    "full": "The gap in the seal lets you through into the adit proper, and the daylight comes with you exactly as far as it cares to — a few yards, thinning fast. The walls are timbered, square, workmanlike. Bats have the ceiling and have had it for ninety years. East, the dark is open for business.",
     "artId": "behind-the-seal",
     "light": "lit",
     "exits": {
@@ -153,8 +153,8 @@
   {
     "id": "adit-drift",
     "name": "The Adit Drift",
-    "brief": "[draft] You are at the adit drift, and the the adit drift does not care.",
-    "full": "[draft] This is The Adit Drift, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the adit drift, between the rails.",
+    "full": "A straight drift with rails down its middle, laid true and still true, going about their business long after the business closed. A lamp room opens off to the north, the stables to the south. The rails run east, deeper in, with the patience of things that never had anywhere else to be.",
     "artId": "adit-drift",
     "light": "dark",
     "exits": {
@@ -175,8 +175,8 @@
   {
     "id": "lamp-room",
     "name": "Lamp Room",
-    "brief": "[draft] You are at lamp room, and the lamp room does not care.",
-    "full": "[draft] This is Lamp Room, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the lamp room, among the empty hooks.",
+    "full": "The deputy's station. Rows of hooks where the lamps hung, each with a chalked number gone ghost-gray, all empty. Whoever gave the lamps out kept this room squared away to the very end: the shelf is clean, the ledger nail is bare, and one flask of oil waits like an apology for everything else.",
     "artId": "lamp-room",
     "light": "dark",
     "exits": {
@@ -188,8 +188,8 @@
   {
     "id": "stables",
     "name": "Underground Stables",
-    "brief": "[draft] You are at underground stables, and the underground stables does not care.",
-    "full": "[draft] This is Underground Stables, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the underground stables, which still smell faintly of patience.",
+    "full": "Stalls for the mules, tack on pegs, a crib of tools along one wall. The mules went up when the mine went down; the tack stayed, oiled once and never again. In the crib, most of what was worth taking has been taken. What is left was left for reasons.",
     "artId": "stables",
     "light": "dark",
     "exits": {
@@ -201,8 +201,8 @@
   {
     "id": "junction",
     "name": "The Junction",
-    "brief": "[draft] You are at the junction, and the the junction does not care.",
-    "full": "[draft] This is The Junction, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are at the junction, where the drifts cross.",
+    "full": "The workings' crossroads. Drifts run off by the compass — the adit back west, the timekeeper's nook north, the shaft head east, the long drift south. The floor is worn into a shallow dish by boots arriving at shift and leaving at shift, which is the whole history of the place in one piece of geology.",
     "artId": "junction",
     "light": "dark",
     "exits": {
@@ -223,8 +223,8 @@
   {
     "id": "timekeepers-nook",
     "name": "Timekeeper's Nook",
-    "brief": "[draft] You are at timekeeper's nook, and the timekeeper's nook does not care.",
-    "full": "[draft] This is Timekeeper's Nook, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the timekeeper's nook.",
+    "full": "A nook barely off the junction where the timekeeper sat and made the mine's minutes matter. A stool, a shelf, and a board of brass checks — one check for each man below, one hook for each man up. Half the checks are still below.",
     "artId": "timekeepers-nook",
     "light": "dark",
     "exits": {
@@ -239,8 +239,8 @@
   {
     "id": "foremans-office",
     "name": "Foreman's Office",
-    "brief": "[draft] You are at foreman's office, and the foreman's office does not care.",
-    "full": "[draft] This is Foreman's Office, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the foreman's office, under the weight of paperwork.",
+    "full": "An office cut into living rock: a desk, a chair with one short leg, and the assay ledger squared to the desk's corner the way a man leaves things when he means to be back directly. The paperwork has outlasted everything it was about.",
     "artId": "foremans-office",
     "light": "dark",
     "exits": {
@@ -252,8 +252,8 @@
   {
     "id": "shaft-head",
     "name": "Shaft Head",
-    "brief": "[draft] You are at shaft head, and the shaft head does not care.",
-    "full": "[draft] This is Shaft Head, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are at the shaft head, over the winze.",
+    "full": "The drift opens over the winze — an internal shaft dropping away below the workings. Over the hole, the kibble bucket sits rusted onto its chain, mid-journey, going nowhere at scale. The pump room is north, the ore chute east. Down is a matter between you and the water.",
     "artId": "shaft-head",
     "light": "dark",
     "exits": {
@@ -273,7 +273,7 @@
             "flag": "pump-drained"
           }
         ],
-        "blockedMessage": "[draft] Black water fills the winze below; the pump has not run yet."
+        "blockedMessage": "The winze is full to the brim with black water, flat and unhurried. Keeping it out was somebody's job, and the somebody and the pump stopped on the same night. Nobody swims down a mine."
       }
     },
     "scenery": [
@@ -283,15 +283,15 @@
           "bucket",
           "chain"
         ],
-        "description": "[draft] A hoist bucket, rusted onto its chain, that has not moved in ninety years."
+        "description": "A hoist bucket — a kibble, in the old men's vocabulary — rusted onto its chain at the head of the winze. It moved ore and men both, up and down, on a word to the engine house. The engine is long cold. The word is not recorded here."
       }
     ]
   },
   {
     "id": "pump-room",
     "name": "Pump Room",
-    "brief": "[draft] You are at pump room, and the pump room does not care.",
-    "full": "[draft] This is Pump Room, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the pump room, with the great pump.",
+    "full": "The great pump fills most of the room: a cathedral of cast iron built to argue with water and win. It is seized now, and its handle socket stands empty — the handle walked off to the stables at some point, the way handles do. Its pipes drop away toward the winze, waiting to be given back their opinion.",
     "artId": "pump-room",
     "light": "dark",
     "exits": {
@@ -303,8 +303,8 @@
   {
     "id": "ore-chute",
     "name": "Ore Chute",
-    "brief": "[draft] You are at ore chute, and the ore chute does not care.",
-    "full": "[draft] This is Ore Chute, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are at the ore chute.",
+    "full": "The chute throat opens in the floor here, timber-lined, pitched steep, polished smooth by everything that ever went down it. It was built to take ore to the shaft foot the fast way. It is still willing.",
     "artId": "ore-chute",
     "light": "dark",
     "exits": {
@@ -316,8 +316,8 @@
   {
     "id": "long-drift",
     "name": "The Long Drift",
-    "brief": "[draft] You are at the long drift, and the the long drift does not care.",
-    "full": "[draft] This is The Long Drift, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the long drift, among the stulls.",
+    "full": "A long, well-timbered drift running south, stulls set every few yards holding the roof to its agreement. On one timber, at waist height, somebody has scratched a word — deep, deliberate, plain as a signature. The powder magazine's iron door is set into the west wall. The drift carries on south toward the stull gallery.",
     "artId": "long-drift",
     "light": "dark",
     "exits": {
@@ -331,7 +331,7 @@
             "flag": "magazine-door-open"
           }
         ],
-        "blockedMessage": "[draft] The magazine door is locked, as a magazine door ought to be."
+        "blockedMessage": "The magazine door is iron, locked, and correct to be both. Powder is the one thing a mine locks up more carefully than wages."
       },
       "s": {
         "to": "stull-gallery"
@@ -341,8 +341,8 @@
   {
     "id": "magazine",
     "name": "The Powder Magazine",
-    "brief": "[draft] You are at the powder magazine, and the the powder magazine does not care.",
-    "full": "[draft] This is The Powder Magazine, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the powder magazine, and inclined to be careful.",
+    "full": "A small chamber cut dry and lined tight, because powder is particular about its lodgings. A keg sits on a low pallet beside a coil of fuse, both kept the way dangerous things are kept by people who intend to grow old. Somebody has painted a warning across the keg in a firm hand.",
     "artId": "magazine",
     "light": "dark",
     "exits": {
@@ -354,8 +354,8 @@
   {
     "id": "stull-gallery",
     "name": "The Stulled Gallery",
-    "brief": "[draft] You are at the stulled gallery, and the the stulled gallery does not care.",
-    "full": "[draft] This is The Stulled Gallery, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the stulled gallery, under a roof with opinions.",
+    "full": "A worked-out gallery held up by stulls, and one of them matters: it stands mid-chamber, bearing hard, and behind it a seam glitters dark red where the miners stopped work. They left the garnets rather than pull that timber. You can see their reasoning. You can also see the garnets.",
     "artId": "stull-gallery",
     "light": "dark",
     "exits": {
@@ -370,8 +370,8 @@
   {
     "id": "broken-drift",
     "name": "The Broken Drift",
-    "brief": "[draft] You are at the broken drift, and the the broken drift does not care.",
-    "full": "[draft] This is The Broken Drift, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the broken drift, keeping the foreman company.",
+    "full": "The drift ends in old collapse, and at the edge of it lies the foreman — what ninety years leaves of a big man in good boots, at his post. The rock took the drift and stopped just short of him, which was not mercy, only arithmetic. He kept his effects. Nobody ever came down to ask for them.",
     "artId": "broken-drift",
     "light": "dark",
     "exits": {
@@ -383,8 +383,8 @@
   {
     "id": "winze-ladderway",
     "name": "The Ladderway",
-    "brief": "[draft] You are at the ladderway, and the the ladderway does not care.",
-    "full": "[draft] This is The Ladderway, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are on the ladderway, below the old waterline.",
+    "full": "Ladders down the winze wall, sound enough — mine ladders were built by men who expected to climb them tired. The timber is stained dark to a waterline well above your head, and below it everything has the scrubbed, swept look of a place the flood kept house in for ninety years and only lately quit.",
     "artId": "winze-ladderway",
     "light": "dark",
     "exits": {
@@ -399,8 +399,8 @@
   {
     "id": "the-gunnis",
     "name": "The Gunnis",
-    "brief": "[draft] You are at the gunnis, and the the gunnis does not care.",
-    "full": "[draft] This is The Gunnis, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the gunnis, under open sky.",
+    "full": "A stope worked open to the daylight — a gunnis, in the old vocabulary: the miners followed the seam up until the hill ran out of hill. Grass has come down the slope to meet the workings. Sky sits overhead, ordinary and enormous. And in the west wall there is an older scar: a worked face, closed with dressed stone, mortared from this side. Somebody broke into something here once before, and the town walled it shut, and did not write it down anywhere you have read.",
     "artId": "the-gunnis",
     "light": "lit",
     "exits": {
@@ -411,7 +411,7 @@
             "flag": "gunnis-known"
           }
         ],
-        "blockedMessage": "[draft] The way down is a way down you have not yet made for yourself.",
+        "blockedMessage": "The scree runs away long and loose below. You have not yet had a reason to trust it.",
         "hidden": true
       }
     }
