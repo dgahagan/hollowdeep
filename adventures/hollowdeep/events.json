@@ -2453,5 +2453,1609 @@
         "text": "The canary stops mid-note. The silence it leaves behind has a shape, and the shape is close."
       }
     ]
+  },
+  {
+    "id": "ledger-check-payroll-tin",
+    "on": {
+      "type": "drop",
+      "target": "payroll-tin"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-cut-garnets",
+    "on": {
+      "type": "drop",
+      "target": "cut-garnets"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-assay-button",
+    "on": {
+      "type": "drop",
+      "target": "assay-button"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-foremans-watch",
+    "on": {
+      "type": "drop",
+      "target": "foremans-watch"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-silver-flowstone",
+    "on": {
+      "type": "drop",
+      "target": "silver-flowstone"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-cave-pearls",
+    "on": {
+      "type": "drop",
+      "target": "cave-pearls"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-weir-nugget",
+    "on": {
+      "type": "drop",
+      "target": "weir-nugget"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-miners-cache",
+    "on": {
+      "type": "drop",
+      "target": "miners-cache"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-bronze-tool",
+    "on": {
+      "type": "drop",
+      "target": "bronze-tool"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-tally-plate",
+    "on": {
+      "type": "drop",
+      "target": "tally-plate"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-warm-stone",
+    "on": {
+      "type": "drop",
+      "target": "warm-stone"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-the-kept",
+    "on": {
+      "type": "drop",
+      "target": "the-kept"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-enter",
+    "on": {
+      "type": "enter",
+      "target": "assay-office"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "unhurried-a",
+    "on": {
+      "type": "flagSet",
+      "target": "ledger-complete"
+    },
+    "once": true,
+    "if": [
+      {
+        "deathsAtMost": 0
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "unhurried"
+      }
+    ]
+  },
+  {
+    "id": "nobody-asked-a",
+    "on": {
+      "type": "flagSet",
+      "target": "ledger-complete"
+    },
+    "once": true,
+    "if": [
+      {
+        "hintsAtMost": 0
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "nobody-asked"
+      }
+    ]
+  },
+  {
+    "id": "ending-a",
+    "on": {
+      "type": "flagSet",
+      "target": "ledger-complete"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "printId",
+        "id": "ending-a-epilogue"
+      },
+      {
+        "kind": "award",
+        "achievement": "the-full-ledger"
+      },
+      {
+        "kind": "endGame",
+        "victory": true
+      }
+    ]
+  },
+  {
+    "id": "unhurried-b",
+    "on": {
+      "type": "use",
+      "target": "vault"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "the-vault"
+            }
+          },
+          {
+            "deathsAtMost": 0
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "unhurried"
+      }
+    ]
+  },
+  {
+    "id": "nobody-asked-b",
+    "on": {
+      "type": "use",
+      "target": "vault"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "the-vault"
+            }
+          },
+          {
+            "hintsAtMost": 0
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "nobody-asked"
+      }
+    ]
+  },
+  {
+    "id": "ending-b",
+    "on": {
+      "type": "use",
+      "target": "vault"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "the-vault"
+            }
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "printId",
+        "id": "ending-b-epilogue"
+      },
+      {
+        "kind": "award",
+        "achievement": "kept-the-seal"
+      },
+      {
+        "kind": "endGame",
+        "victory": true
+      }
+    ]
+  },
+  {
+    "id": "the-bird-went-too-award",
+    "on": {
+      "type": "enter",
+      "target": "the-vault"
+    },
+    "once": true,
+    "if": [
+      {
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "the-bird-went-too"
+      }
+    ]
   }
 ]

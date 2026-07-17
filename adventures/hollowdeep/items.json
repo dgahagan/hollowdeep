@@ -589,5 +589,17 @@
     "adjectives": [
       "antechamber"
     ]
+  },
+  {
+    "id": "vault",
+    "names": [
+      "vault",
+      "plinth"
+    ],
+    "brief": "The vault stands around its plinth, and could be closed as it was opened.",
+    "description": "The vault is a made room around a made thing: plinth, courses, the door you worked to open. Everything about it was built to be shut with intent — and it could be again, by somebody who had banked every other argument and chosen to leave this one where it stands.",
+    "artId": "vault",
+    "portable": false,
+    "initialLocation": "the-vault"
   }
 ]
