@@ -1,0 +1,491 @@
+{
+  "_readme": [
+    "Art manifest for hollowdeep (CLAUDE.md's Art Pipeline; docs/art-plan.md §5).",
+    "Committed; the renders are not (dev/art-candidates/ is gitignored, reproducible from this file).",
+    "",
+    "Class dialect (docs/art-plan.md §5), unlike test-cave's frozen flat dialect: `styles` and `dims`",
+    "are maps keyed by art class (scene/item/creature/marquee); each subject declares its own `class`",
+    "to pick which suffix and generation size it gets.",
+    "",
+    "`styles` are locked by contact-sheet review, not written here in prose (art-implementation-plan T3).",
+    "Placeholder empty strings until then — do not guess at a suffix.",
+    "",
+    "Prompts (T2) carry the VISUAL FACTS from the adventure's own shipped prose and drop the jokes,",
+    "per dev/art/style.md: prompt the observation, never the conclusion the reader should reach.",
+    "",
+    "This skeleton enumerates every artId adventures/hollowdeep actually references (tools/art/audit.ts",
+    "is the derivation, not hand-entry) plus the eleven marquee subjects (docs/art-plan.md §3/§9.3):",
+    "title, two endings, eight per-death vignettes. The thief, the stalker, and marquee-death-stalker",
+    "get indirect treatments (never a portrait/never fully seen); marquee-death-dark is the painting",
+    "with almost nothing in it. See art-implementation-plan T2.",
+    "",
+    "Regenerate:  npx tsx tools/art/build-request.ts dev/art/hollowdeep.json > /tmp/req.json",
+    "             distrobox-host-exec ~/pixelart-venv/bin/python tools/art/host_gen.py /tmp/req.json"
+  ],
+  "styles": {
+    "scene": "",
+    "item": "",
+    "creature": "",
+    "marquee": ""
+  },
+  "dims": {
+    "scene": [
+      1024,
+      640
+    ],
+    "item": [
+      640,
+      640
+    ],
+    "creature": [
+      640,
+      800
+    ],
+    "marquee": [
+      1344,
+      768
+    ]
+  },
+  "seeds": [
+    1,
+    2,
+    3,
+    5,
+    8,
+    13
+  ],
+  "subjects": {
+    "coach-road": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "main-street": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "chapel": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "general-store": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "assay-office": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "tailings-path": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "adit-mouth": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "behind-the-seal": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "adit-drift": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "lamp-room": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "stables": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "junction": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "timekeepers-nook": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "foremans-office": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "shaft-head": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "pump-room": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "ore-chute": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "long-drift": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "magazine": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "stull-gallery": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "broken-drift": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "winze-ladderway": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "the-gunnis": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "shaft-foot": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "breakthrough": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "low-crawl": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "cathedral": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "gallery-of-veils": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "gour-pools": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "black-river": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "river-strand": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "midden": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "breach-wall": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "twisty": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "beyond-the-breach": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "dressed-gallery": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "toolroom": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "store-rooms": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "closed-row": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "tally-chamber": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "worked-face": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "long-stair": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "undercroft": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "cistern": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "warm-gallery": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "deep-cut": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "quiet-gallery": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "antechamber": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "seal-gate": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "keepers-stair": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "keepers-walk": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "watch-room": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "the-vault": {
+      "class": "scene",
+      "prompt": ""
+    },
+    "payroll-tin": {
+      "class": "item",
+      "prompt": ""
+    },
+    "cut-garnets": {
+      "class": "item",
+      "prompt": ""
+    },
+    "assay-button": {
+      "class": "item",
+      "prompt": ""
+    },
+    "foremans-watch": {
+      "class": "item",
+      "prompt": ""
+    },
+    "silver-flowstone": {
+      "class": "item",
+      "prompt": ""
+    },
+    "cave-pearls": {
+      "class": "item",
+      "prompt": ""
+    },
+    "weir-nugget": {
+      "class": "item",
+      "prompt": ""
+    },
+    "miners-cache": {
+      "class": "item",
+      "prompt": ""
+    },
+    "bronze-tool": {
+      "class": "item",
+      "prompt": ""
+    },
+    "tally-plate": {
+      "class": "item",
+      "prompt": ""
+    },
+    "warm-stone": {
+      "class": "item",
+      "prompt": ""
+    },
+    "the-kept": {
+      "class": "item",
+      "prompt": ""
+    },
+    "brass-lantern": {
+      "class": "item",
+      "prompt": ""
+    },
+    "oil-flask": {
+      "class": "item",
+      "prompt": ""
+    },
+    "canary-cage": {
+      "class": "item",
+      "prompt": ""
+    },
+    "key-office": {
+      "class": "item",
+      "prompt": ""
+    },
+    "key-magazine": {
+      "class": "item",
+      "prompt": ""
+    },
+    "steel-gad": {
+      "class": "item",
+      "prompt": ""
+    },
+    "pump-handle": {
+      "class": "item",
+      "prompt": ""
+    },
+    "powder-keg": {
+      "class": "item",
+      "prompt": ""
+    },
+    "fuse-coil": {
+      "class": "item",
+      "prompt": ""
+    },
+    "tally-book": {
+      "class": "item",
+      "prompt": ""
+    },
+    "assay-ledger": {
+      "class": "item",
+      "prompt": ""
+    },
+    "office-door": {
+      "class": "item",
+      "prompt": ""
+    },
+    "magazine-door": {
+      "class": "item",
+      "prompt": ""
+    },
+    "pump": {
+      "class": "item",
+      "prompt": ""
+    },
+    "stull": {
+      "class": "item",
+      "prompt": ""
+    },
+    "rubble": {
+      "class": "item",
+      "prompt": ""
+    },
+    "foreman": {
+      "class": "item",
+      "prompt": ""
+    },
+    "foremans-desk": {
+      "class": "item",
+      "prompt": ""
+    },
+    "assay-bench": {
+      "class": "item",
+      "prompt": ""
+    },
+    "stacks": {
+      "class": "item",
+      "prompt": ""
+    },
+    "scratched-stull": {
+      "class": "item",
+      "prompt": ""
+    },
+    "chute-throat": {
+      "class": "item",
+      "prompt": ""
+    },
+    "flowstone-seam": {
+      "class": "item",
+      "prompt": ""
+    },
+    "pothole": {
+      "class": "item",
+      "prompt": ""
+    },
+    "mechanism": {
+      "class": "item",
+      "prompt": ""
+    },
+    "vault": {
+      "class": "item",
+      "prompt": ""
+    },
+    "stalker": {
+      "class": "creature",
+      "prompt": ""
+    },
+    "thief": {
+      "class": "creature",
+      "prompt": ""
+    },
+    "bats": {
+      "class": "creature",
+      "prompt": ""
+    },
+    "blind-fish": {
+      "class": "creature",
+      "prompt": ""
+    },
+    "storekeeper": {
+      "class": "creature",
+      "prompt": ""
+    },
+    "newt": {
+      "class": "creature",
+      "prompt": ""
+    },
+    "marquee-title": {
+      "class": "marquee",
+      "prompt": ""
+    },
+    "marquee-ending-a": {
+      "class": "marquee",
+      "prompt": ""
+    },
+    "marquee-ending-b": {
+      "class": "marquee",
+      "prompt": ""
+    },
+    "marquee-death-roof": {
+      "class": "marquee",
+      "prompt": ""
+    },
+    "marquee-death-flood": {
+      "class": "marquee",
+      "prompt": ""
+    },
+    "marquee-death-keg": {
+      "class": "marquee",
+      "prompt": ""
+    },
+    "marquee-death-chute": {
+      "class": "marquee",
+      "prompt": ""
+    },
+    "marquee-death-river": {
+      "class": "marquee",
+      "prompt": ""
+    },
+    "marquee-death-gap": {
+      "class": "marquee",
+      "prompt": ""
+    },
+    "marquee-death-dark": {
+      "class": "marquee",
+      "prompt": ""
+    },
+    "marquee-death-stalker": {
+      "class": "marquee",
+      "prompt": ""
+    }
+  }
+}

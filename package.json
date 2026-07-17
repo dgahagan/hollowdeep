@@ -15,7 +15,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "validate": "tsx tools/validate-module.ts",
-    "gate": "npm run typecheck && npm run lint && npm run test && npm run validate && npm run build"
+    "validate:art": "tsx tools/art/validate-art.ts",
+    "gate": "npm run typecheck && npm run lint && npm run test && npm run validate && npm run validate:art && npm run build"
   },
   "dependencies": {
     "react": "^19.2.7",
@@ -31,6 +32,7 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.1.1",
+    "sharp": "^0.35.3",
     "tsx": "^4.23.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.64.0",
