@@ -9,8 +9,12 @@
   "maxScore": 350,
   "lamp": {
     "itemId": "brass-lantern",
-    "startFuel": 400,
-    "warnAt": [80, 30, 10],
+    "startFuel": 480,
+    "warnAt": [
+      60,
+      25,
+      10
+    ],
     "warnMessageId": "lamp-low",
     "exhaustMessageId": "lamp-dead",
     "refuel": {
