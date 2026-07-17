@@ -303,7 +303,7 @@ blocking the batch.
 
 ## Progress Tracker
 
-- [ ] T1 — Audit, contact sheets, optimizer, manifest skeleton (`sonnet`)
+- [x] T1 — Audit, contact sheets, optimizer, manifest skeleton (`sonnet`) — `f76ddb6`
 - [ ] T2 — Author all ~106 subject prompts (`opus`)
 - [ ] T3 — Style lock: candidates, probes, human sign-off (`opus`, human)
 - [ ] T4 — Scenes: generate, curate, choose (`opus`, human)
