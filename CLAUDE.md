@@ -2,25 +2,27 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Status: Foundation complete; Hollowdeep content not started
+## Project Status: Foundation + Hollowdeep content complete; Phase B art and Phase 3 UI next
 
 This is "Hollowdeep" (working title): an original browser-based adventure game
 in the spirit of *Colossal Cave Adventure*. The engine, the `test-cave`
-reference adventure, and a minimal playable browser UI are done and on
-`feat/foundation` (Phase 0+1, `docs/foundation-plan.md`). **Hollowdeep's own
-content is Phase 2 and does not exist yet** — `test-cave` is a fixture, not a
-small Hollowdeep.
+reference adventure, and a minimal playable browser UI are Phase 0+1
+(`docs/foundation-plan.md`). **Hollowdeep itself shipped with Phase 2**
+(`docs/hollowdeep-plan.md`, IMPLEMENTED 2026-07-17): `adventures/hollowdeep/`
+is the complete game — 58 rooms, 12 treasures, 350 points, two endings, hint
+ladders, and a walkthrough that wins at every seed. `test-cave` remains the
+format fixture. Placeholder SVG art until Phase B; real UI chrome is Phase 3.
 
 ```bash
 npm install
-npm run dev      # play test-cave
+npm run dev      # play hollowdeep (test-cave via ?adventure=test-cave)
 npm run gate     # typecheck && lint && test && validate && build — must be green before any commit
 ```
 
 | Command | Does |
 |---|---|
 | `npm run gate` | The whole verification gate. If it is red, nothing else matters. |
-| `npm test` | Vitest (679 tests, 23 files) |
+| `npm test` | Vitest (796 tests, 26 files) |
 | `npm run validate` | Validate every adventure in `adventures/`; takes paths as argv |
 | `npm run dev` / `build` / `preview` | Vite |
 | `npm run typecheck` / `lint` | tsc / ESLint |
@@ -82,10 +84,10 @@ engine core, test-cave, minimal UI); its implementation plan is
 another project; their stale cross-project references were corrected on
 2026-07-15. If any survive, this repo's playbook is authoritative.
 
-## Next Milestone (Phase 0)
+## Next Milestone (Phase B art / Phase 3 UI)
 
-Per `docs/SCOPE.md`: the Hollowdeep adventure design doc (map graph, treasures,
-puzzles, creatures, magic words, scoring table) is the big creative deliverable,
-alongside the repo scaffold, module schema v1 + validator, and the `test-cave`
-fixture. Exit criteria: test-cave loads in a bare-bones page, walkable by
-typing and clicking.
+Per `docs/SCOPE.md`: with Phase 2 content complete, the parallel tracks are
+Phase B (the FLUX art pipeline — recover/rewrite the host generator, author the
+hollowdeep art manifest, generate → curate → optimize ~100 painterly images)
+and Phase 3 (real UI: auto-map, journal, hints panel, adventure select,
+settings, save export/import, accessibility). Exit criteria live in SCOPE §3.

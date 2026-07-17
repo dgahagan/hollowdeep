@@ -1,6 +1,10 @@
 # Hollowdeep — Adventure Design Plan
 
-**Status:** READY — signed off 2026-07-17. Fiction, map (§4; room-by-room in
+**Status:** IMPLEMENTED — built 2026-07-17 on `feat/hollowdeep` via
+[`hollowdeep-implementation-plan.md`](hollowdeep-implementation-plan.md):
+`adventures/hollowdeep/` ships all 58 rooms, 12 treasures, 350 points, both
+endings, 16 hint ladders, and a 254-step walkthrough that wins 350/350 with
+0 deaths and 0 hints at five pinned seeds. Design signed off 2026-07-17. Fiction, map (§4; room-by-room in
 §11), treasures and their chains (§5, §12), creatures (§6), scoring (§7), words
 and secrets (§8), the maze (§9), and all three §10 questions are settled.
 Prerequisite before authoring: ~~the hints + timed-events engine work (§10.2,
