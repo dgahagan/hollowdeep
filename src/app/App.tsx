@@ -27,6 +27,8 @@ import { SettingsPanel } from './SettingsPanel';
 import { MapOverlay } from './MapOverlay';
 import { loadSettings, loadSidecar, saveSettings, TEXT_SCALE_BY_STEP, type Settings } from './uiState';
 import { DeathModal } from './DeathModal';
+import { JournalPanel } from './JournalPanel';
+import { HintsPanel } from './HintsPanel';
 import './fonts.css';
 import './theme.css';
 import './app.css';
@@ -300,6 +302,16 @@ function Game({ module }: { module: AdventureModule }) {
       <header className="shell__header">
         <h1 className="shell__title">{module.manifest.title}</h1>
         <div className="shell__header-actions">
+          {/* Hints has no FR-2.8 shortcut — every free bare letter is a
+              plausible command word — so a header button is its only door. */}
+          <button
+            type="button"
+            onClick={() => {
+              overlays.open('hints');
+            }}
+          >
+            Hints
+          </button>
           <button
             type="button"
             onClick={() => {
@@ -367,9 +379,8 @@ function Game({ module }: { module: AdventureModule }) {
           (T7) has no real content yet, and help proper (T10) is still a
           placeholder. Each says so, in the narrator's own dry voice, rather
           than showing an empty dialog that looks broken. */}
-      <Overlay id="journal" title="Journal">
-        <p>The journal arrives with T7. Your memory will have to do.</p>
-      </Overlay>
+      <JournalPanel module={module} state={state} adventureId={module.manifest.id} />
+      <HintsPanel module={module} state={state} submit={submit} />
       <Overlay id="help" title="Help">
         <p>A proper help panel arrives with T10. Type what you would do; the parser is forgiving.</p>
         <ul className="overlay__shortcut-list">
