@@ -413,11 +413,43 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] It was not made for your hand. Your hand makes do."
+        "text": "The bronze tool bridges the wrongness exactly. The slots take it, the collar turns, and the weight of the far wall goes somewhere else with a sound like a held breath ending. It was not made for your hand. Your hand makes do."
       },
       {
         "kind": "setFlag",
         "flag": "mechanism-turned"
+      }
+    ]
+  },
+  {
+    "id": "take-the-kept",
+    "on": {
+      "type": "take",
+      "target": "the-kept"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "You lift it. It has its weight, and nothing else. Whatever it did, whatever it does, it keeps to itself — a fact with mass. The room is just a room now, and you are a person holding a thing, a long way down, with a long way back."
+      }
+    ]
+  },
+  {
+    "id": "canary-sings-warm-gallery",
+    "on": {
+      "type": "enter",
+      "target": "warm-gallery"
+    },
+    "if": [
+      {
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The canary, which has kept a professional silence the whole way down, begins to sing. Full-throated, unafraid, at home. Nothing about that is reassuring."
       }
     ]
   },
@@ -778,7 +810,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] One plate, near the bottom, is cut with marks that are still being added to."
+        "text": "You work along the cradles, plate after plate, all counts and no unit — until near the bottom you find the one that is different: a later hand, newer marks, the final rows still open, as though the counting were not considered finished. You take that thought and put it somewhere you keep such things."
       },
       {
         "kind": "moveItem",

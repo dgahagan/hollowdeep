@@ -100,7 +100,7 @@
     "names": [
       "newt"
     ],
-    "description": "[draft] A newt, ordinary in every way that matters, past the breach where nothing else is.",
+    "description": "A newt. Brown, damp, ordinary to a degree that borders on defiance. It regards you without alarm, as its ancestors presumably regarded the keepers, and theirs the first dark. Of everything you have met past the breach, it is the only thing that makes sense, and it is a newt.",
     "artId": "newt",
     "behavior": "static",
     "spawn": {

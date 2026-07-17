@@ -160,8 +160,8 @@
       "bronze tool",
       "tool"
     ],
-    "brief": "[draft] a bronze tool, sitting in its rack",
-    "description": "[draft] a bronze tool, worn smooth by a grip that was not shaped like yours",
+    "brief": "A bronze tool rests in its rack, worn bright at the grip.",
+    "description": "Bronze, dense, keel-shaped, with a grip worn glass-smooth by years of a hand that held its weight in different places than yours will. It is not decorated. It is a tool: made, used, maintained, racked at shift's end. Whatever it operated, its owner operated it often.",
     "artId": "bronze-tool",
     "portable": true,
     "initialLocation": "toolroom",
@@ -180,8 +180,8 @@
       "plate",
       "tally"
     ],
-    "brief": "[draft] a plate cut with marks, counting something",
-    "description": "[draft] a plate of marks, cut deep, counting something the narrator will not name",
+    "brief": "A bronze tally plate lies here, marks edge to edge.",
+    "description": "Bronze, palm-wide, heavier than it has any right to be, cut with ranked tally marks in a precise, unhurried hand. The rows stop partway down the final column.",
     "artId": "tally-plate",
     "portable": true,
     "initialLocation": "nowhere",
@@ -191,7 +191,8 @@
     "treasure": {
       "carryPoints": 15,
       "depositPoints": 25
-    }
+    },
+    "readText": "You count. The marks group in their fashion — fives of fives, you decide — and the total, worked twice to be sure of it, comes to something over eleven thousand. The plate records the count plainly. It does not record the unit. You put it down for a moment before you pick it back up."
   },
   {
     "id": "warm-stone",
@@ -199,8 +200,8 @@
       "warm stone",
       "stone"
     ],
-    "brief": "[draft] a stone that has no business being warm",
-    "description": "[draft] a stone, warm to the hand, for no reason anyone has found",
+    "brief": "The warm stone sits in its niche, at home.",
+    "description": "A stone the size of two fists, smooth as river work, and warm — hand-warm, exactly and steadily. It has no reason to be warm. It is not warm because of anything; you have had time to rule things out. The niche was cut to fit it. Somebody kept this stone, and kept it here, and it has kept itself warm ever since, or always had.",
     "artId": "warm-stone",
     "portable": true,
     "initialLocation": "warm-gallery",
@@ -218,8 +219,8 @@
       "kept thing",
       "thing"
     ],
-    "brief": "[draft] the thing the seal was built for",
-    "description": "[draft] the thing the seal was built to keep, and now it is in your hands",
+    "brief": "The kept thing rests on its plinth, and the room attends it.",
+    "description": "Smooth, dense, dark, the cool side of warm — description keeps sliding off it. It is a made thing; the hands that made it are not on record. What it is for is not discoverable from what it is. It was important enough to build all of this around. That will have to do.",
     "artId": "the-kept",
     "portable": true,
     "initialLocation": "the-vault",
@@ -517,8 +518,8 @@
       "stacks",
       "stacked plates"
     ],
-    "brief": "[draft] stacks of plates, waiting to be read",
-    "description": "[draft] plates stacked chest high, each one cut with marks nobody has read in years",
+    "brief": "The tally plates stand stacked in their cradles, edge out.",
+    "description": "Cradle after cradle of bronze plates, each cut edge to edge with ranked tally marks. The hands change as you work along the rows; the discipline never does. Near the bottom of the last cradle, one plate sits apart from the rest.",
     "artId": "stacks",
     "portable": false,
     "initialLocation": "tally-chamber"
@@ -580,8 +581,8 @@
       "mechanism",
       "door"
     ],
-    "brief": "[draft] the mechanism, waiting for a grip that is not yours",
-    "description": "[draft] a locking mechanism with slots cut for a grip that is not shaped like a hand",
+    "brief": "The mechanism sits recessed in the door's center, waiting.",
+    "description": "Slots, grips, a rotating collar — a lock the way a lighthouse is a lamp. Nothing about it is secret; it is all right there, frank as an instrument panel, and none of it is shaped for your fingers. Something to bridge the wrongness might let you work it. A tool, say, made by the hands this was made for.",
     "artId": "mechanism",
     "portable": false,
     "initialLocation": "antechamber",
