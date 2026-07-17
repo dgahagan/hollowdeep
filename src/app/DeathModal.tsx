@@ -113,6 +113,8 @@ export function DeathModal({ module, death, onAccept, onResume }: DeathModalProp
               className="death-modal__vignette"
               src={vignetteUrl}
               alt=""
+              loading="lazy"
+              decoding="async"
               onError={() => {
                 setFailedVignette(death.text);
               }}

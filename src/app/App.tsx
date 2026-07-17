@@ -254,6 +254,22 @@ function SettingsProvider({ children }: { children: ReactNode }) {
     document.documentElement.style.setProperty('--text-scale', String(TEXT_SCALE_BY_STEP[settings.textSize]));
   }, [settings.textSize]);
 
+  // T11 accessibility audit finding: `settings.reduceMotion` ("disable the
+  // lamplight flicker and OTHER animation" per its own SettingsPanel label)
+  // reached the flicker fine — `ScenePanel.tsx` reads it directly — but
+  // nothing app-wide reflected it to CSS, so a purely decorative transition
+  // like the onboarding card's fade-in was only ever killed by the OS-level
+  // `prefers-reduced-motion` query, never by this in-app toggle. Mirrored
+  // from the `data-theme` pattern just above: a `data-reduce-motion`
+  // attribute on `<html>` lets app.css's reduced-motion rules key off EITHER
+  // signal without threading the setting through every component that
+  // animates.
+  useEffect(() => {
+    const root = document.documentElement;
+    if (settings.reduceMotion) root.dataset.reduceMotion = 'true';
+    else delete root.dataset.reduceMotion;
+  }, [settings.reduceMotion]);
+
   const updateSettings = useCallback((patch: Partial<Settings>) => {
     setSettings((current) => ({ ...current, ...patch }));
   }, []);

@@ -239,6 +239,8 @@ function SlotRow({
           alt=""
           width={64}
           height={36}
+          loading="lazy"
+          decoding="async"
           style={{
             width: '64px',
             height: '36px',

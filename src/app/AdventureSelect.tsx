@@ -177,6 +177,8 @@ function AdventureCard({ card, hardcore, onHardcoreChange, onNewGame, onContinue
             className="select-card__cover-img"
             src={coverUrl}
             alt=""
+            loading="lazy"
+            decoding="async"
             onError={() => {
               setCoverFailed(true);
             }}

@@ -88,6 +88,30 @@ body {
   min-height: 0;
 }
 
+/* Tablet floor (T11 audit, FR-3.8 [S]): the two-column grid's
+   `minmax(320px, 460px)` first track grows toward its 460px max whenever
+   there's room, which is exactly what starves the transcript column on a
+   narrow (~768px, portrait) tablet — measured at 260px there, uncomfortably
+   tight for the primary reading/typing column. NOT a phone breakpoint (the
+   floor stays tablet, per decision 2/FR-3.8): 860px sits between the two
+   canonical tablet widths this plan names (768 portrait, 1024 landscape),
+   so landscape tablets keep the side-by-side layout (measured fine at
+   992px content width) and only the narrower portrait case stacks.
+   Scoped OFF transcript-only mode, which already collapses to one column
+   on its own (above) and already sizes correctly with no scene-region row
+   to share space with — adding an explicit second row here would reserve
+   empty space for the hidden scene panel instead. */
+@media (max-width: 860px) {
+  .shell:not(.shell--transcript-only) .shell__body {
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 40vh) minmax(0, 1fr);
+  }
+
+  .shell:not(.shell--transcript-only) .shell__scene-region {
+    max-height: 40vh;
+  }
+}
+
 /* ---- Status bar ---- */
 
 .status-bar {
@@ -1106,7 +1130,17 @@ kbd {
   gap: 0.6rem;
 }
 
-/* ---- Motion ---- */
+/* ---- Motion ----
+   Two independent kill switches, both honored everywhere a transition or
+   keyframe animation lives (standing rule #3): the OS `prefers-reduced-motion`
+   query, and the in-app `settings.reduceMotion` toggle reflected here via
+   `data-reduce-motion` on `<html>` (App.tsx's `SettingsProvider`, mirroring
+   how `data-theme` reflects the theme setting). Neither selector alone is
+   sufficient — a player may have one preference without the other — so every
+   rule below is duplicated across both. `.scene-panel__ambient--flicker`
+   doesn't need an entry here: `ScenePanel.tsx` already omits that class
+   outright under `settings.reduceMotion`, and the OS query kills its
+   `animation` above regardless. */
 
 @media (prefers-reduced-motion: reduce) {
   .transcript-panel {
@@ -1116,4 +1150,12 @@ kbd {
   .onboarding {
     animation: none;
   }
+}
+
+:root[data-reduce-motion='true'] .transcript-panel {
+  scroll-behavior: auto;
+}
+
+:root[data-reduce-motion='true'] .onboarding {
+  animation: none;
 }

@@ -86,6 +86,17 @@ export function Onboarding({ adventureId }: OnboardingProps) {
     saveSidecar(adventureId, { ...sidecar, onboardingSeen: true });
   }, [adventureId]);
 
+  // T11 accessibility audit finding: dismissing (Skip/Got it/Esc) unmounts
+  // this card's own focused button, and a non-modal component that steals no
+  // focus on OPEN still owes the keyboard user somewhere sane to land on
+  // CLOSE — otherwise focus drops to `<body>`, same dead end an untrapped
+  // overlay would leave. `CommandInput.tsx`'s field carries a stable id for
+  // exactly this: the natural "next thing to do" after dismissing a tip
+  // about typing/clicking is to be back in the box ready to type.
+  useEffect(() => {
+    if (seen) document.getElementById('command-input-field')?.focus();
+  }, [seen]);
+
   // Esc dismisses too (keyboard-reachable, standing rule #3's spirit, even
   // though this is not an Overlays.tsx-managed overlay) — but it does NOT
   // trap focus and does NOT call `preventDefault`, so it never fights a
