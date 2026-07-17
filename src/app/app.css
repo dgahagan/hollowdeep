@@ -919,10 +919,201 @@ kbd {
   }
 }
 
+/* ---- Help panel (T10, HelpPanel.tsx) ---- */
+
+.help-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+.help-panel__section h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+  color: var(--ink-muted);
+}
+
+.help-panel__section p {
+  margin: 0 0 0.6rem;
+  line-height: 1.55;
+}
+
+.help-panel__section code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--surface-2);
+  border-radius: 3px;
+  padding: 0.05rem 0.3rem;
+}
+
+.help-panel__verbs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.help-panel__verb-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.help-panel__verb-group dt {
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.help-panel__verb-group dd {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.help-panel__note {
+  color: var(--ink-muted);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+/* ---- Onboarding (T10, Onboarding.tsx): a quiet, dismissible, non-modal
+   card — never a scrim, never a backdrop, never focus-stolen (see the
+   component's own header for why). Fixed to a corner so it can never
+   obscure the command input it is, in part, explaining. ---- */
+
+.onboarding {
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 40;
+  max-width: min(22rem, calc(100vw - 2rem));
+  animation: onboarding-in 220ms ease-out;
+}
+
+.onboarding__card {
+  background: var(--surface-1);
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 0.9rem 1rem 1rem;
+  box-shadow: 0 4px 18px var(--scrim);
+}
+
+.onboarding__step {
+  margin: 0 0 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-muted);
+}
+
+.onboarding__title {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.onboarding__body {
+  margin: 0 0 0.8rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.onboarding__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.onboarding__skip {
+  background: none;
+  border-color: transparent;
+  color: var(--ink-muted);
+}
+
+@keyframes onboarding-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---- Post-game stats screen (T10, StatsScreen.tsx) ---- */
+
+.stats-screen {
+  background: var(--surface-1);
+  color: var(--ink);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  padding: 1.2rem 1.4rem 1.4rem;
+  width: min(560px, 92vw);
+  max-height: min(85vh, 40rem);
+  overflow-y: auto;
+  font-family: var(--font-serif);
+}
+
+.stats-screen::backdrop {
+  background: var(--scrim);
+}
+
+.stats-screen__title {
+  margin: 0 0 1rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
+.stats-screen__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 0.8rem 1rem;
+  margin: 0 0 1rem;
+}
+
+.stats-screen__stat dt {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-muted);
+}
+
+.stats-screen__stat dd {
+  margin: 0.15rem 0 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.stats-screen__tease {
+  margin: 0 0 1rem;
+  text-align: center;
+  font-style: italic;
+  color: var(--accent);
+}
+
+.stats-screen__actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+}
+
 /* ---- Motion ---- */
 
 @media (prefers-reduced-motion: reduce) {
   .transcript-panel {
     scroll-behavior: auto;
+  }
+
+  .onboarding {
+    animation: none;
   }
 }

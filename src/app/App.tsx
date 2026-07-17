@@ -15,7 +15,7 @@ import { fetchReader } from './fetchReader';
 import { ErrorBoundary } from './ErrorBoundary';
 import { useGame } from './useGame';
 import { useKeyboard } from './useKeyboard';
-import { OverlayProvider, useOverlays, Overlay } from './Overlays';
+import { OverlayProvider, useOverlays } from './Overlays';
 import { ScenePanel } from './ScenePanel';
 import { TranscriptPanel } from './TranscriptPanel';
 import { CommandInput } from './CommandInput';
@@ -37,6 +37,9 @@ import { DeathModal } from './DeathModal';
 import { JournalPanel } from './JournalPanel';
 import { HintsPanel } from './HintsPanel';
 import { AdventureSelect } from './AdventureSelect';
+import { HelpPanel } from './HelpPanel';
+import { Onboarding } from './Onboarding';
+import { StatsScreen } from './StatsScreen';
 import type { GameState } from '../engine/types';
 import './fonts.css';
 import './theme.css';
@@ -119,8 +122,21 @@ function useAdventure(id: string): LoadState {
   return state;
 }
 
-function AdventureGate({ id, resume }: { id: string; resume: GameState | null }) {
+function AdventureGate({
+  id,
+  resume,
+  onSelect,
+}: {
+  id: string;
+  resume: GameState | null;
+  onSelect: () => void;
+}) {
   const adventure = useAdventure(id);
+  // Replay (T10 stats screen): a fresh run of the SAME adventure can't change
+  // `id`, so `key={id}` alone would never remount. This nonce, bumped by the
+  // stats screen's Replay, becomes part of the key — a new nonce is a new
+  // mount: empty transcript, turn 0, no resume.
+  const [replayNonce, setReplayNonce] = useState(0);
 
   if (adventure.status === 'error') {
     // Re-thrown during render so the surrounding `ErrorBoundary` (which only
@@ -139,9 +155,18 @@ function AdventureGate({ id, resume }: { id: string; resume: GameState | null })
   return (
     <OverlayProvider>
       {/* `key` forces a fresh Game (and a fresh useGame session) whenever the
-          adventure changes, so switching titles from the select screen never
-          leaks one game's state into another. */}
-      <Game key={id} module={adventure.module} resume={resume} />
+          adventure OR the replay nonce changes, so switching titles from the
+          select screen — or replaying — never leaks one game's state into
+          another. A replay carries no resume state. */}
+      <Game
+        key={`${id}-${replayNonce}`}
+        module={adventure.module}
+        resume={replayNonce === 0 ? resume : null}
+        onReplay={() => {
+          setReplayNonce((nonce) => nonce + 1);
+        }}
+        onSelect={onSelect}
+      />
     </OverlayProvider>
   );
 }
@@ -238,7 +263,19 @@ function SettingsProvider({ children }: { children: ReactNode }) {
   return <SettingsContext.Provider value={value}>{children}</SettingsContext.Provider>;
 }
 
-function Game({ module, resume }: { module: AdventureModule; resume: GameState | null }) {
+function Game({
+  module,
+  resume,
+  onReplay,
+  onSelect,
+}: {
+  module: AdventureModule;
+  resume: GameState | null;
+  /** T10 stats screen: start a fresh run of this same adventure (remount via AdventureGate's nonce). */
+  onReplay: () => void;
+  /** T10 stats screen: back to the adventure-select front door. */
+  onSelect: () => void;
+}) {
   // Hardcore (T6, ui-plan §5): read ONCE, at mount, from the per-adventure
   // sidecar — set by the new-game flow (T9, `setAdventureHardcore`) BEFORE
   // this component mounts, and never re-read, so the mode is locked for the
@@ -314,6 +351,10 @@ function Game({ module, resume }: { module: AdventureModule; resume: GameState |
 
   return (
     <main className={shellClassName}>
+      {/* First-run onboarding (T10): self-gating on the sidecar's
+          onboardingSeen; non-modal, dismissible, never forced. */}
+      <Onboarding adventureId={module.manifest.id} />
+
       <header className="shell__header">
         <h1 className="shell__title">{module.manifest.title}</h1>
         <div className="shell__header-actions">
@@ -362,11 +403,9 @@ function Game({ module, resume }: { module: AdventureModule; resume: GameState |
             typewriterSpeed={settings.typewriterSpeed}
             reduceMotion={settings.reduceMotion}
           />
-          {state.ended && (
-            <p className="shell__ended">
-              {state.ended.victory ? 'Victory!' : 'Game over.'} Final rank: {state.ended.rank}
-            </p>
-          )}
+          {/* The end-of-game summary is the T10 StatsScreen (mounted below),
+              not an inline banner — it supersedes the old `.shell__ended`
+              line, which showed the same victory/rank fact a second time. */}
           <CommandInput onSubmit={submit} suggest={getSuggestions} />
         </div>
       </div>
@@ -386,39 +425,17 @@ function Game({ module, resume }: { module: AdventureModule; resume: GameState |
 
       <DeathModal module={module} death={pendingDeath} onAccept={dismissDeath} onResume={load} />
 
-
       <MapOverlay module={module} state={state} />
-
-      {/* Stub panels (T3): the `j`/`?` shortcuts route through the T1
-          overlay manager now so they're demonstrably wired, but the journal
-          (T7) has no real content yet, and help proper (T10) is still a
-          placeholder. Each says so, in the narrator's own dry voice, rather
-          than showing an empty dialog that looks broken. */}
       <JournalPanel module={module} state={state} adventureId={module.manifest.id} />
       <HintsPanel module={module} state={state} submit={submit} />
-      <Overlay id="help" title="Help">
-        <p>A proper help panel arrives with T10. Type what you would do; the parser is forgiving.</p>
-        <ul className="overlay__shortcut-list">
-          <li>
-            <kbd>m</kbd> map
-          </li>
-          <li>
-            <kbd>j</kbd> journal
-          </li>
-          <li>
-            <kbd>i</kbd> focus inventory
-          </li>
-          <li>
-            <kbd>l</kbd> look
-          </li>
-          <li>
-            <kbd>?</kbd> this panel
-          </li>
-          <li>
-            <kbd>Ctrl</kbd>+<kbd>S</kbd> save
-          </li>
-        </ul>
-      </Overlay>
+      <HelpPanel />
+
+      {/* Post-game stats (T10): mounts unconditionally, reveals itself on
+          state.ended after a short courtesy delay. Replay starts a fresh run
+          of this adventure (remount via AdventureGate's nonce — same hardcore
+          mode, read again from the unchanged sidecar); Select returns to the
+          front door. */}
+      <StatsScreen module={module} state={state} onReplay={onReplay} onSelect={onSelect} />
     </main>
   );
 }
@@ -461,7 +478,13 @@ export default function App() {
             }}
           />
         ) : (
-          <AdventureGate id={route.id} resume={route.resume} />
+          <AdventureGate
+            id={route.id}
+            resume={route.resume}
+            onSelect={() => {
+              setRoute({ screen: 'select' });
+            }}
+          />
         )}
       </ErrorBoundary>
     </SettingsProvider>
