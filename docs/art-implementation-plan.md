@@ -305,7 +305,7 @@ blocking the batch.
 
 - [x] T1 — Audit, contact sheets, optimizer, manifest skeleton (`sonnet`) — `f76ddb6`
 - [x] T2 — Author all ~106 subject prompts (`opus`) — `249be58` (108 subjects)
-- [ ] T3 — Style lock: candidates, probes, human sign-off (`opus`, human)
+- [x] T3 — Style lock: candidates, probes, human sign-off (`opus`, human) — `f08688c` (candidate C, chiaroscuro)
 - [ ] T4 — Scenes: generate, curate, choose (`opus`, human)
 - [ ] T5 — Items + creatures: generate, curate, choose (`opus`, human)
 - [ ] T6 — Marquees: generate, curate, choose (`opus`, human)
