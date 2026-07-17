@@ -82,11 +82,21 @@ with engine work after the world data stabilizes.
 - **Exit criteria:** every subject has a chosen, optimized, style-consistent
   final image wired into the game.
 
-### Phase 3 — UI/UX complete
+### Phase 3 — UI/UX complete — **complete 2026-07-17**
 - Auto-map, journal, hints UI, settings, onboarding, shortcuts, adventure
   select screen, responsive polish, accessibility pass, image
   preloading/perf pass.
-- **Exit criteria:** all [M] and surviving [S] requirements demonstrably met.
+- **Exit criteria met:** the Phase 3 UI ships every [M] and surviving [S]
+  UI-facing requirement — dual AA themes + self-hosted typography, the
+  three-region shell, autocomplete + FR-2.8 shortcuts, the maze-safe
+  auto-map, death-rescue / hardcore / single-step undo, journal + hints
+  panels, settings, save metadata + thumbnails + file export/import,
+  adventure select, help + onboarding + post-game stats, keyboard-only
+  operation, tablet layout, and the reduced-motion + preload perf passes.
+  The closeout report (`docs/ui-implementation-plan.md` §Closeout) maps each
+  requirement to its verification; `docs/ui-plan.md` is marked IMPLEMENTED.
+  The one dependency still open is Phase B art — the UI wires whatever files
+  exist and tolerates their absence, so it does not gate this phase.
 
 ### Phase 4 — Polish & release
 - Full play-testing (including hardcore mode), balance (lamp fuel, creature
@@ -131,11 +141,13 @@ as of 2026-07-16; the boxes below tick only where the v1 bar is actually met.
 - [x] Engine package (headless TS) with test suite — Phase 0+1: parser, turn
       loop, actions, systems, scoring, save/load with migrations, scene view;
       679 tests incl. a scripted walkthrough that wins at every seed
-- [ ] Web app (React) — all [M] UI features
-      — *the minimal wiring UI is done and playable (scene, transcript, input,
-      action buttons, inventory, status, save dialog, shortcuts). The remaining
-      [M] UI features (auto-map, journal, hints, settings, onboarding,
-      adventure-select, achievements UI) are Phase 3.*
+- [x] Web app (React) — all [M] UI features — Phase 3 complete (2026-07-17):
+      dual AA themes + typography, the three-region shell, transcript +
+      autocomplete + FR-2.8 shortcuts, the maze-safe auto-map, death-rescue /
+      hardcore / undo, journal + hints panels, settings, save metadata +
+      export/import, adventure select, help + onboarding + stats, and the
+      accessibility / tablet / performance pass. Per-requirement verification
+      in `docs/ui-implementation-plan.md` §Closeout.
 - [x] `adventures/test-cave/` — reference module — 11 locations, 11 items,
       3 creatures; exercises every engine feature; format reference (FR-6.5)
 - [ ] `adventures/hollowdeep/` — full adventure data + art manifest + finals

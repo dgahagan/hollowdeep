@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Status: Foundation + Hollowdeep content complete; Phase B art and Phase 3 UI next
+## Project Status: Foundation + Hollowdeep content + Phase 3 UI complete; Phase B art is the last track
 
 This is "Hollowdeep" (working title): an original browser-based adventure game
 in the spirit of *Colossal Cave Adventure*. The engine, the `test-cave`
@@ -11,18 +11,25 @@ reference adventure, and a minimal playable browser UI are Phase 0+1
 (`docs/hollowdeep-plan.md`, IMPLEMENTED 2026-07-17): `adventures/hollowdeep/`
 is the complete game — 58 rooms, 12 treasures, 350 points, two endings, hint
 ladders, and a walkthrough that wins at every seed. `test-cave` remains the
-format fixture. Placeholder SVG art until Phase B; real UI chrome is Phase 3.
+format fixture. **The real UI shipped with Phase 3** (`docs/ui-plan.md`,
+IMPLEMENTED 2026-07-17): dual AA themes + self-hosted typography, the
+three-region shell, autocomplete + shortcuts, the maze-safe auto-map,
+death-rescue / hardcore / undo, journal + hints panels, settings, save
+metadata + export/import, adventure select, help + onboarding + stats, and
+the accessibility / tablet / performance pass. **Phase B art is the one
+remaining track** — the UI wires whatever art files exist and tolerates
+placeholders, so it does not block on Phase B.
 
 ```bash
 npm install
-npm run dev      # play hollowdeep (test-cave via ?adventure=test-cave)
+npm run dev      # opens on adventure-select (?adventure=hollowdeep|test-cave deep-links in)
 npm run gate     # typecheck && lint && test && validate && build — must be green before any commit
 ```
 
 | Command | Does |
 |---|---|
 | `npm run gate` | The whole verification gate. If it is red, nothing else matters. |
-| `npm test` | Vitest (796 tests, 26 files) |
+| `npm test` | Vitest (865 tests, 33 files) |
 | `npm run validate` | Validate every adventure in `adventures/`; takes paths as argv |
 | `npm run dev` / `build` / `preview` | Vite |
 | `npm run typecheck` / `lint` | tsc / ESLint |
@@ -45,9 +52,9 @@ npm run gate     # typecheck && lint && test && validate && build — must be gr
 ## Architecture (as built)
 
 - **Engine ≠ UI:** the game core (world model, parser, turn loop, scoring, save/load) is headless TypeScript with no React/DOM imports, fully testable without a browser. React is presentation only.
-- **Engine ≠ content:** adventures are self-contained, schema-validated data modules. Adding an adventure must require zero engine changes. A tiny `test-cave` module serves as the format reference and test fixture. The format is **eleven JSON documents plus `art/`** — manifest, locations, items, creatures, events, strings, vocabulary, scoring, achievements, walkthrough, hints. (The hints *panel* is Phase 3 UI; the hints *data* and the `hint` verb shipped with the hints-timers engine work, alongside relative timers. The art manifest belongs to the Phase B art pipeline, not to a module.) `docs/module-format.md` is the contract.
+- **Engine ≠ content:** adventures are self-contained, schema-validated data modules. Adding an adventure must require zero engine changes. A tiny `test-cave` module serves as the format reference and test fixture. The format is **eleven JSON documents plus `art/`** — manifest, locations, items, creatures, events, strings, vocabulary, scoring, achievements, walkthrough, hints. (The hints *panel* shipped with Phase 3 UI; the hints *data* and the `hint` verb shipped with the hints-timers engine work, alongside relative timers. The art manifest belongs to the Phase B art pipeline, not to a module.) `docs/module-format.md` is the contract.
 - **Determinism:** the turn loop is deterministic given a seed — required for the automated full-walkthrough test.
-- **Saves:** versioned JSON in `localStorage`, namespaced per adventure (`cave.<adventureId>.slot.<n>` / `.auto.<0..4>`), with a migration registry on version bumps. Loading a save that cannot be honoured raises a **typed** `SaveError` the UI presents — never silent corruption. (File export/import, FR-5.4, is Phase 3 and not built.)
+- **Saves:** versioned JSON in `localStorage`, namespaced per adventure (`cave.<adventureId>.slot.<n>` / `.auto.<0..4>`), with a migration registry on version bumps. Loading a save that cannot be honoured raises a **typed** `SaveError` the UI presents — never silent corruption. File export/import (FR-5.4) shipped with Phase 3: named slots are wrapped in a UI-side metadata envelope (`src/app/storage.ts`) around the opaque engine payload, and imports run through the same `SaveError` path — the engine's `SAVE_VERSION` is untouched.
 
 ## Art Pipeline
 
@@ -84,10 +91,15 @@ engine core, test-cave, minimal UI); its implementation plan is
 another project; their stale cross-project references were corrected on
 2026-07-15. If any survive, this repo's playbook is authoritative.
 
-## Next Milestone (Phase B art / Phase 3 UI)
+## Next Milestone (Phase B art, then Phase 4 release)
 
-Per `docs/SCOPE.md`: with Phase 2 content complete, the parallel tracks are
-Phase B (the FLUX art pipeline — recover/rewrite the host generator, author the
-hollowdeep art manifest, generate → curate → optimize ~100 painterly images)
-and Phase 3 (real UI: auto-map, journal, hints panel, adventure select,
-settings, save export/import, accessibility). Exit criteria live in SCOPE §3.
+Per `docs/SCOPE.md`: Phase 2 content and Phase 3 UI are both complete, so the
+one remaining build track is **Phase B** — the FLUX art pipeline (recover or
+rewrite the host generator, author the hollowdeep art manifest, generate →
+curate → optimize ~100 painterly images including the marquee title, ending,
+and eight per-death vignette images the UI already has slots for). The UI is
+placeholder-tolerant, so art lands unreferenced-then-wired with no UI changes:
+the death modal keys vignettes off `marquee-death-<messageId minus '-death'>`,
+adventure select and endings use `marquee-title`/`marquee-*`, scenes use each
+location's `artId`. After Phase B, **Phase 4** is play-testing, balance, and
+release (SCOPE §Phase 4). Exit criteria live in SCOPE §3.

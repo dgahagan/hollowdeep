@@ -1,9 +1,12 @@
 # Phase 3 — UI/UX Design Plan
 
-**Status:** READY — signed off 2026-07-17. Visual identity, the [C]
-inclusions, every mechanic sketched below, and all §12 review items are
-settled (§12 logs the answers); nothing here is blocked on Phase B — the two tracks merge in either order
-(`docs/art-plan.md` §7 is the one coordination point).
+**Status:** IMPLEMENTED 2026-07-17 (`docs/ui-implementation-plan.md`, T1–T12
+all committed on `feat/ui`; per-requirement closeout in that file's
+§Closeout). Visual identity, the [C] inclusions, every mechanic sketched
+below, and all §12 review items are settled (§12 logs the answers); nothing
+here was blocked on Phase B — the two tracks merge in either order
+(`docs/art-plan.md` §7 is the one coordination point), and the shipped UI is
+placeholder-tolerant for every art slot.
 **Phase:** 3 (SCOPE §3). Blocks: v1.
 **Settled by:** [PROJECT-BRIEF.md](PROJECT-BRIEF.md) §9 (hybrid input, clicks
 echo commands, v1 silent), [REQUIREMENTS.md](REQUIREMENTS.md) — the MoSCoW

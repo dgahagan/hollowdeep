@@ -359,9 +359,57 @@ accessibility + tablet + performance passes, docs closeout.
 - [x] T9 — Adventure select + new-game flow (`opus`) — `9c684ed` (blurbs are UI copy in the registry; hardcore locked via `setAdventureHardcore` written pre-mount)
 - [x] T10 — Help, onboarding, stats (`sonnet`) — `77640ff` (onboarding is per-adventure; ending-A tease gated on the `the-full-ledger` achievement)
 - [x] T11 — Accessibility/tablet/perf pass (`sonnet`) — `5c57135` (added `data-reduce-motion` app-wide signal; 860px tablet stack breakpoint)
-- [ ] T12 — Integration smoke + docs closeout (`opus`)
+- [x] T12 — Integration smoke + docs closeout (`opus`) — this commit (closeout report below; ui-plan.md → IMPLEMENTED)
 
 **Done when:** every box is ticked with its commit SHA, `npm run gate` is
 green on `feat/ui` with both walkthrough suites untouched, the closeout
 report demonstrates every [M] and surviving [S] requirement, and
 `docs/ui-plan.md` is marked IMPLEMENTED. Merging is the human's call.
+
+---
+
+## Closeout report (T12, 2026-07-17)
+
+Every UI-facing requirement Phase 3 is responsible for, mapped to what ships
+it and how it was verified. Engine-only requirements (FR-1.x world rules,
+FR-2.1–2.5 parser, FR-4.x art pipeline, FR-6.x module system) landed in
+earlier phases and are out of this plan's scope; they are listed only where
+Phase 3 completes their UI half. Verification is one of: **test** (headless
+vitest in the gate), **smoke** (rendered-browser drive via Playwright this
+session), or **build** (gate step). The full gate (`npm run gate`) is green
+on `feat/ui`: **865 tests / 33 files**, validate, build — both walkthrough
+suites untouched.
+
+| Req | Tag | Shipped by | Verified |
+|---|---|---|---|
+| FR-1.6 death & recovery, hardcore | [M] | T6 — `DeathModal`, `useGame` interception, `SaveDialog` autosave-hiding | smoke: jump-death → modal, resume-before-fall to turn 156; hardcore refuses undo + hides autosaves + no modal · test: `undo.test.ts` gating matrix |
+| FR-1.11 single-step undo | [C] | T6 — `useGame` above `step()` | test: `retainedUndo` (consumed-turn only, one step) · smoke: step back once then refused |
+| FR-1.12 achievements viewable | [S] | T7 journal Log · T9 select progress · T10 stats | smoke: journal lists earned; select shows x/N; stats 7/8 |
+| FR-2.6 autocomplete + history | [S] | T3 — `CommandInput` over `suggestions()` | smoke: `ta`→`take`, magic words never offered, ↑/↓ precedence |
+| FR-2.7 clicks echo commands | [M] | pre-existing, preserved | smoke: East click echoed `> e` and moved |
+| FR-2.8 keyboard shortcuts + help list | [M] | T3 `useKeyboard` · T10 `HelpPanel` | smoke: m/j/i/l/?/Ctrl+S route correctly, suppressed while typing; help lists them |
+| FR-3.1 scene view | [M] | T5 `ScenePanel` (preload, lamplight, dark plate) | smoke: art swaps < preload; flicker off under reduced-motion |
+| FR-3.2 scrollable transcript, screen-reader | [M] | T3 `TranscriptPanel`, `aria-live` | smoke: typed-event styling, aria-live present |
+| FR-3.3 inventory + thumbnails | [M] | pre-existing panel; T8 save thumbnails | smoke: inventory context verbs; slot thumbnails render |
+| FR-3.4 auto-map, maze-safe | [M] | T4 `mapLayout` + `MapOverlay` | test: `mapLayout.test.ts` cloud rule against both modules · smoke: map grows along the spine |
+| FR-3.5 status bar | [M] | pre-existing `StatusBar`, re-themed | smoke: location/score/turn/lamp gauge |
+| FR-3.6 journal (log + notes) | [S] | T7 `journal.ts` + `JournalPanel` | test: `journal.test.ts` derivation · smoke: notes persist across reload |
+| FR-3.7 settings panel | [S] | T2 `SettingsPanel` + `uiState` | test: `uiState.test.ts` persistence/reset · smoke: theme/size/transcript-only apply live |
+| FR-3.8 tablet layout | [S] | T1 shell · T11 860px breakpoint | smoke: 768px single-column no h-scroll, 1024px two-column |
+| FR-4.6 ambient motion | [C] | T5 lamplight flicker | smoke: present at default, off under reduced-motion |
+| FR-5.1 named slots: timestamp/location/score/thumbnail, delete | [M] | T8 `SaveDialog` + envelope | test: `storage.test.ts` round-trip · smoke: slot card metadata + thumbnail, two-step delete |
+| FR-5.3 versioned saves, clear failure | [M] | pre-existing engine; T8 surfaces `SaveError` in dialog | test: corrupt import → error string · smoke: never silent |
+| FR-5.4 export / import file | [S] | T8 | smoke: export downloads envelope; re-import re-summarizes; cross-adventure refused |
+| FR-6.4 adventure select | [S] | T9 `AdventureSelect` | smoke: fresh browser lands on select, both playable, continue resumes, deep-link skips |
+| FR-7.1 help + onboarding | [M] | T10 `HelpPanel` + `Onboarding` | smoke: `?` opens help; onboarding once then quiet, sets `onboardingSeen` |
+| FR-7.2 hints panel (UI) | [S] | T7 `HintsPanel` | smoke: revealed rungs grouped; button submits `hint` |
+| FR-7.3 post-game stats | [C] | T10 `StatsScreen` | smoke: full walkthrough → 254 turns / 350 / 12·12 / 50·58 / 7·8 + ending-A tease |
+| NFR-1 static-only, fonts self-hosted | [M] | T1 fonts in `public/fonts/`, T12 build | build: no runtime network dep; woff2 subsets |
+| NFR-3 first-paint < 3s, swap < 200ms | [M] | T1 preload · T5 art preload · T11 audit | build: 116 KB gzip JS + 3.65 KB CSS; smoke: adjacent art preloaded |
+| NFR-5 keyboard, screen-reader, reduced-motion, AA both themes | [M] | T1 tokens · T11 audit | test/build: `dev/contrast-check.mjs` all pairs AA · smoke: keyboard-only town loop, reduced-motion honored |
+| NFR-6 offline after first load | [S] | static build, no runtime fetch beyond assets | build: no third-party runtime |
+
+**Deferred, as planned (not regressions):** phone layout (FR-3.8 [C]),
+PWA install (NFR-6 [C] half), audio (FR-3.9 [W]), LLM input (FR-2.9 [W]),
+and the painterly art itself (FR-4.x — Phase B; the UI is placeholder-
+tolerant at every art slot). No engine file was touched on this branch.

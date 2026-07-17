@@ -131,33 +131,81 @@ again when it runs out.
 - Something in the cave steals. If your hands feel lighter, your treasure has
   gone somewhere, and it is still in the cave.
 
+## The map
+
+Press **`m`**, or click **Map**. It draws itself as you go: every room you have
+stood in, the corridors between them, and short dashes toward exits you have seen
+but not yet walked. North is up. A ring marks where you are, and the corner keeps
+a count of how much of the cave you have seen.
+
+The map will not solve the maze for you. Rooms that look and read identically
+collapse into a single "twisting passages, all confused" cloud — until you do the
+old trick and drop something in one. A room with your marker in it steps out of
+the cloud and onto the map as itself; pick the marker back up and it dissolves
+again. The map only ever remembers what the cave already let you tell apart.
+
+## The journal and hints
+
+Press **`j`**, or click **Journal**, for two tabs. *Log* is a running account the
+game keeps for you — milestones, treasures carried and banked, achievements,
+deaths, and every hint you have taken — rebuilt honestly from wherever you are,
+so loading a save shows that save's history, not this session's. *Notes* is a
+blank page that is yours; it persists per adventure.
+
+Click **Hints** for the hint panel. It shows every hint you have already
+uncovered, grouped by the puzzle it belongs to, and one button to take the next
+one — the same `−5 points` the `hint` command costs, because it *is* the `hint`
+command. It never lists a hint you have not earned.
+
 ## Saving
 
 Press **Ctrl+S**, or click **Save / Load**. Five named slots, plus an autosave
 that keeps the last five turns on its own — the game saves every turn you take,
 so you can close the tab and come back.
 
-Each row shows when it was saved, where you were, and your score. Load returns
-you exactly there. The transcript starts fresh after a load — a save records the
-world, not the conversation you had about it.
+Each row shows when it was saved, where you were, your score, and a thumbnail of
+the scene. Load returns you exactly there. The transcript starts fresh after a
+load — a save records the world, not the conversation you had about it.
 
-A save that cannot be loaded says so plainly and leaves the game running. It will
-never load half of one.
+**Export** downloads a slot as a file; **Import** reads one back into a slot — for
+a backup, or to carry a game to another browser. An imported save is checked
+before it lands: a file for a different adventure, or one the game cannot read, is
+refused with a plain message and changes nothing. A save that cannot be loaded
+says so plainly and leaves the game running. It will never load half of one.
+
+## Undo
+
+Typed a move you regret? Type **`undo`** to take back the last turn — one step, no
+more. It is a courtesy the cave extends between turns, not a mechanic: it never
+appears in the transcript as a command, and there is nothing to undo at the very
+start, after the game is over, or in hardcore.
+
+## Hardcore
+
+Starting a new game, you can choose **hardcore**. It is set once, at the start,
+and cannot be turned on or off mid-run. In hardcore there is no rescue: death is
+reincarnation and nothing else, the autosaves are hidden while you play, and
+`undo` is refused. Everything else is the same game — it just means it.
 
 ## Keyboard
 
 | Key | Does |
 |---|---|
 | `Enter` | Submit the command |
-| `↑` / `↓` | Walk back through commands you have typed |
-| `l` | Look |
+| `↑` / `↓` | Walk back through commands you have typed (or through the autocomplete list when it is open) |
+| `m` | Map |
+| `j` | Journal |
 | `i` | Jump to the inventory panel |
+| `l` | Look |
+| `?` | Help |
 | `Ctrl+S` | Save / load |
-| `Escape` | Close the save dialog |
+| `Escape` | Close whatever overlay is open |
 
-`l` and `i` are for when you are not typing — while the command box has focus
-they are just letters, so `light lamp` types the word it looks like. `Ctrl+S`
-always works.
+The bare letters (`m`, `j`, `i`, `l`, `?`) are for when you are not typing — while
+the command box has focus they are just letters, so `light lamp` types the word it
+looks like. `Ctrl+S` always works. The **Hints** and **Settings** panels open from
+their header buttons — no letter is free for them without stealing it from a
+command word.
 
 ## If you get stuck
 
