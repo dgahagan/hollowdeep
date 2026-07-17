@@ -229,6 +229,17 @@ body {
   font-style: italic;
 }
 
+.transcript-entry--hint {
+  color: var(--ink-muted);
+  font-style: italic;
+}
+
+.transcript-entry--hint::before {
+  content: 'Hint — ';
+  font-style: normal;
+  color: var(--accent);
+}
+
 /* ---- Command input ---- */
 
 .command-input {
@@ -242,8 +253,14 @@ body {
   font-size: 0.85rem;
 }
 
-.command-input input {
+.command-input__field-wrap {
+  position: relative;
   flex: 1;
+  min-width: 0;
+}
+
+.command-input input {
+  width: 100%;
   padding: 0.55rem 0.7rem;
   background: var(--surface-0);
   border: 1px solid var(--border-strong);
@@ -251,6 +268,37 @@ body {
   color: var(--ink);
   font-family: var(--font-mono);
   font-size: 0.95rem;
+}
+
+.command-input__suggestions {
+  position: absolute;
+  bottom: calc(100% + 0.3rem);
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 0.3rem;
+  list-style: none;
+  background: var(--surface-1);
+  border: 1px solid var(--border-strong);
+  border-radius: 6px;
+  box-shadow: 0 0.4rem 1rem var(--scrim);
+  max-height: 12rem;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.command-input__suggestion {
+  padding: 0.35rem 0.55rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.command-input__suggestion--active,
+.command-input__suggestion:hover {
+  background: var(--surface-2);
+  color: var(--accent);
 }
 
 /* ---- Action bar + inventory (the action region) ---- */
@@ -487,6 +535,28 @@ input:focus-visible {
   gap: 0.55rem;
   color: var(--ink);
   font-size: 0.9rem;
+}
+
+/* ---- Overlay stubs (T3: map/journal/help placeholders ahead of T4/T7/T10) ---- */
+
+.overlay__shortcut-list {
+  list-style: none;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+}
+
+kbd {
+  display: inline-block;
+  padding: 0.05rem 0.4rem;
+  background: var(--surface-2);
+  border: 1px solid var(--border-strong);
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.85em;
 }
 
 /* ---- Motion ---- */

@@ -9,12 +9,13 @@ import {
   type ReactNode,
 } from 'react';
 import type { AdventureModule } from '../engine/schema';
+import { suggestions } from '../engine/view';
 import { loadAdventure } from '../loader';
 import { fetchReader } from './fetchReader';
 import { ErrorBoundary } from './ErrorBoundary';
 import { useGame } from './useGame';
 import { useKeyboard } from './useKeyboard';
-import { OverlayProvider, useOverlays } from './Overlays';
+import { OverlayProvider, useOverlays, Overlay } from './Overlays';
 import { ScenePanel } from './ScenePanel';
 import { TranscriptPanel } from './TranscriptPanel';
 import { CommandInput } from './CommandInput';
@@ -246,12 +247,27 @@ function Game({ module }: { module: AdventureModule }) {
   // inert wrapper around it needs no change inside.
   const inventoryFocusRef = useRef<HTMLDivElement>(null);
 
+  // T3's autocomplete dropdown (CommandInput.tsx) needs the engine's
+  // `suggestions()`, which takes `module` + the live `GameState` — both
+  // engine-side types CommandInput has no business importing. This closure
+  // is the seam: CommandInput only ever sees `(prefix: string) => string[]`.
+  const getSuggestions = useCallback((prefix: string) => suggestions(module, state, prefix), [module, state]);
+
   useKeyboard({
     onLook: () => {
       submit('look');
     },
     onInventoryFocus: () => {
       inventoryFocusRef.current?.focus();
+    },
+    onToggleMap: () => {
+      overlays.toggle('map');
+    },
+    onToggleJournal: () => {
+      overlays.toggle('journal');
+    },
+    onToggleHelp: () => {
+      overlays.toggle('help');
     },
     onOpenSaveDialog: () => {
       overlays.open('saves');
@@ -298,13 +314,17 @@ function Game({ module }: { module: AdventureModule }) {
         </div>
 
         <div className="shell__transcript-region">
-          <TranscriptPanel entries={transcript} />
+          <TranscriptPanel
+            entries={transcript}
+            typewriterSpeed={settings.typewriterSpeed}
+            reduceMotion={settings.reduceMotion}
+          />
           {state.ended && (
             <p className="shell__ended">
               {state.ended.victory ? 'Victory!' : 'Game over.'} Final rank: {state.ended.rank}
             </p>
           )}
-          <CommandInput onSubmit={submit} />
+          <CommandInput onSubmit={submit} suggest={getSuggestions} />
         </div>
       </div>
 
@@ -319,6 +339,41 @@ function Game({ module }: { module: AdventureModule }) {
         onClose={overlays.close}
       />
       <SettingsPanel />
+
+      {/* Stub panels (T3): the `m`/`j`/`?` shortcuts route through the T1
+          overlay manager now so they're demonstrably wired, but the map
+          (T4) and journal (T7) have no real content yet, and help proper
+          (T10) is still a placeholder. Each says so, in the narrator's own
+          dry voice, rather than showing an empty dialog that looks broken. */}
+      <Overlay id="map" title="Map">
+        <p>The map arrives with T4. For now, the cave keeps its own counsel.</p>
+      </Overlay>
+      <Overlay id="journal" title="Journal">
+        <p>The journal arrives with T7. Your memory will have to do.</p>
+      </Overlay>
+      <Overlay id="help" title="Help">
+        <p>A proper help panel arrives with T10. Type what you would do; the parser is forgiving.</p>
+        <ul className="overlay__shortcut-list">
+          <li>
+            <kbd>m</kbd> map
+          </li>
+          <li>
+            <kbd>j</kbd> journal
+          </li>
+          <li>
+            <kbd>i</kbd> focus inventory
+          </li>
+          <li>
+            <kbd>l</kbd> look
+          </li>
+          <li>
+            <kbd>?</kbd> this panel
+          </li>
+          <li>
+            <kbd>Ctrl</kbd>+<kbd>S</kbd> save
+          </li>
+        </ul>
+      </Overlay>
     </main>
   );
 }
