@@ -3,8 +3,9 @@
 A player's guide to the game engine — how to talk to it, and what it expects of
 you. Everything here was transcribed from the running game, not from the source.
 
-The shipping adventure right now is **test-cave**, a small complete cave used as
-the reference and test fixture. Hollowdeep, the real adventure, is Phase 2.
+The shipping adventure is **Hollowdeep** — `npm run dev` opens on the coach
+road above Weir's Landing. The **test-cave** fixture is still playable at
+`?adventure=test-cave`.
 
 ```bash
 npm install

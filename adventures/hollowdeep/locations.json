@@ -1,0 +1,1036 @@
+[
+  {
+    "id": "coach-road",
+    "name": "Coach Road",
+    "brief": "You are on the coach road, above a town that has stopped expecting anyone.",
+    "full": "The coach road comes down out of the hills with the businesslike air of a road that used to matter. Below, in a fold of the valley, sits Weir's Landing — a town considerably smaller than its name and quieter than either. You have a lantern, empty pockets, and a rumor, which is one more rumor than anyone here wants. The road goes on east into town whether you do or not.",
+    "artId": "coach-road",
+    "light": "lit",
+    "exits": {
+      "e": {
+        "to": "main-street"
+      }
+    }
+  },
+  {
+    "id": "main-street",
+    "name": "Main Street",
+    "brief": "You are on Main Street, which is still here, which is somehow worse.",
+    "full": "Main Street still has its buildings, which is the surprising part. The chapel keeps its footing to the north and the general store faces it from the south, both weathered to the same patient gray. East, on the corner, the assay office waits with its shutters squared as if the morning shift were merely late. A path climbs northeast toward the old tailings. Ninety years of nobody has been kinder to this street than it had any right to be.",
+    "artId": "main-street",
+    "light": "lit",
+    "exits": {
+      "w": {
+        "to": "coach-road"
+      },
+      "n": {
+        "to": "chapel"
+      },
+      "s": {
+        "to": "general-store"
+      },
+      "e": {
+        "to": "assay-office",
+        "if": [
+          {
+            "flag": "office-door-open"
+          }
+        ],
+        "blockedMessage": "The assay office is locked, and the lock means it. Keys in a town like this do not travel far."
+      },
+      "ne": {
+        "to": "tailings-path"
+      }
+    }
+  },
+  {
+    "id": "chapel",
+    "name": "The Chapel",
+    "brief": "You are in the chapel, under the memorial board.",
+    "full": "A plain chapel, swept by weather if nothing else. One wall carries the memorial board: two columns of names carved close together, the date cut once at the top as if it did not bear repeating. Beneath the board, on an honest nail, hangs a key.",
+    "artId": "chapel",
+    "light": "lit",
+    "exits": {
+      "s": {
+        "to": "main-street"
+      }
+    },
+    "scenery": [
+      {
+        "names": [
+          "memorial board",
+          "board",
+          "names"
+        ],
+        "description": "Two columns of names and one bad night. The carving is careful and unornamented — the town said what it had to say and then stopped saying it. The nail beneath was added later, for the assay office key, on the reasoning that the office belonged to these men more than to anyone left standing."
+      }
+    ]
+  },
+  {
+    "id": "general-store",
+    "name": "General Store",
+    "brief": "You are in the general store, under the storekeeper's patient eye.",
+    "full": "The general store is open, in the sense that its door is. The shelves hold whatever ninety years could not spoil and nobody came back for, arranged with the neatness of a man who has had time. The storekeeper watches you from behind the counter. By the door hangs a caged canary, yellow as a warning nobody painted.",
+    "artId": "general-store",
+    "light": "lit",
+    "exits": {
+      "n": {
+        "to": "main-street"
+      }
+    }
+  },
+  {
+    "id": "assay-office",
+    "name": "Assay Office",
+    "brief": "You are in the assay office, where things get weighed.",
+    "full": "One room that used to be the whole town's arithmetic. Scales, a stout bench, and small scorched rings on the wood where crucibles stood and cooled. Everything the Hollowdeep ever gave up came through this room to be weighed, entered, and believed. There is space on the books for more.",
+    "artId": "assay-office",
+    "light": "lit",
+    "exits": {
+      "w": {
+        "to": "main-street"
+      }
+    }
+  },
+  {
+    "id": "tailings-path",
+    "name": "Tailings Path",
+    "brief": "You are on the tailings path, above the town.",
+    "full": "The path climbs the spoil heaps along the old tramway grade. From up here the town arranges itself into what it actually is: one street, three roofs that matter, and a hole in a hillside that paid for all of it. The grade runs up toward the adit mouth.",
+    "artId": "tailings-path",
+    "light": "lit",
+    "exits": {
+      "sw": {
+        "to": "main-street"
+      },
+      "up": {
+        "to": "adit-mouth"
+      },
+      "nw": {
+        "to": "the-gunnis",
+        "if": [
+          {
+            "flag": "gunnis-known"
+          }
+        ],
+        "blockedMessage": "The spoil rises that way in a long gray slope with no argument for climbing it. If there is a path up through the scree, you have not learned it.",
+        "hidden": true
+      }
+    }
+  },
+  {
+    "id": "adit-mouth",
+    "name": "The Adit Mouth",
+    "brief": "You are at the adit mouth, before the cracked seal.",
+    "full": "The adit drives straight into the hill, and across its mouth stands the seal: dressed stone, mortared with intent, built by people who wanted the matter understood. It has cracked. One edge has slumped away, leaving a gap of dark exactly wide enough to pass — an invitation or a warning, depending on which way you are walking. The town sits below and behind you, not watching.",
+    "artId": "adit-mouth",
+    "light": "lit",
+    "exits": {
+      "down": {
+        "to": "tailings-path"
+      },
+      "e": {
+        "to": "behind-the-seal"
+      }
+    }
+  },
+  {
+    "id": "behind-the-seal",
+    "name": "Behind the Seal",
+    "brief": "You are just behind the seal, where the daylight gives up.",
+    "full": "The gap in the seal lets you through into the adit proper, and the daylight comes with you exactly as far as it cares to — a few yards, thinning fast. The walls are timbered, square, workmanlike. Bats have the ceiling and have had it for ninety years. East, the dark is open for business.",
+    "artId": "behind-the-seal",
+    "light": "lit",
+    "exits": {
+      "w": {
+        "to": "adit-mouth"
+      },
+      "e": {
+        "to": "adit-drift"
+      }
+    }
+  },
+  {
+    "id": "adit-drift",
+    "name": "The Adit Drift",
+    "brief": "You are in the adit drift, between the rails.",
+    "full": "A straight drift with rails down its middle, laid true and still true, going about their business long after the business closed. A lamp room opens off to the north, the stables to the south. The rails run east, deeper in, with the patience of things that never had anywhere else to be.",
+    "artId": "adit-drift",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "behind-the-seal"
+      },
+      "n": {
+        "to": "lamp-room"
+      },
+      "s": {
+        "to": "stables"
+      },
+      "e": {
+        "to": "junction"
+      }
+    }
+  },
+  {
+    "id": "lamp-room",
+    "name": "Lamp Room",
+    "brief": "You are in the lamp room, among the empty hooks.",
+    "full": "The deputy's station. Rows of hooks where the lamps hung, each with a chalked number gone ghost-gray, all empty. Whoever gave the lamps out kept this room squared away to the very end: the shelf is clean, the ledger nail is bare, and one flask of oil waits like an apology for everything else.",
+    "artId": "lamp-room",
+    "light": "dark",
+    "exits": {
+      "s": {
+        "to": "adit-drift"
+      }
+    }
+  },
+  {
+    "id": "stables",
+    "name": "Underground Stables",
+    "brief": "You are in the underground stables, which still smell faintly of patience.",
+    "full": "Stalls for the mules, tack on pegs, a crib of tools along one wall. The mules went up when the mine went down; the tack stayed, oiled once and never again. In the crib, most of what was worth taking has been taken. What is left was left for reasons.",
+    "artId": "stables",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "adit-drift"
+      }
+    }
+  },
+  {
+    "id": "junction",
+    "name": "The Junction",
+    "brief": "You are at the junction, where the drifts cross.",
+    "full": "The workings' crossroads. Drifts run off by the compass — the adit back west, the timekeeper's nook north, the shaft head east, the long drift south. The floor is worn into a shallow dish by boots arriving at shift and leaving at shift, which is the whole history of the place in one piece of geology.",
+    "artId": "junction",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "adit-drift"
+      },
+      "n": {
+        "to": "timekeepers-nook"
+      },
+      "e": {
+        "to": "shaft-head"
+      },
+      "s": {
+        "to": "long-drift"
+      }
+    }
+  },
+  {
+    "id": "timekeepers-nook",
+    "name": "Timekeeper's Nook",
+    "brief": "You are in the timekeeper's nook.",
+    "full": "A nook barely off the junction where the timekeeper sat and made the mine's minutes matter. A stool, a shelf, and a board of brass checks — one check for each man below, one hook for each man up. Half the checks are still below.",
+    "artId": "timekeepers-nook",
+    "light": "dark",
+    "exits": {
+      "s": {
+        "to": "junction"
+      },
+      "e": {
+        "to": "foremans-office"
+      }
+    }
+  },
+  {
+    "id": "foremans-office",
+    "name": "Foreman's Office",
+    "brief": "You are in the foreman's office, under the weight of paperwork.",
+    "full": "An office cut into living rock: a desk, a chair with one short leg, and the assay ledger squared to the desk's corner the way a man leaves things when he means to be back directly. The paperwork has outlasted everything it was about.",
+    "artId": "foremans-office",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "timekeepers-nook"
+      }
+    }
+  },
+  {
+    "id": "shaft-head",
+    "name": "Shaft Head",
+    "brief": "You are at the shaft head, over the winze.",
+    "full": "The drift opens over the winze — an internal shaft dropping away below the workings. Over the hole, the kibble bucket sits rusted onto its chain, mid-journey, going nowhere at scale. The pump room is north, the ore chute east. Down is a matter between you and the water.",
+    "artId": "shaft-head",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "junction"
+      },
+      "n": {
+        "to": "pump-room"
+      },
+      "e": {
+        "to": "ore-chute"
+      },
+      "down": {
+        "to": "winze-ladderway",
+        "if": [
+          {
+            "flag": "pump-drained"
+          }
+        ],
+        "blockedMessage": "The winze is full to the brim with black water, flat and unhurried. Keeping it out was somebody's job, and the somebody and the pump stopped on the same night. Nobody swims down a mine."
+      }
+    },
+    "scenery": [
+      {
+        "names": [
+          "kibble bucket",
+          "bucket",
+          "chain"
+        ],
+        "description": "A hoist bucket — a kibble, in the old men's vocabulary — rusted onto its chain at the head of the winze. It moved ore and men both, up and down, on a word to the engine house. The engine is long cold. The word is not recorded here."
+      }
+    ]
+  },
+  {
+    "id": "pump-room",
+    "name": "Pump Room",
+    "brief": "You are in the pump room, with the great pump.",
+    "full": "The great pump fills most of the room: a cathedral of cast iron built to argue with water and win. It is seized now, and its handle socket stands empty — the handle walked off to the stables at some point, the way handles do. Its pipes drop away toward the winze, waiting to be given back their opinion.",
+    "artId": "pump-room",
+    "light": "dark",
+    "exits": {
+      "s": {
+        "to": "shaft-head"
+      }
+    }
+  },
+  {
+    "id": "ore-chute",
+    "name": "Ore Chute",
+    "brief": "You are at the ore chute.",
+    "full": "The chute throat opens in the floor here, timber-lined, pitched steep, polished smooth by everything that ever went down it. It was built to take ore to the shaft foot the fast way. It is still willing.",
+    "artId": "ore-chute",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "shaft-head"
+      }
+    }
+  },
+  {
+    "id": "long-drift",
+    "name": "The Long Drift",
+    "brief": "You are in the long drift, among the stulls.",
+    "full": "A long, well-timbered drift running south, stulls set every few yards holding the roof to its agreement. On one timber, at waist height, somebody has scratched a word — deep, deliberate, plain as a signature. The powder magazine's iron door is set into the west wall. The drift carries on south toward the stull gallery.",
+    "artId": "long-drift",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "junction"
+      },
+      "w": {
+        "to": "magazine",
+        "if": [
+          {
+            "flag": "magazine-door-open"
+          }
+        ],
+        "blockedMessage": "The magazine door is iron, locked, and correct to be both. Powder is the one thing a mine locks up more carefully than wages."
+      },
+      "s": {
+        "to": "stull-gallery"
+      }
+    }
+  },
+  {
+    "id": "magazine",
+    "name": "The Powder Magazine",
+    "brief": "You are in the powder magazine, and inclined to be careful.",
+    "full": "A small chamber cut dry and lined tight, because powder is particular about its lodgings. A keg sits on a low pallet beside a coil of fuse, both kept the way dangerous things are kept by people who intend to grow old. Somebody has painted a warning across the keg in a firm hand.",
+    "artId": "magazine",
+    "light": "dark",
+    "exits": {
+      "e": {
+        "to": "long-drift"
+      }
+    }
+  },
+  {
+    "id": "stull-gallery",
+    "name": "The Stulled Gallery",
+    "brief": "You are in the stulled gallery, under a roof with opinions.",
+    "full": "A worked-out gallery held up by stulls, and one of them matters: it stands mid-chamber, bearing hard, and behind it a seam glitters dark red where the miners stopped work. They left the garnets rather than pull that timber. You can see their reasoning. You can also see the garnets.",
+    "artId": "stull-gallery",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "long-drift"
+      },
+      "e": {
+        "to": "broken-drift"
+      }
+    }
+  },
+  {
+    "id": "broken-drift",
+    "name": "The Broken Drift",
+    "brief": "You are in the broken drift, keeping the foreman company.",
+    "full": "The drift ends in old collapse, and at the edge of it lies the foreman — what ninety years leaves of a big man in good boots, at his post. The rock took the drift and stopped just short of him, which was not mercy, only arithmetic. He kept his effects. Nobody ever came down to ask for them.",
+    "artId": "broken-drift",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "stull-gallery"
+      }
+    }
+  },
+  {
+    "id": "winze-ladderway",
+    "name": "The Ladderway",
+    "brief": "You are on the ladderway, below the old waterline.",
+    "full": "Ladders down the winze wall, sound enough — mine ladders were built by men who expected to climb them tired. The timber is stained dark to a waterline well above your head, and below it everything has the scrubbed, swept look of a place the flood kept house in for ninety years and only lately quit.",
+    "artId": "winze-ladderway",
+    "light": "dark",
+    "exits": {
+      "up": {
+        "to": "shaft-head"
+      },
+      "down": {
+        "to": "shaft-foot"
+      }
+    }
+  },
+  {
+    "id": "the-gunnis",
+    "name": "The Gunnis",
+    "brief": "You are in the gunnis, under open sky.",
+    "full": "A stope worked open to the daylight — a gunnis, in the old vocabulary: the miners followed the seam up until the hill ran out of hill. Grass has come down the slope to meet the workings. Sky sits overhead, ordinary and enormous. And in the west wall there is an older scar: a worked face, closed with dressed stone, mortared from this side. Somebody broke into something here once before, and the town walled it shut, and did not write it down anywhere you have read.",
+    "artId": "the-gunnis",
+    "light": "lit",
+    "exits": {
+      "down": {
+        "to": "tailings-path",
+        "if": [
+          {
+            "flag": "gunnis-known"
+          }
+        ],
+        "blockedMessage": "The scree runs away long and loose below. You have not yet had a reason to trust it.",
+        "hidden": true
+      }
+    }
+  },
+  {
+    "id": "shaft-foot",
+    "name": "Shaft Foot",
+    "brief": "You are at the shaft foot, in the drained mud.",
+    "full": "The bottom of the winze. The kibble's twin lies here in the mud, tipped and half-buried — the bucket that was below when the water came. The mud glistens, freshly drained, one clean line on the wall at chest height where the black water stood for ninety years until somebody gave the pump its opinion back. That somebody being you. A drift runs south, toward rougher country.",
+    "artId": "shaft-foot",
+    "light": "dark",
+    "exits": {
+      "up": {
+        "to": "winze-ladderway"
+      },
+      "s": {
+        "to": "breakthrough"
+      }
+    }
+  },
+  {
+    "id": "breakthrough",
+    "name": "The Breakthrough",
+    "brief": "You are at the breakthrough, where the timbering gives up.",
+    "full": "The last set of timbers stands here like a doorframe with no house behind it. Beyond, the walls go their own way — water-cut, patient, older than any wage. This is where the miners drove into a cavern that had been minding its own business for a very long time. Passages lead south and east into it.",
+    "artId": "breakthrough",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "shaft-foot"
+      },
+      "s": {
+        "to": "low-crawl"
+      },
+      "e": {
+        "to": "cathedral"
+      }
+    }
+  },
+  {
+    "id": "low-crawl",
+    "name": "The Low Crawl",
+    "brief": "You are in the low crawl, on close terms with the floor.",
+    "full": "A crawl in wet stone, exactly as tall as it needs to not be. You go through it the way regret goes through a life: slowly, and on your stomach. It gives out to the south, toward the sound of water.",
+    "artId": "low-crawl",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "breakthrough"
+      },
+      "s": {
+        "to": "black-river"
+      }
+    }
+  },
+  {
+    "id": "cathedral",
+    "name": "The Cathedral",
+    "brief": "You are in the cathedral, under the echo.",
+    "full": "The cavern opens into a vault your lamp cannot find the top of. Every sound you make comes back twice — once from the walls, and once, later, from somewhere that has no wall. Now and then the echo returns a sound you did not make: a slow, careful gait, far off, keeping its own schedule. Passages lead everywhere. A chimney in the floor drops into twisting dark.",
+    "artId": "cathedral",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "breakthrough"
+      },
+      "n": {
+        "to": "gallery-of-veils"
+      },
+      "e": {
+        "to": "gour-pools"
+      },
+      "s": {
+        "to": "river-strand"
+      },
+      "down": {
+        "to": "twisty-1"
+      }
+    }
+  },
+  {
+    "id": "gallery-of-veils",
+    "name": "The Gallery of Veils",
+    "brief": "You are in the gallery of veils, where it is very quiet.",
+    "full": "Curtains of flowstone hang from the roof in banded folds, stone behaving like fabric. It is quiet here the way a bank vault is quiet: you can hear your own lamp burn. Low on one wall a seam shows metal under the calcite — a gleam that has been keeping still, in the dark, at scale.",
+    "artId": "gallery-of-veils",
+    "light": "dark",
+    "exits": {
+      "s": {
+        "to": "cathedral"
+      }
+    }
+  },
+  {
+    "id": "gour-pools",
+    "name": "The Gour Pools",
+    "brief": "You are at the gour pools, and the water is watching its property.",
+    "full": "Rimstone dams terrace the floor, pool over pool, each lip grown drip by drip across spans of time that make the mine's ninety years look like a lunch break. In the largest pool, behind the rim, sits a nest of cave pearls, round and lustrous, arranged by the water with what looks unsettlingly like intent. The water has opinions about its property.",
+    "artId": "gour-pools",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "cathedral"
+      }
+    }
+  },
+  {
+    "id": "black-river",
+    "name": "The Black River",
+    "brief": "You are on the bank of the Black River.",
+    "full": "The river runs black and smooth through a channel it has been cutting since before anything had a name for it. Pale fish hang in the slack water by your bank — blind, unhurried, and pointedly clear of the middle. Nothing that lives in this river swims the channel. The strand lies east.",
+    "artId": "black-river",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "low-crawl"
+      },
+      "e": {
+        "to": "river-strand"
+      }
+    }
+  },
+  {
+    "id": "river-strand",
+    "name": "The River Strand",
+    "brief": "You are on the river strand.",
+    "full": "A gravel strand along the river's elbow, the stones sorted by size the way water does its bookkeeping. At the waterline a pothole holds something the size of a fist, gleaming where the river wedged it and then spent a century failing to take it back.",
+    "artId": "river-strand",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "black-river"
+      },
+      "n": {
+        "to": "cathedral"
+      },
+      "e": {
+        "to": "midden"
+      }
+    }
+  },
+  {
+    "id": "midden",
+    "name": "The Midden",
+    "brief": "You are in the midden, among the collection.",
+    "full": "Something keeps house here. The chamber is floored with ninety years of collected things — buttons, buckles, lamp-brass, a candlestick, teeth — sorted into tidy drifts by some private logic: shine with shine, bone with bone. Long smooth drag-marks run in and out of the dark. The curator is not in, or is not showing itself, which may not be the same thing.",
+    "artId": "midden",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "river-strand"
+      }
+    }
+  },
+  {
+    "id": "breach-wall",
+    "name": "The Breach",
+    "brief": "You are at the breach, before the wall somebody else built.",
+    "full": "The maze's draught dies here against a wall that has no business being a wall: coursed stone, laid tight, mortared — and the mortar was struck smooth on the far side. Somebody closed this hole from in there. The miners' drill-holes stop an arm's length short of it, which means they saw it, and downed tools, and the night happened anyway.",
+    "artId": "breach-wall",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "twisty-5"
+      },
+      "e": {
+        "to": "beyond-the-breach",
+        "if": [
+          {
+            "flag": "breach-blasted"
+          }
+        ],
+        "blockedMessage": "The wall was built to a standard and is holding to it. Bare hands do not argue with ninety-year mortar. Powder would.",
+        "hidden": true
+      }
+    }
+  },
+  {
+    "id": "twisty-1",
+    "name": "Twisting Passages",
+    "brief": "You are in a twisting passage indistinguishable from its relatives.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "twisty-2"
+      },
+      "e": {
+        "to": "twisty-4"
+      },
+      "s": {
+        "to": "twisty-3"
+      },
+      "w": {
+        "to": "twisty-1"
+      },
+      "up": {
+        "to": "cathedral"
+      }
+    }
+  },
+  {
+    "id": "twisty-2",
+    "name": "Twisting Passages",
+    "brief": "You are in a twisting passage indistinguishable from its relatives.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "twisty-4"
+      },
+      "e": {
+        "to": "twisty-5"
+      },
+      "s": {
+        "to": "twisty-1"
+      },
+      "w": {
+        "to": "twisty-2"
+      }
+    }
+  },
+  {
+    "id": "twisty-3",
+    "name": "Twisting Passages",
+    "brief": "You are in a twisting passage indistinguishable from its relatives.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "twisty-1"
+      },
+      "e": {
+        "to": "twisty-6"
+      },
+      "s": {
+        "to": "twisty-3"
+      },
+      "w": {
+        "to": "twisty-4"
+      }
+    }
+  },
+  {
+    "id": "twisty-4",
+    "name": "Twisting Passages",
+    "brief": "You are in a twisting passage indistinguishable from its relatives.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "twisty-1"
+      },
+      "e": {
+        "to": "twisty-2"
+      },
+      "s": {
+        "to": "twisty-3"
+      },
+      "w": {
+        "to": "twisty-5"
+      }
+    }
+  },
+  {
+    "id": "twisty-5",
+    "name": "Twisting Passages",
+    "brief": "You are in a twisting passage indistinguishable from its relatives, and the draught is coming from the east.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse. Here, and only here, the draught is coming from the east.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "twisty-2"
+      },
+      "e": {
+        "to": "breach-wall"
+      },
+      "s": {
+        "to": "twisty-4"
+      },
+      "w": {
+        "to": "twisty-5"
+      }
+    }
+  },
+  {
+    "id": "twisty-6",
+    "name": "Twisting Passages",
+    "brief": "You are in a twisting passage indistinguishable from its relatives.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "twisty-3"
+      }
+    }
+  },
+  {
+    "id": "beyond-the-breach",
+    "name": "Beyond the Breach",
+    "brief": "You are beyond the breach, on a floor that is a floor.",
+    "full": "You stand in the settling dust on the far side of the wall, and the first thing you notice is the floor. It is a floor: laid, cambered, drained at the edges — not a cave's floor, a building's. The rubble of your argument spills across it like something somebody will be expected to sweep. The gallery runs east, finished and patient.",
+    "artId": "beyond-the-breach",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "breach-wall"
+      },
+      "e": {
+        "to": "dressed-gallery"
+      }
+    }
+  },
+  {
+    "id": "dressed-gallery",
+    "name": "The Dressed Gallery",
+    "brief": "You are in the dressed gallery, among the wrong tool marks.",
+    "full": "The walls here are dressed — worked smooth in long even strokes, the marks slanting down and left at an angle no shoulder you have ever owned would find comfortable. It is good work. You keep arriving at that observation, and it keeps not helping. Openings lead north and south; the gallery runs on east.",
+    "artId": "dressed-gallery",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "beyond-the-breach"
+      },
+      "n": {
+        "to": "toolroom"
+      },
+      "s": {
+        "to": "store-rooms"
+      },
+      "e": {
+        "to": "closed-row"
+      }
+    }
+  },
+  {
+    "id": "toolroom",
+    "name": "The Toolroom",
+    "brief": "You are in the toolroom, where everything is in its place.",
+    "full": "A toolroom. Racks line both walls, pegged and shelved, every tool in its place — and every place shaped to a tool that is not quite any tool you know. There is no dust of surrender here, nothing dropped, nothing fled. The shift racked its gear in good order and went. One rack holds a bronze tool, worn bright at the grip.",
+    "artId": "toolroom",
+    "light": "dark",
+    "exits": {
+      "s": {
+        "to": "dressed-gallery"
+      }
+    }
+  },
+  {
+    "id": "store-rooms",
+    "name": "The Store-Rooms",
+    "brief": "You are in the store-rooms, among the counted jars.",
+    "full": "Store-rooms in ranked bays: jars sealed with wax gone amber-dark, bundles racked by size, everything counted — the count-marks are right there on the shelf lips. Provisions laid in for a shift that never came back on. In the corner of one bay, entirely unbothered, sits a newt.",
+    "artId": "store-rooms",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "dressed-gallery"
+      }
+    }
+  },
+  {
+    "id": "closed-row",
+    "name": "The Closed Row",
+    "brief": "You are in the closed row, not trying the doors.",
+    "full": "A corridor of doors, all shut, set at intervals too regular for comfort. Each one is fitted, hinged, and latched, and each latch is on this side — which you notice all at once, and then keep noticing. You are not going to try them. This account will simply record that they are shut, and that you kept walking.",
+    "artId": "closed-row",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "dressed-gallery"
+      },
+      "e": {
+        "to": "tally-chamber"
+      },
+      "s": {
+        "to": "long-stair"
+      }
+    }
+  },
+  {
+    "id": "tally-chamber",
+    "name": "The Tally Chamber",
+    "brief": "You are in the tally chamber, spine-deep in bronze.",
+    "full": "Plates of bronze stand stacked in cradles, edge out, like a library from before the idea of paper. Every plate is cut with row upon row of tally marks, precise as machine work and visibly not machine work. Something was counted here — carefully, in good light, for a very long time.",
+    "artId": "tally-chamber",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "closed-row"
+      },
+      "e": {
+        "to": "worked-face"
+      }
+    }
+  },
+  {
+    "id": "worked-face",
+    "name": "The Worked Face",
+    "brief": "You are at the worked face, where they stopped.",
+    "full": "The gallery ends at a working face, dressed halfway, the pattern of strokes stopping mid-course. The tools are racked at the wall, tidy even here. They stopped mid-shift and did not come back to it. You study the line of the work for a while before you let yourself conclude what it is plainly telling you: they were not digging toward the mine. They were digging away from it.",
+    "artId": "worked-face",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "tally-chamber"
+      }
+    }
+  },
+  {
+    "id": "long-stair",
+    "name": "The Long Stair",
+    "brief": "You are on the long stair, respecting the gap.",
+    "full": "A stair descends in long shallow steps cut for a stride half again your own; going down them is a controlled argument with your knees. Partway, a gap — some settling of the rock has dropped two steps into a slot of dark without a visible bottom. A foot-wide ledge skirts it along the wall, humble and adequate. It is the kind of gap you could jump. The steps beyond were cut for longer legs than yours, and the gap, presumably, was theirs to step over. Jumping it would be expressing an opinion about your legs that the evidence does not support.",
+    "artId": "long-stair",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "closed-row"
+      },
+      "down": {
+        "to": "undercroft"
+      }
+    }
+  },
+  {
+    "id": "undercroft",
+    "name": "The Undercroft",
+    "brief": "You are in the undercroft, where sound apologizes.",
+    "full": "A broad undercroft, pillared, low-ceilinged, still. Sound behaves oddly here: your own steps reach your ears late and somehow apologetic, as if the room were absorbing what it could bear to. Ways lead east and west, a passage south breathes warmer air, and the stair climbs back up.",
+    "artId": "undercroft",
+    "light": "dark",
+    "exits": {
+      "up": {
+        "to": "long-stair"
+      },
+      "e": {
+        "to": "cistern"
+      },
+      "s": {
+        "to": "warm-gallery"
+      },
+      "w": {
+        "to": "deep-cut"
+      }
+    }
+  },
+  {
+    "id": "cistern",
+    "name": "The Cistern",
+    "brief": "You are at the cistern, by the open gate.",
+    "full": "Their waterworks: a cistern cut square and deep, dry now, sluice channels running dark and empty along the walls. Everything about it says maintained — and then, all at once, says something else. One sluice gate stands open on a channel that drops away toward the mine, and the stone lip beside it is cut with marks.",
+    "artId": "cistern",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "undercroft"
+      }
+    },
+    "scenery": [
+      {
+        "names": [
+          "sluice marks",
+          "marks",
+          "sluice"
+        ],
+        "description": "Channels and gates, cut clean, sized for serious water — the stonework of people who did not intend to do a thing twice. Beside the open gate, the lip is cut with a column of close, deliberate marks.",
+        "readText": "The marks are a record, kept plainly: levels, intervals, what you take for dates in their fashion — and a final entry cut deeper than the rest. The gate was opened. By procedure, at a recorded hour, signed in their manner of signing. The flood that took the workings and half the men of Weir's Landing began here as somebody's drainage: scheduled, authorized, and sent down."
+      }
+    ]
+  },
+  {
+    "id": "warm-gallery",
+    "name": "The Warm Gallery",
+    "brief": "You are in the warm gallery, and it is warm.",
+    "full": "The gallery is warm. Not volcanic warm, not draught warm — warm like a hall with stoves lit somewhere out of sight, warm like habitation. Nothing explains it, and nothing here is trying to. In a niche at hand height sits a stone, alone. The niche was cut to fit it.",
+    "artId": "warm-gallery",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "undercroft"
+      }
+    }
+  },
+  {
+    "id": "deep-cut",
+    "name": "The Deep Cut",
+    "brief": "You are in the deep cut, going where it goes.",
+    "full": "A single passage, dead straight, driven with a patience that outlasts curiosity. The lamp shows the same walls ahead and behind until both directions give up on detail. Whoever cut this was not exploring. They knew exactly where it went.",
+    "artId": "deep-cut",
+    "light": "dark",
+    "exits": {
+      "e": {
+        "to": "undercroft"
+      },
+      "w": {
+        "to": "quiet-gallery"
+      }
+    }
+  },
+  {
+    "id": "quiet-gallery",
+    "name": "The Quiet Gallery",
+    "brief": "You are in the quiet gallery, walking softly.",
+    "full": "The quiet here has weight and manners. Even the lamp seems to burn politely, its small noises tidied away as they happen. You find that you are walking softly, and you cannot point to the moment you decided to.",
+    "artId": "quiet-gallery",
+    "light": "dark",
+    "exits": {
+      "e": {
+        "to": "deep-cut"
+      },
+      "s": {
+        "to": "antechamber"
+      }
+    }
+  },
+  {
+    "id": "antechamber",
+    "name": "The Antechamber",
+    "brief": "You are in the antechamber, before the mechanism.",
+    "full": "A chamber that is mostly door: the far wall is one piece of fitted bronze and stone, and set in its center is the mechanism — a recessed assembly of slots and grips arranged for a hand that holds its weight in different places than yours. It is not locked, exactly. It is waiting to be operated, and it is particular about how.",
+    "artId": "antechamber",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "quiet-gallery"
+      },
+      "s": {
+        "to": "seal-gate",
+        "if": [
+          {
+            "flag": "mechanism-turned"
+          }
+        ],
+        "blockedMessage": "The door is held by the mechanism, and the mechanism was not built for an idle push. It wants operating — and the operator is expected to bring the right argument."
+      }
+    }
+  },
+  {
+    "id": "seal-gate",
+    "name": "The Seal Gate",
+    "brief": "You are at the seal gate, inside the built thing.",
+    "full": "Past the mechanism, the character of everything changes the way it did at the breach — but this time you know it at once. You are inside a built thing now: jointed stone, dressed courses, a ceiling that was planned. It was built well, and for a purpose, and the purpose had a direction. Stairs lead down.",
+    "artId": "seal-gate",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "antechamber"
+      },
+      "down": {
+        "to": "keepers-stair"
+      }
+    }
+  },
+  {
+    "id": "keepers-stair",
+    "name": "The Keepers' Stair",
+    "brief": "You are on the keepers' stair, taking their steps in yours.",
+    "full": "A stair descends in that long stride again — theirs, not yours. You take the steps two-thirds at a time, like a child on adult stairs, which is not a comparison you enjoy at this depth.",
+    "artId": "keepers-stair",
+    "light": "dark",
+    "exits": {
+      "up": {
+        "to": "seal-gate"
+      },
+      "down": {
+        "to": "keepers-walk"
+      }
+    }
+  },
+  {
+    "id": "keepers-walk",
+    "name": "The Keepers' Walk",
+    "brief": "You are on the keepers' walk, in the worn groove.",
+    "full": "A walkway runs level here, and its floor tells the whole story: a path worn glass-smooth down the center, the width of one walker, turning square at each end. Feet did this — feet on duty, back and forth, for longer than towns last. East, a small room with an aperture. South, a vault.",
+    "artId": "keepers-walk",
+    "light": "dark",
+    "exits": {
+      "up": {
+        "to": "keepers-stair"
+      },
+      "e": {
+        "to": "watch-room"
+      },
+      "s": {
+        "to": "the-vault"
+      }
+    }
+  },
+  {
+    "id": "watch-room",
+    "name": "The Watch Room",
+    "brief": "You are in the watch room, seeing which way it faces.",
+    "full": "A small room with one aperture, and the aperture faces the seal. From here you can see the great work edge-on — the courses, the buttressing, the whole patient argument of it — and from here, only from here, you can see which way it was built to hold. The strength does not face the mine. It does not face the crack, or the daylight, or anything that might come down from the world. All of it, every course and buttress, faces in — toward the small room to the south. The keepers did not walk their walk against what might arrive. They walked it facing what they kept. There is a word for a place built like this. They knew it, and they did not carve it anywhere, because this place was not built to be read. It was built to hold.",
+    "artId": "watch-room",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "keepers-walk"
+      }
+    }
+  },
+  {
+    "id": "the-vault",
+    "name": "The Vault",
+    "brief": "You are in the vault, and the room attends its charge.",
+    "full": "A small square room, and at its center, on a plinth worked smoother than anything else in the deep, the thing the seal was for. It is not large. It is not ornamented. Like everything else down here it is used — kept, tended, dusted, for a span of time you decline to compute. Every line of the room bends toward it: the plinth, the courses of the walls, the worn place on the floor where the keepers stood facing it, at attention or in reverence or on guard. Nothing stops you taking it. That is what stops you.",
+    "artId": "the-vault",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "keepers-walk"
+      }
+    }
+  }
+]

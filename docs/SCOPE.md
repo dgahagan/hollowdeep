@@ -61,12 +61,17 @@ with engine work after the world data stabilizes.
 - **Exit criteria:** test-cave is fully playable headless (tests) and in
   browser with placeholder art; save/load round-trips.
 
-### Phase 2 — Hollowdeep content, first pass
-- Author the full adventure as module data: all locations, items, creatures,
-  events, vocabulary, hints, scoring.
-- Placeholder art everywhere (generated quickly, no curation).
-- **Exit criteria:** Hollowdeep completable start-to-finish (350/350) via the
-  automated walkthrough and by a human.
+### Phase 2 — Hollowdeep content, first pass — **complete 2026-07-17**
+- [x] Author the full adventure as module data: all locations, items, creatures,
+  events, vocabulary, hints, scoring — `adventures/hollowdeep/`, 58 rooms,
+  12 treasures, 350 points, two endings, 16 hint ladders.
+- [x] Placeholder art everywhere (generated quickly, no curation) — 97 SVGs.
+- **Exit criteria met:** Hollowdeep is completable start-to-finish (350/350,
+  top rank, canon achievements, 0 deaths, 0 hints) via the automated
+  walkthrough at five pinned seeds; every chain, death, and both endings were
+  additionally driven by hand headlessly, and the app plays it in-browser
+  (`npm run dev`, default adventure). A full human playthrough is invited —
+  Phase 4's play-testing owns the formal pass.
 
 ### Phase B — Art production (parallel with Phases 1–2)
 - Recover or rewrite the FLUX host generator (`host_gen.py` contract is
@@ -121,8 +126,8 @@ as of 2026-07-16; the boxes below tick only where the v1 bar is actually met.
 - [ ] `docs/` — brief, requirements, scope (these), Hollowdeep design doc,
       module-format authoring guide, art-pipeline guide
       — *brief/requirements/scope done; `module-format.md` + `PLAYING.md` +
-      `README.md` landed with Phase 0+1. **Hollowdeep design doc** and
-      **art-pipeline guide** outstanding.*
+      `README.md` landed with Phase 0+1. **Hollowdeep design doc** landed and IMPLEMENTED
+      (`hollowdeep-plan.md`, 2026-07-17); **art-pipeline guide** outstanding.*
 - [x] Engine package (headless TS) with test suite — Phase 0+1: parser, turn
       loop, actions, systems, scoring, save/load with migrations, scene view;
       679 tests incl. a scripted walkthrough that wins at every seed
@@ -134,6 +139,8 @@ as of 2026-07-16; the boxes below tick only where the v1 bar is actually met.
 - [x] `adventures/test-cave/` — reference module — 11 locations, 11 items,
       3 creatures; exercises every engine feature; format reference (FR-6.5)
 - [ ] `adventures/hollowdeep/` — full adventure data + art manifest + finals
+      — *module data complete with placeholder art (Phase 2, 2026-07-17);
+      the art manifest and final images are Phase B.*
 - [ ] Art pipeline tooling (generator driver, request builder, contact sheets,
       optimizer) — *placeholder SVGs only so far; the loading path is real*
 - [ ] Tagged v1.0 static build, playable end-to-end

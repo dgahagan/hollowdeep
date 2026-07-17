@@ -1,0 +1,605 @@
+[
+  {
+    "id": "payroll-tin",
+    "names": [
+      "payroll tin",
+      "tin"
+    ],
+    "brief": "The payroll tin sits here, still on schedule.",
+    "description": "A japanned tin box with PAYROLL stencilled on the lid, the wages inside counted into paper twists — one twist, one man. Nobody collected. The twists have held their shapes the way the town held its name.",
+    "artId": "payroll-tin",
+    "portable": true,
+    "initialLocation": "timekeepers-nook",
+    "adjectives": [
+      "payroll"
+    ],
+    "treasure": {
+      "carryPoints": 5,
+      "depositPoints": 10
+    }
+  },
+  {
+    "id": "cut-garnets",
+    "names": [
+      "cut garnets",
+      "garnets",
+      "pocket of garnets"
+    ],
+    "brief": "A pocket of cut garnets lies here, dark red and unbothered.",
+    "description": "Garnets, cut and pouched — somebody's private venture, worked on shift time with company tools. Dark red, heavy, and honest as far as it goes.",
+    "artId": "cut-garnets",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "cut"
+    ],
+    "treasure": {
+      "carryPoints": 5,
+      "depositPoints": 10
+    }
+  },
+  {
+    "id": "assay-button",
+    "names": [
+      "assayer's button",
+      "button"
+    ],
+    "brief": "A gold assay button sits here, small and entirely sure of itself.",
+    "description": "A bead of refined gold no bigger than a waistcoat button — the honest leavings of an honest assay. Gold does not tarnish, and it has not bothered to start.",
+    "artId": "assay-button",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "gold",
+      "assay"
+    ],
+    "treasure": {
+      "carryPoints": 5,
+      "depositPoints": 10
+    }
+  },
+  {
+    "id": "foremans-watch",
+    "names": [
+      "foreman's watch",
+      "watch"
+    ],
+    "brief": "The foreman's watch lies here, stopped and certain.",
+    "description": "Stopped at ten past two, which makes it the mine's official record of the hour. Good silver, better engraving: TO J.H. — TWENTY YEARS — WEIR'S LANDING CONSOLIDATED. The sort of thing a town gives a man instead of the money.",
+    "artId": "foremans-watch",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "foreman's",
+      "stopped"
+    ],
+    "treasure": {
+      "carryPoints": 5,
+      "depositPoints": 10
+    }
+  },
+  {
+    "id": "silver-flowstone",
+    "names": [
+      "silver flowstone",
+      "flowstone"
+    ],
+    "brief": "A sheet of silver flowstone leans here, veiled in calcite.",
+    "description": "An eighth of an inch of native silver the size of a table top, grown a molecule at a time in the dark. It is worth a house. Detaching it made a noise like the house coming down.",
+    "artId": "silver-flowstone",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "silver"
+    ],
+    "treasure": {
+      "carryPoints": 10,
+      "depositPoints": 15
+    }
+  },
+  {
+    "id": "cave-pearls",
+    "names": [
+      "cave pearls",
+      "pearls"
+    ],
+    "brief": "A nest of cave pearls sits here, arranged with what looks like intent.",
+    "description": "Round as shot, lustrous as weather, grown layer on layer in the pool's slow rock-tumbler. They did not belong to you. The pool was clear on that point.",
+    "artId": "cave-pearls",
+    "portable": true,
+    "initialLocation": "gour-pools",
+    "adjectives": [
+      "cave"
+    ],
+    "treasure": {
+      "carryPoints": 10,
+      "depositPoints": 15
+    }
+  },
+  {
+    "id": "weir-nugget",
+    "names": [
+      "Weir nugget",
+      "nugget"
+    ],
+    "brief": "The Weir nugget gleams here, fist-sized and unapologetic.",
+    "description": "A fist of waterworn gold. The town is named for the family, and the family, the story goes, was named rich by this river. The nugget is in no ledger anywhere, which tells you whose pocket it was meant to finish in.",
+    "artId": "weir-nugget",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "weir"
+    ],
+    "treasure": {
+      "carryPoints": 10,
+      "depositPoints": 15
+    }
+  },
+  {
+    "id": "miners-cache",
+    "names": [
+      "miner's cache",
+      "cache"
+    ],
+    "brief": "A miner's cache sits in the dead end, oilcloth over a powder box.",
+    "description": "A powder box under oilcloth, packed by a man who knew he might not be back directly: high-graded ore wrapped in a shirt with his initials worked into the collar. He hid it where nothing sensible would look. He never came back for it. You may draw either conclusion about the maze.",
+    "artId": "miners-cache",
+    "portable": true,
+    "initialLocation": "twisty-6",
+    "adjectives": [
+      "miner's"
+    ],
+    "treasure": {
+      "carryPoints": 10,
+      "depositPoints": 15
+    }
+  },
+  {
+    "id": "bronze-tool",
+    "names": [
+      "bronze tool",
+      "tool"
+    ],
+    "brief": "A bronze tool rests in its rack, worn bright at the grip.",
+    "description": "Bronze, dense, keel-shaped, with a grip worn glass-smooth by years of a hand that held its weight in different places than yours will. It is not decorated. It is a tool: made, used, maintained, racked at shift's end. Whatever it operated, its owner operated it often.",
+    "artId": "bronze-tool",
+    "portable": true,
+    "initialLocation": "toolroom",
+    "adjectives": [
+      "bronze"
+    ],
+    "treasure": {
+      "carryPoints": 15,
+      "depositPoints": 25
+    }
+  },
+  {
+    "id": "tally-plate",
+    "names": [
+      "tally plate",
+      "plate",
+      "tally"
+    ],
+    "brief": "A bronze tally plate lies here, marks edge to edge.",
+    "description": "Bronze, palm-wide, heavier than it has any right to be, cut with ranked tally marks in a precise, unhurried hand. The rows stop partway down the final column.",
+    "artId": "tally-plate",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "tally"
+    ],
+    "treasure": {
+      "carryPoints": 15,
+      "depositPoints": 25
+    },
+    "readText": "You count. The marks group in their fashion — fives of fives, you decide — and the total, worked twice to be sure of it, comes to something over eleven thousand. The plate records the count plainly. It does not record the unit. You put it down for a moment before you pick it back up."
+  },
+  {
+    "id": "warm-stone",
+    "names": [
+      "warm stone",
+      "stone"
+    ],
+    "brief": "The warm stone sits in its niche, at home.",
+    "description": "A stone the size of two fists, smooth as river work, and warm — hand-warm, exactly and steadily. It has no reason to be warm. It is not warm because of anything; you have had time to rule things out. The niche was cut to fit it. Somebody kept this stone, and kept it here, and it has kept itself warm ever since, or always had.",
+    "artId": "warm-stone",
+    "portable": true,
+    "initialLocation": "warm-gallery",
+    "adjectives": [
+      "warm"
+    ],
+    "treasure": {
+      "carryPoints": 15,
+      "depositPoints": 25
+    }
+  },
+  {
+    "id": "the-kept",
+    "names": [
+      "kept thing",
+      "thing"
+    ],
+    "brief": "The kept thing rests on its plinth, and the room attends it.",
+    "description": "Smooth, dense, dark, the cool side of warm — description keeps sliding off it. It is a made thing; the hands that made it are not on record. What it is for is not discoverable from what it is. It was important enough to build all of this around. That will have to do.",
+    "artId": "the-kept",
+    "portable": true,
+    "initialLocation": "the-vault",
+    "adjectives": [
+      "kept"
+    ],
+    "treasure": {
+      "carryPoints": 15,
+      "depositPoints": 25
+    }
+  },
+  {
+    "id": "brass-lantern",
+    "names": [
+      "brass lantern",
+      "lantern",
+      "lamp"
+    ],
+    "brief": "Your brass lantern sits here, which is rarely where it should be.",
+    "description": "Dented brass, clean glass, an honest wick. It is the only opinion you carry that the dark is known to respect.",
+    "artId": "brass-lantern",
+    "portable": true,
+    "initialLocation": "inventory",
+    "adjectives": [
+      "brass"
+    ],
+    "lightSource": true
+  },
+  {
+    "id": "oil-flask",
+    "names": [
+      "oil flask",
+      "flask",
+      "oil"
+    ],
+    "brief": "A flask of lamp oil stands here, full and unclaimed.",
+    "description": "Lamp oil, stoppered and sound. In the deputy's system this was the margin — the flask you carried so that the dark stayed a schedule instead of an event.",
+    "artId": "oil-flask",
+    "portable": true,
+    "initialLocation": "lamp-room",
+    "adjectives": [
+      "oil"
+    ]
+  },
+  {
+    "id": "canary-cage",
+    "names": [
+      "canary cage",
+      "canary",
+      "cage"
+    ],
+    "brief": "A caged canary is here, watching you professionally.",
+    "description": "A tin cage and a yellow bird with the alert look of a good employee. Canaries went below so the miners would know what the air was doing before it did it to them. This one knows the work, according to the man who has yet to be paid for it.",
+    "artId": "canary-cage",
+    "portable": true,
+    "initialLocation": "general-store",
+    "adjectives": [
+      "caged"
+    ]
+  },
+  {
+    "id": "key-office",
+    "names": [
+      "key"
+    ],
+    "brief": "A small brass key lies here, out of work.",
+    "description": "Brass, small, well made, with ASSAY stamped on the bow. Somebody oiled it before hanging it up for the last time, which is the kind of thing this town does.",
+    "artId": "key-office",
+    "portable": true,
+    "initialLocation": "chapel",
+    "adjectives": [
+      "office"
+    ]
+  },
+  {
+    "id": "key-magazine",
+    "names": [
+      "key"
+    ],
+    "brief": "A small iron key lies here, tagged MAGAZINE.",
+    "description": "Small, iron, and serious, with a brass tag stamped MAGAZINE. The clerk who tagged it is past caring. The lock it answers to is not.",
+    "artId": "key-magazine",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "magazine"
+    ]
+  },
+  {
+    "id": "steel-gad",
+    "names": [
+      "steel gad",
+      "gad"
+    ],
+    "brief": "A steel gad lies here, wanting work.",
+    "description": "A miner's gad: a foot of forged steel drawn to a chisel point, for prying loose what the rock will not simply hand over. The business end is bright from use. The striking end is mushroomed flat. It has settled opinions about leverage.",
+    "artId": "steel-gad",
+    "portable": true,
+    "initialLocation": "stables",
+    "adjectives": [
+      "steel"
+    ]
+  },
+  {
+    "id": "pump-handle",
+    "names": [
+      "pump handle",
+      "handle"
+    ],
+    "brief": "The great pump's handle leans here, far from its work.",
+    "description": "Six feet of ash and iron with a socket collar — unmistakably the pump's missing argument. Some helpful soul carried it up to the stables for mending, and history intervened before anyone carried it back.",
+    "artId": "pump-handle",
+    "portable": true,
+    "initialLocation": "stables",
+    "adjectives": [
+      "pump"
+    ]
+  },
+  {
+    "id": "powder-keg",
+    "names": [
+      "powder keg",
+      "keg"
+    ],
+    "brief": "A powder keg sits here, lettered in a firm warning hand.",
+    "description": "Blasting powder, dry and sound, in a keg built like it knows what it is carrying. Painted across the head, in letters that grow larger as they go: NOT WITHOUT A FUSE, DAVEY.",
+    "artId": "powder-keg",
+    "portable": true,
+    "initialLocation": "magazine",
+    "adjectives": [
+      "powder"
+    ],
+    "readText": "NOT WITHOUT A FUSE, DAVEY. The letters get larger toward the end, as though Davey had a history."
+  },
+  {
+    "id": "fuse-coil",
+    "names": [
+      "fuse coil",
+      "fuse",
+      "coil"
+    ],
+    "brief": "A coil of safety fuse lies here, wound tidy.",
+    "description": "Safety fuse, coiled by a careful hand. It burns at a walking pace, which is the entire point: the fire keeps its appointment, and you keep your head start.",
+    "artId": "fuse-coil",
+    "portable": true,
+    "initialLocation": "magazine",
+    "adjectives": [
+      "fuse"
+    ]
+  },
+  {
+    "id": "tally-book",
+    "names": [
+      "tally book",
+      "book"
+    ],
+    "brief": "The foreman's tally book lies here, pencil still in its loop.",
+    "description": "A foreman's tally book: wagons, fathoms, feet of timber, men. The canvas cover has taken the shape of the pocket that carried it.",
+    "artId": "tally-book",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "tally"
+    ],
+    "readText": "Counts in a firm pencil — wagons, fathoms, feet of timber. Then, on the last used page, written twice and underlined hard enough to tear the paper: GUNNIS."
+  },
+  {
+    "id": "assay-ledger",
+    "names": [
+      "assay ledger",
+      "ledger"
+    ],
+    "brief": "The assay ledger sits squared to the desk's corner.",
+    "description": "The mine's arithmetic, bound in canvas, heavier than it looks — most honesty is.",
+    "artId": "assay-ledger",
+    "portable": true,
+    "initialLocation": "foremans-office",
+    "adjectives": [
+      "assay"
+    ],
+    "readText": "Weights in, values out, initials, month after month of an honest seam getting honester the deeper it went. The last entries are dated the week of the breach and go unsigned. Nowhere in ninety years of pages is there any mention of a nugget — which, for a town named after one, is either an oversight or a policy."
+  },
+  {
+    "id": "office-door",
+    "names": [
+      "door"
+    ],
+    "brief": "The assay office door stands on the east corner, taking its lock seriously.",
+    "description": "A good door with a better lock. The keyhole's polish says it was turned twice a day for years, and then not at all.",
+    "artId": "office-door",
+    "portable": false,
+    "initialLocation": "main-street",
+    "adjectives": [
+      "office",
+      "assay"
+    ],
+    "container": {
+      "open": false,
+      "locked": true,
+      "keyId": "key-office",
+      "capacity": 0
+    }
+  },
+  {
+    "id": "magazine-door",
+    "names": [
+      "door"
+    ],
+    "brief": "The magazine's iron door is set into the west wall.",
+    "description": "Iron, riveted, and indifferent to sledgehammers. The lock is bright with oil — the one lock in the mine that was maintained to the very end, because powder does not forgive lapses in housekeeping.",
+    "artId": "magazine-door",
+    "portable": false,
+    "initialLocation": "long-drift",
+    "adjectives": [
+      "magazine",
+      "powder"
+    ],
+    "container": {
+      "open": false,
+      "locked": true,
+      "keyId": "key-magazine",
+      "capacity": 0
+    }
+  },
+  {
+    "id": "pump",
+    "names": [
+      "pump",
+      "great pump"
+    ],
+    "brief": "The great pump stands seized, its handle socket empty.",
+    "description": "Cast iron, riveted, taller than you. The maker's plate says it moved water by the ton and expected to. The socket where its handle seats is empty, and the mechanism is stiff but honest: it wants its handle, and then it wants working.",
+    "artId": "pump",
+    "portable": false,
+    "initialLocation": "pump-room"
+  },
+  {
+    "id": "stull",
+    "names": [
+      "stull"
+    ],
+    "brief": "The one stull that matters stands mid-chamber, bearing hard.",
+    "description": "The only timber in the mine still doing real work. It bears against a slab of roof with the strain showing in its grain, and behind it, just out of reach, the garnet seam glitters. Pulling it out would be a decision.",
+    "artId": "stull",
+    "portable": false,
+    "initialLocation": "stull-gallery"
+  },
+  {
+    "id": "rubble",
+    "names": [
+      "rubble"
+    ],
+    "brief": "Rubble fills the south end of the gallery, floor to what was roof.",
+    "description": "Roof, redistributed. The mountain's counteroffer occupies half the gallery in pieces sized between a fist and a coffin. Things could be under it. Searching it would be work.",
+    "artId": "rubble",
+    "portable": false,
+    "initialLocation": "nowhere"
+  },
+  {
+    "id": "foreman",
+    "names": [
+      "foreman"
+    ],
+    "brief": "The foreman lies at the edge of the collapse, at his post.",
+    "description": "He was the foreman; the boots and the belt still say so. He lies where the bad night put him, tidy by accident, patient by default. Whatever he was carrying, he is not using it.",
+    "artId": "foreman",
+    "portable": false,
+    "initialLocation": "broken-drift"
+  },
+  {
+    "id": "foremans-desk",
+    "names": [
+      "desk"
+    ],
+    "brief": "The foreman's desk stands against the wall, drawer shut.",
+    "description": "A clerk's desk gone gray with rock dust. One drawer, stuck in the particular way of drawers with something still in them.",
+    "artId": "foremans-desk",
+    "portable": false,
+    "initialLocation": "foremans-office"
+  },
+  {
+    "id": "assay-bench",
+    "names": [
+      "bench"
+    ],
+    "brief": "The assay bench runs along the wall, dust keeping the ledger now.",
+    "description": "Built stout, for weighing small heavy things. The dust lies even and undisturbed across the top — except along the seam at the wall, where it isn't.",
+    "artId": "assay-bench",
+    "portable": false,
+    "initialLocation": "assay-office"
+  },
+  {
+    "id": "stacks",
+    "names": [
+      "stacks",
+      "stacked plates"
+    ],
+    "brief": "The tally plates stand stacked in their cradles, edge out.",
+    "description": "Cradle after cradle of bronze plates, each cut edge to edge with ranked tally marks. The hands change as you work along the rows; the discipline never does. Near the bottom of the last cradle, one plate sits apart from the rest.",
+    "artId": "stacks",
+    "portable": false,
+    "initialLocation": "tally-chamber"
+  },
+  {
+    "id": "scratched-stull",
+    "names": [
+      "stull"
+    ],
+    "brief": "One stull here carries writing, scratched deep at waist height.",
+    "description": "An ordinary stull doing its ordinary job, except for the writing. The scratches have the confidence of a man recording a fact.",
+    "artId": "scratched-stull",
+    "portable": false,
+    "initialLocation": "long-drift",
+    "adjectives": [
+      "scratched"
+    ],
+    "readText": "One word, scratched deep with a nail and gone over twice: KIBBLE. Beneath it, smaller, in another hand: works at the shaft. Miners wrote the truth where it would be needed. Paper was for the office."
+  },
+  {
+    "id": "chute-throat",
+    "names": [
+      "chute",
+      "ore chute"
+    ],
+    "brief": "The chute throat opens in the floor, timber-lined and patient.",
+    "description": "Steep, smooth, and dark all the way down, every plank polished by tonnage. It was built to take ore to the shaft foot the fast way, and it has been waiting ninety years for one more careless thing.",
+    "artId": "chute-throat",
+    "portable": false,
+    "initialLocation": "ore-chute"
+  },
+  {
+    "id": "flowstone-seam",
+    "names": [
+      "seam",
+      "vein"
+    ],
+    "brief": "Low on the wall, one seam gleams metal under the calcite.",
+    "description": "Native silver in a continuous sheet beneath a skin of calcite — a freak of chemistry worth more than the mine shipped in its best quarter. It is firmly part of the wall. Freeing it would be a matter of leverage, and of making your peace with the acoustics.",
+    "artId": "flowstone-seam",
+    "portable": false,
+    "initialLocation": "gallery-of-veils"
+  },
+  {
+    "id": "pothole",
+    "names": [
+      "pothole",
+      "hole"
+    ],
+    "brief": "A pothole at the waterline holds something that gleams.",
+    "description": "The river drilled this pocket, wedged its trophy in, and has spent a hundred years trying to take it back. The gleam inside is gold, fist-sized, jammed fast. Fingers will not shift it. A foot of good steel might.",
+    "artId": "pothole",
+    "portable": false,
+    "initialLocation": "river-strand"
+  },
+  {
+    "id": "mechanism",
+    "names": [
+      "mechanism",
+      "door"
+    ],
+    "brief": "The mechanism sits recessed in the door's center, waiting.",
+    "description": "Slots, grips, a rotating collar — a lock the way a lighthouse is a lamp. Nothing about it is secret; it is all right there, frank as an instrument panel, and none of it is shaped for your fingers. Something to bridge the wrongness might let you work it. A tool, say, made by the hands this was made for.",
+    "artId": "mechanism",
+    "portable": false,
+    "initialLocation": "antechamber",
+    "adjectives": [
+      "antechamber"
+    ]
+  },
+  {
+    "id": "vault",
+    "names": [
+      "vault",
+      "plinth"
+    ],
+    "brief": "The vault stands around its plinth, and could be closed as it was opened.",
+    "description": "The vault is a made room around a made thing: plinth, courses, the door you worked to open. Everything about it was built to be shut with intent — and it could be again, by somebody who had banked every other argument and chosen to leave this one where it stands.",
+    "artId": "vault",
+    "portable": false,
+    "initialLocation": "the-vault"
+  }
+]

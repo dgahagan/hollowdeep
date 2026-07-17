@@ -1,0 +1,112 @@
+[
+  {
+    "id": "stalker",
+    "names": [
+      "stalker"
+    ],
+    "description": "You have never seen all of it at once: a suggestion of length, a gait with too much patience in it, a way of keeping exactly one step past the lamp's reach. It walks these galleries on its own schedule. It is not an animal, exactly, and the miners — who wrote down everything — wrote down nothing about it.",
+    "artId": "stalker",
+    "behavior": "stalker",
+    "spawn": {
+      "locations": [
+        "cathedral",
+        "gallery-of-veils",
+        "river-strand",
+        "low-crawl"
+      ],
+      "if": [
+        {
+          "visited": "cathedral"
+        }
+      ]
+    },
+    "moveEvery": 3,
+    "aggression": 0.3,
+    "wardOff": {
+      "itemIds": [
+        "canary-cage"
+      ]
+    },
+    "deathMessageId": "stalker-death"
+  },
+  {
+    "id": "thief",
+    "names": [
+      "thief"
+    ],
+    "description": "You have not seen it. You have seen its work: things gone, and long smooth drag-marks in the mud, unhurried, always toward the same place. Ninety years without competition, and it has kept its habits professional.",
+    "artId": "thief",
+    "behavior": "thief",
+    "spawn": {
+      "locations": [
+        "midden"
+      ],
+      "if": [
+        {
+          "visited": "breakthrough"
+        }
+      ]
+    },
+    "stealsTreasure": true,
+    "stashLocation": "midden",
+    "stealAfterTurns": 25,
+    "deathMessageId": "thief-robbery"
+  },
+  {
+    "id": "bats",
+    "names": [
+      "bats"
+    ],
+    "description": "Small brown bats, hanging in the roof timbers like notes in a ledger nobody balances. They took possession the day the miners left, which makes them the sitting tenants, and they conduct themselves accordingly.",
+    "artId": "bats",
+    "behavior": "static",
+    "spawn": {
+      "locations": [
+        "behind-the-seal"
+      ]
+    }
+  },
+  {
+    "id": "blind-fish",
+    "names": [
+      "blind fish",
+      "fish"
+    ],
+    "description": "Pale as paper, eyeless, entirely at peace. They hang in the slack water by the bank and go nowhere near the channel. They have been here far longer than the mine, and they did not get that old by swimming in the middle.",
+    "artId": "blind-fish",
+    "behavior": "static",
+    "spawn": {
+      "locations": [
+        "black-river"
+      ]
+    }
+  },
+  {
+    "id": "storekeeper",
+    "names": [
+      "storekeeper"
+    ],
+    "description": "He has the settled look of a man who stopped waiting for customers some while back and moved on to waiting in general. He will sell you what you can carry, and he recommends the canary — on credit, he says, since money coming up out of that ground is a better bet than money going down into it.",
+    "artId": "storekeeper",
+    "behavior": "static",
+    "spawn": {
+      "locations": [
+        "general-store"
+      ]
+    }
+  },
+  {
+    "id": "newt",
+    "names": [
+      "newt"
+    ],
+    "description": "A newt. Brown, damp, ordinary to a degree that borders on defiance. It regards you without alarm, as its ancestors presumably regarded the keepers, and theirs the first dark. Of everything you have met past the breach, it is the only thing that makes sense, and it is a newt.",
+    "artId": "newt",
+    "behavior": "static",
+    "spawn": {
+      "locations": [
+        "store-rooms"
+      ]
+    }
+  }
+]

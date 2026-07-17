@@ -1,0 +1,50 @@
+[
+  {
+    "id": "on-the-books",
+    "name": "On the Books",
+    "description": "Your first find, weighed and entered. The Hollowdeep is now, officially, an income.",
+    "hidden": false
+  },
+  {
+    "id": "the-full-ledger",
+    "name": "The Full Ledger",
+    "description": "All twelve finds on the books. The ledger balances. It says nothing about you.",
+    "hidden": false
+  },
+  {
+    "id": "unhurried",
+    "name": "Unhurried",
+    "description": "Finished without dying once. The cave had its chances, and you declined every one.",
+    "hidden": false
+  },
+  {
+    "id": "nobody-asked",
+    "name": "Nobody Asked",
+    "description": "Finished without a single hint. Nobody asked. You didn't either.",
+    "hidden": false
+  },
+  {
+    "id": "the-answer",
+    "name": "The Answer",
+    "description": "You found the gunnis, the older scar, and the answer to the question nobody asks aloud.",
+    "hidden": true
+  },
+  {
+    "id": "everything-you-carried",
+    "name": "Everything You Carried",
+    "description": "You visited the midden after the thief did, and it gave back everything you carried.",
+    "hidden": false
+  },
+  {
+    "id": "kept-the-seal",
+    "name": "Kept the Seal",
+    "description": "Eleven on the books, and the twelfth left where a wall was built around the keeping of it.",
+    "hidden": true
+  },
+  {
+    "id": "the-bird-went-too",
+    "name": "The Bird Went Too",
+    "description": "You carried the canary all the way down to the vault. It saw what you saw.",
+    "hidden": true
+  }
+]

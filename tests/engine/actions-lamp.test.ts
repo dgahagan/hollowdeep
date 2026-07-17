@@ -116,6 +116,26 @@ describe('light', () => {
     expect(result.consumesTurn).toBe(false);
     expect(texts(result)).toMatch(/can't light/i);
   });
+
+  // "light X" on a non-lamp falls through to X's `use` events, so content
+  // verbs like "light the fuse" work even though `light` is a core verb.
+  it("lighting a non-lamp item with a live `use` event fires it, as `use` would", () => {
+    let state = at('grotto');
+    state = setItemLocation(state, 'oil-flask', 'inventory');
+
+    const result = act(state, 'light door');
+    expect(result.consumesTurn).toBe(true);
+    expect(texts(result)).toMatch(/rust gives up its grudge/i);
+    expect(result.state.flags['door-oiled']).toBe(true);
+  });
+
+  it("lighting a non-lamp item whose `use` events are all guarded off still refuses", () => {
+    // No oil flask carried, door not yet oiled: both door events' guards fail.
+    const result = act(at('grotto'), 'light door');
+    expect(result.consumesTurn).toBe(false);
+    expect(texts(result)).toMatch(/can't light/i);
+    expect(result.state.flags['door-oiled']).toBeUndefined();
+  });
 });
 
 describe('extinguish', () => {

@@ -1,0 +1,76 @@
+{
+  "milestones": [
+    {
+      "id": "enter-the-cave",
+      "points": 5,
+      "description": "Passed the cracked seal and stood inside the hill.",
+      "when": [
+        {
+          "visited": "behind-the-seal"
+        }
+      ]
+    },
+    {
+      "id": "reach-the-breach",
+      "points": 9,
+      "description": "Blasted through the wall someone else closed.",
+      "when": [
+        {
+          "visited": "beyond-the-breach"
+        }
+      ]
+    },
+    {
+      "id": "past-the-seal",
+      "points": 15,
+      "description": "Turned the mechanism and stood past the seal gate.",
+      "when": [
+        {
+          "visited": "seal-gate"
+        }
+      ]
+    },
+    {
+      "id": "last-lousy-point",
+      "points": 1,
+      "description": "Found the gunnis, and the one point nobody needs to finish.",
+      "when": [
+        {
+          "visited": "the-gunnis"
+        }
+      ]
+    }
+  ],
+  "deathPenalty": 10,
+  "hintPenalty": 5,
+  "ranks": [
+    {
+      "minScore": 0,
+      "title": "Tourist"
+    },
+    {
+      "minScore": 60,
+      "title": "Mucker"
+    },
+    {
+      "minScore": 120,
+      "title": "Timberman"
+    },
+    {
+      "minScore": 200,
+      "title": "Shift Boss"
+    },
+    {
+      "minScore": 280,
+      "title": "Mine Captain"
+    },
+    {
+      "minScore": 310,
+      "title": "Keeper of the Seal"
+    },
+    {
+      "minScore": 350,
+      "title": "Proprietor of the Hollowdeep"
+    }
+  ]
+}

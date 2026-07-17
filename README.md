@@ -10,9 +10,12 @@ Vite + React + TypeScript, static-only, no backend, no runtime AI.
 
 ## Status
 
-The foundation is complete: the engine, the `test-cave` reference adventure, and
-a minimal browser UI you can actually play. Hollowdeep — the real adventure — is
-Phase 2, and a proper UI is Phase 3.
+The foundation and the adventure are complete: the engine, the `test-cave`
+reference fixture, a minimal browser UI, and **Hollowdeep itself** — 58 rooms,
+12 treasures, 350 points, two endings, and a narrator keeping its own counsel.
+`npm run dev` plays it (the fixture stays at `?adventure=test-cave`). Painterly
+art is Phase B; the proper UI is Phase 3 — until then it ships placeholder SVGs
+and plain chrome.
 
 ```bash
 npm install
@@ -24,10 +27,11 @@ Then play. See **[docs/PLAYING.md](docs/PLAYING.md)** for how to talk to the cav
 | | |
 |---|---|
 | **Engine** | Parser, turn loop, movement, item handling, containers, lamp and fuel, darkness, creatures, combat, scoring, ranks, achievements, save/load with migrations, scene view |
+| **`hollowdeep`** | The adventure — 58 locations, 12 treasures in three tiers, a fair maze, a stalker and a thief, two magic words, two endings, 16 hint ladders, placeholder art until Phase B |
 | **`test-cave`** | A small complete adventure — 11 locations, 11 items, 3 creatures — the format reference and test fixture |
 | **UI** | Scene, transcript, command input, action buttons, inventory, status bar, save dialog. Plain on purpose; Phase 3 replaces it. |
 | **Validator** | `npm run validate` checks any adventure against the schema and 40 consistency rules |
-| **Tests** | 747 across 25 files, including a scripted walkthrough that wins at every seed |
+| **Tests** | 796 across 26 files, including scripted walkthroughs for both adventures that win at every seed |
 
 ## Requirements
 

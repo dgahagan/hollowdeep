@@ -1,7 +1,8 @@
 # Hollowdeep Implementation Plan — Authoring the Adventure
 
-**Status:** READY (2026-07-17) — **blocked on the hints + timers engine work**
-(see Preconditions). Do not `/run-plan` until that lands.
+**Status:** COMPLETE (2026-07-17) — all twelve tasks executed and ticked;
+`npm run gate` green (796 tests); the walkthrough wins 350/350 at five
+pinned seeds. Preconditions were verified satisfied before T1.
 
 Execution plan for [`docs/hollowdeep-plan.md`](hollowdeep-plan.md) (the
 WHAT/WHY); rules live in
@@ -466,18 +467,18 @@ markers inside its own region.
 
 ## Progress Tracker
 
-- [ ] T1 — Module skeleton: structure, no voice (`sonnet`)
-- [ ] T2 — Region A: Weir's Landing (`opus`)
-- [ ] T3 — Region B: the Workings (`opus`)
-- [ ] T4 — Region C: cavern, maze, creatures (`opus`)
-- [ ] T5 — Regions D & E: past the breach, the seal (`opus`)
-- [ ] T6 — Magic words and the gunnis (`opus`)
-- [ ] T7 — Endgame: two endings, ranks, achievements (`opus`)
-- [ ] T8 — Hint ladders (`opus`)
-- [ ] T9 — Walkthrough + per-adventure harness (`opus`)
-- [ ] T10 — Content integration tests (`sonnet`)
-- [ ] T11 — Dev app loads Hollowdeep (`sonnet`)
-- [ ] T12 — Voice pass, docs, closeout (`opus`)
+- [x] T1 — Module skeleton: structure, no voice (`sonnet`) — `709542a`
+- [x] T2 — Region A: Weir's Landing (`opus`) — `eb28ee7`
+- [x] T3 — Region B: the Workings (`opus`) — `47eb6e7`
+- [x] T4 — Region C: cavern, maze, creatures (`opus`) — `57a0cdf`
+- [x] T5 — Regions D & E: past the breach, the seal (`opus`) — `e5dec1f`
+- [x] T6 — Magic words and the gunnis (`opus`) — `11c81bc`
+- [x] T7 — Endgame: two endings, ranks, achievements (`opus`) — `8c687b2`
+- [x] T8 — Hint ladders (`opus`) — `eb88fe1`
+- [x] T9 — Walkthrough + per-adventure harness (`opus`) — `6de4ec1`
+- [x] T10 — Content integration tests (`sonnet`) — `8dea616`
+- [x] T11 — Dev app loads Hollowdeep (`sonnet`) — `612c110`
+- [x] T12 — Voice pass, docs, closeout (`opus`) — `c39e492`
 
 **Done when:** every box is ticked with its commit SHA, `npm run gate` is
 green on `feat/hollowdeep`, the hollowdeep walkthrough reaches 350/350 with

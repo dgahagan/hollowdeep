@@ -1,0 +1,4061 @@
+[
+  {
+    "id": "office-door-opened",
+    "on": {
+      "type": "open",
+      "target": "office-door"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "The door swings in on a room that has been holding its breath for ninety years. The hinges do not complain; somebody thorough oiled them before locking up for good."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "office-door-open"
+      }
+    ]
+  },
+  {
+    "id": "canary-on-credit",
+    "on": {
+      "type": "take",
+      "target": "canary-cage"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "general-store"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The storekeeper does not stop you. \"On credit,\" he says, as though the terms were settled years ago and you are merely late. \"The bird knows the work. Settle up when you're rich.\""
+      }
+    ]
+  },
+  {
+    "id": "magazine-door-opened",
+    "on": {
+      "type": "open",
+      "target": "magazine-door"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "The iron door swings on hinges greased against exactly this long a wait. Inside, the dark smells of dry powder and good housekeeping."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "magazine-door-open"
+      }
+    ]
+  },
+  {
+    "id": "pump-fix",
+    "on": {
+      "type": "use",
+      "target": "pump"
+    },
+    "once": true,
+    "if": [
+      {
+        "hasItem": "pump-handle"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The handle drops into its socket with the click of two things resuming a long marriage. The pump is a pump again. It waits, with cast-iron patience, to be asked."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "pump-fixed"
+      }
+    ]
+  },
+  {
+    "id": "pump-drain",
+    "on": {
+      "type": "use",
+      "target": "pump"
+    },
+    "once": true,
+    "if": [
+      {
+        "flag": "pump-fixed"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You bear down. The pump takes hold — reluctant, then interested, then working — and throws black water into the drainage channel in long gouts. Somewhere below, the winze gives the water back with the stunned gurgle of an argument lost after ninety years of winning it."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "pump-drained"
+      }
+    ]
+  },
+  {
+    "id": "keg-death",
+    "on": {
+      "type": "use",
+      "target": "powder-keg"
+    },
+    "if": [
+      {
+        "atLocation": "coach-road"
+      },
+      {
+        "atLocation": "main-street"
+      },
+      {
+        "atLocation": "chapel"
+      },
+      {
+        "atLocation": "general-store"
+      },
+      {
+        "atLocation": "assay-office"
+      },
+      {
+        "atLocation": "tailings-path"
+      },
+      {
+        "atLocation": "adit-mouth"
+      },
+      {
+        "atLocation": "behind-the-seal"
+      },
+      {
+        "atLocation": "adit-drift"
+      },
+      {
+        "atLocation": "lamp-room"
+      },
+      {
+        "atLocation": "stables"
+      },
+      {
+        "atLocation": "junction"
+      },
+      {
+        "atLocation": "timekeepers-nook"
+      },
+      {
+        "atLocation": "foremans-office"
+      },
+      {
+        "atLocation": "shaft-head"
+      },
+      {
+        "atLocation": "pump-room"
+      },
+      {
+        "atLocation": "ore-chute"
+      },
+      {
+        "atLocation": "long-drift"
+      },
+      {
+        "atLocation": "magazine"
+      },
+      {
+        "atLocation": "stull-gallery"
+      },
+      {
+        "atLocation": "broken-drift"
+      },
+      {
+        "atLocation": "winze-ladderway"
+      },
+      {
+        "atLocation": "the-gunnis"
+      },
+      {
+        "atLocation": "shaft-foot"
+      },
+      {
+        "atLocation": "breakthrough"
+      },
+      {
+        "atLocation": "low-crawl"
+      },
+      {
+        "atLocation": "cathedral"
+      },
+      {
+        "atLocation": "gallery-of-veils"
+      },
+      {
+        "atLocation": "gour-pools"
+      },
+      {
+        "atLocation": "black-river"
+      },
+      {
+        "atLocation": "river-strand"
+      },
+      {
+        "atLocation": "midden"
+      },
+      {
+        "atLocation": "twisty-1"
+      },
+      {
+        "atLocation": "twisty-2"
+      },
+      {
+        "atLocation": "twisty-3"
+      },
+      {
+        "atLocation": "twisty-4"
+      },
+      {
+        "atLocation": "twisty-5"
+      },
+      {
+        "atLocation": "twisty-6"
+      },
+      {
+        "atLocation": "beyond-the-breach"
+      },
+      {
+        "atLocation": "dressed-gallery"
+      },
+      {
+        "atLocation": "toolroom"
+      },
+      {
+        "atLocation": "store-rooms"
+      },
+      {
+        "atLocation": "closed-row"
+      },
+      {
+        "atLocation": "tally-chamber"
+      },
+      {
+        "atLocation": "worked-face"
+      },
+      {
+        "atLocation": "long-stair"
+      },
+      {
+        "atLocation": "undercroft"
+      },
+      {
+        "atLocation": "cistern"
+      },
+      {
+        "atLocation": "warm-gallery"
+      },
+      {
+        "atLocation": "deep-cut"
+      },
+      {
+        "atLocation": "quiet-gallery"
+      },
+      {
+        "atLocation": "antechamber"
+      },
+      {
+        "atLocation": "seal-gate"
+      },
+      {
+        "atLocation": "keepers-stair"
+      },
+      {
+        "atLocation": "keepers-walk"
+      },
+      {
+        "atLocation": "watch-room"
+      },
+      {
+        "atLocation": "the-vault"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "keg-death"
+      }
+    ]
+  },
+  {
+    "id": "fuse-nudge",
+    "on": {
+      "type": "use",
+      "target": "fuse-coil"
+    },
+    "if": [
+      {
+        "notFlag": "powder-placed"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You have a fuse and, as yet, nothing that wants one. The keg's label suggests the correct order of operations."
+      }
+    ]
+  },
+  {
+    "id": "place-powder",
+    "on": {
+      "type": "use",
+      "target": "powder-keg"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "breach-wall"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You seat the keg into the seam at the wall's foot, snug as a stone in an arch. It fits like the wall was measured for it — which, considering who did the measuring, is not a comforting thought."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "powder-placed"
+      },
+      {
+        "kind": "moveItem",
+        "item": "powder-keg",
+        "to": "nowhere"
+      }
+    ]
+  },
+  {
+    "id": "attach-fuse",
+    "on": {
+      "type": "use",
+      "target": "fuse-coil"
+    },
+    "once": true,
+    "if": [
+      {
+        "flag": "powder-placed",
+        "atLocation": "breach-wall"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You crimp the fuse to the charge and pay the coil out along the floor, west, into the maze's first turning. A walking pace of fire, and then the argument. All it wants now is a light."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "fused"
+      },
+      {
+        "kind": "moveItem",
+        "item": "fuse-coil",
+        "to": "breach-wall"
+      }
+    ]
+  },
+  {
+    "id": "detonate",
+    "on": {
+      "type": "use",
+      "target": "fuse-coil"
+    },
+    "once": true,
+    "if": [
+      {
+        "flag": "fused"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The fuse takes the flame and walks off into the dark with it, unhurried, keeping its appointment. You go west at a pace you would not call unhurried at all. The mountain says one word. The draught becomes a wind, and then a door."
+      },
+      {
+        "kind": "moveItem",
+        "item": "fuse-coil",
+        "to": "nowhere"
+      },
+      {
+        "kind": "teleport",
+        "to": "twisty-5"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "breach-blasted"
+      },
+      {
+        "kind": "revealExit",
+        "location": "breach-wall",
+        "dir": "e"
+      }
+    ]
+  },
+  {
+    "id": "mechanism-fit",
+    "on": {
+      "type": "use",
+      "target": "mechanism"
+    },
+    "once": true,
+    "if": [
+      {
+        "hasItem": "bronze-tool"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The bronze tool bridges the wrongness exactly. The slots take it, the collar turns, and the weight of the far wall goes somewhere else with a sound like a held breath ending. It was not made for your hand. Your hand makes do."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "mechanism-turned"
+      }
+    ]
+  },
+  {
+    "id": "take-the-kept",
+    "on": {
+      "type": "take",
+      "target": "the-kept"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "You lift it. It has its weight, and nothing else. Whatever it did, whatever it does, it keeps to itself — a fact with mass. The room is just a room now, and you are a person holding a thing, a long way down, with a long way back."
+      }
+    ]
+  },
+  {
+    "id": "canary-sings-warm-gallery",
+    "on": {
+      "type": "enter",
+      "target": "warm-gallery"
+    },
+    "if": [
+      {
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The canary, which has kept a professional silence the whole way down, begins to sing. Full-throated, unafraid, at home. Nothing about that is reassuring."
+      }
+    ]
+  },
+  {
+    "id": "kibble-to-shaft-foot",
+    "on": {
+      "type": "word",
+      "word": "kibble"
+    },
+    "if": [
+      {
+        "atLocation": "shaft-head"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The word goes down the winze the way it went for ninety years — a working word, said where the work is. The dark obliges, and the world exchanges one end of the chain for the other."
+      },
+      {
+        "kind": "teleport",
+        "to": "shaft-foot"
+      }
+    ]
+  },
+  {
+    "id": "kibble-to-shaft-head",
+    "on": {
+      "type": "word",
+      "word": "kibble"
+    },
+    "if": [
+      {
+        "atLocation": "shaft-foot"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You give the winze the hoist word from the receiving end, and the dark hauls away. When it settles, you are at the head of the chain instead of its foot."
+      },
+      {
+        "kind": "teleport",
+        "to": "shaft-head"
+      }
+    ]
+  },
+  {
+    "id": "kibble-elsewhere",
+    "on": {
+      "type": "word",
+      "word": "kibble"
+    },
+    "if": [
+      {
+        "atLocation": "coach-road"
+      },
+      {
+        "atLocation": "main-street"
+      },
+      {
+        "atLocation": "chapel"
+      },
+      {
+        "atLocation": "general-store"
+      },
+      {
+        "atLocation": "assay-office"
+      },
+      {
+        "atLocation": "tailings-path"
+      },
+      {
+        "atLocation": "adit-mouth"
+      },
+      {
+        "atLocation": "behind-the-seal"
+      },
+      {
+        "atLocation": "adit-drift"
+      },
+      {
+        "atLocation": "lamp-room"
+      },
+      {
+        "atLocation": "stables"
+      },
+      {
+        "atLocation": "junction"
+      },
+      {
+        "atLocation": "timekeepers-nook"
+      },
+      {
+        "atLocation": "foremans-office"
+      },
+      {
+        "atLocation": "pump-room"
+      },
+      {
+        "atLocation": "ore-chute"
+      },
+      {
+        "atLocation": "long-drift"
+      },
+      {
+        "atLocation": "magazine"
+      },
+      {
+        "atLocation": "stull-gallery"
+      },
+      {
+        "atLocation": "broken-drift"
+      },
+      {
+        "atLocation": "winze-ladderway"
+      },
+      {
+        "atLocation": "the-gunnis"
+      },
+      {
+        "atLocation": "breakthrough"
+      },
+      {
+        "atLocation": "low-crawl"
+      },
+      {
+        "atLocation": "cathedral"
+      },
+      {
+        "atLocation": "gallery-of-veils"
+      },
+      {
+        "atLocation": "gour-pools"
+      },
+      {
+        "atLocation": "black-river"
+      },
+      {
+        "atLocation": "river-strand"
+      },
+      {
+        "atLocation": "midden"
+      },
+      {
+        "atLocation": "breach-wall"
+      },
+      {
+        "atLocation": "twisty-1"
+      },
+      {
+        "atLocation": "twisty-2"
+      },
+      {
+        "atLocation": "twisty-3"
+      },
+      {
+        "atLocation": "twisty-4"
+      },
+      {
+        "atLocation": "twisty-5"
+      },
+      {
+        "atLocation": "twisty-6"
+      },
+      {
+        "atLocation": "beyond-the-breach"
+      },
+      {
+        "atLocation": "dressed-gallery"
+      },
+      {
+        "atLocation": "toolroom"
+      },
+      {
+        "atLocation": "store-rooms"
+      },
+      {
+        "atLocation": "closed-row"
+      },
+      {
+        "atLocation": "tally-chamber"
+      },
+      {
+        "atLocation": "worked-face"
+      },
+      {
+        "atLocation": "long-stair"
+      },
+      {
+        "atLocation": "undercroft"
+      },
+      {
+        "atLocation": "cistern"
+      },
+      {
+        "atLocation": "warm-gallery"
+      },
+      {
+        "atLocation": "deep-cut"
+      },
+      {
+        "atLocation": "quiet-gallery"
+      },
+      {
+        "atLocation": "antechamber"
+      },
+      {
+        "atLocation": "seal-gate"
+      },
+      {
+        "atLocation": "keepers-stair"
+      },
+      {
+        "atLocation": "keepers-walk"
+      },
+      {
+        "atLocation": "watch-room"
+      },
+      {
+        "atLocation": "the-vault"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "A good word, and wasted here. It wants machinery — a chain, a bucket, a winze to work in. The cave has heard it before and knows exactly where it applies."
+      }
+    ]
+  },
+  {
+    "id": "gunnis-to-the-gunnis",
+    "on": {
+      "type": "word",
+      "word": "gunnis"
+    },
+    "if": [
+      {
+        "atLocation": "broken-drift"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The foreman wrote it twice and underlined it, and now you see why: the word is a place. The dark folds its arms and looks the other way, and when you have your bearings again there is grass, and a slope, and sky — actual sky — overhead."
+      },
+      {
+        "kind": "teleport",
+        "to": "the-gunnis"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "gunnis-known"
+      },
+      {
+        "kind": "revealExit",
+        "location": "tailings-path",
+        "dir": "nw"
+      },
+      {
+        "kind": "revealExit",
+        "location": "the-gunnis",
+        "dir": "down"
+      },
+      {
+        "kind": "award",
+        "achievement": "the-answer"
+      }
+    ]
+  },
+  {
+    "id": "gunnis-to-broken-drift",
+    "on": {
+      "type": "word",
+      "word": "gunnis"
+    },
+    "if": [
+      {
+        "atLocation": "the-gunnis"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You trade the sky back for the dark, the way the word has always traded. The broken drift resumes around you, foreman and all."
+      },
+      {
+        "kind": "teleport",
+        "to": "broken-drift"
+      }
+    ]
+  },
+  {
+    "id": "gunnis-elsewhere",
+    "on": {
+      "type": "word",
+      "word": "gunnis"
+    },
+    "if": [
+      {
+        "atLocation": "coach-road"
+      },
+      {
+        "atLocation": "main-street"
+      },
+      {
+        "atLocation": "chapel"
+      },
+      {
+        "atLocation": "general-store"
+      },
+      {
+        "atLocation": "assay-office"
+      },
+      {
+        "atLocation": "tailings-path"
+      },
+      {
+        "atLocation": "adit-mouth"
+      },
+      {
+        "atLocation": "behind-the-seal"
+      },
+      {
+        "atLocation": "adit-drift"
+      },
+      {
+        "atLocation": "lamp-room"
+      },
+      {
+        "atLocation": "stables"
+      },
+      {
+        "atLocation": "junction"
+      },
+      {
+        "atLocation": "timekeepers-nook"
+      },
+      {
+        "atLocation": "foremans-office"
+      },
+      {
+        "atLocation": "shaft-head"
+      },
+      {
+        "atLocation": "pump-room"
+      },
+      {
+        "atLocation": "ore-chute"
+      },
+      {
+        "atLocation": "long-drift"
+      },
+      {
+        "atLocation": "magazine"
+      },
+      {
+        "atLocation": "stull-gallery"
+      },
+      {
+        "atLocation": "winze-ladderway"
+      },
+      {
+        "atLocation": "shaft-foot"
+      },
+      {
+        "atLocation": "breakthrough"
+      },
+      {
+        "atLocation": "low-crawl"
+      },
+      {
+        "atLocation": "cathedral"
+      },
+      {
+        "atLocation": "gallery-of-veils"
+      },
+      {
+        "atLocation": "gour-pools"
+      },
+      {
+        "atLocation": "black-river"
+      },
+      {
+        "atLocation": "river-strand"
+      },
+      {
+        "atLocation": "midden"
+      },
+      {
+        "atLocation": "breach-wall"
+      },
+      {
+        "atLocation": "twisty-1"
+      },
+      {
+        "atLocation": "twisty-2"
+      },
+      {
+        "atLocation": "twisty-3"
+      },
+      {
+        "atLocation": "twisty-4"
+      },
+      {
+        "atLocation": "twisty-5"
+      },
+      {
+        "atLocation": "twisty-6"
+      },
+      {
+        "atLocation": "beyond-the-breach"
+      },
+      {
+        "atLocation": "dressed-gallery"
+      },
+      {
+        "atLocation": "toolroom"
+      },
+      {
+        "atLocation": "store-rooms"
+      },
+      {
+        "atLocation": "closed-row"
+      },
+      {
+        "atLocation": "tally-chamber"
+      },
+      {
+        "atLocation": "worked-face"
+      },
+      {
+        "atLocation": "long-stair"
+      },
+      {
+        "atLocation": "undercroft"
+      },
+      {
+        "atLocation": "cistern"
+      },
+      {
+        "atLocation": "warm-gallery"
+      },
+      {
+        "atLocation": "deep-cut"
+      },
+      {
+        "atLocation": "quiet-gallery"
+      },
+      {
+        "atLocation": "antechamber"
+      },
+      {
+        "atLocation": "seal-gate"
+      },
+      {
+        "atLocation": "keepers-stair"
+      },
+      {
+        "atLocation": "keepers-walk"
+      },
+      {
+        "atLocation": "watch-room"
+      },
+      {
+        "atLocation": "the-vault"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "A real word, and the cave knows it — but it names a place, and it does its trading from particular ground. Said here, it is only vocabulary."
+      }
+    ]
+  },
+  {
+    "id": "the-answer-award",
+    "on": {
+      "type": "enter",
+      "target": "the-gunnis"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "the-answer"
+      }
+    ]
+  },
+  {
+    "id": "search-bench",
+    "on": {
+      "type": "search",
+      "target": "assay-bench"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "You run a hand along the seam where the bench meets the wall and come up with somebody's rounding error: a bead of assay gold, rolled out of reach and written off a lifetime ago."
+      },
+      {
+        "kind": "moveItem",
+        "item": "assay-button",
+        "to": "assay-office"
+      }
+    ]
+  },
+  {
+    "id": "search-foreman",
+    "on": {
+      "type": "search",
+      "target": "foreman"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "You go through his pockets with more apology than efficiency. His watch, stopped. His tally book, the pencil still in its loop. You are the first person in ninety years to ask him for anything."
+      },
+      {
+        "kind": "moveItem",
+        "item": "foremans-watch",
+        "to": "broken-drift"
+      },
+      {
+        "kind": "moveItem",
+        "item": "tally-book",
+        "to": "broken-drift"
+      }
+    ]
+  },
+  {
+    "id": "search-foremans-desk",
+    "on": {
+      "type": "search",
+      "target": "foremans-desk"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "The drawer sticks, then gives. Pushed to the back, behind requisition forms for timber that never came: a small iron key, tagged MAGAZINE in the clerk's careful hand."
+      },
+      {
+        "kind": "moveItem",
+        "item": "key-magazine",
+        "to": "foremans-office"
+      }
+    ]
+  },
+  {
+    "id": "search-stacks",
+    "on": {
+      "type": "search",
+      "target": "stacks"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "You work along the cradles, plate after plate, all counts and no unit — until near the bottom you find the one that is different: a later hand, newer marks, the final rows still open, as though the counting were not considered finished. You take that thought and put it somewhere you keep such things."
+      },
+      {
+        "kind": "moveItem",
+        "item": "tally-plate",
+        "to": "tally-chamber"
+      }
+    ]
+  },
+  {
+    "id": "pull-stull",
+    "on": {
+      "type": "use",
+      "target": "stull"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "The stull comes free with less argument than you expected, which is the worst sign there is. Overhead, the roof clears its throat. Behind where the timber stood, the garnet seam sits open-handed. You would put it at about six good breaths before the mountain finishes the sentence."
+      },
+      {
+        "kind": "moveItem",
+        "item": "cut-garnets",
+        "to": "stull-gallery"
+      },
+      {
+        "kind": "startTimer",
+        "timer": "roof-fall",
+        "turns": 6
+      }
+    ]
+  },
+  {
+    "id": "roof-fall-death",
+    "on": {
+      "type": "timerExpired",
+      "target": "roof-fall"
+    },
+    "if": [
+      {
+        "atLocation": "stull-gallery"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "roof-fall-death"
+      }
+    ]
+  },
+  {
+    "id": "roof-fall-escaped",
+    "on": {
+      "type": "timerExpired",
+      "target": "roof-fall"
+    },
+    "if": [
+      {
+        "atLocation": "coach-road"
+      },
+      {
+        "atLocation": "main-street"
+      },
+      {
+        "atLocation": "chapel"
+      },
+      {
+        "atLocation": "general-store"
+      },
+      {
+        "atLocation": "assay-office"
+      },
+      {
+        "atLocation": "tailings-path"
+      },
+      {
+        "atLocation": "adit-mouth"
+      },
+      {
+        "atLocation": "behind-the-seal"
+      },
+      {
+        "atLocation": "adit-drift"
+      },
+      {
+        "atLocation": "lamp-room"
+      },
+      {
+        "atLocation": "stables"
+      },
+      {
+        "atLocation": "junction"
+      },
+      {
+        "atLocation": "timekeepers-nook"
+      },
+      {
+        "atLocation": "foremans-office"
+      },
+      {
+        "atLocation": "shaft-head"
+      },
+      {
+        "atLocation": "pump-room"
+      },
+      {
+        "atLocation": "ore-chute"
+      },
+      {
+        "atLocation": "long-drift"
+      },
+      {
+        "atLocation": "magazine"
+      },
+      {
+        "atLocation": "broken-drift"
+      },
+      {
+        "atLocation": "winze-ladderway"
+      },
+      {
+        "atLocation": "the-gunnis"
+      },
+      {
+        "atLocation": "shaft-foot"
+      },
+      {
+        "atLocation": "breakthrough"
+      },
+      {
+        "atLocation": "low-crawl"
+      },
+      {
+        "atLocation": "cathedral"
+      },
+      {
+        "atLocation": "gallery-of-veils"
+      },
+      {
+        "atLocation": "gour-pools"
+      },
+      {
+        "atLocation": "black-river"
+      },
+      {
+        "atLocation": "river-strand"
+      },
+      {
+        "atLocation": "midden"
+      },
+      {
+        "atLocation": "breach-wall"
+      },
+      {
+        "atLocation": "twisty-1"
+      },
+      {
+        "atLocation": "twisty-2"
+      },
+      {
+        "atLocation": "twisty-3"
+      },
+      {
+        "atLocation": "twisty-4"
+      },
+      {
+        "atLocation": "twisty-5"
+      },
+      {
+        "atLocation": "twisty-6"
+      },
+      {
+        "atLocation": "beyond-the-breach"
+      },
+      {
+        "atLocation": "dressed-gallery"
+      },
+      {
+        "atLocation": "toolroom"
+      },
+      {
+        "atLocation": "store-rooms"
+      },
+      {
+        "atLocation": "closed-row"
+      },
+      {
+        "atLocation": "tally-chamber"
+      },
+      {
+        "atLocation": "worked-face"
+      },
+      {
+        "atLocation": "long-stair"
+      },
+      {
+        "atLocation": "undercroft"
+      },
+      {
+        "atLocation": "cistern"
+      },
+      {
+        "atLocation": "warm-gallery"
+      },
+      {
+        "atLocation": "deep-cut"
+      },
+      {
+        "atLocation": "quiet-gallery"
+      },
+      {
+        "atLocation": "antechamber"
+      },
+      {
+        "atLocation": "seal-gate"
+      },
+      {
+        "atLocation": "keepers-stair"
+      },
+      {
+        "atLocation": "keepers-walk"
+      },
+      {
+        "atLocation": "watch-room"
+      },
+      {
+        "atLocation": "the-vault"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "From somewhere behind you comes a long, settling roar — the sound of a mountain sitting down. The stull gallery has closed its account."
+      }
+    ]
+  },
+  {
+    "id": "roof-fall-settle",
+    "on": {
+      "type": "timerExpired",
+      "target": "roof-fall"
+    },
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "roof-fallen"
+      },
+      {
+        "kind": "moveItem",
+        "item": "rubble",
+        "to": "stull-gallery"
+      }
+    ]
+  },
+  {
+    "id": "roof-fall-bury",
+    "on": {
+      "type": "timerExpired",
+      "target": "roof-fall"
+    },
+    "if": [
+      {
+        "itemAt": {
+          "item": "cut-garnets",
+          "location": "stull-gallery"
+        }
+      }
+    ],
+    "do": [
+      {
+        "kind": "moveItem",
+        "item": "cut-garnets",
+        "to": "nowhere"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "garnets-buried"
+      }
+    ]
+  },
+  {
+    "id": "search-rubble",
+    "on": {
+      "type": "search",
+      "target": "rubble"
+    },
+    "once": true,
+    "if": [
+      {
+        "flag": "garnets-buried"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You pull rubble aside until the rubble becomes gravel and the gravel gives up the goods: the garnet pouch, dusty, dented, and past caring. The mountain kept them, in its way."
+      },
+      {
+        "kind": "moveItem",
+        "item": "cut-garnets",
+        "to": "stull-gallery"
+      }
+    ]
+  },
+  {
+    "id": "take-pearls",
+    "on": {
+      "type": "take",
+      "target": "cave-pearls"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "The pearls come up wet and perfect. Behind you the dam's lip gives with a crack, and somewhere below, water begins arguing its way back up. You would give it five turns of the glass. No more."
+      },
+      {
+        "kind": "startTimer",
+        "timer": "gour-flood",
+        "turns": 5
+      }
+    ]
+  },
+  {
+    "id": "gour-flood-death",
+    "on": {
+      "type": "timerExpired",
+      "target": "gour-flood"
+    },
+    "if": [
+      {
+        "atLocation": "gour-pools"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "gour-flood-death"
+      }
+    ]
+  },
+  {
+    "id": "gour-flood-safe",
+    "on": {
+      "type": "timerExpired",
+      "target": "gour-flood"
+    },
+    "if": [
+      {
+        "atLocation": "coach-road"
+      },
+      {
+        "atLocation": "main-street"
+      },
+      {
+        "atLocation": "chapel"
+      },
+      {
+        "atLocation": "general-store"
+      },
+      {
+        "atLocation": "assay-office"
+      },
+      {
+        "atLocation": "tailings-path"
+      },
+      {
+        "atLocation": "adit-mouth"
+      },
+      {
+        "atLocation": "behind-the-seal"
+      },
+      {
+        "atLocation": "adit-drift"
+      },
+      {
+        "atLocation": "lamp-room"
+      },
+      {
+        "atLocation": "stables"
+      },
+      {
+        "atLocation": "junction"
+      },
+      {
+        "atLocation": "timekeepers-nook"
+      },
+      {
+        "atLocation": "foremans-office"
+      },
+      {
+        "atLocation": "shaft-head"
+      },
+      {
+        "atLocation": "pump-room"
+      },
+      {
+        "atLocation": "ore-chute"
+      },
+      {
+        "atLocation": "long-drift"
+      },
+      {
+        "atLocation": "magazine"
+      },
+      {
+        "atLocation": "stull-gallery"
+      },
+      {
+        "atLocation": "broken-drift"
+      },
+      {
+        "atLocation": "winze-ladderway"
+      },
+      {
+        "atLocation": "the-gunnis"
+      },
+      {
+        "atLocation": "shaft-foot"
+      },
+      {
+        "atLocation": "breakthrough"
+      },
+      {
+        "atLocation": "low-crawl"
+      },
+      {
+        "atLocation": "cathedral"
+      },
+      {
+        "atLocation": "gallery-of-veils"
+      },
+      {
+        "atLocation": "black-river"
+      },
+      {
+        "atLocation": "river-strand"
+      },
+      {
+        "atLocation": "midden"
+      },
+      {
+        "atLocation": "breach-wall"
+      },
+      {
+        "atLocation": "twisty-1"
+      },
+      {
+        "atLocation": "twisty-2"
+      },
+      {
+        "atLocation": "twisty-3"
+      },
+      {
+        "atLocation": "twisty-4"
+      },
+      {
+        "atLocation": "twisty-5"
+      },
+      {
+        "atLocation": "twisty-6"
+      },
+      {
+        "atLocation": "beyond-the-breach"
+      },
+      {
+        "atLocation": "dressed-gallery"
+      },
+      {
+        "atLocation": "toolroom"
+      },
+      {
+        "atLocation": "store-rooms"
+      },
+      {
+        "atLocation": "closed-row"
+      },
+      {
+        "atLocation": "tally-chamber"
+      },
+      {
+        "atLocation": "worked-face"
+      },
+      {
+        "atLocation": "long-stair"
+      },
+      {
+        "atLocation": "undercroft"
+      },
+      {
+        "atLocation": "cistern"
+      },
+      {
+        "atLocation": "warm-gallery"
+      },
+      {
+        "atLocation": "deep-cut"
+      },
+      {
+        "atLocation": "quiet-gallery"
+      },
+      {
+        "atLocation": "antechamber"
+      },
+      {
+        "atLocation": "seal-gate"
+      },
+      {
+        "atLocation": "keepers-stair"
+      },
+      {
+        "atLocation": "keepers-walk"
+      },
+      {
+        "atLocation": "watch-room"
+      },
+      {
+        "atLocation": "the-vault"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "From back the way you came, a rush and a long slap of settling water: the gour pools taking their room back. The argument is over. The water won it, the way water does."
+      }
+    ]
+  },
+  {
+    "id": "pry-flowstone",
+    "on": {
+      "type": "use",
+      "target": "flowstone-seam"
+    },
+    "once": true,
+    "if": [
+      {
+        "hasItem": "steel-gad"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You set the gad behind the sheet and lean. The silver comes away whole — and the crack goes off like a shot, once from the wall, once from the vault overhead, and a third time from somewhere that has no wall. Far off, a gait changes."
+      },
+      {
+        "kind": "moveItem",
+        "item": "silver-flowstone",
+        "to": "gallery-of-veils"
+      },
+      {
+        "kind": "activateCreature",
+        "creature": "stalker"
+      }
+    ]
+  },
+  {
+    "id": "pry-nugget",
+    "on": {
+      "type": "use",
+      "target": "pothole"
+    },
+    "once": true,
+    "if": [
+      {
+        "hasItem": "steel-gad"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The gad finds the purchase your fingers couldn't, and the river loses a hundred-year argument. The Weir nugget comes free, heavier than it looks, like most history."
+      },
+      {
+        "kind": "moveItem",
+        "item": "weir-nugget",
+        "to": "river-strand"
+      }
+    ]
+  },
+  {
+    "id": "pry-nugget-refusal",
+    "on": {
+      "type": "use",
+      "target": "pothole"
+    },
+    "if": [
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "coach-road"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "main-street"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "chapel"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "general-store"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "assay-office"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "tailings-path"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "adit-mouth"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "behind-the-seal"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "adit-drift"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "lamp-room"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "stables"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "junction"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "timekeepers-nook"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "foremans-office"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "shaft-head"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "pump-room"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "ore-chute"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "long-drift"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "magazine"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "stull-gallery"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "broken-drift"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "winze-ladderway"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "the-gunnis"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "shaft-foot"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "breakthrough"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "low-crawl"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "cathedral"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "gallery-of-veils"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "gour-pools"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "black-river"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "river-strand"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "breach-wall"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-1"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-2"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-3"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-4"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-5"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-6"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "beyond-the-breach"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "dressed-gallery"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "toolroom"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "store-rooms"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "closed-row"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "tally-chamber"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "worked-face"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "long-stair"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "undercroft"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "cistern"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "warm-gallery"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "deep-cut"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "quiet-gallery"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "antechamber"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "seal-gate"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "keepers-stair"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "keepers-walk"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "watch-room"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "the-vault"
+        }
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You get two fingers behind it and the river laughs at you both. It is wedged past the strength of hands. A foot of good steel would change the conversation."
+      }
+    ]
+  },
+  {
+    "id": "chute-warn",
+    "on": {
+      "type": "use",
+      "target": "chute-throat"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "You lean into the chute throat and understand two things at once: it goes all the way down, and nothing about you is ore. The polish on the timber is the testimony of everything that already went. Consider yourself warned, which is once more than the chute ever warns anybody."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "chute-warned"
+      }
+    ]
+  },
+  {
+    "id": "chute-death",
+    "on": {
+      "type": "use",
+      "target": "chute-throat"
+    },
+    "if": [
+      {
+        "flag": "chute-warned"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "chute-death"
+      }
+    ]
+  },
+  {
+    "id": "swim-warn",
+    "on": {
+      "type": "verb",
+      "target": "swim"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "black-river"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You size up the channel. The fish — who are blind, and have lived here since before the town had a name, and know something — keep to the slack water by the banks. Nothing native to this river swims the middle. You could still try. The river takes all comers."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "swim-warned"
+      }
+    ]
+  },
+  {
+    "id": "swim-death",
+    "on": {
+      "type": "verb",
+      "target": "swim"
+    },
+    "if": [
+      {
+        "atLocation": "black-river",
+        "flag": "swim-warned"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "swim-death"
+      }
+    ]
+  },
+  {
+    "id": "jump-death",
+    "on": {
+      "type": "verb",
+      "target": "jump"
+    },
+    "if": [
+      {
+        "atLocation": "long-stair"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "jump-death"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-payroll-tin",
+    "on": {
+      "type": "drop",
+      "target": "payroll-tin"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-cut-garnets",
+    "on": {
+      "type": "drop",
+      "target": "cut-garnets"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-assay-button",
+    "on": {
+      "type": "drop",
+      "target": "assay-button"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-foremans-watch",
+    "on": {
+      "type": "drop",
+      "target": "foremans-watch"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-silver-flowstone",
+    "on": {
+      "type": "drop",
+      "target": "silver-flowstone"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-cave-pearls",
+    "on": {
+      "type": "drop",
+      "target": "cave-pearls"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-weir-nugget",
+    "on": {
+      "type": "drop",
+      "target": "weir-nugget"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-miners-cache",
+    "on": {
+      "type": "drop",
+      "target": "miners-cache"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-bronze-tool",
+    "on": {
+      "type": "drop",
+      "target": "bronze-tool"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-tally-plate",
+    "on": {
+      "type": "drop",
+      "target": "tally-plate"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-warm-stone",
+    "on": {
+      "type": "drop",
+      "target": "warm-stone"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-the-kept",
+    "on": {
+      "type": "drop",
+      "target": "the-kept"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "everything-you-carried-award",
+    "on": {
+      "type": "enter",
+      "target": "midden"
+    },
+    "once": true,
+    "if": [
+      {
+        "itemAt": {
+          "item": "payroll-tin",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "cut-garnets",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "assay-button",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "foremans-watch",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "silver-flowstone",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "cave-pearls",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "weir-nugget",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "miners-cache",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "bronze-tool",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "tally-plate",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "warm-stone",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "the-kept",
+          "location": "midden"
+        }
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "everything-you-carried"
+      }
+    ]
+  },
+  {
+    "id": "canary-quiet-cathedral",
+    "on": {
+      "type": "enter",
+      "target": "cathedral"
+    },
+    "if": [
+      {
+        "creatureAt": {
+          "creature": "stalker",
+          "location": "cathedral"
+        },
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The canary stops mid-note. The silence it leaves behind has a shape, and the shape is close."
+      }
+    ]
+  },
+  {
+    "id": "canary-quiet-gallery-of-veils",
+    "on": {
+      "type": "enter",
+      "target": "gallery-of-veils"
+    },
+    "if": [
+      {
+        "creatureAt": {
+          "creature": "stalker",
+          "location": "gallery-of-veils"
+        },
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The canary stops mid-note. The silence it leaves behind has a shape, and the shape is close."
+      }
+    ]
+  },
+  {
+    "id": "canary-quiet-river-strand",
+    "on": {
+      "type": "enter",
+      "target": "river-strand"
+    },
+    "if": [
+      {
+        "creatureAt": {
+          "creature": "stalker",
+          "location": "river-strand"
+        },
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The canary stops mid-note. The silence it leaves behind has a shape, and the shape is close."
+      }
+    ]
+  },
+  {
+    "id": "canary-quiet-low-crawl",
+    "on": {
+      "type": "enter",
+      "target": "low-crawl"
+    },
+    "if": [
+      {
+        "creatureAt": {
+          "creature": "stalker",
+          "location": "low-crawl"
+        },
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "The canary stops mid-note. The silence it leaves behind has a shape, and the shape is close."
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-payroll-tin",
+    "on": {
+      "type": "drop",
+      "target": "payroll-tin"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-cut-garnets",
+    "on": {
+      "type": "drop",
+      "target": "cut-garnets"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-assay-button",
+    "on": {
+      "type": "drop",
+      "target": "assay-button"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-foremans-watch",
+    "on": {
+      "type": "drop",
+      "target": "foremans-watch"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-silver-flowstone",
+    "on": {
+      "type": "drop",
+      "target": "silver-flowstone"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-cave-pearls",
+    "on": {
+      "type": "drop",
+      "target": "cave-pearls"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-weir-nugget",
+    "on": {
+      "type": "drop",
+      "target": "weir-nugget"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-miners-cache",
+    "on": {
+      "type": "drop",
+      "target": "miners-cache"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-bronze-tool",
+    "on": {
+      "type": "drop",
+      "target": "bronze-tool"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-tally-plate",
+    "on": {
+      "type": "drop",
+      "target": "tally-plate"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-warm-stone",
+    "on": {
+      "type": "drop",
+      "target": "warm-stone"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-the-kept",
+    "on": {
+      "type": "drop",
+      "target": "the-kept"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "ledger-check-enter",
+    "on": {
+      "type": "enter",
+      "target": "assay-office"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "assay-office"
+            }
+          },
+          {
+            "notFlag": "ledger-complete"
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "setFlag",
+        "flag": "ledger-complete"
+      }
+    ]
+  },
+  {
+    "id": "unhurried-a",
+    "on": {
+      "type": "flagSet",
+      "target": "ledger-complete"
+    },
+    "once": true,
+    "if": [
+      {
+        "deathsAtMost": 0
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "unhurried"
+      }
+    ]
+  },
+  {
+    "id": "nobody-asked-a",
+    "on": {
+      "type": "flagSet",
+      "target": "ledger-complete"
+    },
+    "once": true,
+    "if": [
+      {
+        "hintsAtMost": 0
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "nobody-asked"
+      }
+    ]
+  },
+  {
+    "id": "ending-a",
+    "on": {
+      "type": "flagSet",
+      "target": "ledger-complete"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "printId",
+        "id": "ending-a-epilogue"
+      },
+      {
+        "kind": "award",
+        "achievement": "the-full-ledger"
+      },
+      {
+        "kind": "endGame",
+        "victory": true
+      }
+    ]
+  },
+  {
+    "id": "unhurried-b",
+    "on": {
+      "type": "use",
+      "target": "vault"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "the-vault"
+            }
+          },
+          {
+            "deathsAtMost": 0
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "unhurried"
+      }
+    ]
+  },
+  {
+    "id": "nobody-asked-b",
+    "on": {
+      "type": "use",
+      "target": "vault"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "the-vault"
+            }
+          },
+          {
+            "hintsAtMost": 0
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "nobody-asked"
+      }
+    ]
+  },
+  {
+    "id": "ending-b",
+    "on": {
+      "type": "use",
+      "target": "vault"
+    },
+    "once": true,
+    "if": [
+      {
+        "all": [
+          {
+            "itemAt": {
+              "item": "payroll-tin",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cut-garnets",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "assay-button",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "foremans-watch",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "silver-flowstone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "cave-pearls",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "weir-nugget",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "miners-cache",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "bronze-tool",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "tally-plate",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "warm-stone",
+              "location": "assay-office"
+            }
+          },
+          {
+            "itemAt": {
+              "item": "the-kept",
+              "location": "the-vault"
+            }
+          }
+        ]
+      }
+    ],
+    "do": [
+      {
+        "kind": "printId",
+        "id": "ending-b-epilogue"
+      },
+      {
+        "kind": "award",
+        "achievement": "kept-the-seal"
+      },
+      {
+        "kind": "endGame",
+        "victory": true
+      }
+    ]
+  },
+  {
+    "id": "the-bird-went-too-award",
+    "on": {
+      "type": "enter",
+      "target": "the-vault"
+    },
+    "once": true,
+    "if": [
+      {
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "the-bird-went-too"
+      }
+    ]
+  }
+]
