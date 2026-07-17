@@ -1,7 +1,8 @@
 # Hollowdeep Implementation Plan — Authoring the Adventure
 
-**Status:** READY (2026-07-17) — **blocked on the hints + timers engine work**
-(see Preconditions). Do not `/run-plan` until that lands.
+**Status:** COMPLETE (2026-07-17) — all twelve tasks executed and ticked;
+`npm run gate` green (796 tests); the walkthrough wins 350/350 at five
+pinned seeds. Preconditions were verified satisfied before T1.
 
 Execution plan for [`docs/hollowdeep-plan.md`](hollowdeep-plan.md) (the
 WHAT/WHY); rules live in
@@ -477,7 +478,7 @@ markers inside its own region.
 - [x] T9 — Walkthrough + per-adventure harness (`opus`) — `6de4ec1`
 - [x] T10 — Content integration tests (`sonnet`) — `8dea616`
 - [x] T11 — Dev app loads Hollowdeep (`sonnet`) — `612c110`
-- [ ] T12 — Voice pass, docs, closeout (`opus`)
+- [x] T12 — Voice pass, docs, closeout (`opus`) — `c39e492`
 
 **Done when:** every box is ticked with its commit SHA, `npm run gate` is
 green on `feat/hollowdeep`, the hollowdeep walkthrough reaches 350/350 with
