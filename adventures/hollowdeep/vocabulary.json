@@ -1,0 +1,56 @@
+{
+  "verbs": [
+    {
+      "id": "use",
+      "words": [
+        "use",
+        "pull",
+        "pry",
+        "oil",
+        "fit",
+        "seal",
+        "climb"
+      ],
+      "patterns": [
+        "VN",
+        "VNPN"
+      ]
+    },
+    {
+      "id": "swim",
+      "words": [
+        "swim"
+      ],
+      "patterns": [
+        "V"
+      ]
+    },
+    {
+      "id": "jump",
+      "words": [
+        "jump",
+        "leap"
+      ],
+      "patterns": [
+        "V"
+      ]
+    }
+  ],
+  "noiseWords": [
+    "the",
+    "a",
+    "an",
+    "some",
+    "please"
+  ],
+  "magicWords": [
+    {
+      "word": "kibble",
+      "eventId": "kibble-to-shaft-foot"
+    },
+    {
+      "word": "gunnis",
+      "eventId": "gunnis-to-the-gunnis"
+    }
+  ]
+}

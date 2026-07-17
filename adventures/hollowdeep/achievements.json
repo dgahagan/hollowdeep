@@ -1,0 +1,50 @@
+[
+  {
+    "id": "on-the-books",
+    "name": "On the Books",
+    "description": "[draft] Bank the first treasure at the assay office.",
+    "hidden": false
+  },
+  {
+    "id": "the-full-ledger",
+    "name": "The Full Ledger",
+    "description": "[draft] Bank all twelve treasures.",
+    "hidden": false
+  },
+  {
+    "id": "unhurried",
+    "name": "Unhurried",
+    "description": "[draft] Finish the game without dying once.",
+    "hidden": false
+  },
+  {
+    "id": "nobody-asked",
+    "name": "Nobody Asked",
+    "description": "[draft] Finish the game without taking a single hint.",
+    "hidden": false
+  },
+  {
+    "id": "the-answer",
+    "name": "The Answer",
+    "description": "[draft] Find the gunnis, and the thing nobody asked about.",
+    "hidden": true
+  },
+  {
+    "id": "everything-you-carried",
+    "name": "Everything You Carried",
+    "description": "[draft] Meet the midden after the thief did, and find every treasure it took.",
+    "hidden": false
+  },
+  {
+    "id": "kept-the-seal",
+    "name": "Kept the Seal",
+    "description": "[draft] Finish the game having left the kept thing where it was.",
+    "hidden": true
+  },
+  {
+    "id": "the-bird-went-too",
+    "name": "The Bird Went Too",
+    "description": "[draft] Reach the vault still carrying the canary.",
+    "hidden": true
+  }
+]

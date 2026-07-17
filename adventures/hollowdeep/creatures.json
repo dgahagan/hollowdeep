@@ -1,0 +1,112 @@
+[
+  {
+    "id": "stalker",
+    "names": [
+      "stalker"
+    ],
+    "description": "[draft] Something that walks the cavern on its own schedule, and is not an animal, exactly.",
+    "artId": "stalker",
+    "behavior": "stalker",
+    "spawn": {
+      "locations": [
+        "cathedral",
+        "gallery-of-veils",
+        "river-strand",
+        "low-crawl"
+      ],
+      "if": [
+        {
+          "visited": "cathedral"
+        }
+      ]
+    },
+    "moveEvery": 3,
+    "aggression": 0.3,
+    "wardOff": {
+      "itemIds": [
+        "canary-cage"
+      ]
+    },
+    "deathMessageId": "stalker-death"
+  },
+  {
+    "id": "thief",
+    "names": [
+      "thief"
+    ],
+    "description": "[draft] Something acquisitive that has had ninety years and no competition.",
+    "artId": "thief",
+    "behavior": "thief",
+    "spawn": {
+      "locations": [
+        "midden"
+      ],
+      "if": [
+        {
+          "visited": "breakthrough"
+        }
+      ]
+    },
+    "stealsTreasure": true,
+    "stashLocation": "midden",
+    "stealAfterTurns": 25,
+    "deathMessageId": "thief-robbery"
+  },
+  {
+    "id": "bats",
+    "names": [
+      "bats"
+    ],
+    "description": "[draft] A cloud of bats, disturbed and resettling somewhere just out of sight.",
+    "artId": "bats",
+    "behavior": "static",
+    "spawn": {
+      "locations": [
+        "behind-the-seal"
+      ]
+    }
+  },
+  {
+    "id": "blind-fish",
+    "names": [
+      "blind fish",
+      "fish"
+    ],
+    "description": "[draft] Blind fish, pale in the black water, that stay well clear of the channel.",
+    "artId": "blind-fish",
+    "behavior": "static",
+    "spawn": {
+      "locations": [
+        "black-river"
+      ]
+    }
+  },
+  {
+    "id": "storekeeper",
+    "names": [
+      "storekeeper"
+    ],
+    "description": "[draft] The storekeeper, the only person in Weir's Landing still willing to talk to you.",
+    "artId": "storekeeper",
+    "behavior": "static",
+    "spawn": {
+      "locations": [
+        "general-store"
+      ]
+    }
+  },
+  {
+    "id": "newt",
+    "names": [
+      "newt"
+    ],
+    "description": "[draft] A newt, ordinary in every way that matters, past the breach where nothing else is.",
+    "artId": "newt",
+    "behavior": "static",
+    "spawn": {
+      "locations": [
+        "store-rooms"
+      ]
+    }
+  }
+]

@@ -1,0 +1,1615 @@
+[
+  {
+    "id": "office-door-opened",
+    "on": {
+      "type": "open",
+      "target": "office-door"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The office door gives, and Main Street is behind you now."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "office-door-open"
+      }
+    ]
+  },
+  {
+    "id": "magazine-door-opened",
+    "on": {
+      "type": "open",
+      "target": "magazine-door"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The magazine door gives, and the powder is yours to reach."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "magazine-door-open"
+      }
+    ]
+  },
+  {
+    "id": "pump-fix",
+    "on": {
+      "type": "use",
+      "target": "pump"
+    },
+    "once": true,
+    "if": [
+      {
+        "hasItem": "pump-handle"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The handle seats, and the pump remembers how to be a pump."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "pump-fixed"
+      }
+    ]
+  },
+  {
+    "id": "pump-drain",
+    "on": {
+      "type": "use",
+      "target": "pump"
+    },
+    "once": true,
+    "if": [
+      {
+        "flag": "pump-fixed"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The pump takes hold and the black water below starts to give ground."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "pump-drained"
+      }
+    ]
+  },
+  {
+    "id": "keg-death",
+    "on": {
+      "type": "use",
+      "target": "fuse-coil"
+    },
+    "if": [
+      {
+        "notFlag": "powder-placed"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "keg-death"
+      }
+    ]
+  },
+  {
+    "id": "place-powder",
+    "on": {
+      "type": "use",
+      "target": "powder-keg"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "breach-wall"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The keg settles into the breach, and there is no taking that decision back."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "powder-placed"
+      },
+      {
+        "kind": "moveItem",
+        "item": "powder-keg",
+        "to": "nowhere"
+      }
+    ]
+  },
+  {
+    "id": "attach-fuse",
+    "on": {
+      "type": "use",
+      "target": "fuse-coil"
+    },
+    "once": true,
+    "if": [
+      {
+        "flag": "powder-placed"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The fuse runs true from the keg to somewhere you would rather be standing."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "fused"
+      }
+    ]
+  },
+  {
+    "id": "detonate",
+    "on": {
+      "type": "use",
+      "target": "fuse-coil"
+    },
+    "once": true,
+    "if": [
+      {
+        "flag": "fused"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The spark walks off into the dark, and you walk the other way, quickly."
+      },
+      {
+        "kind": "teleport",
+        "to": "twisty-5"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "breach-blasted"
+      },
+      {
+        "kind": "revealExit",
+        "location": "breach-wall",
+        "dir": "e"
+      }
+    ]
+  },
+  {
+    "id": "mechanism-fit",
+    "on": {
+      "type": "use",
+      "target": "mechanism"
+    },
+    "once": true,
+    "if": [
+      {
+        "hasItem": "bronze-tool"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] It was not made for your hand. Your hand makes do."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "mechanism-turned"
+      }
+    ]
+  },
+  {
+    "id": "kibble-to-shaft-foot",
+    "on": {
+      "type": "word",
+      "word": "kibble"
+    },
+    "if": [
+      {
+        "atLocation": "shaft-head"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The word lands somewhere below, and the hill obliges."
+      },
+      {
+        "kind": "teleport",
+        "to": "shaft-foot"
+      }
+    ]
+  },
+  {
+    "id": "kibble-to-shaft-head",
+    "on": {
+      "type": "word",
+      "word": "kibble"
+    },
+    "if": [
+      {
+        "atLocation": "shaft-foot"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The word lands somewhere above, and the hill obliges."
+      },
+      {
+        "kind": "teleport",
+        "to": "shaft-head"
+      }
+    ]
+  },
+  {
+    "id": "kibble-elsewhere",
+    "on": {
+      "type": "word",
+      "word": "kibble"
+    },
+    "if": [
+      {
+        "atLocation": "coach-road"
+      },
+      {
+        "atLocation": "main-street"
+      },
+      {
+        "atLocation": "chapel"
+      },
+      {
+        "atLocation": "general-store"
+      },
+      {
+        "atLocation": "assay-office"
+      },
+      {
+        "atLocation": "tailings-path"
+      },
+      {
+        "atLocation": "adit-mouth"
+      },
+      {
+        "atLocation": "behind-the-seal"
+      },
+      {
+        "atLocation": "adit-drift"
+      },
+      {
+        "atLocation": "lamp-room"
+      },
+      {
+        "atLocation": "stables"
+      },
+      {
+        "atLocation": "junction"
+      },
+      {
+        "atLocation": "timekeepers-nook"
+      },
+      {
+        "atLocation": "foremans-office"
+      },
+      {
+        "atLocation": "pump-room"
+      },
+      {
+        "atLocation": "ore-chute"
+      },
+      {
+        "atLocation": "long-drift"
+      },
+      {
+        "atLocation": "magazine"
+      },
+      {
+        "atLocation": "stull-gallery"
+      },
+      {
+        "atLocation": "broken-drift"
+      },
+      {
+        "atLocation": "winze-ladderway"
+      },
+      {
+        "atLocation": "the-gunnis"
+      },
+      {
+        "atLocation": "breakthrough"
+      },
+      {
+        "atLocation": "low-crawl"
+      },
+      {
+        "atLocation": "cathedral"
+      },
+      {
+        "atLocation": "gallery-of-veils"
+      },
+      {
+        "atLocation": "gour-pools"
+      },
+      {
+        "atLocation": "black-river"
+      },
+      {
+        "atLocation": "river-strand"
+      },
+      {
+        "atLocation": "midden"
+      },
+      {
+        "atLocation": "breach-wall"
+      },
+      {
+        "atLocation": "twisty-1"
+      },
+      {
+        "atLocation": "twisty-2"
+      },
+      {
+        "atLocation": "twisty-3"
+      },
+      {
+        "atLocation": "twisty-4"
+      },
+      {
+        "atLocation": "twisty-5"
+      },
+      {
+        "atLocation": "twisty-6"
+      },
+      {
+        "atLocation": "beyond-the-breach"
+      },
+      {
+        "atLocation": "dressed-gallery"
+      },
+      {
+        "atLocation": "toolroom"
+      },
+      {
+        "atLocation": "store-rooms"
+      },
+      {
+        "atLocation": "closed-row"
+      },
+      {
+        "atLocation": "tally-chamber"
+      },
+      {
+        "atLocation": "worked-face"
+      },
+      {
+        "atLocation": "long-stair"
+      },
+      {
+        "atLocation": "undercroft"
+      },
+      {
+        "atLocation": "cistern"
+      },
+      {
+        "atLocation": "warm-gallery"
+      },
+      {
+        "atLocation": "deep-cut"
+      },
+      {
+        "atLocation": "quiet-gallery"
+      },
+      {
+        "atLocation": "antechamber"
+      },
+      {
+        "atLocation": "seal-gate"
+      },
+      {
+        "atLocation": "keepers-stair"
+      },
+      {
+        "atLocation": "keepers-walk"
+      },
+      {
+        "atLocation": "watch-room"
+      },
+      {
+        "atLocation": "the-vault"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The word wants machinery, and there is none of that here."
+      }
+    ]
+  },
+  {
+    "id": "gunnis-to-the-gunnis",
+    "on": {
+      "type": "word",
+      "word": "gunnis"
+    },
+    "if": [
+      {
+        "atLocation": "broken-drift"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The word opens a way that was always there, if you knew to ask."
+      },
+      {
+        "kind": "teleport",
+        "to": "the-gunnis"
+      },
+      {
+        "kind": "setFlag",
+        "flag": "gunnis-known"
+      },
+      {
+        "kind": "revealExit",
+        "location": "tailings-path",
+        "dir": "nw"
+      },
+      {
+        "kind": "revealExit",
+        "location": "the-gunnis",
+        "dir": "down"
+      }
+    ]
+  },
+  {
+    "id": "gunnis-to-broken-drift",
+    "on": {
+      "type": "word",
+      "word": "gunnis"
+    },
+    "if": [
+      {
+        "atLocation": "the-gunnis"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The word closes the distance the other way."
+      },
+      {
+        "kind": "teleport",
+        "to": "broken-drift"
+      }
+    ]
+  },
+  {
+    "id": "search-bench",
+    "on": {
+      "type": "search",
+      "target": "assay-bench"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] A bead of gold has rolled into the seam where the bench meets the wall."
+      },
+      {
+        "kind": "moveItem",
+        "item": "assay-button",
+        "to": "assay-office"
+      }
+    ]
+  },
+  {
+    "id": "search-foreman",
+    "on": {
+      "type": "search",
+      "target": "foreman"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] His watch, stopped, and a book of counts, are where he kept them."
+      },
+      {
+        "kind": "moveItem",
+        "item": "foremans-watch",
+        "to": "broken-drift"
+      },
+      {
+        "kind": "moveItem",
+        "item": "tally-book",
+        "to": "broken-drift"
+      }
+    ]
+  },
+  {
+    "id": "search-foremans-desk",
+    "on": {
+      "type": "search",
+      "target": "foremans-desk"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] A key, small and iron, is pushed to the back of a drawer."
+      },
+      {
+        "kind": "moveItem",
+        "item": "key-magazine",
+        "to": "foremans-office"
+      }
+    ]
+  },
+  {
+    "id": "search-stacks",
+    "on": {
+      "type": "search",
+      "target": "stacks"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] One plate, near the bottom, is cut with marks that are still being added to."
+      },
+      {
+        "kind": "moveItem",
+        "item": "tally-plate",
+        "to": "tally-chamber"
+      }
+    ]
+  },
+  {
+    "id": "pull-stull",
+    "on": {
+      "type": "use",
+      "target": "stull"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The stull comes free, and the roof clears its throat."
+      },
+      {
+        "kind": "moveItem",
+        "item": "cut-garnets",
+        "to": "stull-gallery"
+      },
+      {
+        "kind": "startTimer",
+        "timer": "roof-fall",
+        "turns": 6
+      }
+    ]
+  },
+  {
+    "id": "roof-fall-death",
+    "on": {
+      "type": "timerExpired",
+      "target": "roof-fall"
+    },
+    "if": [
+      {
+        "atLocation": "stull-gallery"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "roof-fall-death"
+      }
+    ]
+  },
+  {
+    "id": "roof-fall-escaped",
+    "on": {
+      "type": "timerExpired",
+      "target": "roof-fall"
+    },
+    "if": [
+      {
+        "atLocation": "coach-road"
+      },
+      {
+        "atLocation": "main-street"
+      },
+      {
+        "atLocation": "chapel"
+      },
+      {
+        "atLocation": "general-store"
+      },
+      {
+        "atLocation": "assay-office"
+      },
+      {
+        "atLocation": "tailings-path"
+      },
+      {
+        "atLocation": "adit-mouth"
+      },
+      {
+        "atLocation": "behind-the-seal"
+      },
+      {
+        "atLocation": "adit-drift"
+      },
+      {
+        "atLocation": "lamp-room"
+      },
+      {
+        "atLocation": "stables"
+      },
+      {
+        "atLocation": "junction"
+      },
+      {
+        "atLocation": "timekeepers-nook"
+      },
+      {
+        "atLocation": "foremans-office"
+      },
+      {
+        "atLocation": "shaft-head"
+      },
+      {
+        "atLocation": "pump-room"
+      },
+      {
+        "atLocation": "ore-chute"
+      },
+      {
+        "atLocation": "long-drift"
+      },
+      {
+        "atLocation": "magazine"
+      },
+      {
+        "atLocation": "broken-drift"
+      },
+      {
+        "atLocation": "winze-ladderway"
+      },
+      {
+        "atLocation": "the-gunnis"
+      },
+      {
+        "atLocation": "shaft-foot"
+      },
+      {
+        "atLocation": "breakthrough"
+      },
+      {
+        "atLocation": "low-crawl"
+      },
+      {
+        "atLocation": "cathedral"
+      },
+      {
+        "atLocation": "gallery-of-veils"
+      },
+      {
+        "atLocation": "gour-pools"
+      },
+      {
+        "atLocation": "black-river"
+      },
+      {
+        "atLocation": "river-strand"
+      },
+      {
+        "atLocation": "midden"
+      },
+      {
+        "atLocation": "breach-wall"
+      },
+      {
+        "atLocation": "twisty-1"
+      },
+      {
+        "atLocation": "twisty-2"
+      },
+      {
+        "atLocation": "twisty-3"
+      },
+      {
+        "atLocation": "twisty-4"
+      },
+      {
+        "atLocation": "twisty-5"
+      },
+      {
+        "atLocation": "twisty-6"
+      },
+      {
+        "atLocation": "beyond-the-breach"
+      },
+      {
+        "atLocation": "dressed-gallery"
+      },
+      {
+        "atLocation": "toolroom"
+      },
+      {
+        "atLocation": "store-rooms"
+      },
+      {
+        "atLocation": "closed-row"
+      },
+      {
+        "atLocation": "tally-chamber"
+      },
+      {
+        "atLocation": "worked-face"
+      },
+      {
+        "atLocation": "long-stair"
+      },
+      {
+        "atLocation": "undercroft"
+      },
+      {
+        "atLocation": "cistern"
+      },
+      {
+        "atLocation": "warm-gallery"
+      },
+      {
+        "atLocation": "deep-cut"
+      },
+      {
+        "atLocation": "quiet-gallery"
+      },
+      {
+        "atLocation": "antechamber"
+      },
+      {
+        "atLocation": "seal-gate"
+      },
+      {
+        "atLocation": "keepers-stair"
+      },
+      {
+        "atLocation": "keepers-walk"
+      },
+      {
+        "atLocation": "watch-room"
+      },
+      {
+        "atLocation": "the-vault"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] Somewhere behind you, the mountain sits down."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "roof-fallen"
+      },
+      {
+        "kind": "moveItem",
+        "item": "rubble",
+        "to": "stull-gallery"
+      },
+      {
+        "kind": "moveItem",
+        "item": "cut-garnets",
+        "to": "nowhere"
+      }
+    ]
+  },
+  {
+    "id": "search-rubble",
+    "on": {
+      "type": "search",
+      "target": "rubble"
+    },
+    "once": true,
+    "if": [
+      {
+        "flag": "roof-fallen"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The garnets are still in there, and the rubble gives them back."
+      },
+      {
+        "kind": "moveItem",
+        "item": "cut-garnets",
+        "to": "stull-gallery"
+      }
+    ]
+  },
+  {
+    "id": "take-pearls",
+    "on": {
+      "type": "take",
+      "target": "cave-pearls"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The rim gives, and somewhere below, water starts to argue."
+      },
+      {
+        "kind": "startTimer",
+        "timer": "gour-flood",
+        "turns": 5
+      }
+    ]
+  },
+  {
+    "id": "gour-flood-death",
+    "on": {
+      "type": "timerExpired",
+      "target": "gour-flood"
+    },
+    "if": [
+      {
+        "atLocation": "gour-pools"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "gour-flood-death"
+      }
+    ]
+  },
+  {
+    "id": "gour-flood-safe",
+    "on": {
+      "type": "timerExpired",
+      "target": "gour-flood"
+    },
+    "if": [
+      {
+        "atLocation": "coach-road"
+      },
+      {
+        "atLocation": "main-street"
+      },
+      {
+        "atLocation": "chapel"
+      },
+      {
+        "atLocation": "general-store"
+      },
+      {
+        "atLocation": "assay-office"
+      },
+      {
+        "atLocation": "tailings-path"
+      },
+      {
+        "atLocation": "adit-mouth"
+      },
+      {
+        "atLocation": "behind-the-seal"
+      },
+      {
+        "atLocation": "adit-drift"
+      },
+      {
+        "atLocation": "lamp-room"
+      },
+      {
+        "atLocation": "stables"
+      },
+      {
+        "atLocation": "junction"
+      },
+      {
+        "atLocation": "timekeepers-nook"
+      },
+      {
+        "atLocation": "foremans-office"
+      },
+      {
+        "atLocation": "shaft-head"
+      },
+      {
+        "atLocation": "pump-room"
+      },
+      {
+        "atLocation": "ore-chute"
+      },
+      {
+        "atLocation": "long-drift"
+      },
+      {
+        "atLocation": "magazine"
+      },
+      {
+        "atLocation": "stull-gallery"
+      },
+      {
+        "atLocation": "broken-drift"
+      },
+      {
+        "atLocation": "winze-ladderway"
+      },
+      {
+        "atLocation": "the-gunnis"
+      },
+      {
+        "atLocation": "shaft-foot"
+      },
+      {
+        "atLocation": "breakthrough"
+      },
+      {
+        "atLocation": "low-crawl"
+      },
+      {
+        "atLocation": "cathedral"
+      },
+      {
+        "atLocation": "gallery-of-veils"
+      },
+      {
+        "atLocation": "black-river"
+      },
+      {
+        "atLocation": "river-strand"
+      },
+      {
+        "atLocation": "midden"
+      },
+      {
+        "atLocation": "breach-wall"
+      },
+      {
+        "atLocation": "twisty-1"
+      },
+      {
+        "atLocation": "twisty-2"
+      },
+      {
+        "atLocation": "twisty-3"
+      },
+      {
+        "atLocation": "twisty-4"
+      },
+      {
+        "atLocation": "twisty-5"
+      },
+      {
+        "atLocation": "twisty-6"
+      },
+      {
+        "atLocation": "beyond-the-breach"
+      },
+      {
+        "atLocation": "dressed-gallery"
+      },
+      {
+        "atLocation": "toolroom"
+      },
+      {
+        "atLocation": "store-rooms"
+      },
+      {
+        "atLocation": "closed-row"
+      },
+      {
+        "atLocation": "tally-chamber"
+      },
+      {
+        "atLocation": "worked-face"
+      },
+      {
+        "atLocation": "long-stair"
+      },
+      {
+        "atLocation": "undercroft"
+      },
+      {
+        "atLocation": "cistern"
+      },
+      {
+        "atLocation": "warm-gallery"
+      },
+      {
+        "atLocation": "deep-cut"
+      },
+      {
+        "atLocation": "quiet-gallery"
+      },
+      {
+        "atLocation": "antechamber"
+      },
+      {
+        "atLocation": "seal-gate"
+      },
+      {
+        "atLocation": "keepers-stair"
+      },
+      {
+        "atLocation": "keepers-walk"
+      },
+      {
+        "atLocation": "watch-room"
+      },
+      {
+        "atLocation": "the-vault"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The pool refills behind you, and settles, and the argument is over."
+      }
+    ]
+  },
+  {
+    "id": "pry-flowstone",
+    "on": {
+      "type": "use",
+      "target": "flowstone-seam"
+    },
+    "once": true,
+    "if": [
+      {
+        "hasItem": "steel-gad"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The sheet comes away with a crack that goes off like a shot."
+      },
+      {
+        "kind": "moveItem",
+        "item": "silver-flowstone",
+        "to": "gallery-of-veils"
+      },
+      {
+        "kind": "activateCreature",
+        "creature": "stalker"
+      }
+    ]
+  },
+  {
+    "id": "pry-nugget",
+    "on": {
+      "type": "use",
+      "target": "pothole"
+    },
+    "once": true,
+    "if": [
+      {
+        "hasItem": "steel-gad"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The gad finds purchase, and the nugget comes free of the rock."
+      },
+      {
+        "kind": "moveItem",
+        "item": "weir-nugget",
+        "to": "river-strand"
+      }
+    ]
+  },
+  {
+    "id": "chute-warn",
+    "on": {
+      "type": "use",
+      "target": "chute-throat"
+    },
+    "once": true,
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The throat drops away into nothing you can see the bottom of. This is not a climb; think again."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "chute-warned"
+      }
+    ]
+  },
+  {
+    "id": "chute-death",
+    "on": {
+      "type": "use",
+      "target": "chute-throat"
+    },
+    "if": [
+      {
+        "flag": "chute-warned"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "chute-death"
+      }
+    ]
+  },
+  {
+    "id": "swim-warn",
+    "on": {
+      "type": "verb",
+      "target": "swim"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "black-river"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The blind fish stay out of the channel, and that is not for no reason."
+      },
+      {
+        "kind": "setFlag",
+        "flag": "swim-warned"
+      }
+    ]
+  },
+  {
+    "id": "swim-death",
+    "on": {
+      "type": "verb",
+      "target": "swim"
+    },
+    "if": [
+      {
+        "atLocation": "black-river",
+        "flag": "swim-warned"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "swim-death"
+      }
+    ]
+  },
+  {
+    "id": "jump-death",
+    "on": {
+      "type": "verb",
+      "target": "jump"
+    },
+    "if": [
+      {
+        "atLocation": "long-stair"
+      }
+    ],
+    "do": [
+      {
+        "kind": "die",
+        "messageId": "jump-death"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-payroll-tin",
+    "on": {
+      "type": "drop",
+      "target": "payroll-tin"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-cut-garnets",
+    "on": {
+      "type": "drop",
+      "target": "cut-garnets"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-assay-button",
+    "on": {
+      "type": "drop",
+      "target": "assay-button"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-foremans-watch",
+    "on": {
+      "type": "drop",
+      "target": "foremans-watch"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-silver-flowstone",
+    "on": {
+      "type": "drop",
+      "target": "silver-flowstone"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-cave-pearls",
+    "on": {
+      "type": "drop",
+      "target": "cave-pearls"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-weir-nugget",
+    "on": {
+      "type": "drop",
+      "target": "weir-nugget"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-miners-cache",
+    "on": {
+      "type": "drop",
+      "target": "miners-cache"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-bronze-tool",
+    "on": {
+      "type": "drop",
+      "target": "bronze-tool"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-tally-plate",
+    "on": {
+      "type": "drop",
+      "target": "tally-plate"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-warm-stone",
+    "on": {
+      "type": "drop",
+      "target": "warm-stone"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "on-the-books-the-kept",
+    "on": {
+      "type": "drop",
+      "target": "the-kept"
+    },
+    "once": true,
+    "if": [
+      {
+        "atLocation": "assay-office"
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "on-the-books"
+      }
+    ]
+  },
+  {
+    "id": "everything-you-carried-award",
+    "on": {
+      "type": "enter",
+      "target": "midden"
+    },
+    "once": true,
+    "if": [
+      {
+        "itemAt": {
+          "item": "payroll-tin",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "cut-garnets",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "assay-button",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "foremans-watch",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "silver-flowstone",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "cave-pearls",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "weir-nugget",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "miners-cache",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "bronze-tool",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "tally-plate",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "warm-stone",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "the-kept",
+          "location": "midden"
+        }
+      }
+    ],
+    "do": [
+      {
+        "kind": "award",
+        "achievement": "everything-you-carried"
+      }
+    ]
+  },
+  {
+    "id": "canary-quiet-cathedral",
+    "on": {
+      "type": "enter",
+      "target": "cathedral"
+    },
+    "if": [
+      {
+        "creatureAt": {
+          "creature": "stalker",
+          "location": "cathedral"
+        },
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The canary stops singing."
+      }
+    ]
+  },
+  {
+    "id": "canary-quiet-gallery-of-veils",
+    "on": {
+      "type": "enter",
+      "target": "gallery-of-veils"
+    },
+    "if": [
+      {
+        "creatureAt": {
+          "creature": "stalker",
+          "location": "gallery-of-veils"
+        },
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The canary stops singing."
+      }
+    ]
+  },
+  {
+    "id": "canary-quiet-river-strand",
+    "on": {
+      "type": "enter",
+      "target": "river-strand"
+    },
+    "if": [
+      {
+        "creatureAt": {
+          "creature": "stalker",
+          "location": "river-strand"
+        },
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The canary stops singing."
+      }
+    ]
+  },
+  {
+    "id": "canary-quiet-low-crawl",
+    "on": {
+      "type": "enter",
+      "target": "low-crawl"
+    },
+    "if": [
+      {
+        "creatureAt": {
+          "creature": "stalker",
+          "location": "low-crawl"
+        },
+        "hasItem": "canary-cage"
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "[draft] The canary stops singing."
+      }
+    ]
+  }
+]

@@ -1,0 +1,15 @@
+{
+  "steps": [
+    {
+      "cmd": "e"
+    },
+    {
+      "cmd": "w"
+    },
+    {
+      "cmd": "look"
+    }
+  ],
+  "expectedScore": 350,
+  "expectedAchievements": []
+}

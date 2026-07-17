@@ -1,0 +1,15 @@
+{
+  "lamp-low": "[draft] The lamp dims for a moment before steadying. There is less oil in it than there was.",
+  "lamp-dead": "[draft] The lamp gutters and goes out. The dark has been waiting.",
+  "dark-warning": "[draft] It is pitch dark, and the cave is in no hurry to help you.",
+  "dark-death": "[draft] You take one step too many in the dark, and the dark does not step aside.",
+  "no-hints": "[draft] Nothing comes to mind. The cave assumes you know what you are doing.",
+  "stalker-death": "[draft] The stalker decides the question of who belongs down here, and settles it.",
+  "thief-robbery": "[draft] Something goes past you at speed. Your pockets are lighter than they were.",
+  "roof-fall-death": "[draft] The roof finishes what the stull started, and it is not interested in your opinion.",
+  "gour-flood-death": "[draft] The pool stops arguing and simply takes the room, and you with it.",
+  "chute-death": "[draft] The chute takes the one more careless thing it has been waiting ninety years for.",
+  "swim-death": "[draft] The channel takes you the way it has taken everything else that ignored the fish.",
+  "jump-death": "[draft] The gap was cut for longer legs, and it knew that before you jumped.",
+  "keg-death": "[draft] The keg goes up before the fuse ever gets the chance to."
+}

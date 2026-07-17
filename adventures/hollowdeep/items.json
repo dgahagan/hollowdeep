@@ -1,0 +1,591 @@
+[
+  {
+    "id": "payroll-tin",
+    "names": [
+      "payroll tin",
+      "tin"
+    ],
+    "brief": "[draft] wages nobody collected, sitting where they were left",
+    "description": "[draft] a tin box of wages for a shift that never clocked out",
+    "artId": "payroll-tin",
+    "portable": true,
+    "initialLocation": "timekeepers-nook",
+    "adjectives": [
+      "payroll"
+    ],
+    "treasure": {
+      "carryPoints": 5,
+      "depositPoints": 10
+    }
+  },
+  {
+    "id": "cut-garnets",
+    "names": [
+      "cut garnets",
+      "garnets",
+      "pocket of garnets"
+    ],
+    "brief": "[draft] a pocket of garnets, freed from the rock",
+    "description": "[draft] small dark stones, cut and pocketed by somebody in a hurry",
+    "artId": "cut-garnets",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "cut"
+    ],
+    "treasure": {
+      "carryPoints": 5,
+      "depositPoints": 10
+    }
+  },
+  {
+    "id": "assay-button",
+    "names": [
+      "assayer's button",
+      "button"
+    ],
+    "brief": "[draft] a bead of gold, exactly where the assay left it",
+    "description": "[draft] a bead of gold, cast off by the assay office's own process",
+    "artId": "assay-button",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "gold",
+      "assay"
+    ],
+    "treasure": {
+      "carryPoints": 5,
+      "depositPoints": 10
+    }
+  },
+  {
+    "id": "foremans-watch",
+    "names": [
+      "foreman's watch",
+      "watch"
+    ],
+    "brief": "[draft] a stopped watch, on the foreman",
+    "description": "[draft] a pocket watch, stopped at the hour it happened",
+    "artId": "foremans-watch",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "foreman's",
+      "stopped"
+    ],
+    "treasure": {
+      "carryPoints": 5,
+      "depositPoints": 10
+    }
+  },
+  {
+    "id": "silver-flowstone",
+    "names": [
+      "silver flowstone",
+      "flowstone"
+    ],
+    "brief": "[draft] a sheet of native silver, freed from the wall",
+    "description": "[draft] a sheet of native silver, heavier than a sheet has any right to be",
+    "artId": "silver-flowstone",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "silver"
+    ],
+    "treasure": {
+      "carryPoints": 10,
+      "depositPoints": 15
+    }
+  },
+  {
+    "id": "cave-pearls",
+    "names": [
+      "cave pearls",
+      "pearls"
+    ],
+    "brief": "[draft] a nest of pearls, sitting in the pool",
+    "description": "[draft] small stone pearls, rolled round by water with nowhere better to be",
+    "artId": "cave-pearls",
+    "portable": true,
+    "initialLocation": "gour-pools",
+    "adjectives": [
+      "cave"
+    ],
+    "treasure": {
+      "carryPoints": 10,
+      "depositPoints": 15
+    }
+  },
+  {
+    "id": "weir-nugget",
+    "names": [
+      "Weir nugget",
+      "nugget"
+    ],
+    "brief": "[draft] the nugget the town is named for, wedged in the rock",
+    "description": "[draft] a nugget the size of a fist, and the reason the town has a name",
+    "artId": "weir-nugget",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "weir"
+    ],
+    "treasure": {
+      "carryPoints": 10,
+      "depositPoints": 15
+    }
+  },
+  {
+    "id": "miners-cache",
+    "names": [
+      "miner's cache",
+      "cache"
+    ],
+    "brief": "[draft] a cache someone hid and never came back for",
+    "description": "[draft] a small hoard, packed by somebody who meant to return for it",
+    "artId": "miners-cache",
+    "portable": true,
+    "initialLocation": "twisty-6",
+    "adjectives": [
+      "miner's"
+    ],
+    "treasure": {
+      "carryPoints": 10,
+      "depositPoints": 15
+    }
+  },
+  {
+    "id": "bronze-tool",
+    "names": [
+      "bronze tool",
+      "tool"
+    ],
+    "brief": "[draft] a bronze tool, sitting in its rack",
+    "description": "[draft] a bronze tool, worn smooth by a grip that was not shaped like yours",
+    "artId": "bronze-tool",
+    "portable": true,
+    "initialLocation": "toolroom",
+    "adjectives": [
+      "bronze"
+    ],
+    "treasure": {
+      "carryPoints": 15,
+      "depositPoints": 25
+    }
+  },
+  {
+    "id": "tally-plate",
+    "names": [
+      "tally plate",
+      "plate",
+      "tally"
+    ],
+    "brief": "[draft] a plate cut with marks, counting something",
+    "description": "[draft] a plate of marks, cut deep, counting something the narrator will not name",
+    "artId": "tally-plate",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "tally"
+    ],
+    "treasure": {
+      "carryPoints": 15,
+      "depositPoints": 25
+    }
+  },
+  {
+    "id": "warm-stone",
+    "names": [
+      "warm stone",
+      "stone"
+    ],
+    "brief": "[draft] a stone that has no business being warm",
+    "description": "[draft] a stone, warm to the hand, for no reason anyone has found",
+    "artId": "warm-stone",
+    "portable": true,
+    "initialLocation": "warm-gallery",
+    "adjectives": [
+      "warm"
+    ],
+    "treasure": {
+      "carryPoints": 15,
+      "depositPoints": 25
+    }
+  },
+  {
+    "id": "the-kept",
+    "names": [
+      "kept thing",
+      "thing"
+    ],
+    "brief": "[draft] the thing the seal was built for",
+    "description": "[draft] the thing the seal was built to keep, and now it is in your hands",
+    "artId": "the-kept",
+    "portable": true,
+    "initialLocation": "the-vault",
+    "adjectives": [
+      "kept"
+    ],
+    "treasure": {
+      "carryPoints": 15,
+      "depositPoints": 25
+    }
+  },
+  {
+    "id": "brass-lantern",
+    "names": [
+      "brass lantern",
+      "lantern",
+      "lamp"
+    ],
+    "brief": "[draft] your brass lantern, ready to hand",
+    "description": "[draft] a brass lantern, dented, honest, and the only light you brought",
+    "artId": "brass-lantern",
+    "portable": true,
+    "initialLocation": "inventory",
+    "adjectives": [
+      "brass"
+    ],
+    "lightSource": true
+  },
+  {
+    "id": "oil-flask",
+    "names": [
+      "oil flask",
+      "flask",
+      "oil"
+    ],
+    "brief": "[draft] an oil flask, left for whoever needs it",
+    "description": "[draft] a flask of lamp oil, the game's one margin against the dark",
+    "artId": "oil-flask",
+    "portable": true,
+    "initialLocation": "lamp-room",
+    "adjectives": [
+      "oil"
+    ]
+  },
+  {
+    "id": "canary-cage",
+    "names": [
+      "canary cage",
+      "canary",
+      "cage"
+    ],
+    "brief": "[draft] a caged canary, had on credit",
+    "description": "[draft] a canary in a cage, mining-true, and a hand you will wish you had free",
+    "artId": "canary-cage",
+    "portable": true,
+    "initialLocation": "general-store",
+    "adjectives": [
+      "caged"
+    ]
+  },
+  {
+    "id": "key-office",
+    "names": [
+      "key"
+    ],
+    "brief": "[draft] a key, hung beneath the board",
+    "description": "[draft] a small brass key for the assay office door",
+    "artId": "key-office",
+    "portable": true,
+    "initialLocation": "chapel",
+    "adjectives": [
+      "office"
+    ]
+  },
+  {
+    "id": "key-magazine",
+    "names": [
+      "key"
+    ],
+    "brief": "[draft] a key, turned up where it was hidden",
+    "description": "[draft] a small iron key for the magazine door",
+    "artId": "key-magazine",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "magazine"
+    ]
+  },
+  {
+    "id": "steel-gad",
+    "names": [
+      "steel gad",
+      "gad"
+    ],
+    "brief": "[draft] a steel gad, left with the tack",
+    "description": "[draft] a steel gad, made for prying what does not want to move",
+    "artId": "steel-gad",
+    "portable": true,
+    "initialLocation": "stables",
+    "adjectives": [
+      "steel"
+    ]
+  },
+  {
+    "id": "pump-handle",
+    "names": [
+      "pump handle",
+      "handle"
+    ],
+    "brief": "[draft] a pump handle, missing its pump",
+    "description": "[draft] a cast handle, sized for the pump in the room to the north",
+    "artId": "pump-handle",
+    "portable": true,
+    "initialLocation": "stables",
+    "adjectives": [
+      "pump"
+    ]
+  },
+  {
+    "id": "powder-keg",
+    "names": [
+      "powder keg",
+      "keg"
+    ],
+    "brief": "[draft] a keg of powder, labelled in someone's careful hand",
+    "description": "[draft] a keg of blasting powder, labelled NOT WITHOUT A FUSE in a careful hand",
+    "artId": "powder-keg",
+    "portable": true,
+    "initialLocation": "magazine",
+    "adjectives": [
+      "powder"
+    ],
+    "readText": "[draft] NOT WITHOUT A FUSE, DAVEY."
+  },
+  {
+    "id": "fuse-coil",
+    "names": [
+      "fuse coil",
+      "fuse",
+      "coil"
+    ],
+    "brief": "[draft] a coil of fuse, beside the keg",
+    "description": "[draft] a coil of slow fuse, exactly as long as somebody thought it should be",
+    "artId": "fuse-coil",
+    "portable": true,
+    "initialLocation": "magazine",
+    "adjectives": [
+      "fuse"
+    ]
+  },
+  {
+    "id": "tally-book",
+    "names": [
+      "tally book",
+      "book"
+    ],
+    "brief": "[draft] the foreman's tally book",
+    "description": "[draft] a book of counts, kept in a hand that stopped keeping it",
+    "artId": "tally-book",
+    "portable": true,
+    "initialLocation": "nowhere",
+    "adjectives": [
+      "tally"
+    ],
+    "readText": "[draft] Among the counts, one word is written twice and underlined: GUNNIS."
+  },
+  {
+    "id": "assay-ledger",
+    "names": [
+      "assay ledger",
+      "ledger"
+    ],
+    "brief": "[draft] the assay office's ledger",
+    "description": "[draft] a ledger of everything the office ever weighed, and one thing it never did",
+    "artId": "assay-ledger",
+    "portable": true,
+    "initialLocation": "foremans-office",
+    "adjectives": [
+      "assay"
+    ]
+  },
+  {
+    "id": "office-door",
+    "names": [
+      "door"
+    ],
+    "brief": "[draft] the assay office door, shut fast",
+    "description": "[draft] a door with a good lock and a keyhole that has seen better decades",
+    "artId": "office-door",
+    "portable": false,
+    "initialLocation": "main-street",
+    "adjectives": [
+      "office",
+      "assay"
+    ],
+    "container": {
+      "open": false,
+      "locked": true,
+      "keyId": "key-office",
+      "capacity": 0
+    }
+  },
+  {
+    "id": "magazine-door",
+    "names": [
+      "door"
+    ],
+    "brief": "[draft] the magazine door, shut fast",
+    "description": "[draft] a heavy door, locked the way a powder magazine's door ought to be",
+    "artId": "magazine-door",
+    "portable": false,
+    "initialLocation": "long-drift",
+    "adjectives": [
+      "magazine",
+      "powder"
+    ],
+    "container": {
+      "open": false,
+      "locked": true,
+      "keyId": "key-magazine",
+      "capacity": 0
+    }
+  },
+  {
+    "id": "pump",
+    "names": [
+      "pump",
+      "great pump"
+    ],
+    "brief": "[draft] the great pump, seized and silent",
+    "description": "[draft] a pump the size of a room, seized, and missing its handle",
+    "artId": "pump",
+    "portable": false,
+    "initialLocation": "pump-room"
+  },
+  {
+    "id": "stull",
+    "names": [
+      "stull"
+    ],
+    "brief": "[draft] a stull you could pull, if you were willing",
+    "description": "[draft] a single stout timber, set to hold back exactly what you would expect",
+    "artId": "stull",
+    "portable": false,
+    "initialLocation": "stull-gallery"
+  },
+  {
+    "id": "rubble",
+    "names": [
+      "rubble"
+    ],
+    "brief": "[draft] a fall of rubble, new and unsettled",
+    "description": "[draft] loose rock, freshly come down, and not yet decided about staying that way",
+    "artId": "rubble",
+    "portable": false,
+    "initialLocation": "nowhere"
+  },
+  {
+    "id": "foreman",
+    "names": [
+      "foreman"
+    ],
+    "brief": "[draft] the foreman, still at his post",
+    "description": "[draft] a man who did not leave when the others did, and has not moved since",
+    "artId": "foreman",
+    "portable": false,
+    "initialLocation": "broken-drift"
+  },
+  {
+    "id": "foremans-desk",
+    "names": [
+      "desk"
+    ],
+    "brief": "[draft] the foreman's desk, drawers shut",
+    "description": "[draft] a desk of dark wood, its drawers shut on whatever he left in them",
+    "artId": "foremans-desk",
+    "portable": false,
+    "initialLocation": "foremans-office"
+  },
+  {
+    "id": "assay-bench",
+    "names": [
+      "bench"
+    ],
+    "brief": "[draft] the assay bench, dusty and bare",
+    "description": "[draft] a bench built for weighing small, valuable things",
+    "artId": "assay-bench",
+    "portable": false,
+    "initialLocation": "assay-office"
+  },
+  {
+    "id": "stacks",
+    "names": [
+      "stacks",
+      "stacked plates"
+    ],
+    "brief": "[draft] stacks of plates, waiting to be read",
+    "description": "[draft] plates stacked chest high, each one cut with marks nobody has read in years",
+    "artId": "stacks",
+    "portable": false,
+    "initialLocation": "tally-chamber"
+  },
+  {
+    "id": "scratched-stull",
+    "names": [
+      "stull"
+    ],
+    "brief": "[draft] a stull scratched with a word",
+    "description": "[draft] a stull scratched waist high with a word, plain as a signature",
+    "artId": "scratched-stull",
+    "portable": false,
+    "initialLocation": "long-drift",
+    "adjectives": [
+      "scratched"
+    ],
+    "readText": "[draft] Scratched deep and plain: KIBBLE."
+  },
+  {
+    "id": "chute-throat",
+    "names": [
+      "chute",
+      "ore chute"
+    ],
+    "brief": "[draft] the throat of the ore chute, open and waiting",
+    "description": "[draft] a chute throat that has been waiting ninety years for one more careless thing",
+    "artId": "chute-throat",
+    "portable": false,
+    "initialLocation": "ore-chute"
+  },
+  {
+    "id": "flowstone-seam",
+    "names": [
+      "seam",
+      "vein"
+    ],
+    "brief": "[draft] a bare seam of something pale in the rock",
+    "description": "[draft] a seam of native silver showing bare in the rock, easy to reach and hard to free quietly",
+    "artId": "flowstone-seam",
+    "portable": false,
+    "initialLocation": "gallery-of-veils"
+  },
+  {
+    "id": "pothole",
+    "names": [
+      "pothole",
+      "hole"
+    ],
+    "brief": "[draft] a pothole with something wedged in it",
+    "description": "[draft] a pothole worn round by the river, with something wedged fast in the bottom",
+    "artId": "pothole",
+    "portable": false,
+    "initialLocation": "river-strand"
+  },
+  {
+    "id": "mechanism",
+    "names": [
+      "mechanism",
+      "door"
+    ],
+    "brief": "[draft] the mechanism, waiting for a grip that is not yours",
+    "description": "[draft] a locking mechanism with slots cut for a grip that is not shaped like a hand",
+    "artId": "mechanism",
+    "portable": false,
+    "initialLocation": "antechamber",
+    "adjectives": [
+      "antechamber"
+    ]
+  }
+]

@@ -1,0 +1,1036 @@
+[
+  {
+    "id": "coach-road",
+    "name": "Coach Road",
+    "brief": "[draft] You are at coach road, and the coach road does not care.",
+    "full": "[draft] This is Coach Road, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "coach-road",
+    "light": "lit",
+    "exits": {
+      "e": {
+        "to": "main-street"
+      }
+    }
+  },
+  {
+    "id": "main-street",
+    "name": "Main Street",
+    "brief": "[draft] You are at main street, and the main street does not care.",
+    "full": "[draft] This is Main Street, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "main-street",
+    "light": "lit",
+    "exits": {
+      "w": {
+        "to": "coach-road"
+      },
+      "n": {
+        "to": "chapel"
+      },
+      "s": {
+        "to": "general-store"
+      },
+      "e": {
+        "to": "assay-office",
+        "if": [
+          {
+            "flag": "office-door-open"
+          }
+        ],
+        "blockedMessage": "[draft] The assay office door is locked fast."
+      },
+      "ne": {
+        "to": "tailings-path"
+      }
+    }
+  },
+  {
+    "id": "chapel",
+    "name": "The Chapel",
+    "brief": "[draft] You are at the chapel, and the the chapel does not care.",
+    "full": "[draft] This is The Chapel, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "chapel",
+    "light": "lit",
+    "exits": {
+      "s": {
+        "to": "main-street"
+      }
+    },
+    "scenery": [
+      {
+        "names": [
+          "memorial board",
+          "board",
+          "names"
+        ],
+        "description": "[draft] A board of carved names, and a key hanging beneath it."
+      }
+    ]
+  },
+  {
+    "id": "general-store",
+    "name": "General Store",
+    "brief": "[draft] You are at general store, and the general store does not care.",
+    "full": "[draft] This is General Store, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "general-store",
+    "light": "lit",
+    "exits": {
+      "n": {
+        "to": "main-street"
+      }
+    }
+  },
+  {
+    "id": "assay-office",
+    "name": "Assay Office",
+    "brief": "[draft] You are at assay office, and the assay office does not care.",
+    "full": "[draft] This is Assay Office, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "assay-office",
+    "light": "lit",
+    "exits": {
+      "w": {
+        "to": "main-street"
+      }
+    }
+  },
+  {
+    "id": "tailings-path",
+    "name": "Tailings Path",
+    "brief": "[draft] You are at tailings path, and the tailings path does not care.",
+    "full": "[draft] This is Tailings Path, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "tailings-path",
+    "light": "lit",
+    "exits": {
+      "sw": {
+        "to": "main-street"
+      },
+      "up": {
+        "to": "adit-mouth"
+      },
+      "nw": {
+        "to": "the-gunnis",
+        "if": [
+          {
+            "flag": "gunnis-known"
+          }
+        ],
+        "blockedMessage": "[draft] The scree slope you have in mind is not one you have found yet.",
+        "hidden": true
+      }
+    }
+  },
+  {
+    "id": "adit-mouth",
+    "name": "The Adit Mouth",
+    "brief": "[draft] You are at the adit mouth, and the the adit mouth does not care.",
+    "full": "[draft] This is The Adit Mouth, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "adit-mouth",
+    "light": "lit",
+    "exits": {
+      "down": {
+        "to": "tailings-path"
+      },
+      "e": {
+        "to": "behind-the-seal"
+      }
+    }
+  },
+  {
+    "id": "behind-the-seal",
+    "name": "Behind the Seal",
+    "brief": "[draft] You are at behind the seal, and the behind the seal does not care.",
+    "full": "[draft] This is Behind the Seal, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "behind-the-seal",
+    "light": "lit",
+    "exits": {
+      "w": {
+        "to": "adit-mouth"
+      },
+      "e": {
+        "to": "adit-drift"
+      }
+    }
+  },
+  {
+    "id": "adit-drift",
+    "name": "The Adit Drift",
+    "brief": "[draft] You are at the adit drift, and the the adit drift does not care.",
+    "full": "[draft] This is The Adit Drift, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "adit-drift",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "behind-the-seal"
+      },
+      "n": {
+        "to": "lamp-room"
+      },
+      "s": {
+        "to": "stables"
+      },
+      "e": {
+        "to": "junction"
+      }
+    }
+  },
+  {
+    "id": "lamp-room",
+    "name": "Lamp Room",
+    "brief": "[draft] You are at lamp room, and the lamp room does not care.",
+    "full": "[draft] This is Lamp Room, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "lamp-room",
+    "light": "dark",
+    "exits": {
+      "s": {
+        "to": "adit-drift"
+      }
+    }
+  },
+  {
+    "id": "stables",
+    "name": "Underground Stables",
+    "brief": "[draft] You are at underground stables, and the underground stables does not care.",
+    "full": "[draft] This is Underground Stables, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "stables",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "adit-drift"
+      }
+    }
+  },
+  {
+    "id": "junction",
+    "name": "The Junction",
+    "brief": "[draft] You are at the junction, and the the junction does not care.",
+    "full": "[draft] This is The Junction, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "junction",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "adit-drift"
+      },
+      "n": {
+        "to": "timekeepers-nook"
+      },
+      "e": {
+        "to": "shaft-head"
+      },
+      "s": {
+        "to": "long-drift"
+      }
+    }
+  },
+  {
+    "id": "timekeepers-nook",
+    "name": "Timekeeper's Nook",
+    "brief": "[draft] You are at timekeeper's nook, and the timekeeper's nook does not care.",
+    "full": "[draft] This is Timekeeper's Nook, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "timekeepers-nook",
+    "light": "dark",
+    "exits": {
+      "s": {
+        "to": "junction"
+      },
+      "e": {
+        "to": "foremans-office"
+      }
+    }
+  },
+  {
+    "id": "foremans-office",
+    "name": "Foreman's Office",
+    "brief": "[draft] You are at foreman's office, and the foreman's office does not care.",
+    "full": "[draft] This is Foreman's Office, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "foremans-office",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "timekeepers-nook"
+      }
+    }
+  },
+  {
+    "id": "shaft-head",
+    "name": "Shaft Head",
+    "brief": "[draft] You are at shaft head, and the shaft head does not care.",
+    "full": "[draft] This is Shaft Head, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "shaft-head",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "junction"
+      },
+      "n": {
+        "to": "pump-room"
+      },
+      "e": {
+        "to": "ore-chute"
+      },
+      "down": {
+        "to": "winze-ladderway",
+        "if": [
+          {
+            "flag": "pump-drained"
+          }
+        ],
+        "blockedMessage": "[draft] Black water fills the winze below; the pump has not run yet."
+      }
+    },
+    "scenery": [
+      {
+        "names": [
+          "kibble bucket",
+          "bucket",
+          "chain"
+        ],
+        "description": "[draft] A hoist bucket, rusted onto its chain, that has not moved in ninety years."
+      }
+    ]
+  },
+  {
+    "id": "pump-room",
+    "name": "Pump Room",
+    "brief": "[draft] You are at pump room, and the pump room does not care.",
+    "full": "[draft] This is Pump Room, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "pump-room",
+    "light": "dark",
+    "exits": {
+      "s": {
+        "to": "shaft-head"
+      }
+    }
+  },
+  {
+    "id": "ore-chute",
+    "name": "Ore Chute",
+    "brief": "[draft] You are at ore chute, and the ore chute does not care.",
+    "full": "[draft] This is Ore Chute, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "ore-chute",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "shaft-head"
+      }
+    }
+  },
+  {
+    "id": "long-drift",
+    "name": "The Long Drift",
+    "brief": "[draft] You are at the long drift, and the the long drift does not care.",
+    "full": "[draft] This is The Long Drift, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "long-drift",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "junction"
+      },
+      "w": {
+        "to": "magazine",
+        "if": [
+          {
+            "flag": "magazine-door-open"
+          }
+        ],
+        "blockedMessage": "[draft] The magazine door is locked, as a magazine door ought to be."
+      },
+      "s": {
+        "to": "stull-gallery"
+      }
+    }
+  },
+  {
+    "id": "magazine",
+    "name": "The Powder Magazine",
+    "brief": "[draft] You are at the powder magazine, and the the powder magazine does not care.",
+    "full": "[draft] This is The Powder Magazine, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "magazine",
+    "light": "dark",
+    "exits": {
+      "e": {
+        "to": "long-drift"
+      }
+    }
+  },
+  {
+    "id": "stull-gallery",
+    "name": "The Stulled Gallery",
+    "brief": "[draft] You are at the stulled gallery, and the the stulled gallery does not care.",
+    "full": "[draft] This is The Stulled Gallery, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "stull-gallery",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "long-drift"
+      },
+      "e": {
+        "to": "broken-drift"
+      }
+    }
+  },
+  {
+    "id": "broken-drift",
+    "name": "The Broken Drift",
+    "brief": "[draft] You are at the broken drift, and the the broken drift does not care.",
+    "full": "[draft] This is The Broken Drift, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "broken-drift",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "stull-gallery"
+      }
+    }
+  },
+  {
+    "id": "winze-ladderway",
+    "name": "The Ladderway",
+    "brief": "[draft] You are at the ladderway, and the the ladderway does not care.",
+    "full": "[draft] This is The Ladderway, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "winze-ladderway",
+    "light": "dark",
+    "exits": {
+      "up": {
+        "to": "shaft-head"
+      },
+      "down": {
+        "to": "shaft-foot"
+      }
+    }
+  },
+  {
+    "id": "the-gunnis",
+    "name": "The Gunnis",
+    "brief": "[draft] You are at the gunnis, and the the gunnis does not care.",
+    "full": "[draft] This is The Gunnis, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "the-gunnis",
+    "light": "lit",
+    "exits": {
+      "down": {
+        "to": "tailings-path",
+        "if": [
+          {
+            "flag": "gunnis-known"
+          }
+        ],
+        "blockedMessage": "[draft] The way down is a way down you have not yet made for yourself.",
+        "hidden": true
+      }
+    }
+  },
+  {
+    "id": "shaft-foot",
+    "name": "Shaft Foot",
+    "brief": "[draft] You are at shaft foot, and the shaft foot does not care.",
+    "full": "[draft] This is Shaft Foot, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "shaft-foot",
+    "light": "dark",
+    "exits": {
+      "up": {
+        "to": "winze-ladderway"
+      },
+      "s": {
+        "to": "breakthrough"
+      }
+    }
+  },
+  {
+    "id": "breakthrough",
+    "name": "The Breakthrough",
+    "brief": "[draft] You are at the breakthrough, and the the breakthrough does not care.",
+    "full": "[draft] This is The Breakthrough, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "breakthrough",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "shaft-foot"
+      },
+      "s": {
+        "to": "low-crawl"
+      },
+      "e": {
+        "to": "cathedral"
+      }
+    }
+  },
+  {
+    "id": "low-crawl",
+    "name": "The Low Crawl",
+    "brief": "[draft] You are at the low crawl, and the the low crawl does not care.",
+    "full": "[draft] This is The Low Crawl, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "low-crawl",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "breakthrough"
+      },
+      "s": {
+        "to": "black-river"
+      }
+    }
+  },
+  {
+    "id": "cathedral",
+    "name": "The Cathedral",
+    "brief": "[draft] You are at the cathedral, and the the cathedral does not care.",
+    "full": "[draft] This is The Cathedral, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "cathedral",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "breakthrough"
+      },
+      "n": {
+        "to": "gallery-of-veils"
+      },
+      "e": {
+        "to": "gour-pools"
+      },
+      "s": {
+        "to": "river-strand"
+      },
+      "down": {
+        "to": "twisty-1"
+      }
+    }
+  },
+  {
+    "id": "gallery-of-veils",
+    "name": "The Gallery of Veils",
+    "brief": "[draft] You are at the gallery of veils, and the the gallery of veils does not care.",
+    "full": "[draft] This is The Gallery of Veils, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "gallery-of-veils",
+    "light": "dark",
+    "exits": {
+      "s": {
+        "to": "cathedral"
+      }
+    }
+  },
+  {
+    "id": "gour-pools",
+    "name": "The Gour Pools",
+    "brief": "[draft] You are at the gour pools, and the the gour pools does not care.",
+    "full": "[draft] This is The Gour Pools, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "gour-pools",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "cathedral"
+      }
+    }
+  },
+  {
+    "id": "black-river",
+    "name": "The Black River",
+    "brief": "[draft] You are at the black river, and the the black river does not care.",
+    "full": "[draft] This is The Black River, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "black-river",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "low-crawl"
+      },
+      "e": {
+        "to": "river-strand"
+      }
+    }
+  },
+  {
+    "id": "river-strand",
+    "name": "The River Strand",
+    "brief": "[draft] You are at the river strand, and the the river strand does not care.",
+    "full": "[draft] This is The River Strand, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "river-strand",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "black-river"
+      },
+      "n": {
+        "to": "cathedral"
+      },
+      "e": {
+        "to": "midden"
+      }
+    }
+  },
+  {
+    "id": "midden",
+    "name": "The Midden",
+    "brief": "[draft] You are at the midden, and the the midden does not care.",
+    "full": "[draft] This is The Midden, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "midden",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "river-strand"
+      }
+    }
+  },
+  {
+    "id": "breach-wall",
+    "name": "The Breach",
+    "brief": "[draft] You are at the breach, and the the breach does not care.",
+    "full": "[draft] This is The Breach, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "breach-wall",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "twisty-5"
+      },
+      "e": {
+        "to": "beyond-the-breach",
+        "if": [
+          {
+            "flag": "breach-blasted"
+          }
+        ],
+        "blockedMessage": "[draft] The hole is a hole in name only; the mortar behind it has not moved.",
+        "hidden": true
+      }
+    }
+  },
+  {
+    "id": "twisty-1",
+    "name": "Twisting Passages",
+    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
+    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "twisty-2"
+      },
+      "e": {
+        "to": "twisty-4"
+      },
+      "s": {
+        "to": "twisty-3"
+      },
+      "w": {
+        "to": "twisty-1"
+      },
+      "up": {
+        "to": "cathedral"
+      }
+    }
+  },
+  {
+    "id": "twisty-2",
+    "name": "Twisting Passages",
+    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
+    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "twisty-4"
+      },
+      "e": {
+        "to": "twisty-5"
+      },
+      "s": {
+        "to": "twisty-1"
+      },
+      "w": {
+        "to": "twisty-2"
+      }
+    }
+  },
+  {
+    "id": "twisty-3",
+    "name": "Twisting Passages",
+    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
+    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "twisty-1"
+      },
+      "e": {
+        "to": "twisty-6"
+      },
+      "s": {
+        "to": "twisty-3"
+      },
+      "w": {
+        "to": "twisty-4"
+      }
+    }
+  },
+  {
+    "id": "twisty-4",
+    "name": "Twisting Passages",
+    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
+    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "twisty-1"
+      },
+      "e": {
+        "to": "twisty-2"
+      },
+      "s": {
+        "to": "twisty-3"
+      },
+      "w": {
+        "to": "twisty-5"
+      }
+    }
+  },
+  {
+    "id": "twisty-5",
+    "name": "Twisting Passages",
+    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
+    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall. [draft] A draught moves through the stone here, and it is coming from the east.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "twisty-2"
+      },
+      "e": {
+        "to": "breach-wall"
+      },
+      "s": {
+        "to": "twisty-4"
+      },
+      "w": {
+        "to": "twisty-5"
+      }
+    }
+  },
+  {
+    "id": "twisty-6",
+    "name": "Twisting Passages",
+    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
+    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall.",
+    "artId": "twisty",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "twisty-3"
+      }
+    }
+  },
+  {
+    "id": "beyond-the-breach",
+    "name": "Beyond the Breach",
+    "brief": "[draft] You are at beyond the breach, and the beyond the breach does not care.",
+    "full": "[draft] This is Beyond the Breach, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "beyond-the-breach",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "breach-wall"
+      },
+      "e": {
+        "to": "dressed-gallery"
+      }
+    }
+  },
+  {
+    "id": "dressed-gallery",
+    "name": "The Dressed Gallery",
+    "brief": "[draft] You are at the dressed gallery, and the the dressed gallery does not care.",
+    "full": "[draft] This is The Dressed Gallery, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "dressed-gallery",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "beyond-the-breach"
+      },
+      "n": {
+        "to": "toolroom"
+      },
+      "s": {
+        "to": "store-rooms"
+      },
+      "e": {
+        "to": "closed-row"
+      }
+    }
+  },
+  {
+    "id": "toolroom",
+    "name": "The Toolroom",
+    "brief": "[draft] You are at the toolroom, and the the toolroom does not care.",
+    "full": "[draft] This is The Toolroom, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "toolroom",
+    "light": "dark",
+    "exits": {
+      "s": {
+        "to": "dressed-gallery"
+      }
+    }
+  },
+  {
+    "id": "store-rooms",
+    "name": "The Store-Rooms",
+    "brief": "[draft] You are at the store-rooms, and the the store-rooms does not care.",
+    "full": "[draft] This is The Store-Rooms, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "store-rooms",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "dressed-gallery"
+      }
+    }
+  },
+  {
+    "id": "closed-row",
+    "name": "The Closed Row",
+    "brief": "[draft] You are at the closed row, and the the closed row does not care.",
+    "full": "[draft] This is The Closed Row, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "closed-row",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "dressed-gallery"
+      },
+      "e": {
+        "to": "tally-chamber"
+      },
+      "s": {
+        "to": "long-stair"
+      }
+    }
+  },
+  {
+    "id": "tally-chamber",
+    "name": "The Tally Chamber",
+    "brief": "[draft] You are at the tally chamber, and the the tally chamber does not care.",
+    "full": "[draft] This is The Tally Chamber, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "tally-chamber",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "closed-row"
+      },
+      "e": {
+        "to": "worked-face"
+      }
+    }
+  },
+  {
+    "id": "worked-face",
+    "name": "The Worked Face",
+    "brief": "[draft] You are at the worked face, and the the worked face does not care.",
+    "full": "[draft] This is The Worked Face, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "worked-face",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "tally-chamber"
+      }
+    }
+  },
+  {
+    "id": "long-stair",
+    "name": "The Long Stair",
+    "brief": "[draft] You are at the long stair, and the the long stair does not care.",
+    "full": "[draft] This is The Long Stair, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "long-stair",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "closed-row"
+      },
+      "down": {
+        "to": "undercroft"
+      }
+    }
+  },
+  {
+    "id": "undercroft",
+    "name": "The Undercroft",
+    "brief": "[draft] You are at the undercroft, and the the undercroft does not care.",
+    "full": "[draft] This is The Undercroft, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "undercroft",
+    "light": "dark",
+    "exits": {
+      "up": {
+        "to": "long-stair"
+      },
+      "e": {
+        "to": "cistern"
+      },
+      "s": {
+        "to": "warm-gallery"
+      },
+      "w": {
+        "to": "deep-cut"
+      }
+    }
+  },
+  {
+    "id": "cistern",
+    "name": "The Cistern",
+    "brief": "[draft] You are at the cistern, and the the cistern does not care.",
+    "full": "[draft] This is The Cistern, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "cistern",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "undercroft"
+      }
+    },
+    "scenery": [
+      {
+        "names": [
+          "sluice marks",
+          "marks",
+          "sluice"
+        ],
+        "description": "[draft] Grooves cut for water that had somewhere particular to go.",
+        "readText": "[draft] The marks trace a drainage that was somebody's plan, once, before it was a flood."
+      }
+    ]
+  },
+  {
+    "id": "warm-gallery",
+    "name": "The Warm Gallery",
+    "brief": "[draft] You are at the warm gallery, and the the warm gallery does not care.",
+    "full": "[draft] This is The Warm Gallery, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "warm-gallery",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "undercroft"
+      }
+    }
+  },
+  {
+    "id": "deep-cut",
+    "name": "The Deep Cut",
+    "brief": "[draft] You are at the deep cut, and the the deep cut does not care.",
+    "full": "[draft] This is The Deep Cut, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "deep-cut",
+    "light": "dark",
+    "exits": {
+      "e": {
+        "to": "undercroft"
+      },
+      "w": {
+        "to": "quiet-gallery"
+      }
+    }
+  },
+  {
+    "id": "quiet-gallery",
+    "name": "The Quiet Gallery",
+    "brief": "[draft] You are at the quiet gallery, and the the quiet gallery does not care.",
+    "full": "[draft] This is The Quiet Gallery, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "quiet-gallery",
+    "light": "dark",
+    "exits": {
+      "e": {
+        "to": "deep-cut"
+      },
+      "s": {
+        "to": "antechamber"
+      }
+    }
+  },
+  {
+    "id": "antechamber",
+    "name": "The Antechamber",
+    "brief": "[draft] You are at the antechamber, and the the antechamber does not care.",
+    "full": "[draft] This is The Antechamber, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "antechamber",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "quiet-gallery"
+      },
+      "s": {
+        "to": "seal-gate",
+        "if": [
+          {
+            "flag": "mechanism-turned"
+          }
+        ],
+        "blockedMessage": "[draft] The mechanism holds the door shut, and it was not made for an idle push."
+      }
+    }
+  },
+  {
+    "id": "seal-gate",
+    "name": "The Seal Gate",
+    "brief": "[draft] You are at the seal gate, and the the seal gate does not care.",
+    "full": "[draft] This is The Seal Gate, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "seal-gate",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "antechamber"
+      },
+      "down": {
+        "to": "keepers-stair"
+      }
+    }
+  },
+  {
+    "id": "keepers-stair",
+    "name": "The Keepers' Stair",
+    "brief": "[draft] You are at the keepers' stair, and the the keepers' stair does not care.",
+    "full": "[draft] This is The Keepers' Stair, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "keepers-stair",
+    "light": "dark",
+    "exits": {
+      "up": {
+        "to": "seal-gate"
+      },
+      "down": {
+        "to": "keepers-walk"
+      }
+    }
+  },
+  {
+    "id": "keepers-walk",
+    "name": "The Keepers' Walk",
+    "brief": "[draft] You are at the keepers' walk, and the the keepers' walk does not care.",
+    "full": "[draft] This is The Keepers' Walk, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "keepers-walk",
+    "light": "dark",
+    "exits": {
+      "up": {
+        "to": "keepers-stair"
+      },
+      "e": {
+        "to": "watch-room"
+      },
+      "s": {
+        "to": "the-vault"
+      }
+    }
+  },
+  {
+    "id": "watch-room",
+    "name": "The Watch Room",
+    "brief": "[draft] You are at the watch room, and the the watch room does not care.",
+    "full": "[draft] This is The Watch Room, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "watch-room",
+    "light": "dark",
+    "exits": {
+      "w": {
+        "to": "keepers-walk"
+      }
+    }
+  },
+  {
+    "id": "the-vault",
+    "name": "The Vault",
+    "brief": "[draft] You are at the vault, and the the vault does not care.",
+    "full": "[draft] This is The Vault, drawn in a single flat sentence until the region task gives it a voice.",
+    "artId": "the-vault",
+    "light": "dark",
+    "exits": {
+      "n": {
+        "to": "keepers-walk"
+      }
+    }
+  }
+]

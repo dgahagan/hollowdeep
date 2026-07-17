@@ -1,0 +1,28 @@
+{
+  "id": "hollowdeep",
+  "title": "Hollowdeep",
+  "version": "1.0.0",
+  "engineVersion": "^2.0.0",
+  "startLocation": "coach-road",
+  "repositoryLocation": "assay-office",
+  "carryLimit": 5,
+  "maxScore": 350,
+  "lamp": {
+    "itemId": "brass-lantern",
+    "startFuel": 400,
+    "warnAt": [80, 30, 10],
+    "warnMessageId": "lamp-low",
+    "exhaustMessageId": "lamp-dead",
+    "refuel": {
+      "itemId": "oil-flask",
+      "amount": 200,
+      "consumesItem": true
+    }
+  },
+  "darkness": {
+    "deathChance": 0.3,
+    "warningMessageId": "dark-warning",
+    "deathMessageId": "dark-death"
+  },
+  "artFormat": "svg"
+}
