@@ -471,7 +471,7 @@ markers inside its own region.
 - [x] T3 — Region B: the Workings (`opus`) — `47eb6e7`
 - [x] T4 — Region C: cavern, maze, creatures (`opus`) — `57a0cdf`
 - [x] T5 — Regions D & E: past the breach, the seal (`opus`) — `e5dec1f`
-- [ ] T6 — Magic words and the gunnis (`opus`)
+- [x] T6 — Magic words and the gunnis (`opus`) — `11c81bc`
 - [ ] T7 — Endgame: two endings, ranks, achievements (`opus`)
 - [ ] T8 — Hint ladders (`opus`)
 - [ ] T9 — Walkthrough + per-adventure harness (`opus`)
