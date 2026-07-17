@@ -1,0 +1,47 @@
+/* The two voices of the transcript (ui-plan §12.1, pinned 2026-07-17 from the
+   dev/type-specimen.html sign-off): Literata for narration, JetBrains Mono for
+   the player's commands. Self-hosted (NFR-1 — no third-party runtime), latin
+   subset only, woff2 only. The files and their OFL licenses live in
+   `public/fonts/` rather than under src/ so `index.html` can preload them by a
+   stable URL in dev and prod alike (Vite would content-hash anything imported
+   from src/, which a static <link rel="preload"> cannot follow). */
+
+@font-face {
+  font-family: 'Literata';
+  src: url('/fonts/literata-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Literata';
+  src: url('/fonts/literata-latin-400-italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Literata';
+  src: url('/fonts/literata-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono-latin-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}

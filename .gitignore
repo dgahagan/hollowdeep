@@ -40,3 +40,4 @@ pnpm-debug.log*
 # request file itself IS committed: it is the reproducible part.
 dev/art-candidates/*.png
 dev/art-candidates/*.webp
+.playwright-mcp/

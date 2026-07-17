@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hollowdeep — type specimen (T1 checkpoint)</title>
+<style>
+  /* Candidate faces, self-hosted from ./type-specimen/fonts (all OFL). */
+  @font-face { font-family: 'Literata'; src: url('type-specimen/fonts/literata-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Literata'; src: url('type-specimen/fonts/literata-latin-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: 'Literata'; src: url('type-specimen/fonts/literata-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Source Serif 4'; src: url('type-specimen/fonts/source-serif-4-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Source Serif 4'; src: url('type-specimen/fonts/source-serif-4-latin-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: 'Source Serif 4'; src: url('type-specimen/fonts/source-serif-4-latin-700-normal.woff2') format('woff2'); font-weight: 700; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'JetBrains Mono'; src: url('type-specimen/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Source Code Pro'; src: url('type-specimen/fonts/source-code-pro-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+
+  /* The T1 tokens, verbatim (see dev/contrast-check.mjs — all pairs AA). */
+  .dark {
+    --surface-0: #16130f; --surface-1: #201a12; --surface-2: #2a2317;
+    --border: #4a3f2e; --border-strong: #8a795c;
+    --ink: #e8ddc8; --ink-muted: #b0a086;
+    --accent: #d9a441; --danger: #e08663; --success: #9dc186;
+  }
+  .light {
+    --surface-0: #ede2cb; --surface-1: #f6efe0; --surface-2: #fdf9ef;
+    --border: #b3a284; --border-strong: #7c6c4e;
+    --ink: #2e2618; --ink-muted: #5d5138;
+    --accent: #7d5514; --danger: #9c3116; --success: #33591f;
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui; background: #000; }
+  .theme { background: var(--surface-0); color: var(--ink); padding: 2rem 2.5rem 3rem; }
+  h1 { font-size: 1.1rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-muted); font-weight: 400; }
+  .combos { display: grid; grid-template-columns: repeat(auto-fit, minmax(430px, 1fr)); gap: 1.5rem; }
+  .combo { background: var(--surface-1); border: 1px solid var(--border); border-radius: 6px; padding: 1.25rem 1.5rem; }
+  .combo h2 { font-family: inherit; font-size: 0.85rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); margin: 0 0 1rem; font-weight: 700; }
+  .narration { font-size: 1.05rem; line-height: 1.65; margin: 0 0 0.35rem; }
+  .narration em { }
+  .cmd { font-size: 0.9rem; color: var(--accent); margin: 0.75rem 0 0.35rem; }
+  .cmd::before { content: '> '; }
+  .hint { font-style: italic; color: var(--ink-muted); font-size: 1.0rem; margin: 0.5rem 0; }
+  .score { color: var(--success); font-size: 1.0rem; margin: 0.5rem 0; }
+  .death { color: var(--danger); font-weight: 700; font-size: 1.05rem; margin: 0.5rem 0; }
+  .status { margin-top: 1rem; padding: 0.5rem 0.75rem; background: var(--surface-2); border: 1px solid var(--border); border-radius: 4px; font-size: 0.78rem; letter-spacing: 0.04em; color: var(--ink-muted); }
+  .input-demo { margin-top: 0.75rem; padding: 0.5rem 0.7rem; background: var(--surface-0); border: 1px solid var(--border-strong); border-radius: 4px; font-size: 0.95rem; color: var(--ink); }
+  .caret::after { content: '▏'; color: var(--accent); }
+
+  .c-lit-jb  .narration, .c-lit-jb  .hint, .c-lit-jb  .death, .c-lit-jb  .score { font-family: 'Literata', serif; }
+  .c-lit-jb  .cmd, .c-lit-jb  .status, .c-lit-jb  .input-demo { font-family: 'JetBrains Mono', monospace; }
+  .c-lit-scp .narration, .c-lit-scp .hint, .c-lit-scp .death, .c-lit-scp .score { font-family: 'Literata', serif; }
+  .c-lit-scp .cmd, .c-lit-scp .status, .c-lit-scp .input-demo { font-family: 'Source Code Pro', monospace; }
+  .c-ss4-jb  .narration, .c-ss4-jb  .hint, .c-ss4-jb  .death, .c-ss4-jb  .score { font-family: 'Source Serif 4', serif; }
+  .c-ss4-jb  .cmd, .c-ss4-jb  .status, .c-ss4-jb  .input-demo { font-family: 'JetBrains Mono', monospace; }
+  .c-ss4-scp .narration, .c-ss4-scp .hint, .c-ss4-scp .death, .c-ss4-scp .score { font-family: 'Source Serif 4', serif; }
+  .c-ss4-scp .cmd, .c-ss4-scp .status, .c-ss4-scp .input-demo { font-family: 'Source Code Pro', monospace; }
+</style>
+</head>
+<body>
+<div class="theme dark">
+  <h1>Dark — lamplit (default theme)</h1>
+  <div class="combos">
+    <section class="combo c-lit-jb"><h2>A · Literata + JetBrains Mono</h2>
+      <p class="narration">You stand in the nave of a drowned chapel. Columns rise out of black water, and somewhere above, a bell that has not rung in a century holds its breath. <em>The lamplight does not reach the far wall — nothing you can see does.</em></p>
+      <p class="cmd">take the brass lantern</p>
+      <p class="narration">Taken. It is heavier than it looks, and warmer.</p>
+      <p class="hint">You get the feeling the water is listening.</p>
+      <p class="score">[Your score just went up by 25 points.]</p>
+      <p class="death">You have died. The cave has seen this before.</p>
+      <div class="status">HOLLOWDEEP CHAPEL · SCORE 120/350 · TURN 214 · LAMP ████████░░</div>
+      <div class="input-demo caret">drop the silver crown</div>
+    </section>
+    <section class="combo c-lit-scp"><h2>B · Literata + Source Code Pro</h2>
+      <p class="narration">You stand in the nave of a drowned chapel. Columns rise out of black water, and somewhere above, a bell that has not rung in a century holds its breath. <em>The lamplight does not reach the far wall — nothing you can see does.</em></p>
+      <p class="cmd">take the brass lantern</p>
+      <p class="narration">Taken. It is heavier than it looks, and warmer.</p>
+      <p class="hint">You get the feeling the water is listening.</p>
+      <p class="score">[Your score just went up by 25 points.]</p>
+      <p class="death">You have died. The cave has seen this before.</p>
+      <div class="status">HOLLOWDEEP CHAPEL · SCORE 120/350 · TURN 214 · LAMP ████████░░</div>
+      <div class="input-demo caret">drop the silver crown</div>
+    </section>
+    <section class="combo c-ss4-jb"><h2>C · Source Serif 4 + JetBrains Mono</h2>
+      <p class="narration">You stand in the nave of a drowned chapel. Columns rise out of black water, and somewhere above, a bell that has not rung in a century holds its breath. <em>The lamplight does not reach the far wall — nothing you can see does.</em></p>
+      <p class="cmd">take the brass lantern</p>
+      <p class="narration">Taken. It is heavier than it looks, and warmer.</p>
+      <p class="hint">You get the feeling the water is listening.</p>
+      <p class="score">[Your score just went up by 25 points.]</p>
+      <p class="death">You have died. The cave has seen this before.</p>
+      <div class="status">HOLLOWDEEP CHAPEL · SCORE 120/350 · TURN 214 · LAMP ████████░░</div>
+      <div class="input-demo caret">drop the silver crown</div>
+    </section>
+    <section class="combo c-ss4-scp"><h2>D · Source Serif 4 + Source Code Pro</h2>
+      <p class="narration">You stand in the nave of a drowned chapel. Columns rise out of black water, and somewhere above, a bell that has not rung in a century holds its breath. <em>The lamplight does not reach the far wall — nothing you can see does.</em></p>
+      <p class="cmd">take the brass lantern</p>
+      <p class="narration">Taken. It is heavier than it looks, and warmer.</p>
+      <p class="hint">You get the feeling the water is listening.</p>
+      <p class="score">[Your score just went up by 25 points.]</p>
+      <p class="death">You have died. The cave has seen this before.</p>
+      <div class="status">HOLLOWDEEP CHAPEL · SCORE 120/350 · TURN 214 · LAMP ████████░░</div>
+      <div class="input-demo caret">drop the silver crown</div>
+    </section>
+  </div>
+</div>
+<div class="theme light">
+  <h1>Light — parchment</h1>
+  <div class="combos">
+    <section class="combo c-lit-jb"><h2>A · Literata + JetBrains Mono</h2>
+      <p class="narration">You stand in the nave of a drowned chapel. Columns rise out of black water, and somewhere above, a bell that has not rung in a century holds its breath. <em>The lamplight does not reach the far wall — nothing you can see does.</em></p>
+      <p class="cmd">take the brass lantern</p>
+      <p class="hint">You get the feeling the water is listening.</p>
+      <p class="score">[Your score just went up by 25 points.]</p>
+      <p class="death">You have died. The cave has seen this before.</p>
+      <div class="status">HOLLOWDEEP CHAPEL · SCORE 120/350 · TURN 214 · LAMP ████████░░</div>
+      <div class="input-demo caret">drop the silver crown</div>
+    </section>
+    <section class="combo c-lit-scp"><h2>B · Literata + Source Code Pro</h2>
+      <p class="narration">You stand in the nave of a drowned chapel. Columns rise out of black water, and somewhere above, a bell that has not rung in a century holds its breath. <em>The lamplight does not reach the far wall — nothing you can see does.</em></p>
+      <p class="cmd">take the brass lantern</p>
+      <p class="hint">You get the feeling the water is listening.</p>
+      <p class="score">[Your score just went up by 25 points.]</p>
+      <p class="death">You have died. The cave has seen this before.</p>
+      <div class="status">HOLLOWDEEP CHAPEL · SCORE 120/350 · TURN 214 · LAMP ████████░░</div>
+      <div class="input-demo caret">drop the silver crown</div>
+    </section>
+    <section class="combo c-ss4-jb"><h2>C · Source Serif 4 + JetBrains Mono</h2>
+      <p class="narration">You stand in the nave of a drowned chapel. Columns rise out of black water, and somewhere above, a bell that has not rung in a century holds its breath. <em>The lamplight does not reach the far wall — nothing you can see does.</em></p>
+      <p class="cmd">take the brass lantern</p>
+      <p class="hint">You get the feeling the water is listening.</p>
+      <p class="score">[Your score just went up by 25 points.]</p>
+      <p class="death">You have died. The cave has seen this before.</p>
+      <div class="status">HOLLOWDEEP CHAPEL · SCORE 120/350 · TURN 214 · LAMP ████████░░</div>
+      <div class="input-demo caret">drop the silver crown</div>
+    </section>
+    <section class="combo c-ss4-scp"><h2>D · Source Serif 4 + Source Code Pro</h2>
+      <p class="narration">You stand in the nave of a drowned chapel. Columns rise out of black water, and somewhere above, a bell that has not rung in a century holds its breath. <em>The lamplight does not reach the far wall — nothing you can see does.</em></p>
+      <p class="cmd">take the brass lantern</p>
+      <p class="hint">You get the feeling the water is listening.</p>
+      <p class="score">[Your score just went up by 25 points.]</p>
+      <p class="death">You have died. The cave has seen this before.</p>
+      <div class="status">HOLLOWDEEP CHAPEL · SCORE 120/350 · TURN 214 · LAMP ████████░░</div>
+      <div class="input-demo caret">drop the silver crown</div>
+    </section>
+  </div>
+</div>
+</body>
+</html>

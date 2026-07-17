@@ -1,0 +1,69 @@
+/* Design tokens (T1, ui-plan §3 + settled decision 1): the dark "lamplit"
+   theme is the default — a page read by lantern light — with a light
+   "parchment" theme selected via `data-theme="light"` on <html>. BOTH themes
+   are designed to WCAG AA, not one derived from the other (NFR-5); every
+   ink/surface pair below is verified by `dev/contrast-check.mjs`, which fails
+   CI-style (exit 1) if an edit here regresses a pair. Keep that script's
+   token tables in sync with this file.
+
+   Recorded ratios (2026-07-17, all targets met):
+     dark  — ink 13.8/12.8/11.6:1 on surfaces 0/1/2; muted 7.3/6.8/6.1:1;
+             accent 8.2/7.7/6.9:1; danger 6.8/6.4/5.7:1; success 9.2/8.5/7.7:1;
+             border-strong 4.4/4.1/3.7:1 (UI boundaries, 3:1 target)
+     light — ink 11.6/13.0/14.2:1; muted 6.1/6.8/7.4:1; accent 5.1/5.8/6.3:1;
+             danger 5.7/6.4/7.0:1; success 6.3/7.1/7.7:1;
+             border-strong 4.0/4.5/4.9:1
+   `--border` is decorative panel separation only (exempt from WCAG 1.4.11);
+   anything interactive draws `--border-strong`. */
+
+:root {
+  color-scheme: dark;
+
+  /* Surfaces, deepest to most raised. */
+  --surface-0: #16130f; /* the page */
+  --surface-1: #201a12; /* panels */
+  --surface-2: #2a2317; /* raised elements: buttons, status chips */
+
+  /* Ink. */
+  --ink: #e8ddc8;
+  --ink-muted: #b0a086;
+
+  /* The lamp-warm accent and the two semantic voices. */
+  --accent: #d9a441;
+  --danger: #e08663;
+  --success: #9dc186;
+
+  /* Borders: decorative vs interactive (see header note). */
+  --border: #4a3f2e;
+  --border-strong: #8a795c;
+
+  /* Scrim behind overlays. */
+  --scrim: rgba(8, 6, 3, 0.65);
+
+  /* Typography (pinned from the type specimen, ui-plan §12.1). */
+  --font-serif: 'Literata', Georgia, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono', 'Courier New', monospace;
+
+  /* Base text scale — T2's text-size setting adjusts this. */
+  --text-scale: 1;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+
+  --surface-0: #ede2cb;
+  --surface-1: #f6efe0;
+  --surface-2: #fdf9ef;
+
+  --ink: #2e2618;
+  --ink-muted: #5d5138;
+
+  --accent: #7d5514;
+  --danger: #9c3116;
+  --success: #33591f;
+
+  --border: #b3a284;
+  --border-strong: #7c6c4e;
+
+  --scrim: rgba(46, 38, 24, 0.45);
+}
