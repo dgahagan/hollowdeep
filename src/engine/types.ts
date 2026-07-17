@@ -144,7 +144,13 @@ export type OutputEvent =
   | { kind: 'score'; text: string; points: number; total: number }
   | { kind: 'achievement'; text: string; achievementId: string }
   | { kind: 'question'; text: string; options: string[] }
-  | { kind: 'game-over'; text: string; victory: boolean; score: number; rank: string };
+  | { kind: 'game-over'; text: string; victory: boolean; score: number; rank: string }
+  /**
+   * A hint rung revealed by the `hint` verb (hints-timers plan §5.3).
+   * `rung` is 1-based — the Nth rung of `hintId`'s ladder just shown. Additive;
+   * not save state, and the UI can style it distinctly once Phase 3 wants to.
+   */
+  | { kind: 'hint'; text: string; hintId: string; rung: number };
 
 /** What `step` returns: a NEW state plus the turn's output. Never mutates. */
 export interface StepResult {

@@ -94,6 +94,10 @@ export function evalCondition(
   if (cond.atLocation !== undefined && state.locationId !== cond.atLocation) return [false, state];
   if (cond.visited !== undefined && !hasVisited(state, cond.visited)) return [false, state];
   if (cond.deathsAtMost !== undefined && state.deaths > cond.deathsAtMost) return [false, state];
+  // Mirrors `deathsAtMost` verbatim (hints-timers plan §5.3): `hintsUsed` is
+  // engine state content cannot see, so this is the only bridge a no-hints
+  // achievement can be built from without the engine naming that achievement.
+  if (cond.hintsAtMost !== undefined && state.hintsUsed > cond.hintsAtMost) return [false, state];
 
   if (cond.itemAt !== undefined && itemLocation(state, cond.itemAt.item) !== cond.itemAt.location) {
     return [false, state];
@@ -155,8 +159,16 @@ export function evalConditions(
   return [false, current];
 }
 
-/** Resolve a `printId` against strings.json, loudly rather than silently. */
-function lookupString(module: AdventureModule, id: string): string {
+/**
+ * Resolve a `printId` (or any other string-table id) against strings.json,
+ * loudly rather than silently.
+ *
+ * Exported: `actions/meta.ts`'s `hint` handler needs the exact same
+ * fallback for `hints.noHintMessageId` (design plan §5.1/§5.2) — a second
+ * copy of the `[missing string: …]` pattern would be the second
+ * implementation of one rule.
+ */
+export function lookupString(module: AdventureModule, id: string): string {
   // T5 proves every printId resolves before a game can start, so this is an
   // engine-visible bug rather than an author's. Surfacing the id beats
   // printing an empty line and moving on.
