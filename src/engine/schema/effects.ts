@@ -134,6 +134,12 @@ const zActivateCreature = z.strictObject({
  * Starting a timer that is already running RESETS it — the second pull of the
  * stull must not be silently weaker than the first. One-shot arming is a
  * guard flag on the arming event, expressible today.
+ *
+ * Edge case for authors: a timer armed from *within a world-tick event*
+ * (a `turnStart` event, or a `timerExpired` event re-arming itself) counts
+ * its n from the next turn — a self-re-arming timer has period n+1. The
+ * contract above is exact for the normal case, a timer armed by a player
+ * action. See worldTick (engine.ts) for why.
  */
 const zStartTimer = z.strictObject({
   kind: z.literal('startTimer'),

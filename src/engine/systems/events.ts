@@ -269,13 +269,15 @@ function applyEffect(
     }
 
     case 'startTimer':
-      // TODO(T3): write `timers[effect.timer] = state.turn + effect.turns`
-      // (restart resets — hints-timers plan §4.1). A temporary no-op rather
-      // than a throw: the frozen-union coverage test asserts every
-      // schema-legal effect applies without throwing, and that invariant is
-      // worth keeping true at every commit. T2 adds the state field; T3
-      // replaces this case and deletes this comment.
-      return [state, []];
+      // Absolute expiry turn, not a countdown — the thief's own idiom
+      // (creatures.ts computes turn − activatedTurn), generalized. The write
+      // is unconditional: starting a running timer RESETS it, so the second
+      // pull of the stull is never silently weaker than the first
+      // (hints-timers plan §4.1). Expiries fire in `worldTick` (engine.ts).
+      return [
+        { ...state, timers: { ...state.timers, [effect.timer]: state.turn + effect.turns } },
+        [],
+      ];
 
     default: {
       const exhaustive: never = effect;
