@@ -360,7 +360,7 @@ Carried from design plan §11 — do not create tasks for these:
 - [x] T4 — The hint verb, selection rule, and hintsAtMost (`sonnet`) — `dce5efb` (handler lives in meta.ts beside the other free verbs; lookupString exported from events.ts rather than duplicated; no app change needed — TranscriptPanel has no exhaustive kind switch)
 - [x] T5 — Validator additions and golden fixtures (`sonnet`) — `0a7c4d6` (hints `when` routed through the existing checkConditions, so dangling refs and flag reads came for free — verified by test, not assumed; document-level error id is `hints`, matching the `manifest` convention)
 - [x] T6 — test-cave exercises everything (`opus`) — `c59db06` (the walked-away bee guard is a 10-way atLocation OR — the condition grammar has no complement of atLocation, a real expressibility note for Hollowdeep's garnet chain, which was sketched with the same "else" shape)
-- [ ] T7 — Integration tests against the real fixture (`sonnet`)
+- [x] T7 — Integration tests against the real fixture (`sonnet`) — `72239b8` (score deltas asserted against a no-hints control run of the same commands rather than hardcoded; no surprises — real content matched the pinned arithmetic first try)
 - [ ] T8 — Documentation and closeout (`opus`)
 
 **Done when:** every box is ticked with its commit SHA, `npm run gate` is
