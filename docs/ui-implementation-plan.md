@@ -351,8 +351,8 @@ accessibility + tablet + performance passes, docs closeout.
 - [x] T1 — Tokens, themes, typography, shell (`opus`, human) — `8ad9187` (faces pinned: Literata + JetBrains Mono; fonts in `public/fonts/` for preload, see commit body)
 - [x] T2 — Settings + persistence layers (`sonnet`) — `35fee75`
 - [x] T3 — Transcript/input upgrades, shortcuts (`sonnet`) — `314eecb`
-- [ ] T4 — Auto-map (`opus`)
-- [ ] T5 — Scene panel: preload, flicker (`sonnet`)
+- [x] T4 — Auto-map (`opus`) — `3cf6d96` (also adds `.claude/**` ignores to eslint/vitest for orchestration worktrees)
+- [x] T5 — Scene panel: preload, flicker (`sonnet`) — `81180dc` (+ `91770fe` wiring the lampWarn prop through App.tsx)
 - [ ] T6 — Death modal, hardcore, undo (`opus`)
 - [ ] T7 — Journal + hints panels (`sonnet`)
 - [ ] T8 — Save metadata + export/import (`sonnet`)
