@@ -10,5 +10,11 @@
     "name": "Unhurried",
     "description": "Finish the cave without dying once.",
     "hidden": false
+  },
+  {
+    "id": "no-hints",
+    "name": "Self-Reliant",
+    "description": "Finish the cave without taking a single hint.",
+    "hidden": false
   }
 ]

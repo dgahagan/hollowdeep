@@ -2,7 +2,7 @@
   "verbs": [
     {
       "id": "use",
-      "words": ["use", "oil", "apply", "pour", "grease"],
+      "words": ["use", "oil", "apply", "pour", "grease", "shake", "rattle"],
       "patterns": ["VN", "VNPN"]
     },
     {

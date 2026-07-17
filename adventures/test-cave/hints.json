@@ -1,4 +1,21 @@
 {
   "noHintMessageId": "no-hints",
-  "hints": []
+  "hints": [
+    {
+      "id": "grate-hint",
+      "when": [{ "notFlag": "grate-open" }],
+      "ladder": [
+        "The grate is locked, and a lock is usually somebody's answer to a key that exists. Things around here get hidden in things."
+      ]
+    },
+    {
+      "id": "rusted-door-hint",
+      "when": [{ "all": [{ "visited": "grotto" }, { "notFlag": "door-oiled" }] }],
+      "ladder": [
+        "The door in the grotto has not moved in a long time, and rust is the reason. Rust is a problem people were solving before you were born.",
+        "What loosens rust is oil, and you have passed some. Think about what a lamp burns.",
+        "Pour the oil flask on the rusted door — 'oil door with flask' — and the hinges will remember their job."
+      ]
+    }
+  ]
 }
