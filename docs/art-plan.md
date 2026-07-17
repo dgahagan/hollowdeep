@@ -90,7 +90,7 @@ palette/pixel-related, which this project explicitly does not do.
 ## 3. The subjects — what actually gets painted
 
 The module today ships **97 artIds** (58 locations sharing one maze artId ⇒ 53
-scene ids, plus items and creatures). Phase B adds four marquee subjects.
+scene ids, plus items and creatures). Phase B adds eleven marquee subjects.
 Roughly:
 
 | Class | Count | Examples |
@@ -105,7 +105,7 @@ UI accents (FR-4.1's tail) stay CSS/procedural and belong to Phase 3 — a
 generated texture is the wrong tool for a border.
 
 The definitive subject list is derived from the module by a tool, not by hand:
-`tools/art/audit.ts` diffs `art-manifest.json` against every `artId` the
+`tools/art/audit.ts` diffs `dev/art/hollowdeep.json` against every `artId` the
 module references, so a content change that adds an artId fails loudly in the
 art pipeline too.
 
