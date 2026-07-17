@@ -470,7 +470,7 @@ markers inside its own region.
 - [x] T2 — Region A: Weir's Landing (`opus`) — `eb28ee7`
 - [x] T3 — Region B: the Workings (`opus`) — `47eb6e7`
 - [x] T4 — Region C: cavern, maze, creatures (`opus`) — `57a0cdf`
-- [ ] T5 — Regions D & E: past the breach, the seal (`opus`)
+- [x] T5 — Regions D & E: past the breach, the seal (`opus`) — `e5dec1f`
 - [ ] T6 — Magic words and the gunnis (`opus`)
 - [ ] T7 — Endgame: two endings, ranks, achievements (`opus`)
 - [ ] T8 — Hint ladders (`opus`)
