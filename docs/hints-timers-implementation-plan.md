@@ -354,7 +354,7 @@ Carried from design plan §11 — do not create tasks for these:
 
 ## Progress Tracker
 
-- [ ] T1 — Schema v2: new vocabulary, 11th document, version bumps, catch-up (`opus`)
+- [x] T1 — Schema v2: new vocabulary, 11th document, version bumps, catch-up (`opus`) — `57871c0` (startTimer stub is a no-op, not a throw — the frozen-union coverage test asserts every effect applies cleanly; T3 replaces it. Loader-test handshake case moved to ^9.0.0, since ^2.0.0 now matches.)
 - [ ] T2 — GameState fields and the 1 → 2 save migration (`opus`)
 - [ ] T3 — The timer system (`opus`)
 - [ ] T4 — The hint verb, selection rule, and hintsAtMost (`sonnet`)
