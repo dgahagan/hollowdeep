@@ -10,7 +10,7 @@ import { ENGINE_VERSION } from './engine/engine';
 // ─────────────────────────────────────────────────────────────────────────────
 // Adventure loader (design plan §7, T6).
 //
-// Reads a module's ten documents through an injected `read`, zod-parses each
+// Reads a module's eleven documents through an injected `read`, zod-parses each
 // against its own schema (T4), assembles the whole `AdventureModule`, checks
 // the `manifest.engineVersion` handshake, then cross-checks references
 // (`checkConsistency`, T5). All failures — read, JSON syntax, schema,
@@ -44,7 +44,7 @@ export { ENGINE_VERSION };
  */
 export type LoadErrorCode = ConsistencyErrorCode | 'read' | 'parse' | 'schema' | 'engine-version';
 
-/** Every one of the ten adventure documents, plus the `art/` directory (not a JSON document, but still a thing a caller can fail to read). */
+/** Every one of the eleven adventure documents, plus the `art/` directory (not a JSON document, but still a thing a caller can fail to read). */
 export type LoadErrorDocument = ModuleDocumentName | 'art';
 
 export interface LoadError {

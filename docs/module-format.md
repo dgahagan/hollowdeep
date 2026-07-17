@@ -23,7 +23,7 @@ npm run validate -- adventures/my-cave
 
 ## The shape of a module
 
-Ten JSON documents plus an art folder. All ten are required.
+Eleven JSON documents plus an art folder. All eleven are required.
 
 ```
 adventures/my-cave/
@@ -36,6 +36,7 @@ adventures/my-cave/
   vocabulary.json    your own verbs, noise words, magic words
   scoring.json       what points are for, and the rank table
   achievements.json  achievements
+  hints.json         condition-gated hint ladders for the `hint` verb
   walkthrough.json   a scripted winning run — the test suite plays it
   art/               one image per artId
 ```
@@ -58,7 +59,7 @@ The adventure's identity and its global rules.
   "id": "test-cave",
   "title": "The Test Cave",
   "version": "1.0.0",
-  "engineVersion": "^1.0.0",
+  "engineVersion": "^2.0.0",
   "startLocation": "road",
   "repositoryLocation": "shed",
   "carryLimit": 5,
@@ -82,7 +83,9 @@ The adventure's identity and its global rules.
 - **`engineVersion`** is a semver range checked against the engine at load. A
   module that needs a feature this engine lacks refuses to load rather than
   half-working. The check **fails closed**: a range the engine cannot parse is a
-  refusal, not a shrug.
+  refusal, not a shrug. The current engine is **2.0.0** — the major marks
+  `hints.json` becoming required, so a module written against the ten-document
+  format declares `^1.x`, gets a clean refusal, and knows exactly why.
 - **`repositoryLocation`** is where treasure counts as deposited.
 - **`maxScore`** must equal the points your content actually awards. The
   validator does that arithmetic (see [Scoring](#scoringjson)); it is the single
@@ -264,9 +267,46 @@ true, **do** Z.
 | `turnStart` | a given turn begins | — (needs `turn`) |
 | `flagSet` | a flag becomes set | flag id |
 | `word` | a magic word is said | — (needs `word`) |
+| `timerExpired` | a running timer's count runs out | timer id (**required**) |
 
 `verb` is how an intransitive adventure verb works (test-cave's `jump`). A verb
 with no engine handler and no matching event is a nudge that costs no turn.
+
+### Timers
+
+The `startTimer` effect names a timer and a turn count; `timerExpired` is how
+you listen for it. Timer ids are an implicit namespace like flags — created by
+use, no declaration. **The contract:** after a player action arms
+`startTimer t n`, the player has exactly `n` further consumed turns; the expiry
+fires during the n-th's world tick, *after* its action — so the n-th move may
+be the one that gets them clear, and your guard sees them already gone. Free
+actions (typos, `score`, `hint`) advance nothing: timers run on the same clock
+the lamp burns by.
+
+```json
+{ "id": "shake-the-tree", "on": { "type": "use", "target": "tree-trunk" },
+  "do": [
+    { "kind": "print", "text": "A low hum starts up overhead." },
+    { "kind": "startTimer", "timer": "bee-swarm", "turns": 3 }
+  ] }
+```
+
+Then two `timerExpired` events with opposite guards — one that fires if the
+player stayed, one if they left (test-cave's bee swarm is the worked example).
+Three things worth knowing:
+
+- **Re-arming resets.** A second `startTimer` on a running id starts the count
+  over; guard the arming event with a flag if you want one-shot arming.
+- **An arming `use` event must print something.** The `use` handler treats an
+  event that produced no output as "nothing happened" and refuses the turn —
+  and you owed the player a telegraph anyway.
+- **A timer armed from inside a world-tick event** (a `turnStart` event, or a
+  `timerExpired` event re-arming itself) counts from the next turn — a
+  self-re-arming timer has period n+1.
+
+The validator rejects a `timerExpired` listening for a timer no `startTimer`
+ever names; a started timer nobody listens for is legal, like a flag set and
+never read.
 
 ### Conditions (`if`)
 
@@ -286,6 +326,7 @@ with no engine handler and no matching event is a nudge that costs no turn.
 | `itemAt` | `{item, location}` — an item is somewhere |
 | `creatureAt` | `{creature, location}` — a creature is somewhere |
 | `deathsAtMost` | the player has died at most N times |
+| `hintsAtMost` | the player has revealed at most N hint rungs — the no-hints achievement's bridge |
 | `chance` | a seeded roll, 0..1 — **the only field that consumes RNG** |
 | `all` | every listed condition holds — the AND (needs `engineVersion ^1.1.0`) |
 
@@ -319,9 +360,10 @@ have to reason about the order of events sharing a trigger.
 
 ### Effects (`do`)
 
-**Frozen at twelve.** Adding one is a schema version bump, not a convenience —
-an open-ended effect vocabulary is how a data format quietly becomes a
-programming language.
+**Frozen at thirteen (v2).** Adding one is a schema version bump, not a
+convenience — an open-ended effect vocabulary is how a data format quietly
+becomes a programming language. (`startTimer` is the one v2 addition, and it
+arrived through its own design plan — the process working, not an exception.)
 
 | Effect | Does |
 |---|---|
@@ -336,6 +378,7 @@ programming language.
 | `award` | grant an achievement |
 | `endGame` | end it, win or lose |
 | `activateCreature` | wake a creature |
+| `startTimer` | start (or reset) a named timer — see [Timers](#timers) |
 
 `do` is **ordered**, and the order is observable.
 
@@ -386,6 +429,7 @@ been given is one they have to find.
 ```json
 {
   "deathPenalty": 10,
+  "hintPenalty": 5,
   "milestones": [{ "id": "grate", "points": 10, "when": [{ "flag": "grate-open" }] }],
   "ranks": [
     { "minScore": 0, "title": "Tourist" },
@@ -405,9 +449,11 @@ The arithmetic that must close:
 maxScore == Σ treasures (carryPoints + depositPoints) + Σ milestones.points
 ```
 
-Achievements award no points. `deathPenalty` is a deduction and does not count
-toward `maxScore`. The rank table needs a floor (`minScore <= 0`) and no
-duplicate thresholds; order does not matter.
+Achievements award no points. `deathPenalty` and `hintPenalty` are deductions
+and do not count toward `maxScore` — `hintPenalty` is charged per hint *rung*
+revealed (FR-7.2's "each step costing points"), and the score floors at 0. The
+rank table needs a floor (`minScore <= 0`) and no duplicate thresholds; order
+does not matter.
 
 ---
 
@@ -421,6 +467,50 @@ Granted by the `award` effect from an ordinary event — there is no separate
 achievement engine, and `Achievement` deliberately has no `when:`. Use the same
 Condition/Effect vocabulary as everything else. They are engine + transcript
 notice only in this phase; the UI is Phase 3.
+
+---
+
+## `hints.json`
+
+FR-7.2's gradual hint system: condition-gated ladders the `hint` verb reveals
+one rung at a time, nudge → hint → solution.
+
+```json
+{
+  "noHintMessageId": "no-hints",
+  "hints": [
+    {
+      "id": "rusted-door-hint",
+      "when": [{ "all": [{ "visited": "grotto" }, { "notFlag": "door-oiled" }] }],
+      "ladder": [
+        "The door has not moved in a long time, and rust is the reason.",
+        "What loosens rust is oil, and you have passed some.",
+        "Pour the oil flask on the rusted door and the hinges will remember their job."
+      ]
+    }
+  ]
+}
+```
+
+- A hint is **available** while `when` holds — the same condition grammar as
+  everything else, and it is also how a hint *retires*: the entry above closes
+  itself the moment `door-oiled` sets. There is no separate `until` field.
+- **Document order is priority order.** The `hint` verb reveals the next rung
+  of the *first* available entry whose ladder is not exhausted; an exhausted
+  ladder is skipped, so the player moves on to the next relevant puzzle.
+- Each rung revealed costs `scoring.hintPenalty` and increments the counter
+  `hintsAtMost` reads. `hint` never costs a turn — asking for help during a
+  timed hazard must not advance the hazard.
+- Three rungs is the convention, not a rule: a findable treasure may need one;
+  a maze may want four.
+- `noHintMessageId` is what `hint` says when nothing is available. Required —
+  an adventure may offer no hints (`"hints": []` is legal), but it is not
+  allowed to be *silent* about it, because all player-facing prose belongs to
+  the adventure.
+
+**A ladder rung must never print a magic word** (FR-1.9 — the same rule as
+suggestions and help). A word-secret's solution rung points at where the word
+is *learned* ("the foreman kept notes"), never at the word itself.
 
 ---
 
@@ -473,7 +563,11 @@ Beyond schema conformance, ~40 consistency rules. The useful ones to know:
 - every `artId` has a file;
 - every location is reachable from `startLocation`;
 - `maxScore` reconciles;
-- every `walkthrough.json` command parses.
+- every `walkthrough.json` command parses;
+- every `timerExpired` trigger names a timer some `startTimer` actually starts;
+- hint `when` conditions resolve (and their flag reads need a writer, like any
+  other flag read), `noHintMessageId` resolves, and ladder prose goes through
+  the borrowed-text backstop like all other prose.
 
 Errors name the document, the id, and the field. Trust them: a module that
 validates is one the engine can actually run.

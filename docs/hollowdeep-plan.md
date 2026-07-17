@@ -3,8 +3,10 @@
 **Status:** READY — signed off 2026-07-17. Fiction, map (§4; room-by-room in
 §11), treasures and their chains (§5, §12), creatures (§6), scoring (§7), words
 and secrets (§8), the maze (§9), and all three §10 questions are settled.
-Prerequisite before authoring: the hints + timed-events engine work (§10.2,
-§10.3) needs its own design plan and must land first.
+Prerequisite before authoring: ~~the hints + timed-events engine work (§10.2,
+§10.3) needs its own design plan and must land first~~ — **built 2026-07-17**
+(`docs/hints-timers-plan.md`, IMPLEMENTED): `startTimer`/`timerExpired`/
+`hintsAtMost`/`hints.json`/the `hint` verb/`SAVE_VERSION 2` all shipped.
 **Phase:** 2 (content). Blocks: all Hollowdeep authoring, Phase B art, v1.
 **Settled by:** [PROJECT-BRIEF.md](PROJECT-BRIEF.md) §2 and §9 — decisions there
 are not re-litigated here.
@@ -66,12 +68,14 @@ Adding a 13th effect is a schema version bump and an engine change. **If a
 puzzle needs one, that is a finding for this document, not a decision to make
 while authoring.**
 
-> **This vocabulary is what is built today, and it is already growing.** The
-> process above worked exactly once and produced two findings, both settled in
-> §10 and both prerequisite engine work: hints (§10.2) and relative timers
-> (§10.3, which adds the 13th effect `startTimer`, a 12th trigger
-> `timerExpired`, and an 11th condition field `hintsAtMost` arrives with hints).
-> Design against the grown vocabulary; **author against it only once it ships.**
+> **The grown vocabulary shipped 2026-07-17** (`docs/hints-timers-plan.md`,
+> IMPLEMENTED): the 13th effect `startTimer`, the 12th trigger `timerExpired`,
+> and the 11th condition field `hintsAtMost` are built, validated, and
+> exercised by test-cave. Authoring may proceed against them. One
+> expressibility note from that work: the condition grammar has no complement
+> of `atLocation`, so a timer's "else the player left" guard is an OR-list of
+> every other room (test-cave's bee swarm is the worked example — the garnet
+> and gour chains will want the same shape).
 
 ### Consequences a designer must plan around
 
@@ -81,7 +85,7 @@ These are not bugs. They are the shape of the thing:
 |---|---|
 | **One lamp per adventure** | `manifest.lamp` is singular and `GameState` tracks one `lampFuel`. A second fuel-burning light source is a **state-shape change and a save migration** — not authorable. Design one light source. |
 | **No counters** | Flags are `boolean \| number`, but no effect *increments* one. "Do X three times" cannot be counted. Model repetition as distinct flags, or don't. |
-| **Timers: being built** | *Was:* `turnStart` fires on an absolute turn number only, so "N turns after X" had no expression. **Settled 2026-07-17 (§10.3): relative timers are being added** — `startTimer` effect, `timerExpired` trigger, `GameState.timers`. Design freely against them, but they are not built yet. |
+| **Timers: built** | *Was:* `turnStart` fires on an absolute turn number only, so "N turns after X" had no expression. **Built 2026-07-17 (§10.3)** — `startTimer` effect, `timerExpired` trigger, `GameState.timers`. Contract: `startTimer t n` from a player action = exactly n further consumed turns, expiry after the n-th's action. An arming `use` event must print (a silent one refuses the turn), and there is no complement of `atLocation` — "the player left" is an OR of the other rooms. |
 | **`chance` is the only randomness** | And it consumes RNG, so it perturbs seeded tests. Fine in flavour; risky on the critical path — the walkthrough must win at every seed. |
 | **A container is how you make a door** | `capacity: 0` + `locked` + `keyId`. That is the grate, and it is the only lock mechanism. |
 | **No liquid model** | FR-1.10's "bottle of water/oil" is `moveItem` plus flags. Pouring is a `use` trigger that sets a flag; there is no volume. |
@@ -108,8 +112,8 @@ maxScore  ==  Σ treasures (carryPoints + depositPoints)  +  Σ milestones.point
 
 | Gap | Status |
 |---|---|
-| **Hints have no home in the format.** SCOPE Phase 2 says "author … hints … as module data"; there are ten module documents and none of them is `hints.json`. FR-7.2 (nudge → hint → solution) is **[S]** — but FR-1.5 **[M]** and FR-1.12 both depend on it. | **Settled — see §10.2.** The format grows an eleventh document. Prerequisite engine work; blocks authoring. |
-| **No timed events relative to an action.** | **Settled — see §10.3.** Being added, on the same `SAVE_VERSION` bump as hints. |
+| **Hints have no home in the format.** SCOPE Phase 2 says "author … hints … as module data"; there are ten module documents and none of them is `hints.json`. FR-7.2 (nudge → hint → solution) is **[S]** — but FR-1.5 **[M]** and FR-1.12 both depend on it. | **Built — see §10.2.** `hints.json` is the eleventh required document; the `hint` verb, `hintPenalty`, and `hintsAtMost` shipped with it. |
+| **No timed events relative to an action.** | **Built — see §10.3.** Landed on the same `SAVE_VERSION` bump as hints (1 → 2), as planned. |
 
 ---
 

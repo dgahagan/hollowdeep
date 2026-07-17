@@ -94,6 +94,7 @@ export const helpHandler: ActionHandler = (module, state) => {
     'Bare directions work too: n, s, e, w, ne, nw, se, sw, up, down, in, out.',
     'Useful verbs: look (l), examine (x), take, drop, open, close, read, search, inventory (i), wait (z), again (g).',
     'Type `verbose` for full descriptions every time, or `brief` to go back to short ones on places you have seen.',
+    'Stuck? Type `hint` — it costs a few points, and never costs a turn.',
   ].join(' ');
   return refuse(state, text);
 };
