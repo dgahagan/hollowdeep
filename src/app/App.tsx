@@ -21,7 +21,30 @@ import './app.css';
 // entire write path, whether the input came from typing (CommandInput) or
 // clicking (ActionBar/InventoryPanel) — FR-2.7's "clicking IS typing".
 
-const ADVENTURE_BASE_DIR = 'adventures/test-cave';
+/**
+ * Adventures this dev build knows how to find on disk (`adventures/<id>`).
+ * Not Phase 3's adventure-select screen — just enough to let `?adventure=`
+ * pick Hollowdeep or fall back to the `test-cave` fixture without a select
+ * UI or any chrome.
+ */
+const KNOWN_ADVENTURE_IDS = ['hollowdeep', 'test-cave'] as const;
+type KnownAdventureId = (typeof KNOWN_ADVENTURE_IDS)[number];
+
+const DEFAULT_ADVENTURE_ID: KnownAdventureId = 'hollowdeep';
+
+function isKnownAdventureId(id: string): id is KnownAdventureId {
+  return (KNOWN_ADVENTURE_IDS as readonly string[]).includes(id);
+}
+
+/**
+ * Which adventure to load: `?adventure=<id>` in the URL, defaulting to
+ * Hollowdeep. Reads `window.location.search` directly rather than a router —
+ * this is a dev convenience, not the Phase 3 select screen, so there's
+ * nothing else in the URL to coordinate with.
+ */
+function adventureIdFromLocation(): string {
+  return new URLSearchParams(window.location.search).get('adventure') ?? DEFAULT_ADVENTURE_ID;
+}
 
 type LoadState =
   | { status: 'loading' }
@@ -38,14 +61,32 @@ function toError(err: unknown): Error {
  * error boundary, which only catches things thrown during render. Storing
  * the rejection in state and re-throwing it from `AdventureGate`'s render
  * body is the bridge.
+ *
+ * An `id` outside `KNOWN_ADVENTURE_IDS` (a typo'd `?adventure=`) takes the
+ * same bridge: rather than a raw fetch failure, `state` starts out already
+ * in `error` (set in `useState`'s lazy initializer, not the effect — an
+ * effect setting state synchronously on mount is a react-hooks/no-op lint
+ * error) with a message naming the bad id and the valid ones, so it lands on
+ * the same "adventure could not be loaded" presentation as a real load error.
  */
-function useAdventure(baseDir: string): LoadState {
-  const [state, setState] = useState<LoadState>({ status: 'loading' });
+function useAdventure(id: string): LoadState {
+  const [state, setState] = useState<LoadState>(() =>
+    isKnownAdventureId(id)
+      ? { status: 'loading' }
+      : {
+          status: 'error',
+          error: new Error(
+            `Unknown adventure "${id}" (from ?adventure=). Known adventures: ${KNOWN_ADVENTURE_IDS.join(', ')}.`,
+          ),
+        },
+  );
 
   useEffect(() => {
+    if (!isKnownAdventureId(id)) return undefined;
+
     let cancelled = false;
 
-    loadAdventure(fetchReader, baseDir)
+    loadAdventure(fetchReader, `adventures/${id}`)
       .then((module) => {
         if (!cancelled) setState({ status: 'ready', module });
       })
@@ -56,13 +97,13 @@ function useAdventure(baseDir: string): LoadState {
     return () => {
       cancelled = true;
     };
-  }, [baseDir]);
+  }, [id]);
 
   return state;
 }
 
-function AdventureGate({ baseDir }: { baseDir: string }) {
-  const adventure = useAdventure(baseDir);
+function AdventureGate({ id }: { id: string }) {
+  const adventure = useAdventure(id);
 
   if (adventure.status === 'error') {
     // Re-thrown during render so the surrounding `ErrorBoundary` (which only
@@ -161,7 +202,7 @@ function Game({ module }: { module: AdventureModule }) {
 export default function App() {
   return (
     <ErrorBoundary>
-      <AdventureGate baseDir={ADVENTURE_BASE_DIR} />
+      <AdventureGate id={adventureIdFromLocation()} />
     </ErrorBoundary>
   );
 }
