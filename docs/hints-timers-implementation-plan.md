@@ -357,7 +357,7 @@ Carried from design plan §11 — do not create tasks for these:
 - [x] T1 — Schema v2: new vocabulary, 11th document, version bumps, catch-up (`opus`) — `57871c0` (startTimer stub is a no-op, not a throw — the frozen-union coverage test asserts every effect applies cleanly; T3 replaces it. Loader-test handshake case moved to ^9.0.0, since ^2.0.0 now matches.)
 - [x] T2 — GameState fields and the 1 → 2 save migration (`opus`) — `e0dcf8c` (v0Blob re-fabricated as a true v0 — missing all four latter-day fields — so the old v0 test now exercises the 0→1→2 chain for free)
 - [x] T3 — The timer system (`opus`) — `fac0ce2` (expiry fires on *strictly-past*, not at-or-past — the design plan's §4.3 parenthetical about increment order was wrong for action effects, and strict-past is what keeps its stated n-further-moves contract exact. Tick-armed timers count from the next turn; documented. **Finding:** useHandler treats output-less use events as refusals while keeping their state mutations — pre-existing, flagged for the human, not fixed here.)
-- [ ] T4 — The hint verb, selection rule, and hintsAtMost (`sonnet`)
+- [x] T4 — The hint verb, selection rule, and hintsAtMost (`sonnet`) — `dce5efb` (handler lives in meta.ts beside the other free verbs; lookupString exported from events.ts rather than duplicated; no app change needed — TranscriptPanel has no exhaustive kind switch)
 - [ ] T5 — Validator additions and golden fixtures (`sonnet`)
 - [ ] T6 — test-cave exercises everything (`opus`)
 - [ ] T7 — Integration tests against the real fixture (`sonnet`)
