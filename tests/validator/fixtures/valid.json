@@ -105,7 +105,24 @@
     "noiseWords": [],
     "magicWords": []
   },
-  "events": [],
+  "events": [
+    {
+      "id": "arm-trap",
+      "once": true,
+      "on": { "type": "enter", "target": "cave" },
+      "do": [
+        { "kind": "startTimer", "timer": "trap-timer", "turns": 3 }
+      ]
+    },
+    {
+      "id": "trap-springs",
+      "once": false,
+      "on": { "type": "timerExpired", "target": "trap-timer" },
+      "do": [
+        { "kind": "print", "text": "A grinding sound echoes through the cave." }
+      ]
+    }
+  ],
   "scoring": {
     "milestones": [],
     "deathPenalty": 0,
@@ -135,6 +152,12 @@
   },
   "hints": {
     "noHintMessageId": "no-hints",
-    "hints": []
+    "hints": [
+      {
+        "id": "find-idol",
+        "when": [{ "visited": "cave" }],
+        "ladder": ["Check the shed for something valuable."]
+      }
+    ]
   }
 }

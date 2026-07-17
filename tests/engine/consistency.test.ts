@@ -21,7 +21,11 @@ import { checkConsistency, type ConsistencyError } from '../../src/engine/schema
 //     clearFlag, and a once:true addScore effect, all resolving cleanly;
 //   - a magic word pointing at a real event;
 //   - a milestone whose flag read is satisfied by a real setFlag/clearFlag;
-//   - a static creature so spawn.locations and artId get checked too.
+//   - a static creature so spawn.locations and artId get checked too;
+//   - a startTimer/timerExpired event pair (arm-vault-alarm/vault-alarm-rings)
+//     where the timer id started is exactly the one the expiry listens for;
+//   - a hints.json entry whose `when` flag read is satisfied the same way a
+//     milestone's is, and whose ladder rung is original prose.
 //
 // maxScore = idol (20 + 25) + vault-milestone (10) + bonus-idol addScore (5,
 // once: true) = 60.
@@ -207,6 +211,18 @@ const rawValidModule = {
       on: { type: 'word', word: 'zeeble' },
       do: [{ kind: 'teleport', to: 'road' }],
     },
+    {
+      id: 'arm-vault-alarm',
+      once: true,
+      on: { type: 'enter', target: 'vault' },
+      do: [{ kind: 'startTimer', timer: 'vault-alarm', turns: 2 }],
+    },
+    {
+      id: 'vault-alarm-rings',
+      once: false,
+      on: { type: 'timerExpired', target: 'vault-alarm' },
+      do: [{ kind: 'print', text: 'A bell tolls somewhere above the vault.' }],
+    },
   ],
   scoring: {
     milestones: [{ id: 'vault-milestone', points: 10, when: [{ flag: 'vault-open' }] }],
@@ -233,7 +249,16 @@ const rawValidModule = {
     steps: [{ cmd: 'look' }],
     expectedScore: 60,
   },
-  hints: { noHintMessageId: 'no-hints', hints: [] },
+  hints: {
+    noHintMessageId: 'no-hints',
+    hints: [
+      {
+        id: 'vault-hint',
+        when: [{ flag: 'vault-open' }],
+        ladder: ['Something in the vault seems to be guarding it.'],
+      },
+    ],
+  },
 };
 
 const validModule: AdventureModule = zAdventureModule.parse(rawValidModule);
@@ -1121,5 +1146,136 @@ describe('checkConsistency — duplicate ids', () => {
         field: 'id',
       }),
     ).toBe(true);
+  });
+
+  it('flags two hints sharing an id', () => {
+    const broken = mutate((m) => {
+      const hint = m.hints.hints.find((h) => h.id === 'vault-hint');
+      if (hint) m.hints.hints.push({ ...hint });
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'duplicate-id',
+        document: 'hints.json',
+        id: 'vault-hint',
+        field: 'id',
+      }),
+    ).toBe(true);
+  });
+});
+
+// ─── timers ──────────────────────────────────────────────────────────────────
+
+// Added with schema v2 (hints-timers plan §8). `timer` is an implicit
+// namespace like flags — no declaration site — so a `timerExpired` trigger
+// naming one no `startTimer` effect ever starts is the same typo shape as
+// `unwritten-flag-read`: a listener that can never hear.
+describe('checkConsistency — timers', () => {
+  it('flags a timerExpired trigger naming a timer no startTimer ever starts', () => {
+    const broken = mutate((m) => {
+      const event = m.events.find((e) => e.id === 'vault-alarm-rings');
+      if (event) event.on = { type: 'timerExpired', target: 'phantom-timer' };
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'unstarted-timer-expiry',
+        document: 'events.json',
+        id: 'vault-alarm-rings',
+        field: 'on.target',
+      }),
+    ).toBe(true);
+  });
+
+  it('does not flag a timerExpired trigger whose timer some startTimer starts', () => {
+    // vault-alarm is started by arm-vault-alarm and listened for by
+    // vault-alarm-rings — the valid module's own baseline.
+    expect(
+      checkConsistency(validModule, validArtFiles).some((e) => e.code === 'unstarted-timer-expiry'),
+    ).toBe(false);
+  });
+
+  it('does not flag a startTimer nobody listens for — the legal, flag-symmetric case', () => {
+    // A started timer with no timerExpired trigger anywhere is exactly like a
+    // flag that is set but never read: legal, and deliberately unchecked.
+    const clone = mutate((m) => {
+      m.events.push({
+        id: 'arm-unheard-timer',
+        once: true,
+        on: { type: 'enter', target: 'shed' },
+        do: [{ kind: 'startTimer', timer: 'never-listened-for', turns: 5 }],
+      });
+    });
+    expect(
+      checkConsistency(clone, validArtFiles).some((e) => e.code === 'unstarted-timer-expiry'),
+    ).toBe(false);
+  });
+});
+
+// ─── hints.json ──────────────────────────────────────────────────────────────
+
+// Added with schema v2 (hints-timers plan §8). hints.json's `when` runs
+// through the same checkConditions every other document's conditions do, so
+// dangling refs and flag reads are covered "for free" — these tests verify
+// that is actually true rather than assuming it.
+describe('checkConsistency — hints.json', () => {
+  it('flags a dangling condition reference inside a hint when', () => {
+    const broken = mutate((m) => {
+      const hint = m.hints.hints.find((h) => h.id === 'vault-hint');
+      if (hint?.when[0]) hint.when[0] = { atLocation: 'no-such-place' };
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'dangling-condition-at-location',
+        document: 'hints.json',
+        id: 'vault-hint',
+        field: 'when[0].atLocation',
+      }),
+    ).toBe(true);
+  });
+
+  it('flags a hint when reading a flag no effect ever sets', () => {
+    const broken = mutate((m) => {
+      const hint = m.hints.hints.find((h) => h.id === 'vault-hint');
+      if (hint?.when[0]) hint.when[0] = { flag: 'never-written-flag' };
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'unwritten-flag-read',
+        document: 'hints.json',
+        id: 'vault-hint',
+        field: 'when[0].flag',
+      }),
+    ).toBe(true);
+  });
+
+  it('flags a noHintMessageId that resolves to no known string', () => {
+    const broken = mutate((m) => {
+      m.hints.noHintMessageId = 'no-such-string';
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), {
+        code: 'dangling-no-hint-message',
+        document: 'hints.json',
+        id: 'hints',
+        field: 'noHintMessageId',
+      }),
+    ).toBe(true);
+  });
+
+  it('flags a ladder rung borrowed verbatim from the source games', () => {
+    const broken = mutate((m) => {
+      const hint = m.hints.hints.find((h) => h.id === 'vault-hint');
+      if (hint) hint.ladder = ['You are likely to be eaten by a grue.'];
+    });
+    const errors = checkConsistency(broken, validArtFiles).filter((e) => e.code === 'borrowed-source-text');
+    expect(errors.length).toBe(1);
+    expect(errors[0]?.document).toBe('hints.json');
+    expect(errors[0]?.id).toBe('vault-hint');
+    expect(errors[0]?.field).toBe('ladder[0]');
+  });
+
+  it('does not flag the valid module’s own hint entry', () => {
+    const errors = checkConsistency(validModule, validArtFiles);
+    expect(errors.some((e) => e.document === 'hints.json')).toBe(false);
   });
 });

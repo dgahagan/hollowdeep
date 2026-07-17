@@ -1,0 +1,163 @@
+{
+  "manifest": {
+    "id": "golden-fixture",
+    "title": "Golden Fixture",
+    "version": "1.0.0",
+    "engineVersion": "^2.0.0",
+    "startLocation": "road",
+    "repositoryLocation": "shed",
+    "maxScore": 20,
+    "carryLimit": 5,
+    "lamp": {
+      "itemId": "lamp",
+      "startFuel": 50,
+      "warnAt": [
+        10
+      ],
+      "warnMessageId": "lamp-low",
+      "exhaustMessageId": "lamp-dead"
+    },
+    "darkness": {
+      "deathChance": 0.1,
+      "warningMessageId": "dark-warning",
+      "deathMessageId": "dark-death"
+    }
+  },
+  "locations": [
+    {
+      "id": "road",
+      "name": "Road",
+      "brief": "A dusty road.",
+      "full": "A dusty road running past a shed and a cave mouth.",
+      "artId": "road",
+      "light": "lit",
+      "exits": {
+        "e": {
+          "to": "shed"
+        },
+        "n": {
+          "to": "cave"
+        }
+      }
+    },
+    {
+      "id": "shed",
+      "name": "Shed",
+      "brief": "A small shed.",
+      "full": "A small shed, its door hanging loose.",
+      "artId": "shed",
+      "light": "lit",
+      "exits": {
+        "w": {
+          "to": "road"
+        }
+      }
+    },
+    {
+      "id": "cave",
+      "name": "Cave",
+      "brief": "A dark cave.",
+      "full": "A dark, damp cave.",
+      "artId": "cave",
+      "light": "dark",
+      "exits": {
+        "s": {
+          "to": "road"
+        },
+        "e": {
+          "to": "shed"
+        }
+      }
+    }
+  ],
+  "items": [
+    {
+      "id": "lamp",
+      "names": [
+        "lamp"
+      ],
+      "brief": "A brass lamp lies here.",
+      "description": "A dependable brass lamp.",
+      "artId": "lamp",
+      "portable": true,
+      "initialLocation": "inventory",
+      "lightSource": true
+    },
+    {
+      "id": "idol",
+      "names": [
+        "idol"
+      ],
+      "brief": "A jade idol lies here.",
+      "description": "A small jade idol, cool to the touch.",
+      "artId": "idol",
+      "portable": true,
+      "initialLocation": "shed",
+      "treasure": {
+        "carryPoints": 10,
+        "depositPoints": 10
+      }
+    }
+  ],
+  "creatures": [],
+  "vocabulary": {
+    "verbs": [],
+    "noiseWords": [],
+    "magicWords": []
+  },
+  "events": [
+    {
+      "id": "arm-trap",
+      "once": true,
+      "on": { "type": "enter", "target": "cave" },
+      "do": [
+        { "kind": "startTimer", "timer": "trap-timer", "turns": 3 }
+      ]
+    },
+    {
+      "id": "trap-springs",
+      "once": false,
+      "on": { "type": "timerExpired", "target": "trap-timer" },
+      "do": [
+        { "kind": "print", "text": "A grinding sound echoes through the cave." }
+      ]
+    }
+  ],
+  "scoring": {
+    "milestones": [],
+    "deathPenalty": 0,
+    "hintPenalty": 5,
+    "ranks": [
+      {
+        "minScore": 0,
+        "title": "Wanderer"
+      }
+    ]
+  },
+  "achievements": [],
+  "strings": {
+    "dark-warning": "It is pitch dark.",
+    "dark-death": "You stumble and fall.",
+    "lamp-low": "The lamp is getting dim.",
+    "lamp-dead": "The lamp goes out.",
+    "no-hints": "No hints here."
+  },
+  "walkthrough": {
+    "steps": [
+      {
+        "cmd": "look"
+      }
+    ],
+    "expectedScore": 20
+  },
+  "hints": {
+    "noHintMessageId": "no-such-string",
+    "hints": [
+      {
+        "id": "find-idol",
+        "when": [{ "visited": "cave" }],
+        "ladder": ["Check the shed for something valuable."]
+      }
+    ]
+  }
+}
