@@ -30,7 +30,10 @@ const DETERMINISM_HINT =
 
 export default tseslint.config(
   {
-    ignores: ['dist/**', 'node_modules/**', 'public/adventures/**', 'coverage/**'],
+    // `.claude/**` covers orchestration worktrees (git worktrees parked under
+    // .claude/worktrees/ during parallel tasks) — without it, `eslint .`
+    // wanders into a sibling checkout's dist/ and fails on its build output.
+    ignores: ['dist/**', 'node_modules/**', 'public/adventures/**', 'coverage/**', '.claude/**'],
   },
 
   // This config file is plain JS and isn't part of any tsconfig project, so

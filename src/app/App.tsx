@@ -24,6 +24,7 @@ import { InventoryPanel } from './InventoryPanel';
 import { StatusBar } from './StatusBar';
 import { SaveDialog } from './SaveDialog';
 import { SettingsPanel } from './SettingsPanel';
+import { MapOverlay } from './MapOverlay';
 import { loadSettings, saveSettings, TEXT_SCALE_BY_STEP, type Settings } from './uiState';
 import './fonts.css';
 import './theme.css';
@@ -340,14 +341,13 @@ function Game({ module }: { module: AdventureModule }) {
       />
       <SettingsPanel />
 
-      {/* Stub panels (T3): the `m`/`j`/`?` shortcuts route through the T1
-          overlay manager now so they're demonstrably wired, but the map
-          (T4) and journal (T7) have no real content yet, and help proper
-          (T10) is still a placeholder. Each says so, in the narrator's own
-          dry voice, rather than showing an empty dialog that looks broken. */}
-      <Overlay id="map" title="Map">
-        <p>The map arrives with T4. For now, the cave keeps its own counsel.</p>
-      </Overlay>
+      <MapOverlay module={module} state={state} />
+
+      {/* Stub panels (T3): the `j`/`?` shortcuts route through the T1
+          overlay manager now so they're demonstrably wired, but the journal
+          (T7) has no real content yet, and help proper (T10) is still a
+          placeholder. Each says so, in the narrator's own dry voice, rather
+          than showing an empty dialog that looks broken. */}
       <Overlay id="journal" title="Journal">
         <p>The journal arrives with T7. Your memory will have to do.</p>
       </Overlay>

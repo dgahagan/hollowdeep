@@ -39,5 +39,9 @@ export default defineConfig({
   plugins: [react(), copyAdventuresPlugin()],
   test: {
     environment: 'node',
+    // Defaults plus `.claude/**`: orchestration parks git worktrees under
+    // .claude/worktrees/ during parallel tasks, and each contains a full
+    // copy of tests/ that must not run (or double-count) from this checkout.
+    exclude: ['**/node_modules/**', '**/dist/**', '.claude/**'],
   },
 });
