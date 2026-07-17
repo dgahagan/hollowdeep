@@ -1,4 +1,382 @@
 {
   "noHintMessageId": "no-hints",
-  "hints": []
+  "hints": [
+    {
+      "id": "office-lock",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "main-street"
+            },
+            {
+              "notFlag": "office-door-open"
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The assay office kept the town's gold, so the town kept the office locked. Locks outlive their keyholders.",
+        "Where does a town that buried half its men keep the key to the room that mattered? Somewhere honest. Somewhere it goes to remember them.",
+        "The key hangs beneath the memorial board in the chapel. Take it, unlock the door with the key, open the door, and search the bench inside."
+      ]
+    },
+    {
+      "id": "canary-ward",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "behind-the-seal"
+            },
+            {
+              "itemAt": {
+                "item": "canary-cage",
+                "location": "general-store"
+              }
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The storekeeper recommends the canary, and he is not making conversation.",
+        "Miners carried birds below because the birds knew things first. What killed miners in the Hollowdeep was not always the air.",
+        "Take the canary from the general store — it is on credit — and carry the cage on every trip below the workings. While you hold it, the thing that walks the cavern keeps its distance."
+      ]
+    },
+    {
+      "id": "payroll-tin",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "junction"
+            },
+            {
+              "itemAt": {
+                "item": "payroll-tin",
+                "location": "timekeepers-nook"
+              }
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The timekeeper kept the wages, and the nook is barely a step off the junction. Nobody ever collected."
+      ]
+    },
+    {
+      "id": "pump-gate",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "shaft-head"
+            },
+            {
+              "notFlag": "pump-drained"
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The winze is full of black water, and keeping it out used to be somebody's whole job.",
+        "The great pump in the pump room is missing exactly one argument, and the stables are where handles go to be mended.",
+        "Take the pump handle from the stables to the pump room. Use the pump once to seat the handle, then use it again to drain the winze."
+      ]
+    },
+    {
+      "id": "garnets-stull",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "stull-gallery"
+            },
+            {
+              "itemAt": {
+                "item": "cut-garnets",
+                "location": "nowhere"
+              }
+            },
+            {
+              "notFlag": "roof-fallen"
+            }
+          ]
+        },
+        {
+          "all": [
+            {
+              "flag": "garnets-buried"
+            },
+            {
+              "itemAt": {
+                "item": "cut-garnets",
+                "location": "nowhere"
+              }
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The miners left the garnets and kept the roof up. That was not indecision. It was a priced decision.",
+        "The stull will come out if you pull it. What happens next happens on a schedule, and the schedule is short.",
+        "Pull the stull, take the garnets, and be out of the gallery within six moves. If the roof wins the race, the garnets keep — search the rubble afterward."
+      ]
+    },
+    {
+      "id": "foreman-effects",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "broken-drift"
+            },
+            {
+              "itemAt": {
+                "item": "foremans-watch",
+                "location": "nowhere"
+              }
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The foreman kept his effects, and nobody in ninety years has asked him for them.",
+        "He was a big man in good boots, and his pockets were part of his office.",
+        "Search the foreman. Take the watch, and read the tally book he carried — words written twice and underlined repay attention."
+      ]
+    },
+    {
+      "id": "magazine-key",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "foremans-office"
+            },
+            {
+              "itemAt": {
+                "item": "key-magazine",
+                "location": "nowhere"
+              }
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The foreman signed for everything, including the things that go bang.",
+        "Offices keep their secrets in furniture. His desk has a drawer with opinions.",
+        "Search the desk in the foreman's office. The magazine key is pushed to the back of the drawer."
+      ]
+    },
+    {
+      "id": "hoist-word",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "long-drift"
+            },
+            {
+              "visited": "shaft-head"
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The old men had working words, and the cave has heard them all. It remembers the useful ones.",
+        "One of them is scratched at waist height on a timber in the long drift, plain as a signature — with a note about where it works.",
+        "Read the scratched stull in the long drift, then say what it says while standing at the shaft head or the shaft foot."
+      ]
+    },
+    {
+      "id": "gunnis-word",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "broken-drift"
+            },
+            {
+              "notFlag": "gunnis-known"
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The last lousy point is real, and it is somewhere the assay ledger never went.",
+        "The foreman's tally book records one word twice, underlined hard enough to tear the paper. Words like that are addresses.",
+        "Read the tally book, stand in the broken drift, and say the underlined word."
+      ]
+    },
+    {
+      "id": "the-maze",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "twisty-1"
+            },
+            {
+              "notFlag": "breach-blasted"
+            }
+          ]
+        },
+        {
+          "all": [
+            {
+              "visited": "twisty-1"
+            },
+            {
+              "itemAt": {
+                "item": "miners-cache",
+                "location": "twisty-6"
+              }
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The passages are alike because nobody down there was decorating. Your own possessions, however, are not alike.",
+        "Drop something in a room and that room stops being every room. And somewhere in the maze, the air refuses to keep still.",
+        "Mark rooms with dropped items until the maze admits its shape. One room has a draught from the east — east from there is the breach. The dead end holds a cache worth the detour."
+      ]
+    },
+    {
+      "id": "flowstone-noise",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "gallery-of-veils"
+            },
+            {
+              "itemAt": {
+                "item": "silver-flowstone",
+                "location": "nowhere"
+              }
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The seam in the gallery of veils is worth more than the mine ever shipped. It is also, at present, part of the wall.",
+        "Freeing it is a question of leverage — and of what the noise will wake.",
+        "Use the steel gad on the seam. The crack will carry a long way. Be holding the canary's cage before you swing."
+      ]
+    },
+    {
+      "id": "gour-pearls",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "gour-pools"
+            },
+            {
+              "itemAt": {
+                "item": "cave-pearls",
+                "location": "gour-pools"
+              }
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The pearls sit behind a rim the water spent ages building, and the water is still on duty.",
+        "Taking them starts an argument you cannot win by standing in the room.",
+        "Take the pearls and leave the gour pools at once. You have about five moves before the water takes the room back."
+      ]
+    },
+    {
+      "id": "wedged-nugget",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "river-strand"
+            },
+            {
+              "itemAt": {
+                "item": "weir-nugget",
+                "location": "nowhere"
+              }
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The gleam in the pothole has outlasted a century of the river's own pulling. Your fingers are not news to it.",
+        "What shifts wedged things is steel and leverage, and the mine left plenty of both lying about.",
+        "Use the steel gad on the pothole."
+      ]
+    },
+    {
+      "id": "the-breach",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "breach-wall"
+            },
+            {
+              "visited": "magazine"
+            },
+            {
+              "notFlag": "breach-blasted"
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The wall at the end of the maze was mortared from the far side. Nobody builds like that to keep people out.",
+        "The mine kept powder for exactly this argument, and safety fuse for having it from a distance.",
+        "Carry the keg and the fuse coil to the breach. Use the keg, then use the fuse, then light the fuse. Do not light the keg. The label agrees."
+      ]
+    },
+    {
+      "id": "tally-stacks",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "tally-chamber"
+            },
+            {
+              "itemAt": {
+                "item": "tally-plate",
+                "location": "nowhere"
+              }
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The plates are a library, and libraries reward browsing.",
+        "One plate is not like the others, and it is not on top.",
+        "Search the stacks in the tally chamber, then read what you find."
+      ]
+    },
+    {
+      "id": "the-mechanism",
+      "when": [
+        {
+          "all": [
+            {
+              "visited": "antechamber"
+            },
+            {
+              "notFlag": "mechanism-turned"
+            }
+          ]
+        }
+      ],
+      "ladder": [
+        "The mechanism is not locked. It is particular.",
+        "It wants a hand that carries its weight differently than yours does — or something made by one.",
+        "Use the bronze tool from the toolroom on the mechanism. If you already banked the tool, fetch it back — the office lends against deposits."
+      ]
+    }
+  ]
 }
