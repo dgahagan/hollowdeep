@@ -1,8 +1,12 @@
-import { describe, expect, it } from 'vitest';
+import { readFile, readdir } from 'node:fs/promises';
+import path from 'node:path';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { zAdventureModule, type AdventureModule } from '../../src/engine/schema';
 import type { GameState, OutputEvent } from '../../src/engine/types';
 import { createGame } from '../../src/engine/state';
 import { step } from '../../src/engine/engine';
+import { loadAdventure } from '../../src/loader';
+import { deserializeSave, saveGame, serializeSave } from '../../src/engine/save';
 
 // ─────────────────────────────────────────────────────────────────────────────
 // The timer system (hints-timers plan §4; T3).
@@ -298,5 +302,82 @@ describe('timerExpired — multiple timers and the periodic idiom', () => {
       .filter((i) => i >= 0);
     expect(echoTurns).toEqual([2, 5]); // action-armed: 2 turns; re-armed: 3
     expect(state.timers['echo']).toBeDefined(); // still running
+  });
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Against REAL content (hints-timers plan T7).
+//
+// The fixture above is a hand-built module built for exactly the arithmetic
+// under test; this is the layer that drives the actual `adventures/test-cave`
+// module, loaded off disk the same way tests/engine/save.test.ts does. The
+// bee-swarm chain (events.json's `shake-the-tree` / `swarm-catches-you` /
+// `swarm-loses-interest`, timer `bee-swarm`, 3 turns) is T6's own exercise of
+// this exact machinery, authored for this purpose.
+// ─────────────────────────────────────────────────────────────────────────────
+
+describe('timers — against test-cave (integration)', () => {
+  const CAVE_DIR = path.resolve(import.meta.dirname, '../../adventures/test-cave');
+  let cave: AdventureModule;
+
+  beforeAll(async () => {
+    cave = await loadAdventure(
+      (p) => readFile(p, 'utf8'),
+      CAVE_DIR,
+      (dir) => readdir(dir),
+    );
+  });
+
+  /** A fixed timestamp — the save.test.ts convention; engine code may not read the clock. */
+  const AT = 1_700_000_000_000;
+
+  function freshCave(): GameState {
+    return createGame(cave, 12345); // the walkthrough's own seed; nothing here depends on which
+  }
+
+  /** Run a command list against the loaded test-cave. Mirrors `play` above, generalized to a real module. */
+  function playCave(state: GameState, commands: string[]): { state: GameState; log: OutputEvent[][] } {
+    let current = state;
+    const log: OutputEvent[][] = [];
+    for (const cmd of commands) {
+      const result = step(cave, current, cmd);
+      current = result.state;
+      log.push(result.events);
+    }
+    return { state: current, log };
+  }
+
+  it('shake the tree and stay: the swarm catches you on the third wait', () => {
+    const armed = playCave(freshCave(), ['e', 'take lamp', 'w', 'n', 'shake tree']).state;
+    const { state, log } = playCave(armed, ['wait', 'wait', 'wait']);
+
+    expect(state.deaths).toBe(1);
+    expect(state.score).toBe(0); // nothing scored yet; 0 - deathPenalty 10, floored
+    expect(state.locationId).toBe('road'); // reincarnated at startLocation
+    expect(state.itemLocations['brass-lamp']).toBe('hollow-tree'); // scattered where death occurred
+    expect(texts(log[2] ?? []).join('\n')).toContain('The committee arrives all at once');
+  });
+
+  it('shake the tree and walk away: the swarm loses interest, no deaths', () => {
+    const armed = playCave(freshCave(), ['n', 'shake tree']).state;
+    const { state, log } = playCave(armed, ['s', 'wait', 'wait']);
+
+    expect(state.deaths).toBe(0);
+    expect(state.locationId).toBe('road');
+    expect(texts(log[2] ?? []).join('\n')).toContain('settles back into the tree');
+  });
+
+  it('a save taken mid-swarm still fires the timer on schedule after loading', () => {
+    const midSwarm = playCave(freshCave(), ['n', 'shake tree', 'wait']).state; // one further turn spent
+    expect(midSwarm.timers['bee-swarm']).toBeDefined();
+    expect(midSwarm.deaths).toBe(0);
+
+    const loaded = deserializeSave(cave, serializeSave(saveGame(cave, midSwarm, AT)));
+    expect(loaded).toEqual(midSwarm);
+
+    const { state: afterOneMore } = playCave(loaded, ['wait']);
+    expect(afterOneMore.deaths).toBe(0); // second further turn: not yet
+    const { state: afterTwoMore } = playCave(afterOneMore, ['wait']);
+    expect(afterTwoMore.deaths).toBe(1); // third further turn: fires exactly on schedule
   });
 });
