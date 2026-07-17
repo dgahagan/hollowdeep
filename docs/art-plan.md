@@ -54,7 +54,7 @@ palette/pixel-related, which this project explicitly does not do.
    schema already accepts `webp` — no engine change.
 4. **test-cave keeps its placeholder SVGs.** It is a format fixture, not a
    small Hollowdeep; real art there would be ~30 generations of pure cost.
-   (Assumption 1, §9 — confirm.)
+   (Confirmed — §9.1.)
 
 ## 2. Constraints and givens
 
