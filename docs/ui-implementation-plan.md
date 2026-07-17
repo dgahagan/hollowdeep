@@ -353,7 +353,7 @@ accessibility + tablet + performance passes, docs closeout.
 - [x] T3 — Transcript/input upgrades, shortcuts (`sonnet`) — `314eecb`
 - [x] T4 — Auto-map (`opus`) — `3cf6d96` (also adds `.claude/**` ignores to eslint/vitest for orchestration worktrees)
 - [x] T5 — Scene panel: preload, flicker (`sonnet`) — `81180dc` (+ `91770fe` wiring the lampWarn prop through App.tsx)
-- [ ] T6 — Death modal, hardcore, undo (`opus`)
+- [x] T6 — Death modal, hardcore, undo (`opus`) — `ba34fea` (vignette contract: `marquee-death-<messageId minus '-death'>.webp` — Phase B names files to match)
 - [ ] T7 — Journal + hints panels (`sonnet`)
 - [ ] T8 — Save metadata + export/import (`sonnet`)
 - [ ] T9 — Adventure select + new-game flow (`opus`)
