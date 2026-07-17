@@ -167,6 +167,71 @@ body {
   border: 1px solid var(--border);
 }
 
+/* Wraps the lit `<img>` so the ambient overlay below has something to
+   position against (T5, ui-plan §3 "Ambient motion"). Only rendered in the
+   lit branch — the dark plate above needs no ambient light layered over a
+   room the player cannot see at all. */
+.scene-panel__art-wrap {
+  position: relative;
+  display: block;
+}
+
+/* The lamplight overlay: a radial gradient standing in for lamp glow, NEVER
+   a transform/filter on the `<img>` itself (ui-plan §3, decision 2) — the art
+   asset always paints as shipped, and this layer composites independently on
+   top of it. `pointer-events: none` + `aria-hidden` (ScenePanel.tsx) keep it
+   fully out of the accessibility tree; the `<img>`'s alt text is the whole
+   story for a screen reader. */
+.scene-panel__ambient {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 50% 35%, rgba(217, 164, 65, 0.16), rgba(217, 164, 65, 0) 70%);
+  opacity: 0.7;
+}
+
+/* Present only when BOTH the in-app motion setting allows it (ScenePanel.tsx
+   omits this class under `settings.reduceMotion`) and the OS query below does
+   not override it. A slow, subtle breathe — nothing that would read as
+   flashing or draw the eye away from the transcript. */
+.scene-panel__ambient--flicker {
+  animation: scene-panel-flicker 6s ease-in-out infinite;
+}
+
+/* Lamp-state tint (T5): warmer, dimmer glow for a low/dying lamp. Currently
+   fed by the optional `lampWarn` prop, unwired by any caller today — see
+   ScenePanel.tsx's header comment for why (SceneView carries no lamp-fuel
+   signal, and this task's file list excludes App.tsx). */
+.scene-panel__ambient--warn {
+  background: radial-gradient(ellipse at 50% 35%, rgba(224, 134, 99, 0.28), rgba(11, 10, 8, 0.35) 75%);
+  opacity: 0.85;
+}
+
+@keyframes scene-panel-flicker {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  35% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 0.62;
+  }
+  72% {
+    opacity: 0.8;
+  }
+}
+
+/* The OS-level kill switch (standing rule #3): independent of the in-app
+   setting above, and wins regardless of which classes ScenePanel.tsx applied. */
+@media (prefers-reduced-motion: reduce) {
+  .scene-panel__ambient--flicker {
+    animation: none;
+  }
+}
+
 .scene-panel__name {
   margin: 0.6rem 0 0.25rem;
   font-size: 1.1rem;
