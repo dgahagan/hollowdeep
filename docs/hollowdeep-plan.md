@@ -1,10 +1,10 @@
 # Hollowdeep — Adventure Design Plan
 
-**Status:** COMPLETE DRAFT (2026-07-17) — awaiting sign-off to READY. Fiction,
-map (§4; room-by-room in §11), treasures and their chains (§5, §12), creatures
-(§6), scoring (§7), words and secrets (§8), the maze (§9), and all three §10
-questions are settled. Prerequisite before authoring: the hints + timed-events
-engine work (§10.2, §10.3) needs its own design plan and must land first.
+**Status:** READY — signed off 2026-07-17. Fiction, map (§4; room-by-room in
+§11), treasures and their chains (§5, §12), creatures (§6), scoring (§7), words
+and secrets (§8), the maze (§9), and all three §10 questions are settled.
+Prerequisite before authoring: the hints + timed-events engine work (§10.2,
+§10.3) needs its own design plan and must land first.
 **Phase:** 2 (content). Blocks: all Hollowdeep authoring, Phase B art, v1.
 **Settled by:** [PROJECT-BRIEF.md](PROJECT-BRIEF.md) §2 and §9 — decisions there
 are not re-litigated here.
