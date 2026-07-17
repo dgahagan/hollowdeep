@@ -394,6 +394,7 @@ describe('applyEffects — every variant in the frozen union', () => {
       award: { kind: 'award', achievement: 'first-treasure' },
       endGame: { kind: 'endGame', victory: true },
       activateCreature: { kind: 'activateCreature', creature: 'cave-rat' },
+      startTimer: { kind: 'startTimer', timer: 'x', turns: 3 },
     };
     expect(Object.keys(samples).sort()).toEqual([...EFFECT_KINDS].sort());
     // Every one applies without throwing.

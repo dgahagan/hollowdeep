@@ -26,7 +26,7 @@ function validRaw(): Record<string, unknown> {
       id: 'loader-fixture',
       title: 'Loader Fixture',
       version: '1.0.0',
-      engineVersion: '^1.0.0',
+      engineVersion: '^2.0.0',
       startLocation: 'road',
       repositoryLocation: 'shed',
       maxScore: 20,
@@ -86,6 +86,7 @@ function validRaw(): Record<string, unknown> {
     scoring: {
       milestones: [],
       deathPenalty: 5,
+      hintPenalty: 5,
       ranks: [{ minScore: 0, title: 'Newcomer' }],
     },
     achievements: [],
@@ -94,8 +95,10 @@ function validRaw(): Record<string, unknown> {
       'lamp-dead': 'The lamp goes out.',
       'dark-warning': 'It is pitch dark.',
       'dark-death': 'You stumble and fall.',
+      'no-hints': 'No hints here.',
     },
     walkthrough: { steps: [{ cmd: 'look' }], expectedScore: 20 },
+    hints: { noHintMessageId: 'no-hints', hints: [] },
   };
 }
 
@@ -225,7 +228,7 @@ describe('loadAdventure — consistency failure', () => {
 describe('loadAdventure — engineVersion handshake', () => {
   it('rejects when the range does not match ENGINE_VERSION', async () => {
     const raw = validRaw();
-    const manifest = { ...(raw.manifest as Record<string, unknown>), engineVersion: '^2.0.0' };
+    const manifest = { ...(raw.manifest as Record<string, unknown>), engineVersion: '^9.0.0' };
     const files = toFiles({ ...raw, manifest }, BASE);
 
     const error = await expectLoadError(makeReader(files), BASE, makeListArt(VALID_ART_FILES));
@@ -233,7 +236,7 @@ describe('loadAdventure — engineVersion handshake', () => {
     expect(hasError(error.errors, { code: 'engine-version', document: 'manifest.json', id: 'manifest' })).toBe(
       true,
     );
-    expect(error.errors[0]?.message).toContain('^2.0.0');
+    expect(error.errors[0]?.message).toContain('^9.0.0');
     expect(error.errors[0]?.message).toContain(ENGINE_VERSION);
   });
 

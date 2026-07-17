@@ -165,8 +165,8 @@ function lookupString(module: AdventureModule, id: string): string {
 
 /**
  * Apply one effect. The exhaustive switch is deliberate: `effects.ts` freezes
- * the union at 12 variants, and a 13th lands here as a compile error rather
- * than a silent no-op.
+ * the union at 13 variants (v2), and a 14th lands here as a compile error
+ * rather than a silent no-op.
  */
 function applyEffect(
   module: AdventureModule,
@@ -267,6 +267,15 @@ function applyEffect(
         [],
       ];
     }
+
+    case 'startTimer':
+      // TODO(T3): write `timers[effect.timer] = state.turn + effect.turns`
+      // (restart resets — hints-timers plan §4.1). A temporary no-op rather
+      // than a throw: the frozen-union coverage test asserts every
+      // schema-legal effect applies without throwing, and that invariant is
+      // worth keeping true at every commit. T2 adds the state field; T3
+      // replaces this case and deletes this comment.
+      return [state, []];
 
     default: {
       const exhaustive: never = effect;

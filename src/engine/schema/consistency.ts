@@ -444,6 +444,11 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
         break;
       case 'endGame':
         break;
+      case 'startTimer':
+        // `timer` is an implicit namespace like flags — no declaration site,
+        // so nothing to resolve here. TODO(T5): collect startTimer ids so the
+        // unstarted-timer-expiry check can audit timerExpired targets.
+        break;
       case 'activateCreature':
         if (!creatureIds.has(effect.creature)) {
           push({
@@ -519,6 +524,11 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
       case 'turnStart':
       case 'word':
         // Neither uses `target`; the schema carries `turn`/`word` instead.
+        break;
+      case 'timerExpired':
+        // `target` is a timer id — an implicit namespace, like flags.
+        // TODO(T5): the unstarted-timer-expiry check audits it against the
+        // startTimer effects collected above.
         break;
       default: {
         const exhaustive: never = event.on.type;

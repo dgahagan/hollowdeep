@@ -27,8 +27,14 @@ import { handlerFor, type ActionResult } from './actions';
  * test-cave's `^1.0.0` is satisfied by 1.1.0. The bump is what lets a module
  * that NEEDS `all` say so — declaring `^1.1.0` gets a clean refusal from an
  * older engine instead of a strict-mode parse error about an unknown key.
+ *
+ * **2.0.0** — hints + timers (hints-timers plan §6). A MAJOR, and honestly
+ * so: `hints.json` is a required eleventh document, so every pre-hints
+ * module fails to load on this engine — calling that minor would make
+ * `^1.0.0` a lie the loader acts on. The additive pieces (`startTimer`,
+ * `timerExpired`, `hintsAtMost`, `scoring.hintPenalty`) ride the same bump.
  */
-export const ENGINE_VERSION = '1.1.0';
+export const ENGINE_VERSION = '2.0.0';
 
 export { createGame } from './state';
 export type { GameState, OutputEvent, SceneView, StepResult, UIAction } from './types';

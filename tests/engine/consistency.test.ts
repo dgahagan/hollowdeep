@@ -211,6 +211,7 @@ const rawValidModule = {
   scoring: {
     milestones: [{ id: 'vault-milestone', points: 10, when: [{ flag: 'vault-open' }] }],
     deathPenalty: 10,
+    hintPenalty: 5,
     ranks: [
       { minScore: 0, title: 'Tourist' },
       { minScore: 35, title: 'Spelunker' },
@@ -226,11 +227,13 @@ const rawValidModule = {
     'dark-death': 'You stumble and fall.',
     'reveal-msg': 'A section of the floor grinds aside, revealing a passage down.',
     'trap-death': 'The floor gives way beneath you.',
+    'no-hints': 'No hints here.',
   },
   walkthrough: {
     steps: [{ cmd: 'look' }],
     expectedScore: 60,
   },
+  hints: { noHintMessageId: 'no-hints', hints: [] },
 };
 
 const validModule: AdventureModule = zAdventureModule.parse(rawValidModule);

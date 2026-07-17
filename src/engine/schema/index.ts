@@ -9,6 +9,7 @@ import { zScoring } from './scoring';
 import { zAchievements } from './achievement';
 import { zStrings } from './strings';
 import { zWalkthrough } from './walkthrough';
+import { zHints } from './hints';
 
 // The engine↔content contract (FR-6.1). Zod is the single source of truth:
 // these schemas are both the runtime validator and, via `z.infer`, the types
@@ -35,6 +36,7 @@ export * from './scoring';
 export * from './achievement';
 export * from './strings';
 export * from './walkthrough';
+export * from './hints';
 
 /**
  * A whole adventure, assembled from its documents.
@@ -55,6 +57,7 @@ export const zAdventureModule = z.strictObject({
   achievements: zAchievements,
   strings: zStrings,
   walkthrough: zWalkthrough,
+  hints: zHints,
 });
 
 export type AdventureModule = z.infer<typeof zAdventureModule>;
@@ -74,6 +77,7 @@ export const MODULE_DOCUMENTS = {
   'achievements.json': zAchievements,
   'strings.json': zStrings,
   'walkthrough.json': zWalkthrough,
+  'hints.json': zHints,
 } as const;
 
 export type ModuleDocumentName = keyof typeof MODULE_DOCUMENTS;

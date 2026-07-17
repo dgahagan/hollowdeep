@@ -2,7 +2,13 @@ import { z } from 'zod';
 import { zId, zDirection } from './common';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// THE EFFECT VOCABULARY IS FROZEN AT v1 (design plan §4.1, §10 risk register).
+// THE EFFECT VOCABULARY IS FROZEN AT v2 (design plan §4.1, §10 risk register).
+//
+// Version history — every entry here is a schema version bump that went
+// through its own design plan, which is the discipline the freeze exists for:
+//   v1 (2026-07-15) — the original twelve (foundation plan §4.1).
+//   v2 (2026-07-17) — added `startTimer` (hints-timers plan §4.1), alongside
+//     the `timerExpired` trigger and `GameState.timers`. ENGINE_VERSION 2.0.0.
 //
 // Every state mutation in the engine is one of the variants below — action
 // handlers and event triggers emit the same vocabulary, and `applyEffects`
@@ -116,7 +122,26 @@ const zActivateCreature = z.strictObject({
   creature: zId,
 });
 
-/** The frozen v1 effect union — see the banner above before touching it. */
+/**
+ * Start (or restart) a named relative timer (hints-timers plan §4).
+ *
+ * `timer` is a content-chosen id in the same implicit namespace as flags —
+ * declared nowhere, created by use. After `startTimer t n` the player has
+ * exactly `n` further CONSUMED turns; the matching `timerExpired` events fire
+ * during the world tick of the n-th, after that turn's action (so the n-th
+ * move may be the one that gets you clear, and the guard sees you gone).
+ *
+ * Starting a timer that is already running RESETS it — the second pull of the
+ * stull must not be silently weaker than the first. One-shot arming is a
+ * guard flag on the arming event, expressible today.
+ */
+const zStartTimer = z.strictObject({
+  kind: z.literal('startTimer'),
+  timer: zId,
+  turns: z.number().int().min(1),
+});
+
+/** The frozen v2 effect union — see the banner above before touching it. */
 export const zEffect = z.discriminatedUnion('kind', [
   zPrint,
   zPrintId,
@@ -130,6 +155,7 @@ export const zEffect = z.discriminatedUnion('kind', [
   zAward,
   zEndGame,
   zActivateCreature,
+  zStartTimer,
 ]);
 
 export type Effect = z.infer<typeof zEffect>;
@@ -148,4 +174,5 @@ export const EFFECT_KINDS = [
   'award',
   'endGame',
   'activateCreature',
+  'startTimer',
 ] as const satisfies readonly Effect['kind'][];
