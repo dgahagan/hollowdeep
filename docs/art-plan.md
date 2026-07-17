@@ -1,9 +1,10 @@
 # Phase B — Art Production Design Plan
 
-**Status:** DRAFT — for review (2026-07-17). Style direction, the unseen-creature
-treatment, format, and tooling ownership are settled (decisions logged below);
-the verbatim style suffix is deliberately NOT settled here — locking it is this
-plan's first deliverable, from test batches, with human sign-off.
+**Status:** READY — signed off 2026-07-17 (style direction, unseen-creature
+treatment, format, tooling ownership, and all §9 review items settled; §9 logs
+the answers). The verbatim style suffix is deliberately NOT settled here —
+locking it is this plan's first deliverable, from test batches, with human
+sign-off.
 **Phase:** B (parallel track; SCOPE §3). Blocks: v1. Does not block Phase 3 —
 the UI consumes whatever `manifest.artFormat` names, so the two tracks merge
 cleanly in either order (one coordination point, §7).
@@ -92,8 +93,8 @@ Roughly:
 | `scene` | ~53 | every location; the six twisty rooms share `twisty` (§9's fairness — identical rooms look identical) |
 | `item` | ~36 | treasures, tools, keys, scenery items events hang on |
 | `creature` | 6 | storekeeper, bats, blind fish, newt as portraits; **thief and stalker indirect** (decision 2) |
-| `marquee` | 4 | title screen; ending-A epilogue; ending-B epilogue; one death vignette (FR-4.1's "death/ending art") |
-| **Total** | **~99** | |
+| `marquee` | 11 | title screen; ending-A epilogue; ending-B epilogue; eight per-death vignettes (§9.3 — one per §12.5 death) |
+| **Total** | **~106** | |
 
 UI accents (FR-4.1's tail) stay CSS/procedural and belong to Phase 3 — a
 generated texture is the wrong tool for a border.
@@ -212,7 +213,7 @@ audit (artIds ⇄ manifest)                        tools/art/audit.ts
 3. `adventures/hollowdeep/art-manifest.json` — complete over every artId +
    marquees, every subject with recorded seeds and a `chosenSeed`.
 4. `art-review/art-review.md` — the verdict log.
-5. ~99 optimized WebP finals committed; `artFormat: "webp"`; every scene
+5. ~106 optimized WebP finals committed; `artFormat: "webp"`; every scene
    ≤ 150 KB; gate green.
 6. `docs/art-pipeline.md` — the how-it-works guide (SCOPE §6's outstanding
    docs deliverable), written at closeout from what actually happened.
@@ -221,12 +222,18 @@ audit (artIds ⇄ manifest)                        tools/art/audit.ts
 into the game (SCOPE), `npm run dev` shows painterly Hollowdeep end to end,
 and a fresh clone can regenerate any image from the manifest alone.
 
-## 9. Assumptions for the human to confirm
+## 9. Review items — resolved 2026-07-17
 
-1. **test-cave stays on placeholder SVGs** (decision 4). Say so now if the
-   fixture should be painted too (~+30 subjects).
-2. **WebP-only** is acceptable (decision 3); AVIF/fallbacks stay out.
-3. **The death vignette is one image**, not eight — the eight deaths share a
-   single "the cave, which has seen this before" painting. Per-death art is
-   a [C]-shaped idea that can ride a later pass.
-4. **Marquee art lands unreferenced** until Phase 3 wires the screens (§7).
+1. **test-cave stays on placeholder SVGs** — confirmed. The fixture is not
+   painted.
+2. **WebP-only** — confirmed. AVIF and fallbacks stay out.
+3. **Eight per-death vignettes** — the human chose the full gallery over a
+   shared image: one painting per §12.5 death (roof, flood, keg, chute,
+   river, gap, dark, stalker). Two constraints carry over from decision 2:
+   the **stalker** death vignette stays indirect (the lamp's circle and what
+   enters it — never the creature plain), and the **darkness** death is the
+   painting with almost nothing in it, which is the assignment. Phase 3 wires
+   them into the death modal per death cause; until then they land
+   unreferenced like the other marquees (§7).
+4. **Marquee art lands unreferenced** until Phase 3 wires the screens —
+   confirmed.

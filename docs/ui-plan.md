@@ -1,8 +1,8 @@
 # Phase 3 — UI/UX Design Plan
 
-**Status:** DRAFT — for review (2026-07-17). Visual identity, the [C]
-inclusions, and every mechanic sketched below are settled (decisions logged in
-§1); nothing here is blocked on Phase B — the two tracks merge in either order
+**Status:** READY — signed off 2026-07-17. Visual identity, the [C]
+inclusions, every mechanic sketched below, and all §12 review items are
+settled (§12 logs the answers); nothing here is blocked on Phase B — the two tracks merge in either order
 (`docs/art-plan.md` §7 is the one coordination point).
 **Phase:** 3 (SCOPE §3). Blocks: v1.
 **Settled by:** [PROJECT-BRIEF.md](PROJECT-BRIEF.md) §9 (hybrid input, clicks
@@ -239,15 +239,19 @@ suite and the full gate green throughout. Component/interaction tests run
 headless (the engine suite stays untouched); a rendered-browser smoke pass
 covers the overlays and both themes.
 
-## 12. Assumptions for the human to confirm
+## 12. Review items — resolved 2026-07-17
 
-1. **Self-hosted Literata (or Source Serif 4) + matching mono** is an
-   acceptable typographic direction — pinned during the first styling task
-   with a one-page type specimen, same sign-off pattern as the art suffix.
-2. **Hardcore is set at new-game and locked** (§5) — not toggleable
-   mid-run. FR-1.6 doesn't say; locking is what makes the no-rescue promise
-   mean something.
-3. **The undo keyword is UI-level** (§5), so `undo` never enters transcripts
-   or walkthroughs and the engine's determinism story is untouched.
-4. **Stats screen's ending tease** (§6) — one line, ending-A only. Say so if
-   even that much signposting of ending B is unwelcome.
+1. **Typography** — confirmed: self-hosted Literata (or Source Serif 4) +
+   matching mono, final faces pinned from a one-page type specimen with
+   human sign-off, same pattern as the art suffix.
+2. **Hardcore is set at new-game and locked** — confirmed. Not toggleable in
+   either direction mid-run.
+3. **Undo is UI-level** — confirmed. Intercepted before `step()`, never a
+   parser verb, absent from transcripts and walkthroughs.
+4. **The ending tease stays** — confirmed: one hidden-achievement-shaped
+   line ("There is another way out."), ending-A stats screen only.
+
+One cross-plan addition from the art review (art-plan §9.3): the death modal
+(§5) shows the **per-death vignette** for the death that just happened —
+mapping death cause to its marquee image is Phase 3 wiring, keyed off the
+death event's message id.
