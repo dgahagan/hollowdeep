@@ -6,16 +6,98 @@ import { describeScene, availableActions } from '../engine/view';
 import { saveGame, serializeSave } from '../engine/save';
 import { writeAutosave } from './storage';
 
-// The engine wiring pattern (design plan §6, T24/T25). This is the one piece
-// of this task meant to survive Phase 3's UI rewrite wholesale — everything
-// else here is throwaway markup.
+// The engine wiring pattern (design plan §6, T24/T25; T6 adds undo, death
+// interception, and hardcore gating). This is the one piece of the Phase 1
+// UI meant to survive Phase 3 wholesale — the rule it demonstrates still
+// holds: ONE `submit(input)` call is the entire write path.
 //
-// Deliberately thin, and deliberately left UNTESTED (design plan §9): there
-// is no jsdom/@testing-library in this project, and a hook this size is not
-// worth inventing one for. If it ever grows a rule worth testing, that rule
-// belongs in a plain function this hook merely calls — the engine already
-// has `step`/`describeScene`/`availableActions`, all covered by real tests.
-// This file's only job is gluing React state to them.
+// T6's additions follow the standing rule that logic which can be headless,
+// is: the undo/death decisions live in the exported pure functions below
+// (`isUndoInput`, `undoRefusal`, `retainedUndo`, `detectDeathText`), covered
+// by tests/app/undo.test.ts, and the hook merely calls them.
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Pure undo/death logic (T6, ui-plan §5 + §12.3)
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Is this input the `undo` keyword? Intercepted ABOVE `step()` — undo is a
+ * UI affordance, never a parser verb (ui-plan §12.3): it does not reach the
+ * engine, is not echoed as a command, and can never appear in a walkthrough.
+ */
+export function isUndoInput(input: string): boolean {
+  return input.trim().toLowerCase() === 'undo';
+}
+
+export type UndoRefusalReason = 'hardcore' | 'game-over' | 'nothing';
+
+/**
+ * The wry UI-side refusal lines (they are the UI's voice, not the
+ * adventure's — undo never reaches the engine, so no module string exists
+ * for it and none should).
+ */
+export const UNDO_REFUSAL_LINES: Record<UndoRefusalReason, string> = {
+  hardcore: 'Hardcore means what it says. The cave does not repeat itself for you.',
+  'game-over': 'It is finished. Whatever you would take back, the cave has already kept.',
+  nothing: 'There is nothing to take back yet, which is either reassuring or ominous.',
+};
+
+/**
+ * The gating matrix (ui-plan §5): hardcore always refuses; a finished game
+ * refuses; no retained state (turn 0, a fresh load, or an undo already
+ * spent) refuses. Order matters only for which excuse the player reads —
+ * hardcore's identity outranks circumstance.
+ */
+export function undoRefusal(args: {
+  hardcore: boolean;
+  ended: boolean;
+  hasUndo: boolean;
+}): UndoRefusalReason | null {
+  if (args.hardcore) return 'hardcore';
+  if (args.ended) return 'game-over';
+  if (!args.hasUndo) return 'nothing';
+  return null;
+}
+
+/**
+ * What the retained undo state becomes after a `step`: a CONSUMED turn
+ * (turn advanced) retains the state it left behind; a refused command or
+ * disambiguation exchange (turn unchanged) keeps whatever was already
+ * retained — a parse error must not eat the player's one step back.
+ * Exactly one prior state is ever held (FR-1.11: single-step).
+ */
+export function retainedUndo(
+  previousState: GameState,
+  previousUndo: GameState | null,
+  nextState: GameState,
+): GameState | null {
+  return nextState.turn > previousState.turn ? previousState : previousUndo;
+}
+
+/** The death event's text from a turn's output, or null if nobody died. */
+export function detectDeathText(events: OutputEvent[]): string | null {
+  const death = events.find((event) => event.kind === 'death');
+  return death?.text ?? null;
+}
+
+/** What the death modal needs to know about the death that just happened. */
+export interface PendingDeath {
+  /** The death event's prose — DeathModal reverse-maps it to a messageId for the vignette. */
+  text: string;
+  /** The turn the death was consumed on; "before the fall" means an autosave with turn < this. */
+  deathTurn: number;
+}
+
+export interface UseGameOptions {
+  seed?: number;
+  /**
+   * Hardcore (ui-plan §5): set at new-game and locked (T9 owns the setting;
+   * this hook only obeys it). No death modal, no undo; autosaves still
+   * written — resume-after-tab-close is not a rescue — but the load UI
+   * hides them mid-run (SaveDialog's concern, not this hook's).
+   */
+  hardcore?: boolean;
+}
 
 export interface UseGameResult {
   state: GameState;
@@ -26,35 +108,29 @@ export interface UseGameResult {
   submit: (input: string) => void;
   /** Adopt a `GameState` loaded from a save (T26). See `load`'s own comment. */
   load: (state: GameState) => void;
+  /** Non-null while the death modal should be up (never in hardcore). */
+  pendingDeath: PendingDeath | null;
+  /** "Accept reincarnation": the engine already did it — just drop the modal. */
+  dismissDeath: () => void;
 }
 
 /**
- * `step` returns `{state, events}`, and T24's hook discarded `events` — there
- * was no transcript to put them in yet. T25 adds one, and the interesting
- * part is where it lives.
- *
  * `state` and `transcript` are ONE React state value, not two `useState`
- * calls, and that is load-bearing, not a style choice. T24's comment above
- * `submit` already establishes the rule this has to keep: the `setState`
- * updater must be PURE — React may invoke it more than once (StrictMode does
- * this on every mount on purpose) or invoke it and then discard the result
- * entirely, so nothing inside the updater may have a side effect, and the
- * updater must be a deterministic function of its previous value and the
- * input. Bundling `transcript` into the same object the updater returns
- * keeps both properties: appending `result.events` to `previous.transcript`
- * is exactly as pure as computing `result.state` was, because it depends on
- * nothing but the two arguments already in scope. A second, independent
- * `useState` for the transcript would break this the moment its setter was
- * called from inside `submit` alongside the state setter — two updates that
- * must commit together would be two updates that COULD be observed apart
- * (an interrupted render sees new state with a stale or missing transcript
- * entry), and "committed but only partially" is precisely the bug T24's
- * autosave discipline exists to rule out. One object, one updater, one
- * commit.
+ * calls, and that is load-bearing, not a style choice: the `setState`
+ * updater must be PURE — React may invoke it more than once (StrictMode
+ * does, on purpose) or discard the result — so appending events and
+ * computing state happen in one deterministic updater, and the pieces can
+ * never be observed committed apart. T6 widens the object with `undoState`
+ * and `pendingDeath` for the same reason: the state that "one step back"
+ * restores and the death the modal shows must travel in the same commit as
+ * the state/transcript they belong to.
  */
 interface Session {
   state: GameState;
   transcript: OutputEvent[];
+  /** The single retained prior state (ui-plan §5) — null at turn 0, after a load, or once spent. */
+  undoState: GameState | null;
+  pendingDeath: PendingDeath | null;
 }
 
 /**
@@ -72,23 +148,95 @@ interface Session {
  * "impure call during render" the purity rule (react-hooks v7) rejects; the
  * initializer callback runs exactly once, on mount.
  */
-export function useGame(module: AdventureModule, seed?: number): UseGameResult {
+export function useGame(module: AdventureModule, options?: UseGameOptions): UseGameResult {
+  const hardcore = options?.hardcore ?? false;
+  const seed = options?.seed;
+
   const [session, setSession] = useState<Session>(() => ({
     state: createGame(module, seed ?? Date.now()),
     transcript: [],
+    undoState: null,
+    pendingDeath: null,
   }));
 
-  // The `setState` updater is PURE — `step` plus a pure array append, and
-  // nothing else. See the `Session` comment above for why the transcript
-  // rides along in the same object rather than a sibling `useState`.
+  // A commit-synced mirror of `session`, for the imperative paths (`undo`
+  // interception, below) that need to consult current state from inside an
+  // event handler without making the setState updater impure. Written from
+  // an effect, not during render (react-hooks v7's refs rule): effects run
+  // at commit, and event handlers only ever fire after a commit, so the
+  // mirror is always fresh by the time anything reads it.
+  const sessionRef = useRef(session);
+  useEffect(() => {
+    sessionRef.current = session;
+  }, [session]);
+
+  // Autosave bookkeeping — declared before `submit` because undo has to
+  // stamp it. See the autosave effect further down for the full discipline.
+  const savedTurn = useRef<number | null>(null);
+
+  // The `setState` updater is PURE — `step` plus pure derivations
+  // (`retainedUndo`, `detectDeathText`), and nothing else.
   const submit = useCallback(
     (input: string) => {
+      // ── The undo interception (T6, ui-plan §12.3) ─────────────────────────
+      // Handled ABOVE `step()`, imperatively (an event handler may have side
+      // effects; the updater may not). Neither branch echoes `undo` as a
+      // command — it is not one.
+      if (isUndoInput(input)) {
+        const current = sessionRef.current;
+        const refusal = undoRefusal({
+          hardcore,
+          ended: current.state.ended !== undefined,
+          hasUndo: current.undoState !== null,
+        });
+
+        if (refusal !== null) {
+          const line: OutputEvent = { kind: 'text', text: UNDO_REFUSAL_LINES[refusal] };
+          setSession((previous) => ({ ...previous, transcript: [...previous.transcript, line] }));
+          return;
+        }
+
+        // **Undo does not touch storage** (cross-task note 3): the autosave
+        // ring keeps every turn it already wrote — history is not rewritten.
+        // Stamping `savedTurn` with the restored turn stops the autosave
+        // effect from firing on this commit; the NEXT consumed turn advances
+        // `turn` again and autosaves as normal (over the same ring slot its
+        // undone predecessor used — same `turn % AUTOSAVE_SLOTS`).
+        const restored = current.undoState;
+        if (restored !== null) savedTurn.current = restored.turn;
+        setSession((previous) => {
+          const undo = previous.undoState;
+          if (undo === null) return previous; // double-invoke safety; refusal already handled above
+          return {
+            state: undo,
+            transcript: [
+              ...previous.transcript,
+              { kind: 'text', text: 'One step back. The cave agrees to pretend that did not happen.' },
+            ],
+            undoState: null, // single-step: spent until the next consumed turn
+            pendingDeath: null,
+          };
+        });
+        return;
+      }
+
       setSession((previous) => {
         const result = step(module, previous.state, input);
-        return { state: result.state, transcript: [...previous.transcript, ...result.events] };
+        const deathText = detectDeathText(result.events);
+        return {
+          state: result.state,
+          transcript: [...previous.transcript, ...result.events],
+          undoState: retainedUndo(previous.state, previous.undoState, result.state),
+          // Hardcore shows no modal (ui-plan §5): reincarnation is what you
+          // get, and the engine already handed it out.
+          pendingDeath:
+            !hardcore && deathText !== null
+              ? { text: deathText, deathTurn: result.state.turn }
+              : previous.pendingDeath,
+        };
       });
     },
-    [module],
+    [module, hardcore],
   );
 
   // Autosave every CONSUMED turn (FR-5.2), as a side effect of committed
@@ -100,8 +248,8 @@ export function useGame(module: AdventureModule, seed?: number): UseGameResult {
   // new `GameState` object with the same `turn`. Comparing turn numbers is
   // the same rule `step` itself uses to decide "did anything happen?"
   // (design plan §5.3), not a second guess at it. `turn === 0` is
-  // `createGame`'s initial state, before the player has done anything.
-  const savedTurn = useRef<number | null>(null);
+  // `createGame`'s initial state, before the player has done anything. Undo
+  // pre-stamps this guard (see `submit`) so a restore never writes.
   useEffect(() => {
     if (savedTurn.current === session.state.turn) return;
     savedTurn.current = session.state.turn;
@@ -115,7 +263,9 @@ export function useGame(module: AdventureModule, seed?: number): UseGameResult {
     writeAutosave(module.manifest.id, session.state.turn, serializeSave(blob));
   }, [module, session.state]);
 
-  // Adopt a `GameState` loaded from a save slot (T26 — SaveDialog's "Load").
+  // Adopt a `GameState` loaded from a save slot (T26 — SaveDialog's "Load",
+  // and T6 — the death modal's "resume from before the fall", which IS a
+  // load, not a mechanic).
   //
   // This does NOT go through `step` — loading isn't a turn, it's a swap of
   // the whole session. Called from a click handler (not from inside the
@@ -127,10 +277,9 @@ export function useGame(module: AdventureModule, seed?: number): UseGameResult {
   // no new information, just a chance to clobber a different turn that
   // happens to share `N % AUTOSAVE_SLOTS`).
   //
-  // `state` and `transcript` still commit together (Session's own comment
-  // above explains why that has to hold) — this just supplies both fields of
-  // a fresh `Session` directly instead of deriving them from the previous
-  // one.
+  // `undoState` starts null: "one step back" across a load boundary would
+  // step into a different session's history. `pendingDeath` clears for the
+  // same reason — and because resuming-before-the-fall must drop the modal.
   //
   // What goes in `transcript`: `GameState` carries no transcript field and
   // must not gain one — the save shape is versioned and migrated forever
@@ -145,7 +294,18 @@ export function useGame(module: AdventureModule, seed?: number): UseGameResult {
   // says so, the same way a command-echo says a command happened.
   const load = useCallback((state: GameState) => {
     savedTurn.current = state.turn;
-    setSession({ state, transcript: [{ kind: 'text', text: 'Game loaded.' }] });
+    setSession({
+      state,
+      transcript: [{ kind: 'text', text: 'Game loaded.' }],
+      undoState: null,
+      pendingDeath: null,
+    });
+  }, []);
+
+  const dismissDeath = useCallback(() => {
+    setSession((previous) =>
+      previous.pendingDeath === null ? previous : { ...previous, pendingDeath: null },
+    );
   }, []);
 
   return {
@@ -155,5 +315,7 @@ export function useGame(module: AdventureModule, seed?: number): UseGameResult {
     transcript: session.transcript,
     submit,
     load,
+    pendingDeath: session.pendingDeath,
+    dismissDeath,
   };
 }

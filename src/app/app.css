@@ -624,6 +624,56 @@ kbd {
   font-size: 0.85em;
 }
 
+/* ---- Death modal (DeathModal.tsx, T6) ---- */
+
+.death-modal {
+  background: var(--surface-1);
+  color: var(--ink);
+  border: 1px solid var(--danger);
+  border-radius: 8px;
+  padding: 1.1rem 1.3rem 1.3rem;
+  width: min(520px, 92vw);
+  font-family: var(--font-serif);
+  text-align: center;
+}
+
+.death-modal::backdrop {
+  background: var(--scrim);
+}
+
+.death-modal__vignette {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 0.9rem;
+}
+
+.death-modal h2 {
+  margin: 0 0 0.6rem;
+  font-size: 1.2rem;
+  color: var(--danger);
+}
+
+.death-modal__text {
+  margin: 0 0 1rem;
+  line-height: 1.55;
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+.death-modal__choices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.death-modal__choices button[disabled] {
+  cursor: default;
+  color: var(--ink-muted);
+}
+
 /* ---- Motion ---- */
 
 @media (prefers-reduced-motion: reduce) {

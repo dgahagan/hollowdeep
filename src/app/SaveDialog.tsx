@@ -148,9 +148,17 @@ export interface SaveDialogProps {
   /** Adopt a loaded state (wired to `useGame`'s `load`). Called with the row's validated `GameState`. */
   onLoad: (state: GameState) => void;
   onClose: () => void;
+  /**
+   * T6, ui-plan §5: hardcore hides the autosave ring MID-RUN (App passes
+   * `hardcore && !ended`). The ring is still written every turn —
+   * resume-after-tab-close is not a rescue — but surfacing it here would
+   * be the death-rescue flow with extra steps. After game over the ring
+   * reappears; there is nothing left to rescue.
+   */
+  hideAutosaves?: boolean;
 }
 
-export function SaveDialog({ open, module, state, onLoad, onClose }: SaveDialogProps) {
+export function SaveDialog({ open, module, state, onLoad, onClose, hideAutosaves = false }: SaveDialogProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   // `storage.ts` is a plain synchronous adapter with no subscription
   // mechanism of its own — the rows below are computed fresh from
@@ -258,10 +266,12 @@ export function SaveDialog({ open, module, state, onLoad, onClose }: SaveDialogP
         <ul className="save-dialog__list">{slotRows}</ul>
       </section>
 
-      <section aria-label="Autosaves">
-        <h3>Autosaves</h3>
-        <ul className="save-dialog__list">{autoRows}</ul>
-      </section>
+      {!hideAutosaves && (
+        <section aria-label="Autosaves">
+          <h3>Autosaves</h3>
+          <ul className="save-dialog__list">{autoRows}</ul>
+        </section>
+      )}
 
       {/* No explicit autoFocus here: React implements it by imperatively
           calling `.focus()` on mount, which for this always-rendered-but-

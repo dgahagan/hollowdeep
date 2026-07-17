@@ -25,7 +25,8 @@ import { StatusBar } from './StatusBar';
 import { SaveDialog } from './SaveDialog';
 import { SettingsPanel } from './SettingsPanel';
 import { MapOverlay } from './MapOverlay';
-import { loadSettings, saveSettings, TEXT_SCALE_BY_STEP, type Settings } from './uiState';
+import { loadSettings, loadSidecar, saveSettings, TEXT_SCALE_BY_STEP, type Settings } from './uiState';
+import { DeathModal } from './DeathModal';
 import './fonts.css';
 import './theme.css';
 import './app.css';
@@ -236,7 +237,14 @@ function SettingsProvider({ children }: { children: ReactNode }) {
 }
 
 function Game({ module }: { module: AdventureModule }) {
-  const { state, scene, actions, transcript, submit, load } = useGame(module);
+  // Hardcore (T6, ui-plan §5): read ONCE, at mount, from the per-adventure
+  // sidecar — set by the new-game flow (T9) and locked for the run. A lazy
+  // useState initializer rather than a plain call so a sidecar write during
+  // play (journal notes share the object) can never flip the mode mid-run.
+  const [hardcore] = useState(() => loadSidecar(module.manifest.id).hardcore);
+  const { state, scene, actions, transcript, submit, load, pendingDeath, dismissDeath } = useGame(module, {
+    hardcore,
+  });
   const overlays = useOverlays();
   const { settings } = useSettings();
 
@@ -345,8 +353,12 @@ function Game({ module }: { module: AdventureModule }) {
           overlays.close();
         }}
         onClose={overlays.close}
+        hideAutosaves={hardcore && state.ended === undefined}
       />
       <SettingsPanel />
+
+      <DeathModal module={module} death={pendingDeath} onAccept={dismissDeath} onResume={load} />
+
 
       <MapOverlay module={module} state={state} />
 
