@@ -467,7 +467,7 @@ markers inside its own region.
 ## Progress Tracker
 
 - [x] T1 — Module skeleton: structure, no voice (`sonnet`) — `709542a`
-- [ ] T2 — Region A: Weir's Landing (`opus`)
+- [x] T2 — Region A: Weir's Landing (`opus`) — `eb28ee7`
 - [ ] T3 — Region B: the Workings (`opus`)
 - [ ] T4 — Region C: cavern, maze, creatures (`opus`)
 - [ ] T5 — Regions D & E: past the breach, the seal (`opus`)
