@@ -296,8 +296,25 @@ obligation, not a disclaimer.
 Each of these blocks authoring, and each is the human's call.
 
 1. ~~**The fiction of the deep.**~~ **Settled 2026-07-16** — see §3.
-2. **Hints** — grow the format an eleventh document, or cut FR-7.2 from Phase 2?
-   It is [S], so cutting is legitimate. Deciding *now* is what matters: a hint
-   system retrofitted after 12 puzzles are authored is 12 puzzles re-read.
+2. ~~**Hints**~~ — **Settled 2026-07-16: build it, before Phase 2 authoring.**
+
+   Hints turn out to be wired into more than FR-7.2's `[S]` suggests: **FR-1.5
+   `[M]`** names "deductions for hints", and **FR-1.12** names a "no-hint
+   completion" achievement. The engine has none of it.
+
+   **This is a prerequisite engine change and it blocks Phase 2 authoring** —
+   the point of deciding now is that puzzles get their hints written while the
+   puzzle is fresh, not re-read twelve times later. It needs its own design plan
+   and `/run-plan`:
+
+   | Piece | Note |
+   |---|---|
+   | `hints.json` | 11th module document. Keyed by `when: Condition[]`, like `Milestone` — a hint is *available* when its guard holds |
+   | `scoring.hintPenalty` | The deduction. A deduction, so it must NOT count toward `maxScore` — same rule as `deathPenalty` |
+   | `GameState.hintsUsed` | **SAVE_VERSION 1 → 2 and a real migration.** Free today (no saves exist); this is exactly what T21 built |
+   | `Condition.hintsAtMost` | Mirrors `deathsAtMost` exactly, and for the identical reason — an achievement content cannot otherwise see |
+   | `hint` core verb | Ships in-engine like every other core verb, so every adventure gets it |
+
+   Phase 3 draws the panel. The engine + data land first.
 3. **Timed events** — does any intended puzzle need "N turns after X"? If yes,
    it is an engine change and belongs in a plan, not in authoring.
