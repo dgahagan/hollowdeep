@@ -419,8 +419,8 @@
   {
     "id": "shaft-foot",
     "name": "Shaft Foot",
-    "brief": "[draft] You are at shaft foot, and the shaft foot does not care.",
-    "full": "[draft] This is Shaft Foot, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are at the shaft foot, in the drained mud.",
+    "full": "The bottom of the winze. The kibble's twin lies here in the mud, tipped and half-buried — the bucket that was below when the water came. The mud glistens, freshly drained, one clean line on the wall at chest height where the black water stood for ninety years until somebody gave the pump its opinion back. That somebody being you. A drift runs south, toward rougher country.",
     "artId": "shaft-foot",
     "light": "dark",
     "exits": {
@@ -435,8 +435,8 @@
   {
     "id": "breakthrough",
     "name": "The Breakthrough",
-    "brief": "[draft] You are at the breakthrough, and the the breakthrough does not care.",
-    "full": "[draft] This is The Breakthrough, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are at the breakthrough, where the timbering gives up.",
+    "full": "The last set of timbers stands here like a doorframe with no house behind it. Beyond, the walls go their own way — water-cut, patient, older than any wage. This is where the miners drove into a cavern that had been minding its own business for a very long time. Passages lead south and east into it.",
     "artId": "breakthrough",
     "light": "dark",
     "exits": {
@@ -454,8 +454,8 @@
   {
     "id": "low-crawl",
     "name": "The Low Crawl",
-    "brief": "[draft] You are at the low crawl, and the the low crawl does not care.",
-    "full": "[draft] This is The Low Crawl, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the low crawl, on close terms with the floor.",
+    "full": "A crawl in wet stone, exactly as tall as it needs to not be. You go through it the way regret goes through a life: slowly, and on your stomach. It gives out to the south, toward the sound of water.",
     "artId": "low-crawl",
     "light": "dark",
     "exits": {
@@ -470,8 +470,8 @@
   {
     "id": "cathedral",
     "name": "The Cathedral",
-    "brief": "[draft] You are at the cathedral, and the the cathedral does not care.",
-    "full": "[draft] This is The Cathedral, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the cathedral, under the echo.",
+    "full": "The cavern opens into a vault your lamp cannot find the top of. Every sound you make comes back twice — once from the walls, and once, later, from somewhere that has no wall. Now and then the echo returns a sound you did not make: a slow, careful gait, far off, keeping its own schedule. Passages lead everywhere. A chimney in the floor drops into twisting dark.",
     "artId": "cathedral",
     "light": "dark",
     "exits": {
@@ -495,8 +495,8 @@
   {
     "id": "gallery-of-veils",
     "name": "The Gallery of Veils",
-    "brief": "[draft] You are at the gallery of veils, and the the gallery of veils does not care.",
-    "full": "[draft] This is The Gallery of Veils, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the gallery of veils, where it is very quiet.",
+    "full": "Curtains of flowstone hang from the roof in banded folds, stone behaving like fabric. It is quiet here the way a bank vault is quiet: you can hear your own lamp burn. Low on one wall a seam shows metal under the calcite — a gleam that has been keeping still, in the dark, at scale.",
     "artId": "gallery-of-veils",
     "light": "dark",
     "exits": {
@@ -508,8 +508,8 @@
   {
     "id": "gour-pools",
     "name": "The Gour Pools",
-    "brief": "[draft] You are at the gour pools, and the the gour pools does not care.",
-    "full": "[draft] This is The Gour Pools, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are at the gour pools, and the water is watching its property.",
+    "full": "Rimstone dams terrace the floor, pool over pool, each lip grown drip by drip across spans of time that make the mine's ninety years look like a lunch break. In the largest pool, behind the rim, sits a nest of cave pearls, round and lustrous, arranged by the water with what looks unsettlingly like intent. The water has opinions about its property.",
     "artId": "gour-pools",
     "light": "dark",
     "exits": {
@@ -521,8 +521,8 @@
   {
     "id": "black-river",
     "name": "The Black River",
-    "brief": "[draft] You are at the black river, and the the black river does not care.",
-    "full": "[draft] This is The Black River, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are on the bank of the Black River.",
+    "full": "The river runs black and smooth through a channel it has been cutting since before anything had a name for it. Pale fish hang in the slack water by your bank — blind, unhurried, and pointedly clear of the middle. Nothing that lives in this river swims the channel. The strand lies east.",
     "artId": "black-river",
     "light": "dark",
     "exits": {
@@ -537,8 +537,8 @@
   {
     "id": "river-strand",
     "name": "The River Strand",
-    "brief": "[draft] You are at the river strand, and the the river strand does not care.",
-    "full": "[draft] This is The River Strand, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are on the river strand.",
+    "full": "A gravel strand along the river's elbow, the stones sorted by size the way water does its bookkeeping. At the waterline a pothole holds something the size of a fist, gleaming where the river wedged it and then spent a century failing to take it back.",
     "artId": "river-strand",
     "light": "dark",
     "exits": {
@@ -556,8 +556,8 @@
   {
     "id": "midden",
     "name": "The Midden",
-    "brief": "[draft] You are at the midden, and the the midden does not care.",
-    "full": "[draft] This is The Midden, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are in the midden, among the collection.",
+    "full": "Something keeps house here. The chamber is floored with ninety years of collected things — buttons, buckles, lamp-brass, a candlestick, teeth — sorted into tidy drifts by some private logic: shine with shine, bone with bone. Long smooth drag-marks run in and out of the dark. The curator is not in, or is not showing itself, which may not be the same thing.",
     "artId": "midden",
     "light": "dark",
     "exits": {
@@ -569,8 +569,8 @@
   {
     "id": "breach-wall",
     "name": "The Breach",
-    "brief": "[draft] You are at the breach, and the the breach does not care.",
-    "full": "[draft] This is The Breach, drawn in a single flat sentence until the region task gives it a voice.",
+    "brief": "You are at the breach, before the wall somebody else built.",
+    "full": "The maze's draught dies here against a wall that has no business being a wall: coursed stone, laid tight, mortared — and the mortar was struck smooth on the far side. Somebody closed this hole from in there. The miners' drill-holes stop an arm's length short of it, which means they saw it, and downed tools, and the night happened anyway.",
     "artId": "breach-wall",
     "light": "dark",
     "exits": {
@@ -584,7 +584,7 @@
             "flag": "breach-blasted"
           }
         ],
-        "blockedMessage": "[draft] The hole is a hole in name only; the mortar behind it has not moved.",
+        "blockedMessage": "The wall was built to a standard and is holding to it. Bare hands do not argue with ninety-year mortar. Powder would.",
         "hidden": true
       }
     }
@@ -592,8 +592,8 @@
   {
     "id": "twisty-1",
     "name": "Twisting Passages",
-    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
-    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall.",
+    "brief": "You are in a twisting passage indistinguishable from its relatives.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse.",
     "artId": "twisty",
     "light": "dark",
     "exits": {
@@ -617,8 +617,8 @@
   {
     "id": "twisty-2",
     "name": "Twisting Passages",
-    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
-    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall.",
+    "brief": "You are in a twisting passage indistinguishable from its relatives.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse.",
     "artId": "twisty",
     "light": "dark",
     "exits": {
@@ -639,8 +639,8 @@
   {
     "id": "twisty-3",
     "name": "Twisting Passages",
-    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
-    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall.",
+    "brief": "You are in a twisting passage indistinguishable from its relatives.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse.",
     "artId": "twisty",
     "light": "dark",
     "exits": {
@@ -661,8 +661,8 @@
   {
     "id": "twisty-4",
     "name": "Twisting Passages",
-    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
-    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall.",
+    "brief": "You are in a twisting passage indistinguishable from its relatives.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse.",
     "artId": "twisty",
     "light": "dark",
     "exits": {
@@ -683,8 +683,8 @@
   {
     "id": "twisty-5",
     "name": "Twisting Passages",
-    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
-    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall. [draft] A draught moves through the stone here, and it is coming from the east.",
+    "brief": "You are in a twisting passage indistinguishable from its relatives, and the draught is coming from the east.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse. Here, and only here, the draught is coming from the east.",
     "artId": "twisty",
     "light": "dark",
     "exits": {
@@ -705,8 +705,8 @@
   {
     "id": "twisty-6",
     "name": "Twisting Passages",
-    "brief": "[draft] You are in a maze of twisting stone passages, none of them distinguishing themselves from the rest.",
-    "full": "[draft] The passages here fold back on themselves in a way that owes nothing to the miners and everything to the rock. Every wall repeats every other wall.",
+    "brief": "You are in a twisting passage indistinguishable from its relatives.",
+    "full": "A twisting passage in worn gray stone, giving onto more twisting passages. Every direction out of here looks exactly like every other direction, and exactly like the way you came in. The cavern did not make this confusing on purpose, which somehow makes it worse.",
     "artId": "twisty",
     "light": "dark",
     "exits": {

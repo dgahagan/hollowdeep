@@ -4,7 +4,7 @@
     "names": [
       "stalker"
     ],
-    "description": "[draft] Something that walks the cavern on its own schedule, and is not an animal, exactly.",
+    "description": "You have never seen all of it at once: a suggestion of length, a gait with too much patience in it, a way of keeping exactly one step past the lamp's reach. It walks these galleries on its own schedule. It is not an animal, exactly, and the miners — who wrote down everything — wrote down nothing about it.",
     "artId": "stalker",
     "behavior": "stalker",
     "spawn": {
@@ -34,7 +34,7 @@
     "names": [
       "thief"
     ],
-    "description": "[draft] Something acquisitive that has had ninety years and no competition.",
+    "description": "You have not seen it. You have seen its work: things gone, and long smooth drag-marks in the mud, unhurried, always toward the same place. Ninety years without competition, and it has kept its habits professional.",
     "artId": "thief",
     "behavior": "thief",
     "spawn": {
@@ -72,7 +72,7 @@
       "blind fish",
       "fish"
     ],
-    "description": "[draft] Blind fish, pale in the black water, that stay well clear of the channel.",
+    "description": "Pale as paper, eyeless, entirely at peace. They hang in the slack water by the bank and go nowhere near the channel. They have been here far longer than the mine, and they did not get that old by swimming in the middle.",
     "artId": "blind-fish",
     "behavior": "static",
     "spawn": {

@@ -84,8 +84,8 @@
       "silver flowstone",
       "flowstone"
     ],
-    "brief": "[draft] a sheet of native silver, freed from the wall",
-    "description": "[draft] a sheet of native silver, heavier than a sheet has any right to be",
+    "brief": "A sheet of silver flowstone leans here, veiled in calcite.",
+    "description": "An eighth of an inch of native silver the size of a table top, grown a molecule at a time in the dark. It is worth a house. Detaching it made a noise like the house coming down.",
     "artId": "silver-flowstone",
     "portable": true,
     "initialLocation": "nowhere",
@@ -103,8 +103,8 @@
       "cave pearls",
       "pearls"
     ],
-    "brief": "[draft] a nest of pearls, sitting in the pool",
-    "description": "[draft] small stone pearls, rolled round by water with nowhere better to be",
+    "brief": "A nest of cave pearls sits here, arranged with what looks like intent.",
+    "description": "Round as shot, lustrous as weather, grown layer on layer in the pool's slow rock-tumbler. They did not belong to you. The pool was clear on that point.",
     "artId": "cave-pearls",
     "portable": true,
     "initialLocation": "gour-pools",
@@ -122,8 +122,8 @@
       "Weir nugget",
       "nugget"
     ],
-    "brief": "[draft] the nugget the town is named for, wedged in the rock",
-    "description": "[draft] a nugget the size of a fist, and the reason the town has a name",
+    "brief": "The Weir nugget gleams here, fist-sized and unapologetic.",
+    "description": "A fist of waterworn gold. The town is named for the family, and the family, the story goes, was named rich by this river. The nugget is in no ledger anywhere, which tells you whose pocket it was meant to finish in.",
     "artId": "weir-nugget",
     "portable": true,
     "initialLocation": "nowhere",
@@ -141,8 +141,8 @@
       "miner's cache",
       "cache"
     ],
-    "brief": "[draft] a cache someone hid and never came back for",
-    "description": "[draft] a small hoard, packed by somebody who meant to return for it",
+    "brief": "A miner's cache sits in the dead end, oilcloth over a powder box.",
+    "description": "A powder box under oilcloth, packed by a man who knew he might not be back directly: high-graded ore wrapped in a shirt with his initials worked into the collar. He hid it where nothing sensible would look. He never came back for it. You may draw either conclusion about the maze.",
     "artId": "miners-cache",
     "portable": true,
     "initialLocation": "twisty-6",
@@ -314,7 +314,7 @@
       "steel gad",
       "gad"
     ],
-    "brief": "A steel gad lies in the tool crib, wanting work.",
+    "brief": "A steel gad lies here, wanting work.",
     "description": "A miner's gad: a foot of forged steel drawn to a chisel point, for prying loose what the rock will not simply hand over. The business end is bright from use. The striking end is mushroomed flat. It has settled opinions about leverage.",
     "artId": "steel-gad",
     "portable": true,
@@ -556,8 +556,8 @@
       "seam",
       "vein"
     ],
-    "brief": "[draft] a bare seam of something pale in the rock",
-    "description": "[draft] a seam of native silver showing bare in the rock, easy to reach and hard to free quietly",
+    "brief": "Low on the wall, one seam gleams metal under the calcite.",
+    "description": "Native silver in a continuous sheet beneath a skin of calcite — a freak of chemistry worth more than the mine shipped in its best quarter. It is firmly part of the wall. Freeing it would be a matter of leverage, and of making your peace with the acoustics.",
     "artId": "flowstone-seam",
     "portable": false,
     "initialLocation": "gallery-of-veils"
@@ -568,8 +568,8 @@
       "pothole",
       "hole"
     ],
-    "brief": "[draft] a pothole with something wedged in it",
-    "description": "[draft] a pothole worn round by the river, with something wedged fast in the bottom",
+    "brief": "A pothole at the waterline holds something that gleams.",
+    "description": "The river drilled this pocket, wedged its trophy in, and has spent a hundred years trying to take it back. The gleam inside is gold, fist-sized, jammed fast. Fingers will not shift it. A foot of good steel might.",
     "artId": "pothole",
     "portable": false,
     "initialLocation": "river-strand"

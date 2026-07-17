@@ -319,7 +319,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The keg settles into the breach, and there is no taking that decision back."
+        "text": "You seat the keg into the seam at the wall's foot, snug as a stone in an arch. It fits like the wall was measured for it — which, considering who did the measuring, is not a comforting thought."
       },
       {
         "kind": "setFlag",
@@ -341,17 +341,23 @@
     "once": true,
     "if": [
       {
-        "flag": "powder-placed"
+        "flag": "powder-placed",
+        "atLocation": "breach-wall"
       }
     ],
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The fuse runs true from the keg to somewhere you would rather be standing."
+        "text": "You crimp the fuse to the charge and pay the coil out along the floor, west, into the maze's first turning. A walking pace of fire, and then the argument. All it wants now is a light."
       },
       {
         "kind": "setFlag",
         "flag": "fused"
+      },
+      {
+        "kind": "moveItem",
+        "item": "fuse-coil",
+        "to": "breach-wall"
       }
     ]
   },
@@ -370,7 +376,12 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The spark walks off into the dark, and you walk the other way, quickly."
+        "text": "The fuse takes the flame and walks off into the dark with it, unhurried, keeping its appointment. You go west at a pace you would not call unhurried at all. The mountain says one word. The draught becomes a wind, and then a door."
+      },
+      {
+        "kind": "moveItem",
+        "item": "fuse-coil",
+        "to": "nowhere"
       },
       {
         "kind": "teleport",
@@ -1082,7 +1093,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The rim gives, and somewhere below, water starts to argue."
+        "text": "The pearls come up wet and perfect. Behind you the dam's lip gives with a crack, and somewhere below, water begins arguing its way back up. You would give it five turns of the glass. No more."
       },
       {
         "kind": "startTimer",
@@ -1291,7 +1302,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The pool refills behind you, and settles, and the argument is over."
+        "text": "From back the way you came, a rush and a long slap of settling water: the gour pools taking their room back. The argument is over. The water won it, the way water does."
       }
     ]
   },
@@ -1310,7 +1321,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The sheet comes away with a crack that goes off like a shot."
+        "text": "You set the gad behind the sheet and lean. The silver comes away whole — and the crack goes off like a shot, once from the wall, once from the vault overhead, and a third time from somewhere that has no wall. Far off, a gait changes."
       },
       {
         "kind": "moveItem",
@@ -1338,12 +1349,375 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The gad finds purchase, and the nugget comes free of the rock."
+        "text": "The gad finds the purchase your fingers couldn't, and the river loses a hundred-year argument. The Weir nugget comes free, heavier than it looks, like most history."
       },
       {
         "kind": "moveItem",
         "item": "weir-nugget",
         "to": "river-strand"
+      }
+    ]
+  },
+  {
+    "id": "pry-nugget-refusal",
+    "on": {
+      "type": "use",
+      "target": "pothole"
+    },
+    "if": [
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "coach-road"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "main-street"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "chapel"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "general-store"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "assay-office"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "tailings-path"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "adit-mouth"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "behind-the-seal"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "adit-drift"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "lamp-room"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "stables"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "junction"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "timekeepers-nook"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "foremans-office"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "shaft-head"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "pump-room"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "ore-chute"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "long-drift"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "magazine"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "stull-gallery"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "broken-drift"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "winze-ladderway"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "the-gunnis"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "shaft-foot"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "breakthrough"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "low-crawl"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "cathedral"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "gallery-of-veils"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "gour-pools"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "black-river"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "river-strand"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "midden"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "breach-wall"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-1"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-2"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-3"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-4"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-5"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "twisty-6"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "beyond-the-breach"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "dressed-gallery"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "toolroom"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "store-rooms"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "closed-row"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "tally-chamber"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "worked-face"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "long-stair"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "undercroft"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "cistern"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "warm-gallery"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "deep-cut"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "quiet-gallery"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "antechamber"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "seal-gate"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "keepers-stair"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "keepers-walk"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "watch-room"
+        }
+      },
+      {
+        "itemAt": {
+          "item": "steel-gad",
+          "location": "the-vault"
+        }
+      }
+    ],
+    "do": [
+      {
+        "kind": "print",
+        "text": "You get two fingers behind it and the river laughs at you both. It is wedged past the strength of hands. A foot of good steel would change the conversation."
       }
     ]
   },
@@ -1398,7 +1772,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The blind fish stay out of the channel, and that is not for no reason."
+        "text": "You size up the channel. The fish — who are blind, and have lived here since before the town had a name, and know something — keep to the slack water by the banks. Nothing native to this river swims the middle. You could still try. The river takes all comers."
       },
       {
         "kind": "setFlag",
@@ -1777,7 +2151,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The canary stops singing."
+        "text": "The canary stops mid-note. The silence it leaves behind has a shape, and the shape is close."
       }
     ]
   },
@@ -1799,7 +2173,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The canary stops singing."
+        "text": "The canary stops mid-note. The silence it leaves behind has a shape, and the shape is close."
       }
     ]
   },
@@ -1821,7 +2195,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The canary stops singing."
+        "text": "The canary stops mid-note. The silence it leaves behind has a shape, and the shape is close."
       }
     ]
   },
@@ -1843,7 +2217,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "[draft] The canary stops singing."
+        "text": "The canary stops mid-note. The silence it leaves behind has a shape, and the shape is close."
       }
     ]
   }
