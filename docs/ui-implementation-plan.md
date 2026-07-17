@@ -350,7 +350,7 @@ accessibility + tablet + performance passes, docs closeout.
 
 - [x] T1 — Tokens, themes, typography, shell (`opus`, human) — `8ad9187` (faces pinned: Literata + JetBrains Mono; fonts in `public/fonts/` for preload, see commit body)
 - [x] T2 — Settings + persistence layers (`sonnet`) — `35fee75`
-- [ ] T3 — Transcript/input upgrades, shortcuts (`sonnet`)
+- [x] T3 — Transcript/input upgrades, shortcuts (`sonnet`) — `314eecb`
 - [ ] T4 — Auto-map (`opus`)
 - [ ] T5 — Scene panel: preload, flicker (`sonnet`)
 - [ ] T6 — Death modal, hardcore, undo (`opus`)
