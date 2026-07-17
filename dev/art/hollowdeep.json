@@ -23,10 +23,10 @@
     "             distrobox-host-exec ~/pixelart-venv/bin/python tools/art/host_gen.py /tmp/req.json"
   ],
   "styles": {
-    "scene": "",
-    "item": "",
-    "creature": "",
-    "marquee": ""
+    "scene": " Painted in oils on canvas, the lit passages worked in thick visible strokes and the darks laid in flat and deep, a matte unvarnished surface. Muted, earthy colour, warmed as if by flame where the light falls. Recorded plainly and observationally, as the thing is, without drama. Not digital art, not concept art, not a videogame asset, no rim lighting, no gloss, nothing polished. No text, no lettering, no numbers, no signature.",
+    "item": " Painted in oils on canvas, the lit passages worked in thick visible strokes and the darks laid in flat and deep, a matte unvarnished surface. Muted, earthy colour, warmed as if by flame where the light falls. Recorded plainly and observationally, as the thing is, without drama. Not digital art, not concept art, not a videogame asset, no rim lighting, no gloss, nothing polished. No text, no lettering, no numbers, no signature.",
+    "creature": " Painted in oils on canvas, the lit passages worked in thick visible strokes and the darks laid in flat and deep, a matte unvarnished surface. Muted, earthy colour, warmed as if by flame where the light falls. Recorded plainly and observationally, as the thing is, without drama. Not digital art, not concept art, not a videogame asset, no rim lighting, no gloss, nothing polished. No text, no lettering, no numbers, no signature.",
+    "marquee": " Painted in oils on canvas, the lit passages worked in thick visible strokes and the darks laid in flat and deep, a matte unvarnished surface. Muted, earthy colour, warmed as if by flame where the light falls. Recorded plainly and observationally, as the thing is, without drama. Not digital art, not concept art, not a videogame asset, no rim lighting, no gloss, nothing polished. No text, no lettering, no numbers, no signature."
   },
   "dims": {
     "scene": [

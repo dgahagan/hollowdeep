@@ -41,3 +41,21 @@ Exclusions have to live in the positive prompt as plain statements ("nothing
 glows", "no lettering"), and they are weak — the first pass still put faint
 text artifacts in the sky. Check skies and walls on review; a seed with
 lettering is a reject, not a fix.
+
+## 5. Hollowdeep's suffix lock (T3, 2026-07-17)
+
+Four candidates probed (control = test-cave's suffix; board + near-black
+edges; chiaroscuro; heavy impasto) against six subjects spanning the space,
+6 seeds each. **C — chiaroscuro — won** (human verdict; see
+`art-review/art-review.md`). Two things worth keeping:
+
+- Putting *tonal structure* in the suffix ("lit passages worked thick, darks
+  laid in flat and deep") did NOT override per-subject light the way putting
+  *lighting* there did (the test-cave lesson in `test-cave.json`'s _readme).
+  The suffix says how paint handles light; each prompt still says where the
+  light is. `main-street`'s overcast daylight survived intact next to
+  `cathedral`'s lamplit dark.
+- "Warmed as if by flame where the light falls" is a colour instruction
+  pinned to a physical cause, so daylight scenes stay gray — the flame
+  warmth only shows up where a prompt puts fire or lantern light. Naming
+  the cause beats naming the palette.
