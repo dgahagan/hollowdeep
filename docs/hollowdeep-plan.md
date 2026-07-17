@@ -64,6 +64,13 @@ Adding a 13th effect is a schema version bump and an engine change. **If a
 puzzle needs one, that is a finding for this document, not a decision to make
 while authoring.**
 
+> **This vocabulary is what is built today, and it is already growing.** The
+> process above worked exactly once and produced two findings, both settled in
+> §10 and both prerequisite engine work: hints (§10.2) and relative timers
+> (§10.3, which adds the 13th effect `startTimer`, a 12th trigger
+> `timerExpired`, and an 11th condition field `hintsAtMost` arrives with hints).
+> Design against the grown vocabulary; **author against it only once it ships.**
+
 ### Consequences a designer must plan around
 
 These are not bugs. They are the shape of the thing:
@@ -72,7 +79,7 @@ These are not bugs. They are the shape of the thing:
 |---|---|
 | **One lamp per adventure** | `manifest.lamp` is singular and `GameState` tracks one `lampFuel`. A second fuel-burning light source is a **state-shape change and a save migration** — not authorable. Design one light source. |
 | **No counters** | Flags are `boolean \| number`, but no effect *increments* one. "Do X three times" cannot be counted. Model repetition as distinct flags, or don't. |
-| **No timers except `turnStart`** | `turnStart` fires on an absolute turn number, not "N turns after X". The thief's delay is engine code (`stealAfterTurns`), not content. A timed puzzle ("the water rises 20 turns after you open the sluice") **has no expression**. |
+| **Timers: being built** | *Was:* `turnStart` fires on an absolute turn number only, so "N turns after X" had no expression. **Settled 2026-07-17 (§10.3): relative timers are being added** — `startTimer` effect, `timerExpired` trigger, `GameState.timers`. Design freely against them, but they are not built yet. |
 | **`chance` is the only randomness** | And it consumes RNG, so it perturbs seeded tests. Fine in flavour; risky on the critical path — the walkthrough must win at every seed. |
 | **A container is how you make a door** | `capacity: 0` + `locked` + `keyId`. That is the grate, and it is the only lock mechanism. |
 | **No liquid model** | FR-1.10's "bottle of water/oil" is `moveItem` plus flags. Pouring is a `use` trigger that sets a flag; there is no volume. |
@@ -99,8 +106,8 @@ maxScore  ==  Σ treasures (carryPoints + depositPoints)  +  Σ milestones.point
 
 | Gap | Status |
 |---|---|
-| **Hints have no home in the format.** SCOPE Phase 2 says "author … hints … as module data"; there are ten module documents and none of them is `hints.json`. FR-7.2 (nudge → hint → solution) is **[S]**. | **Open — see §9.** Either the format grows an eleventh document (schema bump) or hints are cut from Phase 2. |
-| **No timed events relative to an action.** See the table above. | **Open — see §9.** If a puzzle wants one, it is an engine change. |
+| **Hints have no home in the format.** SCOPE Phase 2 says "author … hints … as module data"; there are ten module documents and none of them is `hints.json`. FR-7.2 (nudge → hint → solution) is **[S]** — but FR-1.5 **[M]** and FR-1.12 both depend on it. | **Settled — see §10.2.** The format grows an eleventh document. Prerequisite engine work; blocks authoring. |
+| **No timed events relative to an action.** | **Settled — see §10.3.** Being added, on the same `SAVE_VERSION` bump as hints. |
 
 ---
 
@@ -316,5 +323,34 @@ Each of these blocks authoring, and each is the human's call.
    | `hint` core verb | Ships in-engine like every other core verb, so every adventure gets it |
 
    Phase 3 draws the panel. The engine + data land first.
-3. **Timed events** — does any intended puzzle need "N turns after X"? If yes,
-   it is an engine change and belongs in a plan, not in authoring.
+3. ~~**Timed events**~~ — **Settled 2026-07-17: yes, build them — on the same
+   `SAVE_VERSION` bump as hints (§10.2).**
+
+   Two puzzles in §5 want a timer, and one only looks like it does:
+
+   - **Treasure 2, the garnets.** "Behind a stull you have to be willing to pull
+     out" *is* a timer puzzle: pull the timber, the roof starts working, get in
+     and out before it comes down. Without one it degrades to a `chance` roll or
+     an instant death — both strictly worse, and `chance` on the critical path
+     is a walkthrough-at-every-seed problem (see the constraints table).
+   - **Treasure 6, the cave pearls.** The brief names water among the hazards. A
+     pool that rises is a timer; a pool that doesn't is scenery.
+   - **Treasure 5, the flowstone** — *does not need one.* The noise problem is
+     already carried by the stalker's existing behaviour. Named here so it is not
+     re-litigated later.
+
+   | Piece | Note |
+   |---|---|
+   | `startTimer` effect | **A 13th variant on the frozen union.** Names a timer id and a turn count |
+   | `timerExpired` trigger | 12th trigger. Fires once, on the turn the count runs out |
+   | `GameState.timers` | The state field. **Rides the 1 → 2 bump hints already forces** — one migration, not two |
+
+   **This is not a foreign concept to the engine.** The thief already does it:
+   `creatures.ts:182` computes `state.turn - cs.activatedTurn` and compares it to
+   `stealAfterTurns`. The engine already records when something happened and
+   measures elapsed turns against it — hardcoded for one creature, never exposed
+   to content. This generalizes what is already there.
+
+   **The deadline is why this was decided now:** hints force a save migration
+   regardless. Timers ride it for nearly nothing, or arrive later as
+   `SAVE_VERSION 2 → 3` and a second migration for no reason.
