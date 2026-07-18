@@ -7,6 +7,7 @@ import type { GameState } from '../../src/engine/types';
 import { createGame, getItemState, isCarrying, itemLocation, setItemLocation, setItemState } from '../../src/engine/state';
 import { parse, type Command } from '../../src/engine/parser/parse';
 import { handlerFor, type ActionResult } from '../../src/engine/actions';
+import { isExitRevealed } from '../../src/engine/systems/events';
 
 const MODULE_DIR = path.resolve(import.meta.dirname, '../../adventures/test-cave');
 
@@ -372,6 +373,19 @@ describe('use — a trigger fire and nothing else (SCOPE ADDITION to T16)', () =
     expect(result.consumesTurn).toBe(true);
     expect(texts(result)).toMatch(/rust gives up its grudge/i);
     expect(result.state.flags['door-oiled']).toBe(true);
+  });
+
+  it('oiling ALSO reveals the down exit and says so — without ever searching (player-reported)', () => {
+    // The hatch reveal used to belong exclusively to `search door`
+    // (find-hatch). A player who oiled first had a passable exit the exit
+    // list never showed and no prose ever mentioned.
+    let state = at('grotto');
+    state = setItemLocation(state, 'oil-flask', 'inventory');
+    expect(isExitRevealed(state, 'grotto', 'down')).toBe(false);
+
+    const result = act(state, 'oil door with flask');
+    expect(isExitRevealed(result.state, 'grotto', 'down')).toBe(true);
+    expect(texts(result)).toMatch(/down has become a direction/i);
   });
 
   it('oiling it again hits the already-oiled event, not the first-time text', () => {
