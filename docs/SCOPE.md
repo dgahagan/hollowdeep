@@ -107,6 +107,11 @@ with engine work after the world data stabilizes.
 - Full play-testing (including hardcore mode), balance (lamp fuel, creature
   aggression, hint costs), narrator voice editing pass, bug triage, save
   migration check against Phase 2 saves, final performance audit.
+- Hardcore fuel pressure (decided 2026-07-18): halve `startFuel` in hardcore
+  mode so extinguish-discipline and the one refuel become binding; default
+  mode stays generous. Needs a small engine seam (hardcore is a UI-side
+  flag; likely a fuel multiplier passed into `createGame`) — design it
+  deliberately here rather than bolting on.
 - **Exit criteria:** success criteria in PROJECT-BRIEF §8 all pass; tagged
   v1.0 static build.
 

@@ -166,6 +166,35 @@ body {
   width: 0 !important;
 }
 
+/* Lit vs unlit: the flame is the fact that decides whether fuel is falling,
+   so the gauge says it ambiently — warm fill burning, dimmed fill banked.
+   The pulse class is only applied when the in-app reduce-motion setting is
+   off (StatusBar.tsx); the media query below kills it regardless, same
+   belt-and-suspenders as the scene panel's flicker. */
+.status-bar__lamp--unlit .status-bar__lamp-fill {
+  opacity: 0.35;
+}
+
+.status-bar__lamp--pulse .status-bar__lamp-fill {
+  animation: lamp-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes lamp-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.72;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-bar__lamp--pulse .status-bar__lamp-fill {
+    animation: none;
+  }
+}
+
 /* ---- Scene panel ---- */
 
 .scene-panel {
