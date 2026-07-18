@@ -399,6 +399,25 @@ arrived through its own design plan — the process working, not an exception.)
 > also flow through it, or `maxScore` cannot reconcile and the validator will
 > reject your module. Use it only for scoring outside that model.
 
+**Name the consequence — when the player earned it.** Two conventions, both
+established by play-testing (2026-07-18):
+
+- **A barrier the player deliberately defeated owes plain feedback.** When an
+  event opens a way (a lock turned, hinges oiled, a grate hauled up), its
+  prose should say so in the narrator's voice — test-cave's precedents:
+  *"Down has become a direction"* (the oiled hatch), *"the way down is
+  open"* (the grate). The exit buttons update by themselves the moment the
+  gate's condition holds; the transcript should agree with them, and a
+  `descriptionVariants`/`variants` entry should keep `examine`/`look`
+  telling the same story afterwards. The player already solved it — naming
+  the result spoils nothing.
+- **Consequences at a distance stay oblique.** A mechanism whose effect lands
+  rooms away, a magic word, a secret — discovery is the content, so the
+  event prose gives at most an ambient cue ("somewhere below, stone moves"),
+  never a direction name. Gated exits are invisible until passable by
+  design, and `blockedMessage` is the author's chosen moment to hint —
+  don't pre-empt it from the triggering event.
+
 ---
 
 ## `strings.json`
