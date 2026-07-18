@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { loadAdventure } from '../../src/loader';
 import type { AdventureModule } from '../../src/engine/schema';
 import type { GameState } from '../../src/engine/types';
-import { createGame, setItemLocation } from '../../src/engine/state';
+import { createGame, setItemLocation, setItemState } from '../../src/engine/state';
 import { parse, type Command } from '../../src/engine/parser/parse';
 import { handlerFor, type ActionResult } from '../../src/engine/actions';
 
@@ -90,6 +90,18 @@ describe('inventory — consumes no turn (checking your pockets is free)', () =>
     expect(out).not.toMatch(/leans in the corner/i);
     expect(out).toContain('lamp');
     expect(out).toContain('flask');
+  });
+
+  it('a carried open container lists what it is holding; a closed one keeps its secrets', () => {
+    // The wooden box is non-portable in test-cave, but inventoryHandler never
+    // checks portability — carrying it is a legal state to construct, and the
+    // idol sits inside it from game start.
+    let carrying = setItemLocation(start, 'wooden-box', 'inventory');
+    carrying = setItemState(carrying, 'wooden-box', { locked: false, open: true });
+    expect(texts(act(carrying, 'inventory'))).toMatch(/box \(holding: idol\)/i);
+
+    const closed = setItemState(carrying, 'wooden-box', { open: false });
+    expect(texts(act(closed, 'inventory'))).not.toMatch(/holding|idol/i);
   });
 
   it('the shortcut `i` behaves identically', () => {

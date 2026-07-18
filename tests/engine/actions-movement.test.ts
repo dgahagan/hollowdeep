@@ -251,3 +251,62 @@ describe('back', () => {
     expect(back.consumesTurn).toBe(true);
   });
 });
+
+describe('arrival lists room contents — same lines as look (the maze-marker fix)', () => {
+  it('walking into a room mentions the items lying there', () => {
+    // road -> e -> shed, where the lamp/flask/cup sit. Lamp is carried by
+    // at(), so the flask and cup remain as room items.
+    const result = act(at('road'), 'e');
+    expect(result.state.locationId).toBe('shed');
+    const output = result.events.map((e) => e.text).join(' | ');
+    expect(output).toMatch(/flask/i);
+    expect(output).toMatch(/cup/i);
+  });
+
+  it('mentions an item dropped there earlier, even on a revisit in brief mode — a maze marker is findable again', () => {
+    // Plant the tin cup in a maze room the player has already visited, then
+    // walk in from twisty-1: the revisit brief must be followed by the cup.
+    let state = setItemLocation(at('twisty-1'), 'tin-cup', 'twisty-2');
+    state = { ...state, visited: [...state.visited, 'twisty-2'] };
+    const result = act(state, 'n');
+    expect(result.state.locationId).toBe('twisty-2');
+    expect(result.events.map((e) => e.text).join(' ')).toMatch(/cup/i);
+  });
+
+  it('lists open-container contents on arrival too', () => {
+    // grotto --down--> deep-vault (door-oiled flag opens the gated exit,
+    // same setup as the hidden-exit traversal test above). Box standing open.
+    let state = setFlag(at('grotto'), 'door-oiled', true);
+    state = setItemState(state, 'wooden-box', { locked: false, open: true });
+    const result = act(state, 'down');
+    expect(result.state.locationId).toBe('deep-vault');
+    expect(result.events.map((e) => e.text).join(' ')).toMatch(/jade idol squats in the box/i);
+  });
+
+  it('a creature standing in the room is mentioned on arrival', () => {
+    // Park the static pale-newt in the grotto and walk in from twisty-2.
+    const state: GameState = {
+      ...at('twisty-2'),
+      creatures: {
+        ...at('twisty-2').creatures,
+        'pale-newt': { active: true, locationId: 'grotto', encounterTurns: 0, activatedTurn: 0, hasStolen: false },
+      },
+    };
+    const result = act(state, 'w');
+    expect(result.state.locationId).toBe('grotto');
+    const newt = module_.creatures.find((c) => c.id === 'pale-newt');
+    if (newt === undefined) throw new Error('fixture missing pale-newt');
+    expect(result.events.some((e) => e.text === newt.description)).toBe(true);
+  });
+
+  it('arriving in the dark lists nothing — the spoiler boundary holds', () => {
+    // Walk into the dark deep-vault with no lamp: the warning prints, and
+    // the box (which sits there, open, idol inside) is never mentioned.
+    let state = setFlag(darkAt('grotto'), 'door-oiled', true);
+    state = setItemState(state, 'wooden-box', { locked: false, open: true });
+    const result = act(state, 'down');
+    expect(result.state.locationId).toBe('deep-vault');
+    const output = result.events.map((e) => e.text).join(' ');
+    expect(output).not.toMatch(/box|idol/i);
+  });
+});

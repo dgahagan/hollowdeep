@@ -1,4 +1,4 @@
-import { carriedItems } from '../state';
+import { carriedItems, visibleContents } from '../state';
 import { evalConditions, lookupString } from '../systems/events';
 import { acted, refuse, type ActionHandler } from './index';
 
@@ -53,7 +53,15 @@ export const inventoryHandler: ActionHandler = (module, state) => {
   // `names` is `.min(1)` in the schema, so a first element always exists —
   // `?? item.id` satisfies noUncheckedIndexedAccess without a `!`, and degrades
   // to something legible rather than "undefined" if that ever changes.
-  const names = items.map((item) => item.names[0] ?? item.id);
+  // A carried open container shows what's in it — "box (holding: idol)" —
+  // same visibility rule as look/examine (state.ts visibleContents); a
+  // closed one keeps its secrets, so the list never says more than the
+  // player could see by other means.
+  const names = items.map((item) => {
+    const name = item.names[0] ?? item.id;
+    const inside = visibleContents(module, state, item.id).map((inner) => inner.names[0] ?? inner.id);
+    return inside.length > 0 ? `${name} (holding: ${inside.join(', ')})` : name;
+  });
   return refuse(state, `You are carrying: ${names.join(', ')}.`);
 };
 
