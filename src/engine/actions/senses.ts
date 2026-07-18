@@ -25,34 +25,46 @@ function darknessWarning(module: AdventureModule): string {
  * leak the room's contents to a player who cannot see them (a spoiler
  * boundary, same rule `describeScene` will apply in T22).
  */
-export const lookHandler: ActionHandler = (module, state) => {
-  if (!canSee(module, state)) {
-    return acted(state, [{ kind: 'text', text: darknessWarning(module) }]);
-  }
-
-  const location = currentLocation(module, state);
-  const output: OutputEvent[] = [{ kind: 'text', text: location.full }];
-
-  // Each item's `brief` is a complete sentence in the narrator's own voice
-  // ("An iron key lies here."), so it is printed as its own line and never
-  // wrapped in engine prose. Prefixing them with "You can see" produces
-  // "You can see An iron key lies here." — the engine talking over the
-  // adventure, which is the one thing the string table exists to prevent.
-  // An open container's contents follow it, for the same reason in the other
-  // direction: a lid standing open with the inside unnarrated is the engine
-  // withholding what the player can plainly see.
+/**
+ * What is here, as transcript lines: each item's `brief`, each open
+ * container's visible contents right after it, then each creature's
+ * description. Shared by `look` and by arrival (movement.ts moveTo) so the
+ * two can never disagree about what the player is told they can see — a
+ * dropped item that only `look` would admit to is invisible in practice,
+ * and in the maze a dropped item IS the navigation aid.
+ *
+ * Each `brief` is a complete sentence in the narrator's own voice ("An iron
+ * key lies here."), so it is printed as its own line and never wrapped in
+ * engine prose. Prefixing them with "You can see" produces "You can see An
+ * iron key lies here." — the engine talking over the adventure, which is the
+ * one thing the string table exists to prevent. An open container's contents
+ * follow it for the same reason in the other direction: a lid standing open
+ * with the inside unnarrated is the engine withholding what the player can
+ * plainly see.
+ *
+ * Callers gate on `canSee` — this function assumes the player has light.
+ */
+export function roomContentsLines(module: AdventureModule, state: GameState): OutputEvent[] {
+  const output: OutputEvent[] = [];
   for (const item of itemsAt(module, state, state.locationId)) {
     output.push({ kind: 'text', text: item.brief });
     for (const inner of visibleContents(module, state, item.id)) {
       output.push({ kind: 'text', text: inner.brief });
     }
   }
-
   for (const creature of creaturesHere(module, state)) {
     output.push({ kind: 'text', text: creature.description });
   }
+  return output;
+}
 
-  return acted(state, output);
+export const lookHandler: ActionHandler = (module, state) => {
+  if (!canSee(module, state)) {
+    return acted(state, [{ kind: 'text', text: darknessWarning(module) }]);
+  }
+
+  const location = currentLocation(module, state);
+  return acted(state, [{ kind: 'text', text: location.full }, ...roomContentsLines(module, state)]);
 };
 
 function describeTarget(module: AdventureModule, state: GameState, target: Target): string | undefined {

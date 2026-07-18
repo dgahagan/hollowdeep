@@ -161,18 +161,31 @@ interface AdventureCardProps {
 
 function AdventureCard({ card, hardcore, onHardcoreChange, onNewGame, onContinue }: AdventureCardProps) {
   const { entry, module, status, resume } = card;
-  const [coverFailed, setCoverFailed] = useState(false);
 
   const title = module?.manifest.title ?? entry.id;
-  const coverUrl =
-    module !== undefined
-      ? `/adventures/${entry.id}/art/marquee-title.${module.manifest.artFormat}`
-      : null;
+
+  // Cover candidates, in order: the marquee title plate, then the start
+  // location's own scene art. Not every adventure has a marquee —
+  // test-cave's art set is frozen without one (art-implementation-plan,
+  // deferred table) — but every adventure has a start location with art, so
+  // the second candidate makes a blank cover the exception rather than the
+  // rule. `coverIndex` advances on load error; past the end, the quiet
+  // plate keeps the card's shape (art-plan §7's placeholder tolerance).
+  const coverCandidates: string[] = [];
+  if (module !== undefined) {
+    coverCandidates.push(`/adventures/${entry.id}/art/marquee-title.${module.manifest.artFormat}`);
+    const startArtId = module.locations.find((l) => l.id === module.manifest.startLocation)?.artId;
+    if (startArtId !== undefined) {
+      coverCandidates.push(`/adventures/${entry.id}/art/${startArtId}.${module.manifest.artFormat}`);
+    }
+  }
+  const [coverIndex, setCoverIndex] = useState(0);
+  const coverUrl = coverCandidates[coverIndex];
 
   return (
     <li className="select-card">
       <div className="select-card__cover">
-        {coverUrl !== null && !coverFailed ? (
+        {coverUrl !== undefined ? (
           <img
             className="select-card__cover-img"
             src={coverUrl}
@@ -180,12 +193,10 @@ function AdventureCard({ card, hardcore, onHardcoreChange, onNewGame, onContinue
             loading="lazy"
             decoding="async"
             onError={() => {
-              setCoverFailed(true);
+              setCoverIndex((prev) => prev + 1);
             }}
           />
         ) : (
-          // Placeholder-tolerant (art-plan §7): the marquee may not exist yet.
-          // A quiet plate keeps the card's shape until Phase B lands the file.
           <div className="select-card__cover-plate" aria-hidden="true" />
         )}
       </div>

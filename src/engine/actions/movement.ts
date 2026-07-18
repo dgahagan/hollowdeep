@@ -3,6 +3,7 @@ import type { GameState } from '../types';
 import { canSee, currentLocation, findLocation, hasVisited } from '../state';
 import { applyEffects, evalConditions, fireTriggers } from '../systems/events';
 import { acted, refuse, type ActionHandler, type ActionResult } from './index';
+import { roomContentsLines } from './senses';
 
 // go / enter / exit / back (design plan §5.1, foundation-implementation-plan.md T15).
 //
@@ -107,7 +108,14 @@ function moveTo(module: AdventureModule, state: GameState, destinationId: string
     target: destinationId,
   });
   const text = moveDescription(module, afterEnter, destinationId, wasVisited);
-  return acted(afterEnter, [{ kind: 'text', text }, ...enterEvents]);
+  // Arrival lists what's here — same lines as `look` (senses.ts), items and
+  // creatures both. Brief mode shortens the ROOM's prose on a revisit, never
+  // the contents: a thief-dropped treasure in a maze room is only findable
+  // because walking in mentions it. Dark stays dark: contents are listed
+  // only when the player can see, the same spoiler boundary moveDescription
+  // itself just applied.
+  const contents = canSee(module, afterEnter) ? roomContentsLines(module, afterEnter) : [];
+  return acted(afterEnter, [{ kind: 'text', text }, ...contents, ...enterEvents]);
 }
 
 /** Check the exit's `if` (blocked ⇒ no turn, `blockedMessage` or a generic refusal), then move. */

@@ -400,6 +400,13 @@ function Game({
           >
             Save / Load
           </button>
+          {/* Back to the adventure-select front door. Safe to offer without a
+              confirm: the autosave effect (useGame.ts) has already written
+              this turn, and the select screen's Continue resumes it — leaving
+              is navigation, not abandonment. */}
+          <button type="button" onClick={onSelect}>
+            Adventures
+          </button>
         </div>
         <StatusBar module={module} state={state} scene={scene} />
       </header>

@@ -128,6 +128,12 @@ function TranscriptEntryLine({ entry, typewriterSpeed, motionReduced }: Transcri
 
 export function TranscriptPanel({ entries, typewriterSpeed, reduceMotion }: TranscriptPanelProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  // Whether the view should stay glued to the newest text. True until the
+  // player deliberately scrolls up to read history; scrolling back to the
+  // bottom (or a new turn happening) re-pins. A ref, not state: pinnedness
+  // changes on every scroll event and must never cause a render.
+  const pinnedRef = useRef(true);
   const osReducedMotion = usePrefersReducedMotionQuery();
   const motionReduced = reduceMotion || osReducedMotion;
 
@@ -135,30 +141,64 @@ export function TranscriptPanel({ entries, typewriterSpeed, reduceMotion }: Tran
   // the dependency — the array grows by concatenation each turn (see
   // useGame.ts), so a new length is exactly "a turn happened", and comparing
   // by length avoids re-scrolling on a render that didn't add anything.
+  // A new turn always re-pins: asking the game something means wanting the
+  // answer, wherever the player had scrolled to before.
   useEffect(() => {
     const el = scrollRef.current;
     if (el === null) return;
+    pinnedRef.current = true;
     el.scrollTop = el.scrollHeight;
   }, [entries.length]);
 
+  // The typewriter reveal (TranscriptEntryLine) grows a line CHARACTER BY
+  // CHARACTER long after the entries-length scroll above has fired — at
+  // normal/slow speed the tail of the newest line kept sliding below the
+  // fold. Watch the content's actual size and, while pinned, follow it.
+  // ResizeObserver rather than scrolling from the reveal ticks keeps the
+  // "stay at the bottom" concern in the one component that owns the
+  // scroller, whatever grows it.
+  useEffect(() => {
+    const scroller = scrollRef.current;
+    const content = contentRef.current;
+    if (scroller === null || content === null) return undefined;
+
+    const observer = new ResizeObserver(() => {
+      if (pinnedRef.current) scroller.scrollTop = scroller.scrollHeight;
+    });
+    observer.observe(content);
+    return () => observer.disconnect();
+  }, []);
+
+  // Scrolling up unpins (the player is reading history — yanking them back
+  // down mid-reveal would be hostile); returning to the bottom re-pins. The
+  // 40px slack means "close enough to the bottom counts", so a stray
+  // one-notch wheel tick doesn't strand the view just above the newest text.
+  const onScroll = () => {
+    const el = scrollRef.current;
+    if (el === null) return;
+    pinnedRef.current = el.scrollTop + el.clientHeight >= el.scrollHeight - 40;
+  };
+
   return (
-    <div className="transcript-panel" role="log" aria-live="polite" ref={scrollRef}>
-      {entries.length === 0 && (
-        <p className="transcript-panel__hint">Type a command, or click something below, to begin.</p>
-      )}
-      {entries.map((entry, index) => (
-        // Index keys are safe here: the transcript only ever grows by
-        // appending at the end (useGame.ts) — entries are never reordered,
-        // inserted in the middle, or removed. See `TranscriptEntryLine`'s own
-        // comment for why that stability is exactly what makes it safe to
-        // decide "new vs. history" from mount timing alone.
-        <TranscriptEntryLine
-          key={index}
-          entry={entry}
-          typewriterSpeed={typewriterSpeed}
-          motionReduced={motionReduced}
-        />
-      ))}
+    <div className="transcript-panel" role="log" aria-live="polite" ref={scrollRef} onScroll={onScroll}>
+      <div ref={contentRef}>
+        {entries.length === 0 && (
+          <p className="transcript-panel__hint">Type a command, or click something below, to begin.</p>
+        )}
+        {entries.map((entry, index) => (
+          // Index keys are safe here: the transcript only ever grows by
+          // appending at the end (useGame.ts) — entries are never reordered,
+          // inserted in the middle, or removed. See `TranscriptEntryLine`'s own
+          // comment for why that stability is exactly what makes it safe to
+          // decide "new vs. history" from mount timing alone.
+          <TranscriptEntryLine
+            key={index}
+            entry={entry}
+            typewriterSpeed={typewriterSpeed}
+            motionReduced={motionReduced}
+          />
+        ))}
+      </div>
     </div>
   );
 }

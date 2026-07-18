@@ -138,6 +138,21 @@ export function ScenePanel({ module, scene, lampWarn = false }: ScenePanelProps)
       )}
       <h2 className="scene-panel__name">{scene.name}</h2>
       <p className="scene-panel__description">{scene.description}</p>
+      {/* What's here, right now — `scene.items` already includes the visible
+          contents of open containers and `scene.creatures` whoever is present
+          (view.ts), both empty in the dark. Without these lines a
+          thief-dropped treasure exists only as a sidebar button; the panel is
+          the current-state caption, so it says what the room would say. */}
+      {scene.items.map((item) => (
+        <p key={item.id} className="scene-panel__description scene-panel__contents">
+          {item.brief}
+        </p>
+      ))}
+      {scene.creatures.map((creature) => (
+        <p key={creature.id} className="scene-panel__description scene-panel__contents">
+          {creature.description}
+        </p>
+      ))}
     </section>
   );
 }
