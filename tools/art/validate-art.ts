@@ -63,9 +63,13 @@ function checkStrict(manifest: ArtManifest, adventureId: string): string[] {
   for (const subject of resolveSubjects(manifest)) {
     const problems: string[] = [];
     if (subject.prompt.trim().length === 0) problems.push('empty prompt');
-    if (subject.declaredSeeds === undefined || subject.declaredSeeds.length === 0) {
-      problems.push('no seeds recorded');
-    }
+    // The candidate pool a subject was curated from: its own list, else the
+    // manifest-level default (schema-required). T7 fix — the original check
+    // demanded per-subject lists, which neither manifest ever writes, so
+    // strict could never pass; determinism needs prompt + chosen_seed + dims,
+    // with the pool recorded at either level.
+    const seedPool = subject.declaredSeeds ?? manifest.seeds;
+    if (seedPool.length === 0) problems.push('no seeds recorded');
     if (subject.chosenSeed === undefined) problems.push('no chosen_seed');
     const finalPath = path.join('adventures', adventureId, 'art', `${subject.id}.webp`);
     if (!existsSync(finalPath)) problems.push(`missing final "${finalPath}"`);

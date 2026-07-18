@@ -74,6 +74,13 @@ const zClassSubject = z.strictObject({
   seeds: z.array(z.number().int()).optional(),
   chosen_seed: z.number().int().optional(),
   dims: zDims.optional(),
+  /**
+   * Per-subject WebP quality override for `optimize.ts` (default lives
+   * there). This is where a scene-budget step-down gets RECORDED — the
+   * budget check fails loudly rather than stepping down silently, and the
+   * human-visible resolution is this field plus a `notes` entry.
+   */
+  quality: z.number().int().min(1).max(100).optional(),
   notes: z.string().optional(),
 });
 
@@ -163,6 +170,8 @@ export interface ResolvedSubject {
   /** The subject's own declared seed list, if any (undefined does not mean "no seeds render" — see `renderSeeds`). */
   declaredSeeds: readonly number[] | undefined;
   chosenSeed: number | undefined;
+  /** Class-dialect only: recorded WebP-quality step-down for `optimize.ts` (undefined = its default). */
+  quality: number | undefined;
 }
 
 function resolveFlatSubject(id: string, subject: FlatSubject, manifest: FlatManifest): ResolvedSubject {
@@ -176,6 +185,7 @@ function resolveFlatSubject(id: string, subject: FlatSubject, manifest: FlatMani
     renderSeeds,
     declaredSeeds: subject.seeds,
     chosenSeed: subject.chosen_seed,
+    quality: undefined,
   };
 }
 
@@ -200,6 +210,7 @@ function resolveClassSubject(id: string, subject: ClassSubject, manifest: ClassM
     renderSeeds,
     declaredSeeds: subject.seeds,
     chosenSeed: subject.chosen_seed,
+    quality: subject.quality,
   };
 }
 

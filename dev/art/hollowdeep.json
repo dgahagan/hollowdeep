@@ -89,7 +89,9 @@
     "adit-mouth": {
       "class": "scene",
       "prompt": "A mine adit driving straight into a hillside, its mouth closed by a wall of dressed, mortared stone. One edge of the wall has cracked and slumped, leaving a gap of pure darkness just wide enough for a person. Overcast daylight on the stone; nothing visible past the gap.",
-      "chosen_seed": 2
+      "chosen_seed": 2,
+      "quality": 80,
+      "notes": " T7: 152.8 KB at the default quality 82, over the 150 KB scene budget (FR-4.3); stepped down to q80 (138.0 KB) — recorded decision, not silent."
     },
     "behind-the-seal": {
       "class": "scene",

@@ -28,5 +28,5 @@
     "warningMessageId": "dark-warning",
     "deathMessageId": "dark-death"
   },
-  "artFormat": "svg"
+  "artFormat": "webp"
 }

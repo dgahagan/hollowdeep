@@ -127,7 +127,7 @@ async function optimizeSubject(
   let pipeline = sharp(src);
   if (needsResize) pipeline = pipeline.resize(target[0], target[1], { fit: 'cover' });
 
-  const buffer = await pipeline.webp({ quality: WEBP_QUALITY }).toBuffer();
+  const buffer = await pipeline.webp({ quality: subject.quality ?? WEBP_QUALITY }).toBuffer();
   const outPath = path.join(outDir, `${subject.id}.webp`);
   writeFileSync(outPath, buffer);
 

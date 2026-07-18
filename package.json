@@ -16,7 +16,7 @@
     "test": "vitest run",
     "validate": "tsx tools/validate-module.ts",
     "validate:art": "tsx tools/art/validate-art.ts",
-    "gate": "npm run typecheck && npm run lint && npm run test && npm run validate && npm run validate:art && npm run build"
+    "gate": "npm run typecheck && npm run lint && npm run test && npm run validate && npm run validate:art -- --strict && npm run build"
   },
   "dependencies": {
     "react": "^19.2.7",
