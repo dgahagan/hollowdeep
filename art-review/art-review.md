@@ -181,3 +181,56 @@ submerged, milky-white cataracted eyes reading as blind; true eyeless is a hard 
 - stalker: 1
 - storekeeper: 5
 - thief: 8
+
+## 2026-07-17 — T6 marquees: all 11 chosen
+
+Four review rounds in the interactive UI (66 first-round renders, then
+36 + 30 + 12 targeted retries). The stubborn subjects turned into two
+generalizable prompting lessons, both now applied and worth carrying to any
+future art:
+
+1. **Negations don't hold and trigger nouns win.** "Attached to nothing"
+   still drew a hanging cord — the word *lantern* alone summons its
+   training prior. The fix that worked was removing the noun and describing
+   only the visual effect (river: a sinking glow; gap: a blurred streak of
+   falling light; stalker: eyeshine).
+2. **Any animal noun paints the whole animal.** The stalker's "vague pale
+   outline of a long low animal" rendered a fully-lit white wolf, plainly
+   visible (§9.3 violation, orchestrator-rejected before human review).
+   Eyeshine-only — two pale points past the light's reach, everything else
+   explicitly dark — produced the creepiest set of the batch (human:
+   "definitely makes you feel that you are about to get attacked").
+
+Per-subject retries (full prompt history in manifest `notes`):
+
+- **ending-a** (1 retry): plinth stood in front of the doors; reframed as a
+  reveal *through* the open doorway.
+- **death-roof** (1 retry): light source was in-scene; the T4 lamp-as-source
+  fix applied.
+- **death-river** (3 retries): hanging-cord lantern → outdoor-looking water
+  → lantern noun removed but the glow rendered as underwater fire → light
+  source removed entirely per the human's direction (dark water, pale blind
+  fish, the displacement).
+- **death-gap** (2 retries): nothing read as falling and an airborne lamp
+  grew a cord; recomposed looking down over the broken edge, the fall
+  carried by a blurred streak of light, lamp noun removed.
+- **death-dark** (3 retries): "dying lamp wick" → literal macro wick; a bare
+  red point → still a wick; a concrete "miner's oil lamp" per the human →
+  right idea, wrong lamp; final wording uses the same brass lantern as every
+  other prompt, guttering. §9.3's almost-nothing frame held throughout.
+- **death-stalker** (3 retries): empty light circle → the white-wolf §9.3
+  violation → eyeshine only.
+
+### Marquees
+
+- marquee-title: 1 (human confirmed the tiny lantern figure is intended)
+- marquee-ending-a: 5
+- marquee-ending-b: 13
+- marquee-death-roof: 2
+- marquee-death-flood: 8
+- marquee-death-keg: 3
+- marquee-death-chute: 2
+- marquee-death-river: 1
+- marquee-death-gap: 2
+- marquee-death-dark: 2
+- marquee-death-stalker: 13

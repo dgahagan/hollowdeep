@@ -559,51 +559,65 @@
     "marquee-title": {
       "class": "marquee",
       "prompt": "A cracked stone seal across a mine adit in a hillside, its gap of darkness just wide enough for a person, and below in a fold of the valley a small gray town — one street, a few roofs — under an enormous overcast sky. A single tiny figure with a lantern on the road up.",
-      "notes": "title screen; Phase 3 wires it"
+      "notes": "title screen; Phase 3 wires it; T6: human confirmed the tiny lantern figure is intended, seed 1.",
+      "chosen_seed": 1
     },
     "marquee-ending-a": {
       "class": "marquee",
-      "prompt": "A small square stone room deep underground, a smoothly worked plinth at its center standing empty, the door of fitted bronze and stone open wide. A worn place on the floor where watchers once stood, facing nothing now. Faint light from the open doorway; the rest in dark.",
-      "notes": "mirrors the ending-a epilogue's final image: the open seal around an empty plinth"
+      "prompt": "Seen from a dark stone corridor through a doorway of fitted bronze and stone standing wide open: beyond and framed by the open doors, a small square stone room with a smoothly worked plinth at its center, standing empty. A worn place on the floor before the plinth where watchers once stood. Faint light inside the room; the corridor around the doorway in dark. The plinth is behind the doorway, inside the room, not in front of it.",
+      "notes": "mirrors the ending-a epilogue's final image: the open seal around an empty plinth T6 retry: plinth rendered in front of the doors; reframed as a reveal through the open doorway.",
+      "chosen_seed": 5
     },
     "marquee-ending-b": {
       "class": "marquee",
       "prompt": "A figure with a lantern climbing a long stone stair out of darkness toward a small pale gap of daylight far above, mid-step, carrying nothing else. Massive dark stonework all around; the daylight small and plain.",
-      "notes": "mirrors the ending-b epilogue: walking up lighter by one decision"
+      "notes": "mirrors the ending-b epilogue: walking up lighter by one decision",
+      "chosen_seed": 13
     },
     "marquee-death-roof": {
       "class": "marquee",
-      "prompt": "Mine timbers snapping under a descending roof, rock and dust caught mid-fall filling a lamplit drift, the warm light half-swallowed already."
+      "prompt": "Mine timbers snapping under a descending roof, rock and dust caught mid-fall filling a narrow drift, the collapse coming toward the viewer. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the nearest falling rock and splintering props catch the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "notes": "T6 retry: light source was in-scene; lamp-as-source fix applied (lit from the viewpoint).",
+      "chosen_seed": 2
     },
     "marquee-death-flood": {
       "class": "marquee",
-      "prompt": "Black water coming back over the lip of a rimstone dam all at once, sheeting across terraced pools toward the viewer, a dropped lantern's light half under water. Cave darkness above."
+      "prompt": "Black water coming back over the lip of a rimstone dam all at once, sheeting across terraced pools toward the viewer, a dropped lantern's light half under water. Cave darkness above.",
+      "chosen_seed": 8
     },
     "marquee-death-keg": {
       "class": "marquee",
-      "prompt": "A white-orange bloom of ignited powder filling a small rock chamber, keg staves and timber flying apart, every shadow burned off the walls for one instant."
+      "prompt": "A white-orange bloom of ignited powder filling a small rock chamber, keg staves and timber flying apart, every shadow burned off the walls for one instant.",
+      "chosen_seed": 3
     },
     "marquee-death-chute": {
       "class": "marquee",
-      "prompt": "Looking down the polished timber throat of an ore chute at speed, planks blurring past, a lantern's light tumbling, darkness rushing up from below."
+      "prompt": "Looking down the polished timber throat of an ore chute at speed, planks blurring past, a lantern's light tumbling, darkness rushing up from below.",
+      "chosen_seed": 2
     },
     "marquee-death-river": {
       "class": "marquee",
-      "prompt": "Black river water closing overhead, seen from just beneath the surface, a lantern's light sinking away below, pale eyeless fish keeping their distance near the bank. Out in the channel, a great slow displacement in the water at the edge of sight."
+      "prompt": "Underwater in a black river deep inside a cave at night, no sky, no daylight, no flame anywhere — only a faint failing dimness in the water. Pale blind fish hang at a distance in the dark water. Farther out, a great slow displacement of water at the very edge of sight. Black in every direction.",
+      "notes": "T6 retry: lantern grew a cord and the water read as outdoors; pinned to attached-to-nothing and cave darkness. T6 retry 2: the word 'lantern' kept summoning a hanging cord; noun removed — only the sinking glow is described. T6 retry 3 (human's direction): the sinking glow rendered as underwater fire; light source removed entirely — dark water, fish, the displacement.",
+      "chosen_seed": 1
     },
     "marquee-death-gap": {
       "class": "marquee",
-      "prompt": "Falling into a slot of darkness between broken stone steps, the ledge and the lamplit stair receding above, the dropped lantern a small tumbling point of warm light. No bottom in view."
+      "prompt": "Looking down over the broken edge of a stone step into a narrow black slot, the near stones sharp in warm lamplight from the viewpoint, the rough rock walls below converging into depth, and partway down a thin blurred streak of warm light where something bright is falling away into the black. No bottom in view. No lamp, hand, or figure in the frame.",
+      "notes": "T6 retry: nothing indicated falling; reframed first-person mid-fall, walls motion-blurred, ledge receding above. T6 retry 2: mid-fall viewpoint never read as falling and the airborne lamp grew a cord; recomposed looking down from the edge, the fall carried by a blurred streak of light, lamp noun removed.",
+      "chosen_seed": 2
     },
     "marquee-death-dark": {
       "class": "marquee",
-      "prompt": "Near-total darkness. A single tiny red bead of a dying lamp wick, low in the frame, and the last faint suggestion of a stone floor's edge. Nothing else.",
-      "notes": "§9.3 — the painting with almost nothing in it, which is the assignment"
+      "prompt": "A brass lantern standing on cave stone, its flame burned down to a faint dim red glimmer, almost out of oil, lighting only a hand's breadth of the rock beneath it. The lantern is small and low in the frame. Everything else, nearly the entire frame, is flat black darkness.",
+      "notes": "§9.3 — the painting with almost nothing in it, which is the assignment T6 retry: 'dying lamp wick' rendered a literal close-up wick; reworded to a bare red point, no lamp nouns. §9.3 — the painting with almost nothing in it, which is the assignment. T6 retry 2 (human's direction): the bare red point kept rendering as a macro wick; flipped to a concrete guttering oil lamp, tiny in an almost entirely black frame. §9.3 satisfied by scale, not absence. T6 retry 3 (human's direction): the oil-lamp render didn't match the game's lantern; reworded to the same brass lantern as every other prompt, guttering.",
+      "chosen_seed": 2
     },
     "marquee-death-stalker": {
       "class": "marquee",
-      "prompt": "A lantern standing on cave stone, its full circle of light empty, and crossing into the light from the dark, unhurried, the leading edge of something long and low — the rest of it still in the darkness. Most of the frame is black.",
-      "notes": "§9.3 — the lamp's circle and what enters it; never the creature plain"
+      "prompt": "A brass lantern standing on cave stone, its warm light reaching a few feet across the rock floor. Beyond the reach of the light, low to the ground in the blackness, two small pale points of reflected light hang close together, like eyes catching the flame from the dark. Nothing around them is visible — only the two points and the dark. Most of the frame is black.",
+      "notes": "§9.3 — the lamp's circle and what enters it; never the creature plain T6 retry: the light's circle stayed empty; the entering shape made concrete (head and forelegs in the light, body in the dark). §9.3 — never the creature plain. T6 retry 2: the partial creature kept dissolving to an empty circle; switched to eyeshine — two pale points catching the light with a vague low outline. §9.3 — never the creature plain. T6 retry 3: 'pale animal outline' rendered a fully-lit white wolf, plainly visible (§9.3 violation, orchestrator-rejected before review); every animal noun removed — eyeshine only.",
+      "chosen_seed": 13
     }
   }
 }
