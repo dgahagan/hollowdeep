@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { DIRECTIONS, type AdventureModule } from '../engine/schema';
 import type { SceneView } from '../engine/types';
 import { useSettings } from './App';
@@ -87,6 +87,21 @@ export function artUrl(module: AdventureModule, artId: string): string {
 
 export function ScenePanel({ module, scene, lampWarn = false, inspect = null }: ScenePanelProps) {
   const { settings } = useSettings();
+  const panelRef = useRef<HTMLElement>(null);
+
+  // When an examine puts a painting up, bring the panel into view — the
+  // player just typed at the BOTTOM of the page, and on short viewports the
+  // art they asked for sits above the fold (player-reported). 'nearest'
+  // makes this a no-op when the panel is already visible; smoothness obeys
+  // the same two motion switches as every animation here.
+  const inspectArtId = inspect?.artId;
+  useEffect(() => {
+    if (inspectArtId === undefined) return;
+    panelRef.current?.scrollIntoView({
+      block: 'nearest',
+      behavior: settings.reduceMotion ? 'auto' : 'smooth',
+    });
+  }, [inspectArtId, settings.reduceMotion]);
   const location = module.locations.find((candidate) => candidate.id === scene.locationId);
   // The inspect view borrows the panel wholesale: its art, its alt. `dark`
   // still wins — the engine never emits inspect in the dark, but a stale
@@ -132,7 +147,7 @@ export function ScenePanel({ module, scene, lampWarn = false, inspect = null }: 
     .join(' ');
 
   return (
-    <section className="scene-panel" aria-label="Scene">
+    <section className="scene-panel" aria-label="Scene" ref={panelRef}>
       {shownArtId === undefined ? (
         <div className="scene-panel__art scene-panel__art--dark" role="img" aria-label={scene.description} />
       ) : (
