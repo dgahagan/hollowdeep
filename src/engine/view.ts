@@ -356,7 +356,14 @@ export function availableActions(module: AdventureModule, state: GameState): UIA
     const noun = nounFor(module, state, item.id);
     if (noun === undefined) continue;
     for (const [verb, prefix] of itemVerbs(module, state, item.id, true)) {
-      actions.push({ label: `${prefix} ${noun}`, command: `${verb} ${noun}`, group: 'inventory', targetId: item.id });
+      actions.push({
+        label: `${prefix} ${noun}`,
+        command: `${verb} ${noun}`,
+        group: 'inventory',
+        targetId: item.id,
+        verbLabel: prefix,
+        noun,
+      });
     }
   }
 

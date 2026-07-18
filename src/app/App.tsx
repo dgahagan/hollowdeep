@@ -374,6 +374,26 @@ function Game({
       <header className="shell__header">
         <h1 className="shell__title">{module.manifest.title}</h1>
         <div className="shell__header-actions">
+          {/* Every overlay gets a button, shortcut or no shortcut (FR-2.7:
+              the clickable path always exists — a keyboard-only door is
+              invisible on a tablet and undiscoverable everywhere else).
+              The M/J/? shortcuts (useKeyboard.ts) remain the fast path. */}
+          <button
+            type="button"
+            onClick={() => {
+              overlays.toggle('map');
+            }}
+          >
+            Map
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              overlays.toggle('journal');
+            }}
+          >
+            Journal
+          </button>
           {/* Hints has no FR-2.8 shortcut — every free bare letter is a
               plausible command word — so a header button is its only door. */}
           <button
@@ -399,6 +419,14 @@ function Game({
             }}
           >
             Save / Load
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              overlays.toggle('help');
+            }}
+          >
+            Help
           </button>
           {/* Back to the adventure-select front door. Safe to offer without a
               confirm: the autosave effect (useGame.ts) has already written
