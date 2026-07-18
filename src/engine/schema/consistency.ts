@@ -62,6 +62,7 @@ export type ConsistencyErrorCode =
   | 'dangling-lamp-exhaust-message'
   | 'dangling-darkness-warning-message'
   | 'dangling-darkness-death-message'
+  | 'chance-in-description-variant'
   | 'dangling-condition-has-item'
   | 'dangling-condition-item-at-item'
   | 'dangling-condition-item-at-location'
@@ -258,6 +259,36 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
     });
   }
 
+  /**
+   * Description-variant conditions get the ordinary reference checks PLUS a
+   * `chance` ban: variants are resolved by the pure read side
+   * (systems/descriptions.ts), which discards the state `evalConditions`
+   * returns — sound only while nothing in these conditions draws RNG.
+   * `all` holds leaves only (conditions.ts), so one level of looking inside
+   * is the whole recursion.
+   */
+  function checkVariantConditions(
+    conds: Condition[],
+    document: ModuleDocumentName,
+    id: string,
+    fieldPrefix: string,
+  ): void {
+    checkConditions(conds, document, id, fieldPrefix);
+    conds.forEach((cond, i) => {
+      const hasChance = cond.chance !== undefined || (cond.all ?? []).some((leaf) => leaf.chance !== undefined);
+      if (hasChance) {
+        push({
+          code: 'chance-in-description-variant',
+          document,
+          id,
+          field: `${fieldPrefix}[${i}]`,
+          message:
+            'description variants may not use `chance`: they are resolved by the read side, which must never draw from the seeded RNG',
+        });
+      }
+    });
+  }
+
   // ── locations.json ───────────────────────────────────────────────────────
   for (const location of module.locations) {
     for (const dir of DIRECTIONS) {
@@ -274,10 +305,16 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
       }
       checkConditions(exit.if, 'locations.json', location.id, `exits.${dir}.if`);
     }
+    for (const [i, variant] of (location.variants ?? []).entries()) {
+      checkVariantConditions(variant.if, 'locations.json', location.id, `variants[${i}].if`);
+    }
   }
 
   // ── items.json ───────────────────────────────────────────────────────────
   for (const item of module.items) {
+    for (const [i, variant] of (item.descriptionVariants ?? []).entries()) {
+      checkVariantConditions(variant.if, 'items.json', item.id, `descriptionVariants[${i}].if`);
+    }
     if (!isItemLocation(item.initialLocation)) {
       push({
         code: 'dangling-item-initial-location',
@@ -750,11 +787,18 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
       checkProse('locations.json', location.id, `scenery[${i}].description`, scenery.description);
       checkProse('locations.json', location.id, `scenery[${i}].readText`, scenery.readText);
     }
+    for (const [i, variant] of (location.variants ?? []).entries()) {
+      checkProse('locations.json', location.id, `variants[${i}].full`, variant.full);
+      checkProse('locations.json', location.id, `variants[${i}].brief`, variant.brief);
+    }
   }
   for (const item of module.items) {
     checkProse('items.json', item.id, 'brief', item.brief);
     checkProse('items.json', item.id, 'description', item.description);
     checkProse('items.json', item.id, 'readText', item.readText);
+    for (const [i, variant] of (item.descriptionVariants ?? []).entries()) {
+      checkProse('items.json', item.id, `descriptionVariants[${i}].text`, variant.text);
+    }
   }
   for (const creature of module.creatures) {
     checkProse('creatures.json', creature.id, 'description', creature.description);

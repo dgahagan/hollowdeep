@@ -83,6 +83,12 @@
     "adjectives": ["rusted", "rusty", "iron"],
     "brief": "A rusted door lies flat in the floor.",
     "description": "An iron door set flush into the grotto floor, so thoroughly rusted that door and floor have reached an understanding. The hinges want oil more than they want anything.",
+    "descriptionVariants": [
+      {
+        "if": [{ "flag": "door-oiled" }],
+        "text": "An iron hatch set flush into the grotto floor, its hinges slick and quiet now, holding their oil like a grudge finally set down. It will open downward the moment you ask."
+      }
+    ],
     "artId": "rusted-door",
     "portable": false,
     "initialLocation": "grotto"

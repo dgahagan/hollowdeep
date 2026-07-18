@@ -64,7 +64,25 @@ export const zLocation = z.strictObject({
    */
   exits: z.partialRecord(zDirection, zExit),
   scenery: z.array(zScenery).optional(),
+  /**
+   * State-dependent overrides for `full` (and optionally `brief`) — the
+   * room reads differently once the world has changed (a door oiled, a
+   * flood drained). First variant whose `if` holds wins; none matching
+   * falls back to the static texts. Same no-`chance` rule as item
+   * description variants (schema/item.ts), enforced by checkConsistency:
+   * the read side resolves these freely and must never draw RNG.
+   */
+  variants: z
+    .array(
+      z.strictObject({
+        if: z.array(zCondition).min(1),
+        full: z.string().min(1),
+        brief: z.string().min(1).optional(),
+      }),
+    )
+    .optional(),
 });
 export type Location = z.infer<typeof zLocation>;
+export type LocationVariant = NonNullable<Location['variants']>[number];
 
 export const zLocations = z.array(zLocation).min(1);

@@ -13,6 +13,7 @@ import {
   visibleContents,
 } from './state';
 import { evalConditions, isExitRevealed } from './systems/events';
+import { locationBrief, locationFull } from './systems/descriptions';
 import { buildVocabulary } from './parser/vocab';
 import { resolveScope } from './parser/parse';
 import { DIRECTIONS } from './schema/common';
@@ -180,7 +181,9 @@ export function describeScene(module: AdventureModule, state: GameState): SceneV
   // text is NARRATION, and movement.ts already put it in the transcript on
   // arrival. The scene panel is a caption for where you are now, so it gets the
   // brief — and `verbose` still means what it says everywhere else.
-  const description = state.verbose ? location.full : location.brief;
+  const description = state.verbose
+    ? locationFull(module, state, location)
+    : locationBrief(module, state, location);
 
   // Room items, each followed by the visible contents of any open container
   // among them — same rule as `look` (senses.ts) and parser scope, so the

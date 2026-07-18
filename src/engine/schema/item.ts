@@ -1,5 +1,20 @@
 import { z } from 'zod';
 import { zId } from './common';
+import { zCondition } from './conditions';
+
+/**
+ * A state-dependent description (the conditional-descriptions feature,
+ * 2026-07-18): first variant whose `if` holds wins; none matching falls back
+ * to the static `description`. `chance` conditions are FORBIDDEN here
+ * (enforced by checkConsistency, not the type): descriptions are resolved by
+ * the read side as often as it likes, and a condition that draws from the
+ * seeded RNG would make reading the world change it.
+ */
+export const zDescriptionVariant = z.strictObject({
+  if: z.array(zCondition).min(1),
+  text: z.string().min(1),
+});
+export type DescriptionVariant = z.infer<typeof zDescriptionVariant>;
 
 /**
  * Treasure points (FR-1.5). Two separate awards, both once each:
@@ -53,6 +68,8 @@ export const zItem = z
     brief: z.string().min(1),
     /** Shown on `examine`. */
     description: z.string().min(1),
+    /** State-dependent overrides for `description` — see `zDescriptionVariant`. */
+    descriptionVariants: z.array(zDescriptionVariant).optional(),
     artId: zId,
     portable: z.boolean(),
     /** A location id, a container id, `inventory`, or `nowhere` (not yet in play). */

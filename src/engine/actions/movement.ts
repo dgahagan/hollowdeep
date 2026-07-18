@@ -4,6 +4,7 @@ import { canSee, currentLocation, findLocation, hasVisited } from '../state';
 import { applyEffects, evalConditions, fireTriggers } from '../systems/events';
 import { acted, refuse, type ActionHandler, type ActionResult } from './index';
 import { roomContentsLines } from './senses';
+import { locationBrief, locationFull } from '../systems/descriptions';
 
 // go / enter / exit / back (design plan §5.1, foundation-implementation-plan.md T15).
 //
@@ -90,7 +91,9 @@ function moveDescription(
 ): string {
   if (!canSee(module, state)) return darknessWarning(module);
   const location = locationOrThrow(module, locationId);
-  return wasVisited && !state.verbose ? location.brief : location.full;
+  return wasVisited && !state.verbose
+    ? locationBrief(module, state, location)
+    : locationFull(module, state, location);
 }
 
 /**
