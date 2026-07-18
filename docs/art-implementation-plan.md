@@ -309,7 +309,7 @@ blocking the batch.
 - [x] T4 — Scenes: generate, curate, choose (`opus`, human) — `ccf06e8` (all 53; lamp-as-source fix)
 - [x] T5 — Items + creatures: generate, curate, choose (`opus`, human) — `0c9b90a` (38 items + 6 creatures)
 - [x] T6 — Marquees: generate, curate, choose (`opus`, human) — `183e988` (all 11; four rounds, trigger-noun lessons in style.md §6)
-- [ ] T7 — Atomic flip: finals, budget, determinism, gate (`opus`)
+- [x] T7 — Atomic flip: finals, budget, determinism, gate (`opus`) — `216d9c2` (108 webp; adit-mouth q80; determinism 3/3; strict gate; browser smoke)
 - [ ] T8 — Docs closeout (`opus`)
 
 **Done when:** every box is ticked with its commit SHA, `npm run gate`
