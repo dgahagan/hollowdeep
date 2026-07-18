@@ -35,9 +35,8 @@ pnpm-debug.log*
 # Claude Code local settings (shared config in .claude/ is committed)
 .claude/settings.local.json
 
-# Art generation candidates — raw FLUX renders, ~800KB each. Reproducible from
-# tools/art/host_gen.py + a request file, so they are output, not source. The
-# request file itself IS committed: it is the reproducible part.
-dev/art-candidates/*.png
-dev/art-candidates/*.webp
+# Art generation candidates — raw FLUX renders (~800KB each), contact sheets,
+# and other curation output. All reproducible from the committed manifests in
+# dev/art/ via tools/art/, so the whole directory is output, not source.
+dev/art-candidates/
 .playwright-mcp/

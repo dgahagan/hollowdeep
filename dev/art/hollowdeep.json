@@ -1,0 +1,625 @@
+{
+  "_readme": [
+    "Art manifest for hollowdeep (CLAUDE.md's Art Pipeline; docs/art-plan.md §5).",
+    "Committed; the renders are not (dev/art-candidates/ is gitignored, reproducible from this file).",
+    "",
+    "Class dialect (docs/art-plan.md §5), unlike test-cave's frozen flat dialect: `styles` and `dims`",
+    "are maps keyed by art class (scene/item/creature/marquee); each subject declares its own `class`",
+    "to pick which suffix and generation size it gets.",
+    "",
+    "`styles` are locked by contact-sheet review, not written here in prose (art-implementation-plan T3).",
+    "Placeholder empty strings until then — do not guess at a suffix.",
+    "",
+    "Prompts (T2) carry the VISUAL FACTS from the adventure's own shipped prose and drop the jokes,",
+    "per dev/art/style.md: prompt the observation, never the conclusion the reader should reach.",
+    "",
+    "This skeleton enumerates every artId adventures/hollowdeep actually references (tools/art/audit.ts",
+    "is the derivation, not hand-entry) plus the eleven marquee subjects (docs/art-plan.md §3/§9.3):",
+    "title, two endings, eight per-death vignettes. The thief, the stalker, and marquee-death-stalker",
+    "get indirect treatments (never a portrait/never fully seen); marquee-death-dark is the painting",
+    "with almost nothing in it. See art-implementation-plan T2.",
+    "",
+    "Regenerate:  npx tsx tools/art/build-request.ts dev/art/hollowdeep.json > /tmp/req.json",
+    "             distrobox-host-exec ~/pixelart-venv/bin/python tools/art/host_gen.py /tmp/req.json"
+  ],
+  "styles": {
+    "scene": " Painted in oils on canvas, the lit passages worked in thick visible strokes and the darks laid in flat and deep, a matte unvarnished surface. Muted, earthy colour, warmed as if by flame where the light falls. Recorded plainly and observationally, as the thing is, without drama. Not digital art, not concept art, not a videogame asset, no rim lighting, no gloss, nothing polished. No text, no lettering, no numbers, no signature.",
+    "item": " Painted in oils on canvas, the lit passages worked in thick visible strokes and the darks laid in flat and deep, a matte unvarnished surface. Muted, earthy colour, warmed as if by flame where the light falls. Recorded plainly and observationally, as the thing is, without drama. Not digital art, not concept art, not a videogame asset, no rim lighting, no gloss, nothing polished. No text, no lettering, no numbers, no signature.",
+    "creature": " Painted in oils on canvas, the lit passages worked in thick visible strokes and the darks laid in flat and deep, a matte unvarnished surface. Muted, earthy colour, warmed as if by flame where the light falls. Recorded plainly and observationally, as the thing is, without drama. Not digital art, not concept art, not a videogame asset, no rim lighting, no gloss, nothing polished. No text, no lettering, no numbers, no signature.",
+    "marquee": " Painted in oils on canvas, the lit passages worked in thick visible strokes and the darks laid in flat and deep, a matte unvarnished surface. Muted, earthy colour, warmed as if by flame where the light falls. Recorded plainly and observationally, as the thing is, without drama. Not digital art, not concept art, not a videogame asset, no rim lighting, no gloss, nothing polished. No text, no lettering, no numbers, no signature."
+  },
+  "dims": {
+    "scene": [
+      1024,
+      640
+    ],
+    "item": [
+      640,
+      640
+    ],
+    "creature": [
+      640,
+      800
+    ],
+    "marquee": [
+      1344,
+      768
+    ]
+  },
+  "seeds": [
+    1,
+    2,
+    3,
+    5,
+    8,
+    13
+  ],
+  "subjects": {
+    "coach-road": {
+      "class": "scene",
+      "prompt": "A rutted dirt coach road coming down out of gray hills toward a small town in a fold of the valley below — one street, a handful of roofs. Overcast daylight, flat and even. The road is empty.",
+      "chosen_seed": 1
+    },
+    "main-street": {
+      "class": "scene",
+      "prompt": "A short unpaved main street in an old mining town, its wooden buildings all weathered to the same gray: a plain chapel on one side, a general store facing it, a shuttered office on the corner. Overcast daylight, nobody about.",
+      "chosen_seed": 1
+    },
+    "chapel": {
+      "class": "scene",
+      "prompt": "The inside of a plain wooden chapel, swept and bare. On one wall hangs a memorial board carved with two close-set columns of small marks and a single date at the top. Beneath the board a small brass key hangs on a nail. Gray daylight through plain windows.",
+      "chosen_seed": 3
+    },
+    "general-store": {
+      "class": "scene",
+      "prompt": "The interior of an old general store, shelves stocked with dusty tinned and dry goods in neat rows, a long wooden counter. By the door hangs a small tin birdcage with a yellow canary inside. Gray daylight through the front windows.",
+      "chosen_seed": 8
+    },
+    "assay-office": {
+      "class": "scene",
+      "prompt": "A single assay-office room lit only by gray daylight through half-open shutters. A stout wooden bench holds balance scales; the benchtop is marked with small dark rings stained cold into the old wood where crucibles once stood, long dead. Shelves of ledgers, dust in the air. Nothing is burning; no flame, no fire, no embers, no glow.",
+      "notes": "T4 retry: original 'scorched rings' + the flame-warm suffix read as an active fire on every seed; reworded to cold/long-dead rings and explicit no-fire.",
+      "chosen_seed": 3
+    },
+    "tailings-path": {
+      "class": "scene",
+      "prompt": "A path climbing pale spoil heaps along an old tramway grade above a small town. Below, one street and a few roofs; ahead, a dark opening in the hillside. Overcast daylight, wind-flattened grass.",
+      "chosen_seed": 8
+    },
+    "adit-mouth": {
+      "class": "scene",
+      "prompt": "A mine adit driving straight into a hillside, its mouth closed by a wall of dressed, mortared stone. One edge of the wall has cracked and slumped, leaving a gap of pure darkness just wide enough for a person. Overcast daylight on the stone; nothing visible past the gap.",
+      "chosen_seed": 2,
+      "quality": 80,
+      "notes": " T7: 152.8 KB at the default quality 82, over the 150 KB scene budget (FR-4.3); stepped down to q80 (138.0 KB) — recorded decision, not silent."
+    },
+    "behind-the-seal": {
+      "class": "scene",
+      "prompt": "Just inside a mine adit: square timbered walls, daylight reaching a few yards through a gap in a stone seal behind and thinning fast into darkness ahead. Small brown bats hang from the roof timbers.",
+      "chosen_seed": 2
+    },
+    "adit-drift": {
+      "class": "scene",
+      "prompt": "A straight mine drift with narrow iron rails running down its middle into darkness, square-set timber walls. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the rails and sleepers catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 13
+    },
+    "lamp-room": {
+      "class": "scene",
+      "prompt": "A small underground room, its board of iron hooks all empty, a clean shelf beneath holding one stoppered tin flask alone. No lamp hangs on any hook. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the flask and the empty hooks catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 2
+    },
+    "stables": {
+      "class": "scene",
+      "prompt": "Underground stables cut into rock: timber stalls for mules, dry leather tack on pegs, a wooden crib of old tools along one wall. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the tack and the tool crib catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 3
+    },
+    "junction": {
+      "class": "scene",
+      "prompt": "An underground crossroads where four dark mine drifts meet, the rock floor worn into a shallow dish by decades of boots, timbered openings running off in every direction. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the worn floor catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 2
+    },
+    "timekeepers-nook": {
+      "class": "scene",
+      "prompt": "A small alcove off a mine passage: a stool, a shelf, and a wooden board studded with rows of small iron hooks. Most of the hooks are empty and bare, holding nothing at all; only a few near one corner still carry a small round brass check. Row upon row of naked empty hooks. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the board of mostly-empty hooks catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "notes": "T4 retry #2: prior seeds filled every hook; now emphasises mostly-empty, bare hooks with only a few checks.",
+      "chosen_seed": 8
+    },
+    "foremans-office": {
+      "class": "scene",
+      "prompt": "An office cut into living rock: a wooden desk bare but for a canvas-bound ledger squared to its corner, a chair with one short leg, rock dust gray on every surface. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the desk and its ledger catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 8
+    },
+    "shaft-head": {
+      "class": "scene",
+      "prompt": "An underground chamber where a mine drift opens over an internal shaft dropping into blackness; a rusted iron kibble bucket hangs seized on its chain above the hole. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the bucket and chain catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 5
+    },
+    "pump-room": {
+      "class": "scene",
+      "prompt": "A great cast-iron mine pump filling most of an underground room, riveted, taller than a man, its pipes dropping away through the floor, an empty socket where its handle should seat. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the riveted iron flank catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 8
+    },
+    "ore-chute": {
+      "class": "scene",
+      "prompt": "A timber-lined chute opening in the floor of a mine passage, pitched steep, its planks polished smooth, the throat dropping into darkness. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the worn timber lip catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 5
+    },
+    "long-drift": {
+      "class": "scene",
+      "prompt": "A long well-timbered mine drift running into darkness, heavy props set every few yards, an iron door set into one rock wall; on one timber at waist height, deep deliberate scratches. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; a few yards of timber catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 2
+    },
+    "magazine": {
+      "class": "scene",
+      "prompt": "A small dry chamber cut in rock and lined tight with timber; a wooden powder keg sits on a low pallet beside a coil of fuse, a dark painted band across the keg's head weathered to an illegible smear with no readable letters. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the keg and fuse catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "notes": "T4 retry: keg label must be an illegible smear (FLUX gibberish text); lamp-as-source fix.",
+      "chosen_seed": 13
+    },
+    "stull-gallery": {
+      "class": "scene",
+      "prompt": "A worked-out underground gallery held up by heavy timber props; one prop stands mid-chamber bearing hard under a slab of roof, and behind it a seam in the rock glitters dark red where the digging stopped. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the straining timber and the red glitter catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 1
+    },
+    "broken-drift": {
+      "class": "scene",
+      "prompt": "A mine drift ending in an old roof collapse, fallen rock from fist-sized to coffin-sized; at the edge of the fall lie the skeletal remains of a big man in good boots and a wide leather belt, lying straight. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the remains at the rubble's edge catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 8
+    },
+    "winze-ladderway": {
+      "class": "scene",
+      "prompt": "Wooden mine ladders descending a vertical rock shaft, the timber stained dark to a waterline high overhead, everything below it scrubbed bare. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the nearest rungs catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 8
+    },
+    "the-gunnis": {
+      "class": "scene",
+      "prompt": "A mine stope worked open to the sky — a deep cut in a hillside with grass grown down the slope to meet bare rock. In one rock wall, an older worked face closed with dressed, mortared stone. Overcast daylight under an enormous flat sky.",
+      "chosen_seed": 5
+    },
+    "shaft-foot": {
+      "class": "scene",
+      "prompt": "The muddy bottom of a mine shaft, freshly drained: a tipped iron bucket half-buried in glistening mud, and along the rock wall at chest height a single horizontal band where black water once stood for years, the stone stained dark below the band and paler above it (a stain, not a painted line), a drift opening to one side. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the wet mud and the stained wall catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "notes": "T4 retry: prior seeds painted the waterline as a white stripe; reworded to a tonal stain band. Lamp-as-source fix.",
+      "chosen_seed": 5
+    },
+    "breakthrough": {
+      "class": "scene",
+      "prompt": "A last frame of mine timbers standing like a doorway, and beyond it the walls change to water-cut natural cave, rounded and older. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the timber frame catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 1
+    },
+    "low-crawl": {
+      "class": "scene",
+      "prompt": "A wet stone crawlspace barely tall enough for a person on their stomach, a few feet of gleaming rock floor and a ceiling pressing down. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the wet stone just ahead catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 5
+    },
+    "cathedral": {
+      "class": "scene",
+      "prompt": "A vast natural cavern of raw water-worn limestone, so tall the light cannot find its ceiling: rough natural stone walls and columns barely suggested at the edge of the glow, a chimney hole in the floor dropping into further dark. Not dressed stone, not masonry, not built by anyone. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; a small pool of the cavern floor catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "notes": "T4: pinned to natural limestone (prior seeds drifted to dressed masonry); lamp-as-source fix.",
+      "chosen_seed": 3
+    },
+    "gallery-of-veils": {
+      "class": "scene",
+      "prompt": "Curtains of banded flowstone hanging from a natural cave roof in long folds, stone draped like fabric; low on one wall a seam gleams metallic under a skin of pale calcite. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the stone folds catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 1
+    },
+    "gour-pools": {
+      "class": "scene",
+      "prompt": "Terraces of rimstone pools stepping down a natural cave floor, each lipped with a thin pale dam of grown stone, dark still water behind every rim; in the largest pool a cluster of round lustrous pearls sits behind the rim. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the water and the pearls catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 13
+    },
+    "black-river": {
+      "class": "scene",
+      "prompt": "An underground river running black and smooth through a natural rock channel. Below the surface, submerged in the slack water near the bank, pale eyeless fish hang suspended underwater, none of them out in the middle of the channel. The water surface is unbroken above them. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the near bank and the fish beneath the surface catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "notes": "T4 retry: prior seeds put the fish above the waterline; now pinned as submerged, underwater, surface unbroken.",
+      "chosen_seed": 1
+    },
+    "river-strand": {
+      "class": "scene",
+      "prompt": "A gravel strand along the elbow of an underground river, the stones sorted into bands by size; at the waterline a pothole in the rock holds a fist-sized gleam of gold wedged fast. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the wet sorted gravel catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 2
+    },
+    "midden": {
+      "class": "scene",
+      "prompt": "A cave chamber floored with decades of small collected things — buttons, buckles, lamp brass, tin cups, small bones — sorted into tidy drifts, shine with shine, bone with bone, long smooth drag-marks running out into the dark. Nothing here is burning: no candle, no flame, no glowing object anywhere. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the sorted drifts of small things catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "notes": "T4 retry #2: removed the candlestick (kept rendering as a lit candle light-source) and forbade flame.",
+      "chosen_seed": 13
+    },
+    "breach-wall": {
+      "class": "scene",
+      "prompt": "A wall of coursed, mortared stone closing a natural cave passage, the mortar struck smooth from the far side; old drill holes in the rock stop an arm's length short of it. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the flat stonework catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 13
+    },
+    "twisty": {
+      "class": "scene",
+      "prompt": "A twisting passage of worn gray natural stone giving onto more twisting passages, every opening identical to every other — raw rock, no straight lines, no marks. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; a small pool of the passage catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 5
+    },
+    "beyond-the-breach": {
+      "class": "scene",
+      "prompt": "A built stone floor underground — laid, cambered, drained at the edges — with fresh rubble from a broken wall spilled across it, dust still settling; a finished gallery runs on into darkness. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the rubble on the built floor catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 13
+    },
+    "dressed-gallery": {
+      "class": "scene",
+      "prompt": "An underground gallery with walls dressed smooth in long even strokes, all slanting down and to the left; openings lead off to either side and the gallery runs on into darkness. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the raking toolmarks catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 3
+    },
+    "toolroom": {
+      "class": "scene",
+      "prompt": "An underground room lined with racks and pegs, every tool in its place, each fitted slot shaped to a tool of unfamiliar proportion; one rack holds a keel-shaped bronze tool worn bright at the grip. No dust, nothing dropped. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the racked tools catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 1
+    },
+    "store-rooms": {
+      "class": "scene",
+      "prompt": "Underground store-rooms in ranked bays: jars sealed with amber-dark wax, bundles racked by size, small count-marks cut into the shelf lips; in the corner of one bay sits a small brown newt. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the nearest bay catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 1
+    },
+    "closed-row": {
+      "class": "scene",
+      "prompt": "An underground corridor of fitted doors, all shut, set at intervals too regular for comfort, each latch on the corridor side. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the shut doors catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 13
+    },
+    "tally-chamber": {
+      "class": "scene",
+      "prompt": "Plates of bronze stacked edge-out in wooden cradles, filling an underground room like the shelves of a library, every visible edge cut with rows of fine regular marks. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the stacked bronze edges catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 2
+    },
+    "worked-face": {
+      "class": "scene",
+      "prompt": "An underground gallery ending at a half-dressed rock face, the pattern of even toolstrokes stopping mid-course, tools racked tidily at the wall. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the unfinished face catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 5
+    },
+    "long-stair": {
+      "class": "scene",
+      "prompt": "A stone stair descending underground in long shallow steps cut for a stride longer than a man's; partway down, two steps have dropped away into a slot of darkness, a foot-wide ledge skirting the gap along the wall. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the broken steps and the ledge catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 8
+    },
+    "undercroft": {
+      "class": "scene",
+      "prompt": "A broad low-ceilinged undercroft held up by squat stone pillars, rows of them fading into darkness in every direction. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; a single circle of the smooth floor catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 13
+    },
+    "cistern": {
+      "class": "scene",
+      "prompt": "A great cistern cut square and deep into rock, dry, with empty sluice channels running along its walls; one sluice gate stands open on a channel dropping away into dark, faint worn marks cut into the stone lip beside it, too weathered to read. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the open sluice gate and cut stone catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 2
+    },
+    "warm-gallery": {
+      "class": "scene",
+      "prompt": "An underground gallery of dressed stone; in a niche cut at hand height sits a single smooth stone, and the niche fits it exactly. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the niche and its stone catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 13
+    },
+    "deep-cut": {
+      "class": "scene",
+      "prompt": "A single dead-straight passage of dressed stone running to darkness in both directions, the walls identical as far as the light can show them. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; a small circle mid-passage catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 2
+    },
+    "quiet-gallery": {
+      "class": "scene",
+      "prompt": "An underground gallery of dressed stone, empty and still — nothing but smooth walls, a level floor, and darkness gathered at both ends. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the smooth walls catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 2
+    },
+    "antechamber": {
+      "class": "scene",
+      "prompt": "An underground chamber whose far wall is one piece of fitted bronze and stone; set in its center is a recessed assembly of slots and grips around a rotating collar, exact and frank as an instrument panel, none of it shaped for human fingers. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the bronze mechanism catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 13
+    },
+    "seal-gate": {
+      "class": "scene",
+      "prompt": "The inside of a built place underground: jointed stone walls in dressed courses, a planned ceiling, a stair descending — massive, exact stonework. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the dressed joints catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 3
+    },
+    "keepers-stair": {
+      "class": "scene",
+      "prompt": "A stone stair descending underground, each step cut for a stride half again a man's, exact and unworn at the edges. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; a few of the long steps catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 5
+    },
+    "keepers-walk": {
+      "class": "scene",
+      "prompt": "A level stone walkway underground, its floor worn glass-smooth down the center in a path the width of one walker, turning square at each end, a small doorway to one side. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the worn central path catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 13
+    },
+    "watch-room": {
+      "class": "scene",
+      "prompt": "A small stone room with one square aperture; through it, edge-on, a massive buttressed stone wall, every course and buttress set to brace inward, toward the room. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the buttressed wall through the aperture catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 5
+    },
+    "the-vault": {
+      "class": "scene",
+      "prompt": "A small square stone room; at its center a plinth worked smoother than the walls, and on it a small dark made thing, unornamented, the floor before the plinth worn where feet stood facing it. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the plinth and the thing upon it catches the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "chosen_seed": 1
+    },
+    "payroll-tin": {
+      "class": "item",
+      "prompt": "A black japanned tin box with its lid open, holding rows of small paper twists packed upright, a stencilled marking across the lid. Lit from just outside the frame by warm lamplight; the tin and its paper twists catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 2
+    },
+    "cut-garnets": {
+      "class": "item",
+      "prompt": "A small leather pouch spilling cut garnets across rough wood, dark red and heavy-looking. Lit from just outside the frame by warm lamplight; the scattered garnets catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 5
+    },
+    "assay-button": {
+      "class": "item",
+      "prompt": "A single small bead of refined gold, the size of a waistcoat button, on dark scorched wood. Lit from just outside the frame by warm lamplight; the gold bead catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 8
+    },
+    "foremans-watch": {
+      "class": "item",
+      "prompt": "A silver pocket watch with its lid open, hands stopped at ten past two, fine engraving inside the case, lying on dark cloth. Lit from just outside the frame by warm lamplight; the silver watch catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 3
+    },
+    "silver-flowstone": {
+      "class": "item",
+      "prompt": "A sheet of native silver the size of a tabletop and an eighth of an inch thick, torn free of rock, pale calcite still crusted along one face, propped against stone. Lit from just outside the frame by warm lamplight; the silver sheet catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 3
+    },
+    "cave-pearls": {
+      "class": "item",
+      "prompt": "A nest of cave pearls, round as shot and lustrous, wet, cupped in a rimstone hollow, black water and dark stone beyond. Lit from just outside the frame by warm lamplight; the wet pearls catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 2
+    },
+    "weir-nugget": {
+      "class": "item",
+      "prompt": "A fist-sized nugget of waterworn gold, smooth and river-rounded, sitting on wet gravel, black water behind. Lit from just outside the frame by warm lamplight; the gold nugget catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 13
+    },
+    "miners-cache": {
+      "class": "item",
+      "prompt": "A wooden powder box under pulled-back oilcloth, opened: lumps of high-grade ore wrapped in an old work shirt with stitching worked into the collar. Lit from just outside the frame by warm lamplight; the opened cache catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 1
+    },
+    "bronze-tool": {
+      "class": "item",
+      "prompt": "A keel-shaped tool of dense bronze, undecorated, its grip worn glass-smooth and bright, lying on stone. Lit from just outside the frame by warm lamplight; the bronze tool catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 5
+    },
+    "tally-plate": {
+      "class": "item",
+      "prompt": "A palm-wide bronze plate cut with ranked rows of fine regular marks, the rows stopping partway down the final column, on dark stone. Lit from just outside the frame by warm lamplight; the bronze plate catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 8,
+      "notes": "Chosen seed 8; the 'rows stop partway' detail is subtle at 640px — human accepted, may revisit."
+    },
+    "warm-stone": {
+      "class": "item",
+      "prompt": "A stone the size of two fists, smooth as river work, resting in a wall niche cut to fit it exactly. Lit from just outside the frame by warm lamplight; the smooth stone in its niche catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 2
+    },
+    "the-kept": {
+      "class": "item",
+      "prompt": "A small made thing on a smooth stone plinth: dense, dark, simple in shape, without ornament, the room around it black. Lit from just outside the frame by warm lamplight; the small dark object catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 1
+    },
+    "brass-lantern": {
+      "class": "item",
+      "prompt": "A miner's brass lantern, dented, its glass clean, wick lit with a small steady warm flame. Standing on bare rock, the only light in the frame; darkness pressing in.",
+      "chosen_seed": 2
+    },
+    "oil-flask": {
+      "class": "item",
+      "prompt": "A stoppered tin flask of lamp oil standing alone on a clean wooden shelf beneath a row of empty iron hooks. Lit from just outside the frame by warm lamplight; the flask on its shelf catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 3
+    },
+    "canary-cage": {
+      "class": "item",
+      "prompt": "A small tin birdcage with a yellow canary standing alert on its perch, hung against weathered boards. Soft gray daylight.",
+      "chosen_seed": 13
+    },
+    "key-office": {
+      "class": "item",
+      "prompt": "A small well-made brass key with a stamped bow, hanging on a nail against a plain plank wall. Soft gray daylight.",
+      "chosen_seed": 3
+    },
+    "key-magazine": {
+      "class": "item",
+      "prompt": "A small iron key on a ring with a stamped brass tag, lying on dark wood. Lit from just outside the frame by warm lamplight; the iron key and tag catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 8
+    },
+    "steel-gad": {
+      "class": "item",
+      "prompt": "A foot of forged steel drawn to a chisel point, the point bright from use, the striking end mushroomed flat, lying on rock. Lit from just outside the frame by warm lamplight; the steel gad catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 1
+    },
+    "pump-handle": {
+      "class": "item",
+      "prompt": "Six feet of ash and iron with a socket collar at one end, leaning against a timber stall. Lit from just outside the frame by warm lamplight; the ash-and-iron handle catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 8
+    },
+    "powder-keg": {
+      "class": "item",
+      "prompt": "A stout wooden powder keg standing on its end, its head marked with one simple bold painted geometric hazard symbol. There is no text, no letters, no words, no numbers anywhere on it. Lit from just outside the frame by warm lamplight; the keg catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "notes": "T5 retry: prior seeds put readable letters on it; now a plain painted symbol, text forbidden.",
+      "chosen_seed": 2
+    },
+    "fuse-coil": {
+      "class": "item",
+      "prompt": "A neat coil of pale safety fuse, wound by a careful hand, lying on dry timber. Lit from just outside the frame by warm lamplight; the coiled fuse catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 3
+    },
+    "tally-book": {
+      "class": "item",
+      "prompt": "A canvas-covered tally book bowed to the shape of the pocket that carried it, lying closed on a rock-dusted desk. Lit from just outside the frame by warm lamplight; the worn book catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 5
+    },
+    "assay-ledger": {
+      "class": "item",
+      "prompt": "A heavy canvas-bound ledger, closed, squared to the corner of a dusty desk. Lit from just outside the frame by warm lamplight; the ledger cover catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 1
+    },
+    "office-door": {
+      "class": "item",
+      "prompt": "A solid wooden plank door hung on two black iron hinges along its left edge. On the right edge, near where it opens, a round iron door handle, and below the handle a separate rectangular iron lock plate with an empty keyhole — no key in the keyhole. Planks weathered gray, ironwork dark. Soft gray daylight.",
+      "notes": "T5 retry #3: keys were left in the locks; now a handle plus a separate empty-keyhole lock plate.",
+      "chosen_seed": 3
+    },
+    "magazine-door": {
+      "class": "item",
+      "prompt": "An iron door set into rock, riveted, its lock bright with oil while everything around it is dull with age. Lit from just outside the frame by warm lamplight; the riveted iron and bright lock catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 13
+    },
+    "pump": {
+      "class": "item",
+      "prompt": "A cast-iron mine pump taller than a man, riveted, with a maker's plate, an empty socket where its handle seats. Lit from just outside the frame by warm lamplight; the iron flank catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 8
+    },
+    "stull": {
+      "class": "item",
+      "prompt": "A heavy timber prop standing mid-chamber, bearing hard against a slab of roof, the strain showing in its grain; behind it, just out of reach, a dark red glitter in the rock seam. Lit from just outside the frame by warm lamplight; the straining timber catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 3
+    },
+    "rubble": {
+      "class": "item",
+      "prompt": "A mine gallery half-filled with fallen roof rock, broken chunks from fist-sized to coffin-sized, their freshly broken surfaces pale against the old dark walls. Just broken stone — no faces, no skulls, nothing figural. Lit from just outside the frame by warm lamplight; the broken rock catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "notes": "T5 retry: 'raw pale faces' summoned literal faces/skulls; reworded to broken rock surfaces.",
+      "chosen_seed": 2
+    },
+    "foreman": {
+      "class": "item",
+      "prompt": "The old decayed skeleton of a big man at the edge of a rockfall: bones gone brown and yellowed with great age, stained and weathered, lying straight and still. He wears cracked, rotted, dust-caked leather boots and a worn stiff old leather belt, ninety years underground. A complete correct skeleton — one skull, two arms, two legs — long dead. Lit from just outside the frame by warm lamplight; the aged remains catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "notes": "T5 retry #3: bones/leather looked brand-new; specified decayed age-browned bones and cracked old leather.",
+      "chosen_seed": 2
+    },
+    "foremans-desk": {
+      "class": "item",
+      "prompt": "A clerk's desk gone gray with rock dust, one drawer open a crack. Lit from just outside the frame by warm lamplight; the dusty desk catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 2
+    },
+    "assay-bench": {
+      "class": "item",
+      "prompt": "A stout wooden bench built for weighing small heavy things, dust lying even across the top except along the seam at the wall, where it is disturbed. Gray daylight through shutters.",
+      "chosen_seed": 3
+    },
+    "stacks": {
+      "class": "item",
+      "prompt": "Wooden cradles holding ranks of bronze plates edge-out, rows of fine cut marks along every edge; near the bottom of the last cradle one plate sits apart from the rest. Lit from just outside the frame by warm lamplight; the stacked bronze catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 3
+    },
+    "scratched-stull": {
+      "class": "item",
+      "prompt": "A mine timber prop at waist height carrying deep deliberate scratches, cut with confidence. Lit from just outside the frame by warm lamplight; the scratched timber catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 1
+    },
+    "chute-throat": {
+      "class": "item",
+      "prompt": "A steep ore chute built into the rock floor: a slanting square channel lined with timber planks, like a wooden slide, its boards polished smooth by tons of ore that slid down it, the channel dropping away steeply into darkness below. Lit from just outside the frame by warm lamplight; the timber slide catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "notes": "T5 retry: prior seeds didn't read as a chute; described as a timber ore-slide.",
+      "chosen_seed": 13
+    },
+    "flowstone-seam": {
+      "class": "item",
+      "prompt": "A seam of native silver showing metallic under a skin of pale calcite, low on a cave wall, a continuous sheet running out of sight. Lit from just outside the frame by warm lamplight; the metallic seam catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 1
+    },
+    "pothole": {
+      "class": "item",
+      "prompt": "A pothole in river rock at the waterline, a fist-sized gleam of gold wedged fast inside it, wet stone, black water at the frame's edge. Lit from just outside the frame by warm lamplight; the wedged gold catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 13
+    },
+    "mechanism": {
+      "class": "item",
+      "prompt": "A recessed bronze assembly set in a wall of fitted stone: slots, grips, and a rotating collar, all exact, none of it shaped for human fingers. Lit from just outside the frame by warm lamplight; the bronze mechanism catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 1
+    },
+    "vault": {
+      "class": "item",
+      "prompt": "A door of fitted bronze and stone standing open on a small square room, a smooth plinth at its center. Lit from just outside the frame by warm lamplight; the open door and plinth catches the glow against a near-black ground. No lamp, lantern, hand, or figure appears in the frame.",
+      "chosen_seed": 5
+    },
+    "stalker": {
+      "class": "creature",
+      "prompt": "A view down a dark natural cave passage. The rough stone floor and walls in the immediate foreground are lit warmly, as if by a lamp the viewer holds just out of frame, and the light falls off fast into deep darkness a short way ahead. Far off at the edge of the light, where the black begins, a low shadowy shape stands — barely visible, more suggestion than form, most of it lost in the dark. No lamp, hand, or figure appears; nothing glows.",
+      "notes": "T5 retry #3: 'circle of lamplight' made a literal ring on the floor; reworded to first-person foreground-lit-fading-to-dark, shape at the threshold.",
+      "chosen_seed": 1
+    },
+    "thief": {
+      "class": "creature",
+      "prompt": "Long smooth drag-marks in cave mud, unhurried, all running the same way into darkness, past a tidy drift of small sorted shining things. No creature anywhere in the frame. Lit from just outside the frame by warm lamplight; the light ends where the marks keep going into the dark. No lamp, hand, or figure in the frame.",
+      "notes": "Indirect (decision 2): its work — drag-marks and the sorted stash — never a portrait.",
+      "chosen_seed": 8
+    },
+    "bats": {
+      "class": "creature",
+      "prompt": "Small brown bats hanging in ranks from the roof timbers of a mine adit, folded and still. Dim light from a distant gap of daylight below them.",
+      "chosen_seed": 1
+    },
+    "blind-fish": {
+      "class": "creature",
+      "prompt": "A pale chalk-white cave fish fully underwater and submerged, seen below the surface of a slack black pool near a rock bank — the unbroken water surface lies above it, the fish clearly beneath the water, not above it and not breaking the surface. It is blind: where its eyes would be there is only smooth blank pale skin, no eyeball, no dark eye, no pupil, a featureless blind face. No fishing lines, strings, or hooks. Lit from just outside the frame by warm lamplight through the water. No lamp, hand, or figure in the frame.",
+      "notes": "T5 retry #3: eyes + fish-above-water both persisting; pinned fully submerged (surface above) and eye area as blank skin. Eyeless is a known-hard FLUX case. Chosen seed 3: eyes rendered milky-white/cataracted, which reads as blind.",
+      "chosen_seed": 3
+    },
+    "storekeeper": {
+      "class": "creature",
+      "prompt": "An old storekeeper behind the counter of a general store, settled and unhurried, hands folded, watching. A weathered face and a clean apron. Gray daylight through the front windows.",
+      "chosen_seed": 5
+    },
+    "newt": {
+      "class": "creature",
+      "prompt": "A small brown newt, damp and ordinary, sitting unbothered on a stone shelf beside wax-sealed jars, facing the viewer without alarm. Lit from just outside the frame by warm lamplight. No lamp, hand, or figure in the frame.",
+      "chosen_seed": 2
+    },
+    "marquee-title": {
+      "class": "marquee",
+      "prompt": "A cracked stone seal across a mine adit in a hillside, its gap of darkness just wide enough for a person, and below in a fold of the valley a small gray town — one street, a few roofs — under an enormous overcast sky. A single tiny figure with a lantern on the road up.",
+      "notes": "title screen; Phase 3 wires it; T6: human confirmed the tiny lantern figure is intended, seed 1.",
+      "chosen_seed": 1
+    },
+    "marquee-ending-a": {
+      "class": "marquee",
+      "prompt": "Seen from a dark stone corridor through a doorway of fitted bronze and stone standing wide open: beyond and framed by the open doors, a small square stone room with a smoothly worked plinth at its center, standing empty. A worn place on the floor before the plinth where watchers once stood. Faint light inside the room; the corridor around the doorway in dark. The plinth is behind the doorway, inside the room, not in front of it.",
+      "notes": "mirrors the ending-a epilogue's final image: the open seal around an empty plinth T6 retry: plinth rendered in front of the doors; reframed as a reveal through the open doorway.",
+      "chosen_seed": 5
+    },
+    "marquee-ending-b": {
+      "class": "marquee",
+      "prompt": "A figure with a lantern climbing a long stone stair out of darkness toward a small pale gap of daylight far above, mid-step, carrying nothing else. Massive dark stonework all around; the daylight small and plain.",
+      "notes": "mirrors the ending-b epilogue: walking up lighter by one decision",
+      "chosen_seed": 13
+    },
+    "marquee-death-roof": {
+      "class": "marquee",
+      "prompt": "Mine timbers snapping under a descending roof, rock and dust caught mid-fall filling a narrow drift, the collapse coming toward the viewer. Lit from just outside the frame by warm lamplight, as if from a lamp held at the viewpoint; the nearest falling rock and splintering props catch the glow and everything beyond falls to flat darkness. No lamp, lantern, hand, or figure appears anywhere in the frame.",
+      "notes": "T6 retry: light source was in-scene; lamp-as-source fix applied (lit from the viewpoint).",
+      "chosen_seed": 2
+    },
+    "marquee-death-flood": {
+      "class": "marquee",
+      "prompt": "Black water coming back over the lip of a rimstone dam all at once, sheeting across terraced pools toward the viewer, a dropped lantern's light half under water. Cave darkness above.",
+      "chosen_seed": 8
+    },
+    "marquee-death-keg": {
+      "class": "marquee",
+      "prompt": "A white-orange bloom of ignited powder filling a small rock chamber, keg staves and timber flying apart, every shadow burned off the walls for one instant.",
+      "chosen_seed": 3
+    },
+    "marquee-death-chute": {
+      "class": "marquee",
+      "prompt": "Looking down the polished timber throat of an ore chute at speed, planks blurring past, a lantern's light tumbling, darkness rushing up from below.",
+      "chosen_seed": 2
+    },
+    "marquee-death-river": {
+      "class": "marquee",
+      "prompt": "Underwater in a black river deep inside a cave at night, no sky, no daylight, no flame anywhere — only a faint failing dimness in the water. Pale blind fish hang at a distance in the dark water. Farther out, a great slow displacement of water at the very edge of sight. Black in every direction.",
+      "notes": "T6 retry: lantern grew a cord and the water read as outdoors; pinned to attached-to-nothing and cave darkness. T6 retry 2: the word 'lantern' kept summoning a hanging cord; noun removed — only the sinking glow is described. T6 retry 3 (human's direction): the sinking glow rendered as underwater fire; light source removed entirely — dark water, fish, the displacement.",
+      "chosen_seed": 1
+    },
+    "marquee-death-gap": {
+      "class": "marquee",
+      "prompt": "Looking down over the broken edge of a stone step into a narrow black slot, the near stones sharp in warm lamplight from the viewpoint, the rough rock walls below converging into depth, and partway down a thin blurred streak of warm light where something bright is falling away into the black. No bottom in view. No lamp, hand, or figure in the frame.",
+      "notes": "T6 retry: nothing indicated falling; reframed first-person mid-fall, walls motion-blurred, ledge receding above. T6 retry 2: mid-fall viewpoint never read as falling and the airborne lamp grew a cord; recomposed looking down from the edge, the fall carried by a blurred streak of light, lamp noun removed.",
+      "chosen_seed": 2
+    },
+    "marquee-death-dark": {
+      "class": "marquee",
+      "prompt": "A brass lantern standing on cave stone, its flame burned down to a faint dim red glimmer, almost out of oil, lighting only a hand's breadth of the rock beneath it. The lantern is small and low in the frame. Everything else, nearly the entire frame, is flat black darkness.",
+      "notes": "§9.3 — the painting with almost nothing in it, which is the assignment T6 retry: 'dying lamp wick' rendered a literal close-up wick; reworded to a bare red point, no lamp nouns. §9.3 — the painting with almost nothing in it, which is the assignment. T6 retry 2 (human's direction): the bare red point kept rendering as a macro wick; flipped to a concrete guttering oil lamp, tiny in an almost entirely black frame. §9.3 satisfied by scale, not absence. T6 retry 3 (human's direction): the oil-lamp render didn't match the game's lantern; reworded to the same brass lantern as every other prompt, guttering.",
+      "chosen_seed": 2
+    },
+    "marquee-death-stalker": {
+      "class": "marquee",
+      "prompt": "A brass lantern standing on cave stone, its warm light reaching a few feet across the rock floor. Beyond the reach of the light, low to the ground in the blackness, two small pale points of reflected light hang close together, like eyes catching the flame from the dark. Nothing around them is visible — only the two points and the dark. Most of the frame is black.",
+      "notes": "§9.3 — the lamp's circle and what enters it; never the creature plain T6 retry: the light's circle stayed empty; the entering shape made concrete (head and forelegs in the light, body in the dark). §9.3 — never the creature plain. T6 retry 2: the partial creature kept dissolving to an empty circle; switched to eyeshine — two pale points catching the light with a vague low outline. §9.3 — never the creature plain. T6 retry 3: 'pale animal outline' rendered a fully-lit white wolf, plainly visible (§9.3 violation, orchestrator-rejected before review); every animal noun removed — eyeshine only.",
+      "chosen_seed": 13
+    }
+  }
+}

@@ -73,14 +73,19 @@ with engine work after the world data stabilizes.
   (`npm run dev`, default adventure). A full human playthrough is invited —
   Phase 4's play-testing owns the formal pass.
 
-### Phase B — Art production (parallel with Phases 1–2)
-- Recover or rewrite the FLUX host generator (`host_gen.py` contract is
-  documented in bards-tale-clone `docs/art-pipeline.md`).
-- Style development: lock the painterly style suffix via test batches.
-- Art manifest for all ~100 subjects; contact-sheet generation, seed
-  selection, optimization (WebP/AVIF), integration.
-- **Exit criteria:** every subject has a chosen, optimized, style-consistent
-  final image wired into the game.
+### Phase B — Art production (parallel with Phases 1–2) — **complete 2026-07-17**
+- [x] Recover or rewrite the FLUX host generator — rewritten
+  (`tools/art/host_gen.py`, same request contract; the bards-tale-clone
+  original stayed lost).
+- [x] Style development: suffix locked from probe contact sheets with human
+  sign-off (chiaroscuro; `art-review/art-review.md`).
+- [x] Art manifest for all 108 subjects; interactive review UI, human seed
+  selection over four+ rounds, optimization (WebP-only per art-plan §9.2),
+  atomic integration (`artFormat: "webp"`, placeholder SVGs deleted).
+- **Exit criteria met:** every subject has a chosen, optimized,
+  style-consistent final wired into the game — 108 finals, every scene
+  ≤ 150 KB, seed-determinism spot-checked byte-identical, gate strict.
+  As-built guide: [`art-pipeline.md`](art-pipeline.md).
 
 ### Phase 3 — UI/UX complete — **complete 2026-07-17**
 - Auto-map, journal, hints UI, settings, onboarding, shortcuts, adventure
@@ -95,8 +100,8 @@ with engine work after the world data stabilizes.
   operation, tablet layout, and the reduced-motion + preload perf passes.
   The closeout report (`docs/ui-implementation-plan.md` §Closeout) maps each
   requirement to its verification; `docs/ui-plan.md` is marked IMPLEMENTED.
-  The one dependency still open is Phase B art — the UI wires whatever files
-  exist and tolerates their absence, so it does not gate this phase.
+  (Phase B art, then still in flight, landed the same day — the UI's
+  placeholder-tolerant wiring picked up the finals with no code changes.)
 
 ### Phase 4 — Polish & release
 - Full play-testing (including hardcore mode), balance (lamp fuel, creature
@@ -133,11 +138,12 @@ with engine work after the world data stabilizes.
 These are **v1** deliverables. Phase 0+1 (`docs/foundation-plan.md`) is complete
 as of 2026-07-16; the boxes below tick only where the v1 bar is actually met.
 
-- [ ] `docs/` — brief, requirements, scope (these), Hollowdeep design doc,
+- [x] `docs/` — brief, requirements, scope (these), Hollowdeep design doc,
       module-format authoring guide, art-pipeline guide
       — *brief/requirements/scope done; `module-format.md` + `PLAYING.md` +
-      `README.md` landed with Phase 0+1. **Hollowdeep design doc** landed and IMPLEMENTED
-      (`hollowdeep-plan.md`, 2026-07-17); **art-pipeline guide** outstanding.*
+      `README.md` landed with Phase 0+1; **Hollowdeep design doc** IMPLEMENTED
+      (`hollowdeep-plan.md`, 2026-07-17); **art-pipeline guide** landed with
+      Phase B (`art-pipeline.md`, 2026-07-17).*
 - [x] Engine package (headless TS) with test suite — Phase 0+1: parser, turn
       loop, actions, systems, scoring, save/load with migrations, scene view;
       679 tests incl. a scripted walkthrough that wins at every seed
@@ -150,11 +156,11 @@ as of 2026-07-16; the boxes below tick only where the v1 bar is actually met.
       in `docs/ui-implementation-plan.md` §Closeout.
 - [x] `adventures/test-cave/` — reference module — 11 locations, 11 items,
       3 creatures; exercises every engine feature; format reference (FR-6.5)
-- [ ] `adventures/hollowdeep/` — full adventure data + art manifest + finals
-      — *module data complete with placeholder art (Phase 2, 2026-07-17);
-      the art manifest and final images are Phase B.*
-- [ ] Art pipeline tooling (generator driver, request builder, contact sheets,
-      optimizer) — *placeholder SVGs only so far; the loading path is real*
+- [x] `adventures/hollowdeep/` — full adventure data + art manifest + finals
+      — *module data complete (Phase 2, 2026-07-17); manifest + 108 curated
+      WebP finals shipped with Phase B (2026-07-17), `artFormat: "webp"`.*
+- [x] Art pipeline tooling (generator driver, request builder, contact sheets,
+      review UI, optimizer, `validate:art`) — Phase B, `tools/art/`
 - [ ] Tagged v1.0 static build, playable end-to-end
 
 ## 7. Document History

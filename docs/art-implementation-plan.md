@@ -1,6 +1,6 @@
 # Art Implementation Plan — Phase B Production
 
-**Status:** READY (2026-07-17)
+**Status:** COMPLETE (2026-07-17) — all eight tasks ticked; Phase B shipped.
 
 Execution plan for [`docs/art-plan.md`](art-plan.md) (the WHAT/WHY); rules
 live in [`docs/orchestration-playbook.md`](orchestration-playbook.md).
@@ -303,14 +303,14 @@ blocking the batch.
 
 ## Progress Tracker
 
-- [ ] T1 — Audit, contact sheets, optimizer, manifest skeleton (`sonnet`)
-- [ ] T2 — Author all ~106 subject prompts (`opus`)
-- [ ] T3 — Style lock: candidates, probes, human sign-off (`opus`, human)
-- [ ] T4 — Scenes: generate, curate, choose (`opus`, human)
-- [ ] T5 — Items + creatures: generate, curate, choose (`opus`, human)
-- [ ] T6 — Marquees: generate, curate, choose (`opus`, human)
-- [ ] T7 — Atomic flip: finals, budget, determinism, gate (`opus`)
-- [ ] T8 — Docs closeout (`opus`)
+- [x] T1 — Audit, contact sheets, optimizer, manifest skeleton (`sonnet`) — `f76ddb6`
+- [x] T2 — Author all ~106 subject prompts (`opus`) — `249be58` (108 subjects)
+- [x] T3 — Style lock: candidates, probes, human sign-off (`opus`, human) — `f08688c` (candidate C, chiaroscuro)
+- [x] T4 — Scenes: generate, curate, choose (`opus`, human) — `ccf06e8` (all 53; lamp-as-source fix)
+- [x] T5 — Items + creatures: generate, curate, choose (`opus`, human) — `0c9b90a` (38 items + 6 creatures)
+- [x] T6 — Marquees: generate, curate, choose (`opus`, human) — `183e988` (all 11; four rounds, trigger-noun lessons in style.md §6)
+- [x] T7 — Atomic flip: finals, budget, determinism, gate (`opus`) — `216d9c2` (108 webp; adit-mouth q80; determinism 3/3; strict gate; browser smoke)
+- [x] T8 — Docs closeout (`opus`) — `c046ec9` (art-pipeline.md; art-plan IMPLEMENTED; SCOPE/CLAUDE/README)
 
 **Done when:** every box is ticked with its commit SHA, `npm run gate`
 (including `validate:art --strict`) is green on `feat/art`, all ~106 finals

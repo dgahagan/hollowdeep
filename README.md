@@ -10,13 +10,14 @@ Vite + React + TypeScript, static-only, no backend, no runtime AI.
 
 ## Status
 
-The engine, the adventure, and the real UI are complete: the game core, the
-`test-cave` reference fixture, **Hollowdeep itself** — 58 rooms, 12 treasures,
-350 points, two endings, a narrator keeping its own counsel — and the Phase 3
-UI that frames it all. `npm run dev` opens on the adventure-select screen
-(`?adventure=hollowdeep` or `?adventure=test-cave` deep-links straight in).
-Painterly art is the one remaining track (Phase B); until it lands the UI ships
-placeholder SVGs and is built to tolerate their absence.
+Every build track is complete: the engine, the `test-cave` reference fixture,
+**Hollowdeep itself** — 58 rooms, 12 treasures, 350 points, two endings, a
+narrator keeping its own counsel — the Phase 3 UI that frames it all, and
+**painterly art throughout**: 108 oil-on-canvas illustrations generated
+locally, human-curated seed by seed, shipped as WebP. `npm run dev` opens on
+the adventure-select screen (`?adventure=hollowdeep` or `?adventure=test-cave`
+deep-links straight in). What remains before v1.0 is Phase 4: play-testing,
+balance, and polish.
 
 ```bash
 npm install
@@ -28,7 +29,8 @@ Then play. See **[docs/PLAYING.md](docs/PLAYING.md)** for how to talk to the cav
 | | |
 |---|---|
 | **Engine** | Parser, turn loop, movement, item handling, containers, lamp and fuel, darkness, creatures, combat, scoring, ranks, achievements, save/load with migrations, scene view |
-| **`hollowdeep`** | The adventure — 58 locations, 12 treasures in three tiers, a fair maze, a stalker and a thief, two magic words, two endings, 16 hint ladders, placeholder art until Phase B |
+| **`hollowdeep`** | The adventure — 58 locations, 12 treasures in three tiers, a fair maze, a stalker and a thief, two magic words, two endings, 16 hint ladders |
+| **Art** | 108 painterly illustrations (scenes, items, creatures, and 11 marquees for Phase 3's screens) — FLUX.2-klein-4B locally, one locked oil-on-canvas style, every seed human-picked, WebP ≤ 150 KB per scene; reproducible from `dev/art/` (see `docs/art-pipeline.md`) |
 | **`test-cave`** | A small complete adventure — 11 locations, 11 items, 3 creatures — the format reference and test fixture |
 | **UI** | The real thing (Phase 3): dark "lamplit" + light "parchment" themes to WCAG AA, self-hosted Literata + JetBrains Mono, a three-region shell, autocomplete and keyboard shortcuts, the maze-safe auto-map, death-rescue / hardcore / single-step undo, journal + hints panels, settings, save metadata + thumbnails + file export/import, adventure select, help + onboarding, and a post-game stats screen. Fully keyboard-playable; ambient lamplight and typewriter reveal both honor reduced-motion. |
 | **Validator** | `npm run validate` checks any adventure against the schema and 40 consistency rules |
