@@ -82,6 +82,21 @@ export function itemsIn(module: AdventureModule, state: GameState, containerId: 
   return itemsAt(module, state, containerId);
 }
 
+/**
+ * Items visible inside an item, if it is a container standing open — plus,
+ * recursively, anything visible inside those. Closed (or non-container)
+ * items yield nothing: contents exist to the player only once the lid is up,
+ * which is the same boundary `resolveScope` draws for the parser. This is
+ * the single definition of "what showing a container's contents means" for
+ * look / examine / search / open and the scene view.
+ */
+export function visibleContents(module: AdventureModule, state: GameState, itemId: string): Item[] {
+  const item = module.items.find((i) => i.id === itemId);
+  if (item?.container === undefined) return [];
+  if (getItemState(state, itemId).open !== true) return [];
+  return itemsIn(module, state, itemId).flatMap((inner) => [inner, ...visibleContents(module, state, inner.id)]);
+}
+
 export function getItemState(state: GameState, itemId: string): ItemState {
   return state.itemState[itemId] ?? {};
 }

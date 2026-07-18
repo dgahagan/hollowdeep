@@ -228,6 +228,21 @@ describe('open / close — the steel grate (a lockable "door" with capacity 0)',
     expect(result.consumesTurn).toBe(false);
     expect(texts(result)).toMatch(/can't open/i);
   });
+
+  it('opening reveals the contents: the wooden box announces the jade idol', () => {
+    const state = setItemState(at('deep-vault'), 'wooden-box', { locked: false });
+    const result = act(state, 'open box');
+    expect(result.consumesTurn).toBe(true);
+    expect(texts(result)).toMatch(/you open the box/i);
+    expect(texts(result)).toMatch(/jade idol squats in the box/i);
+  });
+
+  it('opening an empty container reveals nothing extra', () => {
+    let state = setItemState(at('deep-vault'), 'wooden-box', { locked: false });
+    state = setItemLocation(state, 'jade-idol', 'inventory');
+    const result = act(state, 'open box');
+    expect(texts(result)).toBe('You open the box.');
+  });
 });
 
 describe('lock / unlock — the wooden box needs the iron key specifically', () => {

@@ -1,7 +1,7 @@
 import type { AdventureModule } from '../schema';
 import type { GameState, OutputEvent } from '../types';
 import type { Target } from '../parser/parse';
-import { canSee, creaturesHere, currentLocation, findCreature, findItem, itemsAt } from '../state';
+import { canSee, creaturesHere, currentLocation, findCreature, findItem, itemsAt, visibleContents } from '../state';
 import { fireTriggers } from '../systems/events';
 import { acted, refuse, type ActionHandler } from './index';
 
@@ -38,8 +38,14 @@ export const lookHandler: ActionHandler = (module, state) => {
   // wrapped in engine prose. Prefixing them with "You can see" produces
   // "You can see An iron key lies here." — the engine talking over the
   // adventure, which is the one thing the string table exists to prevent.
+  // An open container's contents follow it, for the same reason in the other
+  // direction: a lid standing open with the inside unnarrated is the engine
+  // withholding what the player can plainly see.
   for (const item of itemsAt(module, state, state.locationId)) {
     output.push({ kind: 'text', text: item.brief });
+    for (const inner of visibleContents(module, state, item.id)) {
+      output.push({ kind: 'text', text: inner.brief });
+    }
   }
 
   for (const creature of creaturesHere(module, state)) {
@@ -75,7 +81,13 @@ export const examineHandler: ActionHandler = (module, state, command) => {
   }
 
   const next = command.target.kind === 'item' ? { ...state, itRefers: command.target.id } : state;
-  return acted(next, [{ kind: 'text', text: description }]);
+  const output: OutputEvent[] = [{ kind: 'text', text: description }];
+  if (command.target.kind === 'item') {
+    for (const inner of visibleContents(module, state, command.target.id)) {
+      output.push({ kind: 'text', text: inner.brief });
+    }
+  }
+  return acted(next, output);
 };
 
 function readTextFor(module: AdventureModule, state: GameState, target: Target): string | undefined {
@@ -125,6 +137,16 @@ export const searchHandler: ActionHandler = (module, state, command) => {
 
   const [next, events] = fireTriggers(module, state, { type: 'search', target: command.target.id });
   if (events.length === 0) {
+    // No authored search event — but searching an open container is still a
+    // fair question with a plain answer: what's in it. "Nothing of interest"
+    // on a box holding a treasure is the engine lying.
+    const contents = visibleContents(module, state, command.target.id);
+    if (contents.length > 0) {
+      return acted(
+        next,
+        contents.map((inner): OutputEvent => ({ kind: 'text', text: inner.brief })),
+      );
+    }
     return acted(next, [{ kind: 'text', text: 'You find nothing of interest.' }]);
   }
   return acted(next, events);

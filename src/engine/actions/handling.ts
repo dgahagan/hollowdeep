@@ -8,8 +8,9 @@ import {
   itemLocation,
   itemsIn,
   setItemState,
+  visibleContents,
 } from '../state';
-import { ITEM_INVENTORY, type GameState } from '../types';
+import { ITEM_INVENTORY, type GameState, type OutputEvent } from '../types';
 import { applyEffects, fireTriggers } from '../systems/events';
 import { acted, refuse, type ActionHandler } from './index';
 
@@ -234,7 +235,14 @@ export const openHandler: ActionHandler = (module, state, command) => {
 
   const opened = setItemState(state, container.id, { open: true });
   const [next, events] = fireTriggers(module, opened, { type: 'open', target: container.id });
-  return acted(next, [{ kind: 'text', text: `You open the ${command.noun}.` }, ...events]);
+  // Opening reveals: each content item's `brief` follows the open line, so a
+  // treasure in a box announces itself the moment the lid comes up rather
+  // than waiting to be guessed at (same rule as look/examine/search in
+  // senses.ts; `visibleContents` is the shared definition).
+  const reveal = visibleContents(module, next, container.id).map(
+    (inner): OutputEvent => ({ kind: 'text', text: inner.brief }),
+  );
+  return acted(next, [{ kind: 'text', text: `You open the ${command.noun}.` }, ...reveal, ...events]);
 };
 
 /**
