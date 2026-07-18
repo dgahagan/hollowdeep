@@ -9,7 +9,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "The door swings in on a room that has been holding its breath for ninety years. The hinges do not complain; somebody thorough oiled them before locking up for good."
+        "text": "The door swings in on a room that has been holding its breath for ninety years. The hinges do not complain; somebody thorough oiled them before locking up for good. The assay office is open for business, ninety years late."
       },
       {
         "kind": "setFlag",
@@ -46,7 +46,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "The iron door swings on hinges greased against exactly this long a wait. Inside, the dark smells of dry powder and good housekeeping."
+        "text": "The iron door swings on hinges greased against exactly this long a wait. Inside, the dark smells of dry powder and good housekeeping. The magazine stands open to the west."
       },
       {
         "kind": "setFlag",
@@ -413,7 +413,7 @@
     "do": [
       {
         "kind": "print",
-        "text": "The bronze tool bridges the wrongness exactly. The slots take it, the collar turns, and the weight of the far wall goes somewhere else with a sound like a held breath ending. It was not made for your hand. Your hand makes do."
+        "text": "The bronze tool bridges the wrongness exactly. The slots take it, the collar turns, and the weight of the far wall goes somewhere else with a sound like a held breath ending. It was not made for your hand. Your hand makes do. What was a wall is a doorway now, and the doorway is south."
       },
       {
         "kind": "setFlag",

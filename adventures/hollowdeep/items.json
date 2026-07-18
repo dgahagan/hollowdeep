@@ -422,7 +422,27 @@
       "locked": true,
       "keyId": "key-office",
       "capacity": 0
-    }
+    },
+    "descriptionVariants": [
+      {
+        "if": [
+          {
+            "flag": "office-door-open"
+          }
+        ],
+        "text": "A good door standing open on hinges somebody thorough oiled before locking up. The lock has retired with its record intact."
+      }
+    ],
+    "briefVariants": [
+      {
+        "if": [
+          {
+            "flag": "office-door-open"
+          }
+        ],
+        "text": "The assay office door stands open on the east corner."
+      }
+    ]
   },
   {
     "id": "magazine-door",
@@ -443,7 +463,27 @@
       "locked": true,
       "keyId": "key-magazine",
       "capacity": 0
-    }
+    },
+    "descriptionVariants": [
+      {
+        "if": [
+          {
+            "flag": "magazine-door-open"
+          }
+        ],
+        "text": "Iron, riveted, standing open on hinges greased against exactly this long a wait. The one lock in the mine that was maintained to the very end has done its job and stood down."
+      }
+    ],
+    "briefVariants": [
+      {
+        "if": [
+          {
+            "flag": "magazine-door-open"
+          }
+        ],
+        "text": "The magazine's iron door stands open in the west wall."
+      }
+    ]
   },
   {
     "id": "pump",
@@ -455,7 +495,43 @@
     "description": "Cast iron, riveted, taller than you. The maker's plate says it moved water by the ton and expected to. The socket where its handle seats is empty, and the mechanism is stiff but honest: it wants its handle, and then it wants working.",
     "artId": "pump",
     "portable": false,
-    "initialLocation": "pump-room"
+    "initialLocation": "pump-room",
+    "descriptionVariants": [
+      {
+        "if": [
+          {
+            "flag": "pump-drained"
+          }
+        ],
+        "text": "Cast iron, riveted, taller than you, at rest. The handle sits seated in its socket and the mechanism hangs loose from honest use: the winze below stands drained on this machine's say-so, and it knows it."
+      },
+      {
+        "if": [
+          {
+            "flag": "pump-fixed"
+          }
+        ],
+        "text": "Cast iron, riveted, taller than you. The handle sits seated in its socket now, and the mechanism has stopped being stiff about it. It wants working."
+      }
+    ],
+    "briefVariants": [
+      {
+        "if": [
+          {
+            "flag": "pump-drained"
+          }
+        ],
+        "text": "The great pump stands at ease, its argument with the water won."
+      },
+      {
+        "if": [
+          {
+            "flag": "pump-fixed"
+          }
+        ],
+        "text": "The great pump stands ready, its handle seated."
+      }
+    ]
   },
   {
     "id": "stull",
@@ -588,6 +664,26 @@
     "initialLocation": "antechamber",
     "adjectives": [
       "antechamber"
+    ],
+    "descriptionVariants": [
+      {
+        "if": [
+          {
+            "flag": "mechanism-turned"
+          }
+        ],
+        "text": "Slots, grips, a rotating collar — turned now, and at rest. It has done the one thing it was made to do, and it holds no further opinions about your fingers."
+      }
+    ],
+    "briefVariants": [
+      {
+        "if": [
+          {
+            "flag": "mechanism-turned"
+          }
+        ],
+        "text": "The mechanism rests turned in the center of the open wall."
+      }
     ]
   },
   {

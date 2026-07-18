@@ -315,6 +315,9 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
     for (const [i, variant] of (item.descriptionVariants ?? []).entries()) {
       checkVariantConditions(variant.if, 'items.json', item.id, `descriptionVariants[${i}].if`);
     }
+    for (const [i, variant] of (item.briefVariants ?? []).entries()) {
+      checkVariantConditions(variant.if, 'items.json', item.id, `briefVariants[${i}].if`);
+    }
     if (!isItemLocation(item.initialLocation)) {
       push({
         code: 'dangling-item-initial-location',
@@ -798,6 +801,9 @@ export function checkConsistency(module: AdventureModule, artFiles: string[]): C
     checkProse('items.json', item.id, 'readText', item.readText);
     for (const [i, variant] of (item.descriptionVariants ?? []).entries()) {
       checkProse('items.json', item.id, `descriptionVariants[${i}].text`, variant.text);
+    }
+    for (const [i, variant] of (item.briefVariants ?? []).entries()) {
+      checkProse('items.json', item.id, `briefVariants[${i}].text`, variant.text);
     }
   }
   for (const creature of module.creatures) {

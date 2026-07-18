@@ -588,3 +588,47 @@ describe('the maze — connectivity and the exact §11.3 table', () => {
     expect(findLoc('breach-wall').exits.w?.to).toBe('twisty-5');
   });
 });
+
+describe('the earned-barrier convention (module-format.md, audited 2026-07-18)', () => {
+  const flagged = (locationId: string, flag: string): GameState => {
+    const s = litLampAt(locationId);
+    return { ...s, flags: { ...s.flags, [flag]: true } };
+  };
+
+  it('every barrier-opening event names its consequence in the prose', () => {
+    const eventText = (id: string): string => {
+      const ev = module_.events.find((candidate) => candidate.id === id);
+      if (ev === undefined) throw new Error(`missing event ${id}`);
+      return ev.do
+        .filter((eff): eff is Extract<typeof eff, { kind: 'print' }> => eff.kind === 'print')
+        .map((eff) => eff.text)
+        .join(' ');
+    };
+    expect(eventText('office-door-opened')).toMatch(/open for business/i);
+    expect(eventText('magazine-door-opened')).toMatch(/open to the west/i);
+    expect(eventText('mechanism-fit')).toMatch(/doorway is south/i);
+    // The pump and the blast were already compliant: the winze "gives the
+    // water back", the draught becomes "a door". Distance cases stay theirs.
+    expect(eventText('pump-drain')).toMatch(/winze gives the water back/i);
+    expect(eventText('detonate')).toMatch(/and then a door/i);
+  });
+
+  it('rooms stop describing defeated barriers', () => {
+    const look = (state: GameState) => texts(step(module_, state, 'look').events);
+    expect(look(flagged('main-street', 'office-door-open'))).toMatch(/open at last/i);
+    expect(look(litLampAt('main-street'))).toMatch(/shutters squared/i);
+    expect(look(flagged('shaft-head', 'pump-drained'))).toMatch(/water has conceded/i);
+    expect(look(flagged('breach-wall', 'breach-blasted'))).toMatch(/used to be a wall/i);
+    expect(look(flagged('antechamber', 'mechanism-turned'))).toMatch(/mostly doorway now/i);
+    expect(look(flagged('tailings-path', 'gunnis-known'))).toMatch(/now that you know where it goes/i);
+  });
+
+  it('items stop describing defeated barriers — examine AND the in-room line', () => {
+    const examine = (state: GameState, noun: string) => texts(step(module_, state, `examine ${noun}`).events);
+    expect(examine(flagged('pump-room', 'pump-drained'), 'pump')).toMatch(/knows it/i);
+    expect(examine(litLampAt('pump-room'), 'pump')).toMatch(/wants its handle/i);
+    expect(examine(flagged('antechamber', 'mechanism-turned'), 'mechanism')).toMatch(/no further opinions/i);
+    // briefVariants: the room listing agrees (look at pump-room, drained).
+    expect(texts(step(module_, flagged('pump-room', 'pump-drained'), 'look').events)).toMatch(/at ease/i);
+  });
+});

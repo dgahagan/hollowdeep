@@ -13,7 +13,7 @@ import {
   visibleContents,
 } from './state';
 import { evalConditions, isExitRevealed } from './systems/events';
-import { locationBrief, locationFull } from './systems/descriptions';
+import { itemBrief, locationBrief, locationFull } from './systems/descriptions';
 import { buildVocabulary } from './parser/vocab';
 import { resolveScope } from './parser/parse';
 import { DIRECTIONS } from './schema/common';
@@ -192,7 +192,7 @@ export function describeScene(module: AdventureModule, state: GameState): SceneV
     .flatMap((item) => [item, ...visibleContents(module, state, item.id)])
     .map((item) => ({
       id: item.id,
-      brief: item.brief,
+      brief: itemBrief(module, state, item),
     }));
 
   const creatures: SceneCreature[] = creaturesHere(module, state).map((creature) => ({
