@@ -299,6 +299,12 @@ function Game({
   // run. A lazy useState initializer rather than a plain call so a sidecar
   // write during play (journal notes share the object) can never flip it.
   const [hardcore] = useState(() => loadSidecar(module.manifest.id).hardcore);
+
+  // The post-game tally is PLAYER-OPENED (the "view your tally" button that
+  // replaces the input row once the game ends) — never auto-popped over the
+  // epilogue. Resets with the component on replay/adventure-change, like
+  // every other piece of Game state.
+  const [statsOpen, setStatsOpen] = useState(false);
   const { state, scene, actions, transcript, submit, load, pendingDeath, dismissDeath } = useGame(module, {
     hardcore,
   });
@@ -455,10 +461,23 @@ function Game({
             typewriterSpeed={settings.typewriterSpeed}
             reduceMotion={settings.reduceMotion}
           />
-          {/* The end-of-game summary is the T10 StatsScreen (mounted below),
-              not an inline banner — it supersedes the old `.shell__ended`
-              line, which showed the same victory/rank fact a second time. */}
-          <CommandInput onSubmit={submit} suggest={getSuggestions} />
+          {/* Once the game ends the input row's job is done; in its place, the
+              one affordance that matters — opening the tally. Player-invoked,
+              never auto-popped: the epilogue prose above is the payoff, and a
+              modal auto-stomping it was the bug (player-reported). */}
+          {state.ended !== undefined ? (
+            <button
+              type="button"
+              className="shell__stats-button"
+              onClick={() => {
+                setStatsOpen(true);
+              }}
+            >
+              {state.ended.victory ? 'Victory' : 'The end'} — view your tally
+            </button>
+          ) : (
+            <CommandInput onSubmit={submit} suggest={getSuggestions} />
+          )}
         </div>
       </div>
 
@@ -487,7 +506,16 @@ function Game({
           of this adventure (remount via AdventureGate's nonce — same hardcore
           mode, read again from the unchanged sidecar); Select returns to the
           front door. */}
-      <StatsScreen module={module} state={state} onReplay={onReplay} onSelect={onSelect} />
+      <StatsScreen
+        module={module}
+        state={state}
+        open={statsOpen}
+        onClose={() => {
+          setStatsOpen(false);
+        }}
+        onReplay={onReplay}
+        onSelect={onSelect}
+      />
     </main>
   );
 }
