@@ -99,6 +99,21 @@ export const examineHandler: ActionHandler = (module, state, command) => {
       output.push({ kind: 'text', text: inner.brief });
     }
   }
+  // Looking closely at something with art shows its painting (FR-4.1 finally
+  // on screen) — but only when the player can see. Examining a carried item
+  // in the dark is done by touch; emitting its art would draw what cannot be
+  // seen, the same leak the dark scene panel exists to prevent.
+  if (canSee(module, state)) {
+    const subject =
+      command.target.kind === 'item'
+        ? findItem(module, command.target.id)
+        : command.target.kind === 'creature'
+          ? findCreature(module, command.target.id)
+          : undefined;
+    if (subject?.artId !== undefined) {
+      output.push({ kind: 'inspect', text: subject.names[0] ?? subject.id, artId: subject.artId });
+    }
+  }
   return acted(next, output);
 };
 

@@ -26,6 +26,7 @@ import { SaveDialog } from './SaveDialog';
 import { SettingsPanel } from './SettingsPanel';
 import { MapOverlay } from './MapOverlay';
 import {
+  activeInspect,
   loadSettings,
   loadSidecar,
   saveSettings,
@@ -441,10 +442,10 @@ function Game({
 
       <div className="shell__body">
         <div className="shell__scene-region">
-          <ScenePanel module={module} scene={scene} lampWarn={lampWarn} />
+          <ScenePanel module={module} scene={scene} lampWarn={lampWarn} inspect={activeInspect(transcript)} />
           <ActionBar actions={actions} onAction={submit} />
           <div className="shell__inventory-focus" ref={inventoryFocusRef} tabIndex={-1}>
-            <InventoryPanel actions={actions} onAction={submit} />
+            <InventoryPanel module={module} actions={actions} onAction={submit} />
           </div>
         </div>
 

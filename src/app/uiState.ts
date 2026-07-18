@@ -1,3 +1,5 @@
+import type { OutputEvent } from '../engine/types';
+
 // UI-side persistence: the two layers that sit ALONGSIDE GameState saves
 // without ever touching them (ui-plan §8, standing rule #4).
 //
@@ -269,4 +271,27 @@ export function saveSidecar(adventureId: string, sidecar: AdventureUiState, stor
 export function setAdventureHardcore(adventureId: string, hardcore: boolean, storage?: StorageLike): boolean {
   const current = loadSidecar(adventureId, storage);
   return saveSidecar(adventureId, { ...current, hardcore }, storage);
+}
+
+/**
+ * The examine-art to show for the CURRENT turn, derived from the transcript
+ * tail (T-none: the item-art display feature, 2026-07-18). An `inspect`
+ * event belongs to the newest turn exactly while no `command-echo` has
+ * appeared after it — the next command of any kind reverts the scene panel
+ * to the room, which is the whole "look at a painting, then put it down"
+ * interaction. Pure derivation: no session field, nothing to reset on
+ * undo/load (both append or replace transcript lines, which makes the scan
+ * come up empty on its own).
+ */
+export function activeInspect(transcript: readonly OutputEvent[]): {
+  artId: string;
+  name: string;
+} | null {
+  for (let i = transcript.length - 1; i >= 0; i--) {
+    const entry = transcript[i];
+    if (entry === undefined) continue;
+    if (entry.kind === 'inspect') return { artId: entry.artId, name: entry.text };
+    if (entry.kind === 'command-echo') return null;
+  }
+  return null;
 }

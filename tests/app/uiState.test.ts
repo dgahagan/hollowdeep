@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  activeInspect,
   DEFAULT_SETTINGS,
   DEFAULT_SIDECAR,
   loadSettings,
@@ -136,5 +137,24 @@ describe('uiState — per-adventure UI sidecar (cave.<id>.ui)', () => {
   it('falls back to defaults with no storage available at all', () => {
     expect(loadSidecar('hollowdeep')).toEqual(DEFAULT_SIDECAR);
     expect(saveSidecar('hollowdeep', DEFAULT_SIDECAR)).toBe(false);
+  });
+});
+
+describe('activeInspect — the one-turn examine-art window', () => {
+  const echo = { kind: 'command-echo', text: '> examine lamp' } as const;
+  const text = { kind: 'text', text: 'A brass lamp.' } as const;
+  const inspect = { kind: 'inspect', text: 'lamp', artId: 'brass-lamp' } as const;
+
+  it('returns the inspect from the newest turn', () => {
+    expect(activeInspect([echo, text, inspect])).toEqual({ artId: 'brass-lamp', name: 'lamp' });
+  });
+
+  it('an inspect from a PRIOR turn is over — any newer command reverts', () => {
+    expect(activeInspect([echo, inspect, { kind: 'command-echo', text: '> wait' }, text])).toBeNull();
+  });
+
+  it('empty and inspect-free transcripts yield null', () => {
+    expect(activeInspect([])).toBeNull();
+    expect(activeInspect([echo, text])).toBeNull();
   });
 });
