@@ -1,10 +1,14 @@
 # Phase B — Art Production Design Plan
 
-**Status:** READY — signed off 2026-07-17 (style direction, unseen-creature
-treatment, format, tooling ownership, and all §9 review items settled; §9 logs
-the answers). The verbatim style suffix is deliberately NOT settled here —
-locking it is this plan's first deliverable, from test batches, with human
-sign-off.
+**Status:** IMPLEMENTED — 2026-07-17, via
+[`art-implementation-plan.md`](art-implementation-plan.md) T1–T8 on
+`feat/art`. All 108 subjects (53 scenes, 38 items, 6 creatures, 11 marquees)
+curated with human verdicts and shipped as WebP finals; `artFormat: "webp"`;
+`validate:art --strict` in the gate. The as-built guide is
+[`art-pipeline.md`](art-pipeline.md); verdicts in `art-review/art-review.md`.
+(Original status: READY — signed off 2026-07-17; style direction,
+unseen-creature treatment, format, tooling ownership, and all §9 review items
+settled; §9 logs the answers.)
 **Phase:** B (parallel track; SCOPE §3). Blocks: v1. Does not block Phase 3 —
 the UI consumes whatever `manifest.artFormat` names, so the two tracks merge
 cleanly in either order (one coordination point, §7).

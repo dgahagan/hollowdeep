@@ -10,12 +10,13 @@ Vite + React + TypeScript, static-only, no backend, no runtime AI.
 
 ## Status
 
-The foundation and the adventure are complete: the engine, the `test-cave`
-reference fixture, a minimal browser UI, and **Hollowdeep itself** — 58 rooms,
-12 treasures, 350 points, two endings, and a narrator keeping its own counsel.
-`npm run dev` plays it (the fixture stays at `?adventure=test-cave`). Painterly
-art is Phase B; the proper UI is Phase 3 — until then it ships placeholder SVGs
-and plain chrome.
+The foundation, the adventure, and the art are complete: the engine, the
+`test-cave` reference fixture, a minimal browser UI, **Hollowdeep itself** —
+58 rooms, 12 treasures, 350 points, two endings, and a narrator keeping its
+own counsel — and **painterly art throughout**: 108 oil-on-canvas
+illustrations generated locally, human-curated seed by seed, shipped as WebP.
+`npm run dev` plays it (the fixture stays at `?adventure=test-cave`). The
+proper UI is Phase 3 — until then the chrome stays plain.
 
 ```bash
 npm install
@@ -27,7 +28,8 @@ Then play. See **[docs/PLAYING.md](docs/PLAYING.md)** for how to talk to the cav
 | | |
 |---|---|
 | **Engine** | Parser, turn loop, movement, item handling, containers, lamp and fuel, darkness, creatures, combat, scoring, ranks, achievements, save/load with migrations, scene view |
-| **`hollowdeep`** | The adventure — 58 locations, 12 treasures in three tiers, a fair maze, a stalker and a thief, two magic words, two endings, 16 hint ladders, placeholder art until Phase B |
+| **`hollowdeep`** | The adventure — 58 locations, 12 treasures in three tiers, a fair maze, a stalker and a thief, two magic words, two endings, 16 hint ladders |
+| **Art** | 108 painterly illustrations (scenes, items, creatures, and 11 marquees for Phase 3's screens) — FLUX.2-klein-4B locally, one locked oil-on-canvas style, every seed human-picked, WebP ≤ 150 KB per scene; reproducible from `dev/art/` (see `docs/art-pipeline.md`) |
 | **`test-cave`** | A small complete adventure — 11 locations, 11 items, 3 creatures — the format reference and test fixture |
 | **UI** | Scene, transcript, command input, action buttons, inventory, status bar, save dialog. Plain on purpose; Phase 3 replaces it. |
 | **Validator** | `npm run validate` checks any adventure against the schema and 40 consistency rules |

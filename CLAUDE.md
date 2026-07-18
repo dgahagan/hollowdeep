@@ -2,7 +2,7 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Status: Foundation + Hollowdeep content complete; Phase B art and Phase 3 UI next
+## Project Status: Foundation + Hollowdeep content + Phase B art complete; Phase 3 UI next
 
 This is "Hollowdeep" (working title): an original browser-based adventure game
 in the spirit of *Colossal Cave Adventure*. The engine, the `test-cave`
@@ -11,7 +11,9 @@ reference adventure, and a minimal playable browser UI are Phase 0+1
 (`docs/hollowdeep-plan.md`, IMPLEMENTED 2026-07-17): `adventures/hollowdeep/`
 is the complete game — 58 rooms, 12 treasures, 350 points, two endings, hint
 ladders, and a walkthrough that wins at every seed. `test-cave` remains the
-format fixture. Placeholder SVG art until Phase B; real UI chrome is Phase 3.
+format fixture. **Phase B art shipped too** (`docs/art-plan.md`, IMPLEMENTED
+2026-07-17): 108 curated painterly WebP finals, `artFormat: "webp"`, no
+placeholder SVGs left. Real UI chrome is Phase 3.
 
 ```bash
 npm install
@@ -21,9 +23,10 @@ npm run gate     # typecheck && lint && test && validate && build — must be gr
 
 | Command | Does |
 |---|---|
-| `npm run gate` | The whole verification gate. If it is red, nothing else matters. |
+| `npm run gate` | The whole verification gate (incl. `validate:art -- --strict`). If it is red, nothing else matters. |
 | `npm test` | Vitest (796 tests, 26 files) |
 | `npm run validate` | Validate every adventure in `adventures/`; takes paths as argv |
+| `npm run validate:art` | Art manifests: schema + audit; `--strict` also requires chosen seeds + finals on disk |
 | `npm run dev` / `build` / `preview` | Vite |
 | `npm run typecheck` / `lint` | tsc / ESLint |
 
@@ -51,23 +54,20 @@ npm run gate     # typecheck && lint && test && validate && build — must be gr
 
 ## Art Pipeline
 
-Reuses the manifest-first pattern from the sibling project
-`~/work/personal/fable/bards-tale-clone` (see its `docs/art-pipeline.md` for the
-full writeup):
+Built, run, and documented in-repo: **`docs/art-pipeline.md`** is the guide
+(as-built, Phase B complete 2026-07-17). The short version:
 
-- FLUX.2-klein-4B running locally on the host's RTX 5080, invoked from the
-  distrobox via `distrobox-host-exec` → Python venv → a generator script that
-  reads a JSON request file (idempotent, deterministic seeds).
-- A per-adventure **art manifest** (id, subject prompt, shared style suffix,
-  dims, candidate seeds, `chosen_seed`) is the committed source of truth;
-  contact-sheet review picks winners.
-- **Caveat:** the old `host_gen.py`/`pixelcore.py` drivers are missing from
-  bards-tale-clone's working tree (only a `.pyc` remains in
-  `dev/pixel-art/__pycache__/`). Recover them from the host or rewrite (~100
-  lines); their request-file contract is documented in that repo's art-pipeline
-  doc and `dev/pixel-art/gen_request*.json` examples.
-- This project skips the palette-crush/JSON-import steps entirely: generate →
-  pick seed → optimize (WebP/AVIF, ≤150 KB per scene) → commit as static assets.
+- FLUX.2-klein-4B on the host's RTX 5080, invoked from the distrobox via
+  `distrobox-host-exec ~/pixelart-venv/bin/python tools/art/host_gen.py
+  REQUEST.json` (idempotent, seed-deterministic; the driver was rewritten
+  here — the bards-tale-clone original stayed lost).
+- The committed **art manifest** (`dev/art/<adventure>.json`) is the source
+  of truth; `tools/art/` (build-request, audit, contact-sheet, review-ui,
+  optimize, validate-art) does everything else. Human verdicts are logged in
+  `art-review/art-review.md`; prompting rules live in `dev/art/style.md`.
+- Generate → human-pick seeds (interactive review UI over
+  `python3 -m http.server`) → optimize (WebP only, ≤150 KB per scene) →
+  commit finals under `adventures/<id>/art/`. Raw candidates never commit.
 
 ## Workflow Commands
 
@@ -84,10 +84,10 @@ engine core, test-cave, minimal UI); its implementation plan is
 another project; their stale cross-project references were corrected on
 2026-07-15. If any survive, this repo's playbook is authoritative.
 
-## Next Milestone (Phase B art / Phase 3 UI)
+## Next Milestone (Phase 3 UI)
 
-Per `docs/SCOPE.md`: with Phase 2 content complete, the parallel tracks are
-Phase B (the FLUX art pipeline — recover/rewrite the host generator, author the
-hollowdeep art manifest, generate → curate → optimize ~100 painterly images)
-and Phase 3 (real UI: auto-map, journal, hints panel, adventure select,
-settings, save export/import, accessibility). Exit criteria live in SCOPE §3.
+Per `docs/SCOPE.md`: with Phase 2 content and Phase B art both complete, what
+remains is Phase 3 (real UI: auto-map, journal, hints panel, adventure select,
+settings, save export/import, accessibility — plus wiring the marquee art into
+title/endings/death screens) and then Phase 4 polish/release. Exit criteria
+live in SCOPE §3.
