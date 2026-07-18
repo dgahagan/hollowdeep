@@ -177,7 +177,7 @@ describe('refuel — the oil flask (T17 acceptance: refueling from the oil flask
     return s;
   }
 
-  it('tops the lamp up from a carried oil flask, consuming the flask', () => {
+  it('tops the lamp up from a carried oil flask — which SURVIVES (softlock fix)', () => {
     let state = lowOnFuel(at('shed'));
     state = setItemLocation(state, 'oil-flask', 'inventory');
 
@@ -185,8 +185,31 @@ describe('refuel — the oil flask (T17 acceptance: refueling from the oil flask
     expect(result.consumesTurn).toBe(true);
     // manifest.lamp.refuel.amount is 120 (adventures/test-cave/manifest.json) — 10 + 120.
     expect(result.state.lampFuel).toBe(130);
-    expect(itemLocation(result.state, 'oil-flask')).toBe('nowhere'); // consumesItem: true
+    // consumesItem: false — the flask also oils the vault door (oil-the-door
+    // event), so consuming it on refuel made refuel-before-oil an unwinnable
+    // game. The flask stays.
+    expect(itemLocation(result.state, 'oil-flask')).toBe('inventory');
     expect(texts(result)).toMatch(/top the lamp up/i);
+  });
+
+  it('consumesItem: true destroys the source (the hollowdeep configuration, pinned on a patched module)', () => {
+    const refuel = module_.manifest.lamp.refuel;
+    if (refuel === undefined) throw new Error('fixture lamp has no refuel config');
+    const consuming: AdventureModule = {
+      ...module_,
+      manifest: { ...module_.manifest, lamp: { ...module_.manifest.lamp, refuel: { ...refuel, consumesItem: true } } },
+    };
+    let state = lowOnFuel(at('shed'));
+    state = setItemLocation(state, 'oil-flask', 'inventory');
+
+    const parsed = parse(consuming, state, 'refuel lamp');
+    if (parsed.kind === 'error' || parsed.kind === 'disambiguation') throw new Error('refuel failed to parse');
+    const handler = handlerFor('refuel');
+    if (handler === undefined) throw new Error('no refuel handler');
+    const result = handler(consuming, state, parsed);
+
+    expect(result.state.lampFuel).toBe(130);
+    expect(itemLocation(result.state, 'oil-flask')).toBe('nowhere');
   });
 
   it('the bare `refuel` form (no noun) does the same thing', () => {
