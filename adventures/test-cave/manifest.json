@@ -20,7 +20,7 @@
     "refuel": {
       "itemId": "oil-flask",
       "amount": 120,
-      "consumesItem": true
+      "consumesItem": false
     }
   },
   "darkness": {
