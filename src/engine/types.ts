@@ -215,4 +215,13 @@ export interface UIAction {
   group: 'exit' | 'item' | 'inventory';
   /** The entity this acts on, for grouping in the UI. */
   targetId?: string;
+  /**
+   * For item/inventory actions: the verb half of `label` ("Examine") and the
+   * noun half ("brass lantern"), so a UI that groups actions into one row
+   * per item can label the row with the noun and the buttons with bare
+   * verbs — without re-deriving either from string surgery on `label`.
+   * Absent on exit actions.
+   */
+  verbLabel?: string;
+  noun?: string;
 }

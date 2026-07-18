@@ -54,6 +54,7 @@ body {
 .shell__header-actions {
   margin-left: auto;
   display: flex;
+  flex-wrap: wrap;
   gap: 0.4rem;
 }
 
@@ -436,6 +437,36 @@ body {
   color: var(--ink-muted);
   font-style: italic;
   margin: 0;
+}
+
+/* One row per carried item: name left, bare-verb buttons right. */
+.inventory-panel__rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.inventory-panel__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.inventory-panel__item-name {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.inventory-panel__row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.3rem;
+  flex-shrink: 0;
 }
 
 .shell__inventory-focus:focus-visible {
