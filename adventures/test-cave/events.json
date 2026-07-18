@@ -53,8 +53,9 @@
     "on": { "type": "use", "target": "rusted-door" },
     "if": [{ "hasItem": "oil-flask", "notFlag": "door-oiled" }],
     "do": [
-      { "kind": "print", "text": "You work the oil into the hinges. The rust gives up its grudge slowly, and then all at once." },
-      { "kind": "setFlag", "flag": "door-oiled" }
+      { "kind": "print", "text": "You work the oil into the hinges. The rust gives up its grudge slowly, and then all at once. It was never quite a door — it is a hatch, and it will open now. Down has become a direction." },
+      { "kind": "setFlag", "flag": "door-oiled" },
+      { "kind": "revealExit", "location": "grotto", "dir": "down" }
     ]
   },
   {
