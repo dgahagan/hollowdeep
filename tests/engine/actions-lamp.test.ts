@@ -241,3 +241,16 @@ describe('refuel — the oil flask (T17 acceptance: refueling from the oil flask
     expect(result.state.lampFuel).toBe(10);
   });
 });
+
+describe("'fill' as a refuel synonym (player-reported: 'fill lamp' parsed to nothing)", () => {
+  it('fill lamp refuels, same as refuel lamp', () => {
+    let state = at('shed');
+    state = setItemLocation(state, 'brass-lamp', 'inventory');
+    state = setItemLocation(state, 'oil-flask', 'inventory');
+    state = { ...state, lampFuel: 10 };
+
+    const result = act(state, 'fill lamp');
+    expect(result.consumesTurn).toBe(true);
+    expect(result.state.lampFuel).toBe(130);
+  });
+});
