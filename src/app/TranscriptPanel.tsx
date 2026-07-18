@@ -185,19 +185,24 @@ export function TranscriptPanel({ entries, typewriterSpeed, reduceMotion }: Tran
         {entries.length === 0 && (
           <p className="transcript-panel__hint">Type a command, or click something below, to begin.</p>
         )}
-        {entries.map((entry, index) => (
-          // Index keys are safe here: the transcript only ever grows by
-          // appending at the end (useGame.ts) — entries are never reordered,
-          // inserted in the middle, or removed. See `TranscriptEntryLine`'s own
-          // comment for why that stability is exactly what makes it safe to
-          // decide "new vs. history" from mount timing alone.
-          <TranscriptEntryLine
-            key={index}
-            entry={entry}
-            typewriterSpeed={typewriterSpeed}
-            motionReduced={motionReduced}
-          />
-        ))}
+        {entries.map((entry, index) =>
+          // `inspect` is a visual directive — the scene panel renders it as
+          // the examined subject's painting (activeInspect, uiState.ts); as a
+          // transcript line it would just be the subject's bare name, noise.
+          entry.kind === 'inspect' ? null : (
+            // Index keys are safe here: the transcript only ever grows by
+            // appending at the end (useGame.ts) — entries are never reordered,
+            // inserted in the middle, or removed. See `TranscriptEntryLine`'s own
+            // comment for why that stability is exactly what makes it safe to
+            // decide "new vs. history" from mount timing alone.
+            <TranscriptEntryLine
+              key={index}
+              entry={entry}
+              typewriterSpeed={typewriterSpeed}
+              motionReduced={motionReduced}
+            />
+          ),
+        )}
       </div>
     </div>
   );

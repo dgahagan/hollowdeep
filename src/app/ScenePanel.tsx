@@ -71,17 +71,30 @@ export interface ScenePanelProps {
   scene: SceneView;
   /** See "Lamp-state tint" above — no current caller passes this; defaults to off. */
   lampWarn?: boolean;
+  /**
+   * A just-examined subject's art (uiState.ts `activeInspect`): shown in
+   * place of the room's painting for exactly one turn — the next command of
+   * any kind reverts. Never present in the dark: the engine only emits
+   * `inspect` events when the player can see (actions/senses.ts).
+   */
+  inspect?: { artId: string; name: string } | null;
 }
 
-/** Same `<artId>.<format>` convention as the render below, shared so preloading can't drift from it. */
-function artUrl(module: AdventureModule, artId: string): string {
+/** Same `<artId>.<format>` convention as the render below, shared (also by InventoryPanel's thumbnails) so nothing drifts from it. */
+export function artUrl(module: AdventureModule, artId: string): string {
   return `/adventures/${module.manifest.id}/art/${artId}.${module.manifest.artFormat}`;
 }
 
-export function ScenePanel({ module, scene, lampWarn = false }: ScenePanelProps) {
+export function ScenePanel({ module, scene, lampWarn = false, inspect = null }: ScenePanelProps) {
   const { settings } = useSettings();
   const location = module.locations.find((candidate) => candidate.id === scene.locationId);
-  const altText = location?.brief ?? scene.description;
+  // The inspect view borrows the panel wholesale: its art, its alt. `dark`
+  // still wins — the engine never emits inspect in the dark, but a stale
+  // transcript after a load could in principle disagree, and the dark plate
+  // is the boundary that must not lose.
+  const showInspect = inspect !== null && !scene.dark;
+  const shownArtId = showInspect ? inspect.artId : scene.artId;
+  const altText = showInspect ? inspect.name : (location?.brief ?? scene.description);
 
   // Preload every exit-adjacent location's art on arrival. Re-derives the
   // current location from `module.locations` INSIDE the effect (rather than
@@ -120,13 +133,13 @@ export function ScenePanel({ module, scene, lampWarn = false }: ScenePanelProps)
 
   return (
     <section className="scene-panel" aria-label="Scene">
-      {scene.artId === undefined ? (
+      {shownArtId === undefined ? (
         <div className="scene-panel__art scene-panel__art--dark" role="img" aria-label={scene.description} />
       ) : (
         <div className="scene-panel__art-wrap">
           <img
-            className="scene-panel__art"
-            src={artUrl(module, scene.artId)}
+            className={showInspect ? 'scene-panel__art scene-panel__art--inspect' : 'scene-panel__art'}
+            src={artUrl(module, shownArtId)}
             alt={altText}
             width={512}
             height={288}
@@ -136,6 +149,7 @@ export function ScenePanel({ module, scene, lampWarn = false }: ScenePanelProps)
           <div className={ambientClassName} aria-hidden="true" />
         </div>
       )}
+      {showInspect && <p className="scene-panel__contents scene-panel__inspect-caption">Examining: {inspect.name}</p>}
       <h2 className="scene-panel__name">{scene.name}</h2>
       <p className="scene-panel__description">{scene.description}</p>
       {/* What's here, right now — `scene.items` already includes the visible

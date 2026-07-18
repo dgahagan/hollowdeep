@@ -150,7 +150,16 @@ export type OutputEvent =
    * `rung` is 1-based — the Nth rung of `hintId`'s ladder just shown. Additive;
    * not save state, and the UI can style it distinctly once Phase 3 wants to.
    */
-  | { kind: 'hint'; text: string; hintId: string; rung: number };
+  | { kind: 'hint'; text: string; hintId: string; rung: number }
+  /**
+   * `examine` looked closely at something that has art (FR-4.1's item and
+   * creature illustrations; emitted only when the player can SEE — examining
+   * a carried item in the dark stays text-only, same spoiler boundary as
+   * everywhere else). The UI may show `artId`'s painting for the turn and
+   * revert with the next command; `text` is the subject's display name so a
+   * transcript that chooses to render this line still reads sensibly.
+   */
+  | { kind: 'inspect'; text: string; artId: string };
 
 /** What `step` returns: a NEW state plus the turn's output. Never mutates. */
 export interface StepResult {

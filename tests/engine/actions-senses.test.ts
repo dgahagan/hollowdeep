@@ -237,3 +237,36 @@ describe('open-container contents — look / examine / search reveal what is ins
     expect(texts(result)).toMatch(/nothing of interest/i);
   });
 });
+
+describe('examine emits an inspect event — the item/creature art finally shows (FR-4.1)', () => {
+  it('examining a visible item carries its artId', () => {
+    const result = act(at('shed'), 'examine flask');
+    const inspect = result.events.find((e) => e.kind === 'inspect');
+    expect(inspect).toBeDefined();
+    if (inspect?.kind === 'inspect') {
+      expect(inspect.artId).toBe('oil-flask');
+      expect(inspect.text).toBe('flask');
+    }
+  });
+
+  it('examining a creature carries its artId too', () => {
+    const state: GameState = {
+      ...at('grotto'),
+      creatures: {
+        ...at('grotto').creatures,
+        'pale-newt': { active: true, locationId: 'grotto', encounterTurns: 0, activatedTurn: 0, hasStolen: false },
+      },
+    };
+    const result = act(state, 'examine newt');
+    expect(result.events.some((e) => e.kind === 'inspect' && e.artId === 'pale-newt')).toBe(true);
+  });
+
+  it('examining in the dark stays text-only — no art of what cannot be seen', () => {
+    // Carry the lamp UNLIT into the dark vault; examining it by touch works,
+    // but the painting must not leak.
+    let state = darkAt('deep-vault');
+    state = setItemLocation(state, 'brass-lamp', 'inventory');
+    const result = act(state, 'examine lamp');
+    expect(result.events.some((e) => e.kind === 'inspect')).toBe(false);
+  });
+});

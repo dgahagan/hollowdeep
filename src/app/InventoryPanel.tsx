@@ -1,18 +1,23 @@
+import type { AdventureModule } from '../engine/schema';
 import type { UIAction } from '../engine/types';
+import { artUrl } from './ScenePanel';
 
 // Inventory rows (design plan §6, T25; FR-2.7). Same source as `ActionBar` —
 // `availableActions()` — filtered to `group === 'inventory'`, the other half
 // of the exit/item vs. inventory split.
 //
-// One ROW per carried item — the item's name, then a bare-verb button per
+// One ROW per carried item — a thumbnail of its painting (FR-3.3's item
+// thumbnails, at last), the item's name, then a bare-verb button per
 // available action ("Examine", "Drop", "Light") — instead of a flat pile of
 // full-sentence buttons ("Examine brass lantern", "Drop brass lantern", …),
 // which repeated every noun as many times as it had verbs. The engine
 // supplies the split (`UIAction.verbLabel`/`noun`, view.ts) so nothing here
 // parses labels. Buttons keep the full command as their aria-label — a
 // screen reader hears "Drop brass lantern", not a bare "Drop" torn from its
-// row's context.
+// row's context; thumbnails are decorative (`alt=""`) since the name sits
+// right beside them.
 export interface InventoryPanelProps {
+  module: AdventureModule;
   actions: UIAction[];
   onAction: (command: string) => void;
 }
@@ -37,8 +42,11 @@ function toRows(inventory: UIAction[]): InventoryRow[] {
   return [...rows.values()];
 }
 
-export function InventoryPanel({ actions, onAction }: InventoryPanelProps) {
+export function InventoryPanel({ module, actions, onAction }: InventoryPanelProps) {
   const inventory = actions.filter((action) => action.group === 'inventory');
+
+  const artIdFor = (targetId: string | undefined): string | undefined =>
+    targetId === undefined ? undefined : module.items.find((item) => item.id === targetId)?.artId;
 
   return (
     <section className="inventory-panel" aria-label="Inventory">
@@ -47,8 +55,19 @@ export function InventoryPanel({ actions, onAction }: InventoryPanelProps) {
         <p className="inventory-panel__hint">You are carrying nothing.</p>
       ) : (
         <ul className="inventory-panel__rows">
-          {toRows(inventory).map((row) => (
+          {toRows(inventory).map((row) => {
+            const thumbArtId = artIdFor(row.actions[0]?.targetId);
+            return (
             <li key={row.key} className="inventory-panel__row">
+              {thumbArtId !== undefined && (
+                <img
+                  className="inventory-panel__thumb"
+                  src={artUrl(module, thumbArtId)}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
               <span className="inventory-panel__item-name">{row.name}</span>
               <span className="inventory-panel__row-actions">
                 {row.actions.map((action) => (
@@ -65,7 +84,8 @@ export function InventoryPanel({ actions, onAction }: InventoryPanelProps) {
                 ))}
               </span>
             </li>
-          ))}
+            );
+          })}
         </ul>
       )}
     </section>

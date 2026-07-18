@@ -219,6 +219,20 @@ body {
   display: block;
 }
 
+/* Examine view: item/creature art is squarer (640×640 / 640×800) than the
+   wide scene plates, so cap its height and center it rather than letting a
+   portrait swallow the column. Reverts with the next command (ScenePanel). */
+.scene-panel__art--inspect {
+  max-height: 320px;
+  width: auto;
+  margin: 0 auto;
+}
+
+.scene-panel__inspect-caption {
+  margin-top: 0.35rem;
+  font-style: italic;
+}
+
 /* The dark plate: what a room looks like when you cannot look at it. Holds the
    image's footprint so the panel does not jump as the lamp goes on and off. */
 .scene-panel__art--dark {
@@ -494,8 +508,19 @@ body {
 }
 
 .inventory-panel__item-name {
+  flex: 1;
   min-width: 0;
   overflow-wrap: anywhere;
+}
+
+/* FR-3.3's item thumbnail: a small square crop of the item's painting. */
+.inventory-panel__thumb {
+  width: 32px;
+  height: 32px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
 }
 
 .inventory-panel__row-actions {
