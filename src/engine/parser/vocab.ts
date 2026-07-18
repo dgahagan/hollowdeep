@@ -40,7 +40,11 @@ export const CORE_VERBS: readonly Verb[] = [
   // lamp
   { id: 'light', words: ['light', 'ignite'], patterns: ['VN'] },
   { id: 'extinguish', words: ['extinguish', 'douse', 'snuff'], patterns: ['VN'] },
-  { id: 'refuel', words: ['refuel', 'refill'], patterns: ['V', 'VN'] },
+  // 'pour' is deliberately NOT here: test-cave's vocabulary.json claims it
+  // for its use/oil verb family ("pour oil on the door"), and an engine verb
+  // word colliding with a content one is exactly the merge fight
+  // buildVocabulary exists to avoid.
+  { id: 'refuel', words: ['refuel', 'refill', 'fill'], patterns: ['V', 'VN'] },
 
   // combat
   { id: 'attack', words: ['attack', 'kill', 'hit', 'fight'], patterns: ['VN', 'VNPN'] },

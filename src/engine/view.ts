@@ -309,6 +309,11 @@ function itemVerbs(module: AdventureModule, state: GameState, itemId: string, ca
     // `light` on an empty lamp refuses, so only offer what will work.
     if (!lit && state.lampFuel > 0) verbs.push(['light', 'Light']);
     if (lit) verbs.push(['extinguish', 'Extinguish']);
+    // Refuel appears exactly when it would succeed (same rule as every verb
+    // here): a refuel source is configured AND in the pack. The handler also
+    // requires the lamp carried — already true on this branch.
+    const refuel = module.manifest.lamp.refuel;
+    if (refuel !== undefined && isCarrying(state, refuel.itemId)) verbs.push(['refuel', 'Refuel']);
   }
 
   return verbs;

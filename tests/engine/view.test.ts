@@ -399,3 +399,17 @@ describe('open-container contents surface in the view layer (the jade-idol disco
     expect(suggestions(module_, lit('deep-vault'), 'ido')).not.toContain('idol');
   });
 });
+
+describe('the Refuel button (player-reported: refuel was typed-only)', () => {
+  it('appears on the carried lamp exactly when the refuel source is also carried', () => {
+    let state = lit('shed');
+    const before = availableActions(module_, state).filter((a) => a.targetId === 'brass-lamp');
+    expect(before.some((a) => a.command.startsWith('refuel'))).toBe(false);
+
+    state = setItemLocation(state, 'oil-flask', 'inventory');
+    const after = availableActions(module_, state).filter((a) => a.targetId === 'brass-lamp');
+    const refuel = after.find((a) => a.command.startsWith('refuel'));
+    expect(refuel).toBeDefined();
+    expect(refuel?.verbLabel).toBe('Refuel');
+  });
+});
