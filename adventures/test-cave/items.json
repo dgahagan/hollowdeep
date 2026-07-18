@@ -56,6 +56,12 @@
     "adjectives": ["steel", "iron"],
     "brief": "A steel grate is set into the floor.",
     "description": "Steel bars in a steel frame, bolted into the rock and fitted with a lock that has outlived whoever turned it last.",
+    "descriptionVariants": [
+      {
+        "if": [{ "flag": "grate-open" }],
+        "text": "Steel bars in a steel frame, swung up and standing open. The lock has said its piece; the hole below has the floor."
+      }
+    ],
     "artId": "grate",
     "portable": false,
     "initialLocation": "cave-mouth",

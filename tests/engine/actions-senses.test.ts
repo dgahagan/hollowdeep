@@ -292,3 +292,19 @@ describe('conditional descriptions — the oiled door finally admits it (2026-07
     expect(texts(after)).not.toMatch(/sealed by decades/i);
   });
 });
+
+describe('the opened grate names its consequence (the goal-feedback convention)', () => {
+  it('opening the grate says the way down is open', () => {
+    let state = at('cave-mouth');
+    state = setItemState(state, 'grate', { locked: false });
+    const result = act(state, 'open grate');
+    expect(texts(result)).toMatch(/the way down is open/i);
+  });
+
+  it('examine and look both follow once the grate stands open', () => {
+    const open = setFlag(setItemState(at('cave-mouth'), 'grate', { locked: false, open: true }), 'grate-open', true);
+    expect(texts(act(open, 'examine grate'))).toMatch(/standing open/i);
+    expect(texts(act(open, 'look'))).toMatch(/nobody's opinion but yours/i);
+    expect(texts(act(at('cave-mouth'), 'look'))).toMatch(/strong opinions/i);
+  });
+});

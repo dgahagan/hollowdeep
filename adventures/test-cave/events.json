@@ -28,7 +28,7 @@
     "id": "grate-note",
     "once": true,
     "on": { "type": "flagSet", "target": "grate-open" },
-    "do": [{ "kind": "print", "text": "Below, the dark waits with the patience of something that has done this before." }]
+    "do": [{ "kind": "print", "text": "Below, the dark waits with the patience of something that has done this before. Nothing stands between you and it now — the way down is open." }]
   },
   {
     "id": "learn-zeeble",

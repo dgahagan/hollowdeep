@@ -72,6 +72,12 @@
     "name": "Cave Mouth",
     "brief": "You are at the mouth of a cave.",
     "full": "The hill opens here into a throat of grey stone. A steel grate is set into the floor where the throat narrows, bolted down by someone with strong opinions about who goes below.",
+    "variants": [
+      {
+        "if": [{ "flag": "grate-open" }],
+        "full": "The hill opens here into a throat of grey stone. The steel grate stands open where the throat narrows, and who goes below is nobody's opinion but yours now."
+      }
+    ],
     "artId": "cave-mouth",
     "light": "lit",
     "exits": {
