@@ -56,7 +56,15 @@ export function StatusBar({ module, state, scene }: StatusBarProps) {
         {state.turn}
       </span>
       <span className={lampClassName}>
-        <span className="status-bar__label">{lampLit ? 'Lamp · lit' : 'Lamp'}</span>
+        <span className="status-bar__label">
+          {lampLit ? (
+            <>
+              Lamp · <span className="status-bar__lit">lit</span>
+            </>
+          ) : (
+            'Lamp'
+          )}
+        </span>
         <span
           className="status-bar__lamp-gauge"
           role="img"

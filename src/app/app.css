@@ -166,6 +166,14 @@ body {
   width: 0 !important;
 }
 
+/* The word "lit" steps up from the label's muted ink to full ink — near
+   white in the dark theme, full-contrast ink on parchment — so the state
+   reads at a glance without breaking the label's register. */
+.status-bar__lit {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 /* Lit vs unlit: the flame is the fact that decides whether fuel is falling,
    so the gauge says it ambiently — warm fill burning, dimmed fill banked.
    The pulse class is only applied when the in-app reduce-motion setting is
