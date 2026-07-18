@@ -118,3 +118,66 @@ the human's request). Chosen seeds:
 - watch-room: 5
 - winze-ladderway: 8
 - worked-face: 5
+
+---
+
+## 2026-07-17 — T5 items + creatures: all 44 chosen
+
+Generated with the lamp-as-source fix pre-applied to all lamplit item/creature prompts
+(the T4 lesson, applied before first review). Reviewed in the new interactive UI — a
+large share by the human's son. Content retries (recorded in manifest `notes`): powder-keg
+(readable letters→plain symbol), office-door (floating lock/double hinges→handle+separate
+keyhole), rubble ('pale faces'→broken rock, no skulls), foreman (fresh/3-legged→decayed
+correct skeleton), chute-throat (unreadable→timber slide), stalker ('circle of lamplight'→
+first-person passage with a shape at the dark threshold), blind-fish (eyes+above-water→
+submerged, milky-white cataracted eyes reading as blind; true eyeless is a hard FLUX case).
+
+### Items
+
+- assay-bench: 3
+- assay-button: 8
+- assay-ledger: 1
+- brass-lantern: 2
+- bronze-tool: 5
+- canary-cage: 13
+- cave-pearls: 2
+- chute-throat: 13
+- cut-garnets: 5
+- flowstone-seam: 1
+- foreman: 2
+- foremans-desk: 2
+- foremans-watch: 3
+- fuse-coil: 3
+- key-magazine: 8
+- key-office: 3
+- magazine-door: 13
+- mechanism: 1
+- miners-cache: 1
+- office-door: 3
+- oil-flask: 3
+- payroll-tin: 2
+- pothole: 13
+- powder-keg: 2
+- pump: 8
+- pump-handle: 8
+- rubble: 2
+- scratched-stull: 1
+- silver-flowstone: 3
+- stacks: 3
+- steel-gad: 1
+- stull: 3
+- tally-book: 5
+- tally-plate: 8
+- the-kept: 1
+- vault: 5
+- warm-stone: 2
+- weir-nugget: 13
+
+### Creatures
+
+- bats: 1
+- blind-fish: 3
+- newt: 2
+- stalker: 1
+- storekeeper: 5
+- thief: 8
