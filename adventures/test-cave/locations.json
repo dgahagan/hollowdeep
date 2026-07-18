@@ -201,6 +201,12 @@
     "name": "Shining Grotto",
     "brief": "You are in a grotto lit by shining moss.",
     "full": "Water sheets down the far wall and the moss answers it, throwing a cold green light over everything. A carving has been cut beneath the water, worn but legible. In the floor, a rusted door lies flat, sealed by decades of its own indignation.",
+    "variants": [
+      {
+        "if": [{ "flag": "door-oiled" }],
+        "full": "Water sheets down the far wall and the moss answers it, throwing a cold green light over everything. A carving has been cut beneath the water, worn but legible. In the floor, the old hatch sits freshly oiled and agreeable, ready to open downward whenever you are."
+      }
+    ],
     "artId": "grotto",
     "light": "lit",
     "exits": {

@@ -193,6 +193,19 @@ lamp is on a shelf.
   container with `capacity: 0` — that is how the grate works.
 - **`treasure`** scores twice: `carryPoints` on first pickup, `depositPoints` on
   reaching `repositoryLocation`. Each awards once, ever.
+- **`descriptionVariants`** (optional) makes `examine` text follow the world's
+  state: an array of `{ "if": [conditions], "text": "…" }`, first match wins,
+  none matching falls back to `description`. The conditions are the same
+  `Condition` objects events use, with one hard rule: **no `chance`** —
+  descriptions are read freely by the UI, and a condition that draws from the
+  seeded RNG would make *reading* the world change it (the validator refuses
+  it). Test-cave's rusted door is the worked example: once `door-oiled` is
+  set, examining it stops claiming the hinges want oil.
+
+  Locations have the same mechanism as **`variants`** —
+  `{ "if": [...], "full": "…", "brief": "…"? }` — picked by `look`, arrival,
+  and the scene caption, so a room can stop describing a state the player
+  has already changed.
 
 ---
 

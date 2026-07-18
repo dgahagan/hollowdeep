@@ -3,6 +3,7 @@ import type { GameState, OutputEvent } from '../types';
 import type { Target } from '../parser/parse';
 import { canSee, creaturesHere, currentLocation, findCreature, findItem, itemsAt, visibleContents } from '../state';
 import { fireTriggers } from '../systems/events';
+import { itemDescription, locationFull } from '../systems/descriptions';
 import { acted, refuse, type ActionHandler } from './index';
 
 // look / examine / read / search (foundation-implementation-plan.md T15).
@@ -64,11 +65,17 @@ export const lookHandler: ActionHandler = (module, state) => {
   }
 
   const location = currentLocation(module, state);
-  return acted(state, [{ kind: 'text', text: location.full }, ...roomContentsLines(module, state)]);
+  return acted(state, [
+    { kind: 'text', text: locationFull(module, state, location) },
+    ...roomContentsLines(module, state),
+  ]);
 };
 
 function describeTarget(module: AdventureModule, state: GameState, target: Target): string | undefined {
-  if (target.kind === 'item') return findItem(module, target.id)?.description;
+  if (target.kind === 'item') {
+    const item = findItem(module, target.id);
+    return item === undefined ? undefined : itemDescription(module, state, item);
+  }
   if (target.kind === 'creature') return findCreature(module, target.id)?.description;
   return currentLocation(module, state).scenery?.[target.index]?.description;
 }

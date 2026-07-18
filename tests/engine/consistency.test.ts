@@ -1279,3 +1279,45 @@ describe('checkConsistency — hints.json', () => {
     expect(errors.some((e) => e.document === 'hints.json')).toBe(false);
   });
 });
+
+describe('checkConsistency — description variants (conditional descriptions, 2026-07-18)', () => {
+  it('accepts a flag-guarded variant on items and locations', () => {
+    const withVariants = mutate((m) => {
+      const item = m.items[0];
+      if (item) item.descriptionVariants = [{ if: [{ flag: 'vault-open' }], text: 'Changed by the world.' }];
+      const loc = m.locations[0];
+      if (loc) loc.variants = [{ if: [{ flag: 'vault-open' }], full: 'The room, but different now.' }];
+    });
+    expect(checkConsistency(withVariants, validArtFiles)).toEqual([]);
+  });
+
+  it('refuses `chance` in a variant condition — pure read side must never draw RNG', () => {
+    const broken = mutate((m) => {
+      const item = m.items[0];
+      if (item) item.descriptionVariants = [{ if: [{ chance: 0.5 }], text: 'Sometimes different.' }];
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), { code: 'chance-in-description-variant', document: 'items.json' }),
+    ).toBe(true);
+  });
+
+  it('refuses `chance` hiding inside a variant `all`', () => {
+    const broken = mutate((m) => {
+      const loc = m.locations[0];
+      if (loc) loc.variants = [{ if: [{ all: [{ flag: 'vault-open' }, { chance: 0.5 }] }], full: 'Different.' }];
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), { code: 'chance-in-description-variant', document: 'locations.json' }),
+    ).toBe(true);
+  });
+
+  it('still runs the ordinary reference checks on variant conditions', () => {
+    const broken = mutate((m) => {
+      const item = m.items[0];
+      if (item) item.descriptionVariants = [{ if: [{ hasItem: 'no-such-item' }], text: 'Never shown.' }];
+    });
+    expect(
+      hasError(checkConsistency(broken, validArtFiles), { code: 'dangling-condition-has-item', document: 'items.json' }),
+    ).toBe(true);
+  });
+});

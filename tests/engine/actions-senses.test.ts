@@ -4,7 +4,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { loadAdventure } from '../../src/loader';
 import type { AdventureModule } from '../../src/engine/schema';
 import type { GameState } from '../../src/engine/types';
-import { createGame, isFlagSet, setItemLocation, setItemState } from '../../src/engine/state';
+import { createGame, isFlagSet, setFlag, setItemLocation, setItemState } from '../../src/engine/state';
 import { isExitRevealed } from '../../src/engine/systems/events';
 import { parse, type Command } from '../../src/engine/parser/parse';
 import { handlerFor, type ActionResult } from '../../src/engine/actions';
@@ -268,5 +268,27 @@ describe('examine emits an inspect event — the item/creature art finally shows
     state = setItemLocation(state, 'brass-lamp', 'inventory');
     const result = act(state, 'examine lamp');
     expect(result.events.some((e) => e.kind === 'inspect')).toBe(false);
+  });
+});
+
+describe('conditional descriptions — the oiled door finally admits it (2026-07-18)', () => {
+  it('examine picks the first matching variant over the static description', () => {
+    const before = act(at('grotto'), 'examine door');
+    expect(texts(before)).toMatch(/hinges want oil/i);
+
+    const oiled = setFlag(at('grotto'), 'door-oiled', true);
+    const after = act(oiled, 'examine door');
+    expect(texts(after)).toMatch(/slick and quiet/i);
+    expect(texts(after)).not.toMatch(/hinges want oil/i);
+  });
+
+  it('look picks the location variant once the flag holds', () => {
+    const before = act(at('grotto'), 'look');
+    expect(texts(before)).toMatch(/sealed by decades/i);
+
+    const oiled = setFlag(at('grotto'), 'door-oiled', true);
+    const after = act(oiled, 'look');
+    expect(texts(after)).toMatch(/freshly oiled and agreeable/i);
+    expect(texts(after)).not.toMatch(/sealed by decades/i);
   });
 });
