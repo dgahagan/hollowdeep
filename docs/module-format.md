@@ -202,6 +202,9 @@ lamp is on a shelf.
   it). Test-cave's rusted door is the worked example: once `door-oiled` is
   set, examining it stops claiming the hinges want oil.
 
+  **`briefVariants`** does the same for the in-room line, so a door's room
+  listing can stop "taking its lock seriously" after the player opened it.
+
   Locations have the same mechanism as **`variants`** —
   `{ "if": [...], "full": "…", "brief": "…"? }` — picked by `look`, arrival,
   and the scene caption, so a room can stop describing a state the player

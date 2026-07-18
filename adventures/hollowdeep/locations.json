@@ -41,7 +41,17 @@
       "ne": {
         "to": "tailings-path"
       }
-    }
+    },
+    "variants": [
+      {
+        "if": [
+          {
+            "flag": "office-door-open"
+          }
+        ],
+        "full": "Main Street still has its buildings, which is the surprising part. The chapel keeps its footing to the north and the general store faces it from the south, both weathered to the same patient gray. East, on the corner, the assay office stands open at last, the morning shift ninety years late. A path climbs northeast toward the old tailings. Ninety years of nobody has been kinder to this street than it had any right to be."
+      }
+    ]
   },
   {
     "id": "chapel",
@@ -116,7 +126,17 @@
         "blockedMessage": "The spoil rises that way in a long gray slope with no argument for climbing it. If there is a path up through the scree, you have not learned it.",
         "hidden": true
       }
-    }
+    },
+    "variants": [
+      {
+        "if": [
+          {
+            "flag": "gunnis-known"
+          }
+        ],
+        "full": "The path climbs the spoil heaps along the old tramway grade. From up here the town arranges itself into what it actually is: one street, three roofs that matter, and a hole in a hillside that paid for all of it. The grade runs up toward the adit mouth, and a thin path picks its way northwest through the scree — obvious, now that you know where it goes."
+      }
+    ]
   },
   {
     "id": "adit-mouth",
@@ -285,6 +305,16 @@
         ],
         "description": "A hoist bucket — a kibble, in the old men's vocabulary — rusted onto its chain at the head of the winze. It moved ore and men both, up and down, on a word to the engine house. The engine is long cold. The word is not recorded here."
       }
+    ],
+    "variants": [
+      {
+        "if": [
+          {
+            "flag": "pump-drained"
+          }
+        ],
+        "full": "The drift opens over the winze — an internal shaft dropping away below the workings. Over the hole, the kibble bucket sits rusted onto its chain, mid-journey, going nowhere at scale. The pump room is north, the ore chute east. Down is open now: the water has conceded the winze, and the ladders show all the way into the dark."
+      }
     ]
   },
   {
@@ -298,7 +328,25 @@
       "s": {
         "to": "shaft-head"
       }
-    }
+    },
+    "variants": [
+      {
+        "if": [
+          {
+            "flag": "pump-drained"
+          }
+        ],
+        "full": "The great pump fills most of the room: a cathedral of cast iron built to argue with water and win. It has won. It stands at ease with its handle seated, and its pipes drop away toward a winze that is finally, sullenly dry."
+      },
+      {
+        "if": [
+          {
+            "flag": "pump-fixed"
+          }
+        ],
+        "full": "The great pump fills most of the room: a cathedral of cast iron built to argue with water and win. Its handle sits seated in the socket now, and the whole machine has the air of an argument about to resume. Its pipes drop away toward the winze, waiting to be given back their opinion."
+      }
+    ]
   },
   {
     "id": "ore-chute",
@@ -336,7 +384,17 @@
       "s": {
         "to": "stull-gallery"
       }
-    }
+    },
+    "variants": [
+      {
+        "if": [
+          {
+            "flag": "magazine-door-open"
+          }
+        ],
+        "full": "A long, well-timbered drift running south, stulls set every few yards holding the roof to its agreement. On one timber, at waist height, somebody has scratched a word — deep, deliberate, plain as a signature. The powder magazine's iron door stands open in the west wall. The drift carries on south toward the stull gallery."
+      }
+    ]
   },
   {
     "id": "magazine",
@@ -400,7 +458,7 @@
     "id": "the-gunnis",
     "name": "The Gunnis",
     "brief": "You are in the gunnis, under open sky.",
-    "full": "A stope worked open to the daylight — a gunnis, in the old vocabulary: the miners followed the seam up until the hill ran out of hill. Grass has come down the slope to meet the workings. Sky sits overhead, ordinary and enormous. And in the west wall there is an older scar: a worked face, closed with dressed stone, mortared from this side. Somebody broke into something here once before, and the town walled it shut, and did not write it down anywhere you have read.",
+    "full": "A stope worked open to the daylight — a gunnis, in the old vocabulary: the miners followed the seam up until the hill ran out of hill. Grass has come down the slope to meet the workings. Sky sits overhead, ordinary and enormous. And in the west wall there is an older scar: a worked face, closed with dressed stone, mortared from this side. Somebody broke into something here once before, and the town walled it shut, and did not write it down anywhere you have read. Below, the spoil slope carries a thin path down toward the tailings.",
     "artId": "the-gunnis",
     "light": "lit",
     "exits": {
@@ -587,7 +645,18 @@
         "blockedMessage": "The wall was built to a standard and is holding to it. Bare hands do not argue with ninety-year mortar. Powder would.",
         "hidden": true
       }
-    }
+    },
+    "variants": [
+      {
+        "if": [
+          {
+            "flag": "breach-blasted"
+          }
+        ],
+        "full": "The maze's draught pours through what used to be a wall: coursed stone thrown open, the smooth-struck mortar's argument settled by powder. The miners' drill-holes still stop an arm's length short of the edges — a caution the blast has made a historical footnote. East, through the breach, the dark is older than the mine.",
+        "brief": "You are at the breach, in the wall's absence."
+      }
+    ]
   },
   {
     "id": "twisty-1",
@@ -954,7 +1023,18 @@
         ],
         "blockedMessage": "The door is held by the mechanism, and the mechanism was not built for an idle push. It wants operating — and the operator is expected to bring the right argument."
       }
-    }
+    },
+    "variants": [
+      {
+        "if": [
+          {
+            "flag": "mechanism-turned"
+          }
+        ],
+        "full": "A chamber that is mostly doorway now: the far wall of fitted bronze and stone stands swung aside, and the mechanism rests in its center with the collar turned and nothing left to be particular about. South, the way it guarded is open.",
+        "brief": "You are in the antechamber, before the open seal."
+      }
+    ]
   },
   {
     "id": "seal-gate",

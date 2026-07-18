@@ -3,7 +3,7 @@ import type { GameState, OutputEvent } from '../types';
 import type { Target } from '../parser/parse';
 import { canSee, creaturesHere, currentLocation, findCreature, findItem, itemsAt, visibleContents } from '../state';
 import { fireTriggers } from '../systems/events';
-import { itemDescription, locationFull } from '../systems/descriptions';
+import { itemBrief, itemDescription, locationFull } from '../systems/descriptions';
 import { acted, refuse, type ActionHandler } from './index';
 
 // look / examine / read / search (foundation-implementation-plan.md T15).
@@ -48,9 +48,9 @@ function darknessWarning(module: AdventureModule): string {
 export function roomContentsLines(module: AdventureModule, state: GameState): OutputEvent[] {
   const output: OutputEvent[] = [];
   for (const item of itemsAt(module, state, state.locationId)) {
-    output.push({ kind: 'text', text: item.brief });
+    output.push({ kind: 'text', text: itemBrief(module, state, item) });
     for (const inner of visibleContents(module, state, item.id)) {
-      output.push({ kind: 'text', text: inner.brief });
+      output.push({ kind: 'text', text: itemBrief(module, state, inner) });
     }
   }
   for (const creature of creaturesHere(module, state)) {

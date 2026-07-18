@@ -70,6 +70,12 @@ export const zItem = z
     description: z.string().min(1),
     /** State-dependent overrides for `description` — see `zDescriptionVariant`. */
     descriptionVariants: z.array(zDescriptionVariant).optional(),
+    /**
+     * State-dependent overrides for `brief` (the in-room line), same shape
+     * and rules — so a door's room listing can stop "taking its lock
+     * seriously" after the player has opened it.
+     */
+    briefVariants: z.array(zDescriptionVariant).optional(),
     artId: zId,
     portable: z.boolean(),
     /** A location id, a container id, `inventory`, or `nowhere` (not yet in play). */

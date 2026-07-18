@@ -26,6 +26,15 @@ export function itemDescription(module: AdventureModule, state: GameState, item:
   return item.description;
 }
 
+/** The item's in-room line: first matching `briefVariants` entry, else `brief`. */
+export function itemBrief(module: AdventureModule, state: GameState, item: Item): string {
+  for (const variant of item.briefVariants ?? []) {
+    const [holds] = evalConditions(module, state, variant.if);
+    if (holds) return variant.text;
+  }
+  return item.brief;
+}
+
 function matchingLocationVariant(module: AdventureModule, state: GameState, location: Location) {
   for (const variant of location.variants ?? []) {
     const [holds] = evalConditions(module, state, variant.if);
