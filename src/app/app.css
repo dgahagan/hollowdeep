@@ -398,6 +398,14 @@ body {
   align-items: center;
 }
 
+/* Replaces the input row once the game ends — the door to the tally, styled
+   to be findable without shouting over the epilogue above it. */
+.shell__stats-button {
+  align-self: center;
+  padding: 0.5rem 1.25rem;
+  font-weight: 600;
+}
+
 .command-input label {
   color: var(--ink-muted);
   font-size: 0.85rem;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import type { AdventureModule } from '../engine/schema';
 import type { GameState } from '../engine/types';
 
@@ -94,58 +94,29 @@ export function deriveStats(module: AdventureModule, state: GameState): GameStat
   };
 }
 
-/**
- * How long the epilogue's final transcript line gets to sit on screen,
- * uncovered, before this dialog takes over — "after the epilogue clears"
- * (ui-plan §6), given as a fixed beat rather than a real "typewriter
- * finished revealing" signal: `TranscriptPanel.tsx` exposes no such
- * callback today, and wiring one through would touch `App.tsx`/`useGame.ts`,
- * both outside this task's file list. With the default `typewriterSpeed`
- * ('instant'), the epilogue is already fully visible the instant `state`
- * updates, so this delay is purely a courtesy pause, not a race against an
- * animation — a future task that threads a real reveal-complete signal
- * through `App.tsx` can replace this constant outright.
- */
-const REVEAL_DELAY_MS = 900;
-
 export interface StatsScreenProps {
   module: AdventureModule;
   state: GameState;
+  /**
+   * PLAYER-CONTROLLED visibility (2026-07-18, player-reported): this dialog
+   * used to auto-pop 900ms after the game ended, dimming the epilogue prose
+   * it was celebrating — and Esc bounced to adventure-select, so the ending
+   * could never be read at leisure. Now App.tsx owns `open` (the
+   * "view your tally" button that replaces the input row), and closing just
+   * closes: the epilogue stays readable, the tally reopens on demand.
+   */
+  open: boolean;
+  onClose: () => void;
   /** Start a fresh run of the SAME adventure. */
   onReplay: () => void;
   /** Return to the adventure-select screen. */
   onSelect: () => void;
 }
 
-export function StatsScreen({ module, state, onReplay, onSelect }: StatsScreenProps) {
+export function StatsScreen({ module, state, open, onClose, onReplay, onSelect }: StatsScreenProps) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const ended = state.ended !== undefined;
-
-  // The courtesy delay (see REVEAL_DELAY_MS above): `shouldShow` flips true
-  // `REVEAL_DELAY_MS` after `ended` first becomes true — via `setTimeout`,
-  // never a synchronous `setState` inside the effect body itself (the
-  // react-hooks `set-state-in-effect` rule flags exactly that as a
-  // cascading-render hazard). `prefers-reduced-motion` collapses the delay
-  // to 0ms rather than skipping the timeout altogether — still async, so the
-  // same rule stays satisfied, and 0ms is imperceptible without being a
-  // literal synchronous update. `shouldShow` never needs to reset to
-  // `false`: `state.ended` is set once, terminally, for a given playthrough,
-  // and `Game`'s `key={id}` (App.tsx) remounts this component fresh — with a
-  // fresh `false` — on every new adventure/replay, which is the only way
-  // `ended` could otherwise go back to being unset.
-  const [shouldShow, setShouldShow] = useState(false);
-
-  useEffect(() => {
-    if (!ended) return undefined;
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const id = window.setTimeout(
-      () => {
-        setShouldShow(true);
-      },
-      reducedMotion ? 0 : REVEAL_DELAY_MS,
-    );
-    return () => window.clearTimeout(id);
-  }, [ended]);
+  const shouldShow = open && ended;
 
   useEffect(() => {
     const dialog = dialogRef.current;
@@ -154,19 +125,18 @@ export function StatsScreen({ module, state, onReplay, onSelect }: StatsScreenPr
     else if (!shouldShow && dialog.open) dialog.close();
   }, [shouldShow]);
 
-  // Esc (or any native close) has no "resume play" to fall back to — the
-  // game already ended — so it lands on the same place the "Select" button
-  // does: the adventure-select screen. That is the least surprising choice
-  // of the two callbacks (it never silently starts a new run).
+  // Esc (or any native close) simply closes — the epilogue underneath is
+  // what the player is going back to. Leaving is what the explicit Replay /
+  // Select buttons (and the header's Adventures button) are for.
   useEffect(() => {
     const dialog = dialogRef.current;
     if (dialog === null) return undefined;
     const handleClose = () => {
-      if (state.ended !== undefined) onSelect();
+      onClose();
     };
     dialog.addEventListener('close', handleClose);
     return () => dialog.removeEventListener('close', handleClose);
-  }, [state.ended, onSelect]);
+  }, [onClose]);
 
   const stats = deriveStats(module, state);
 
@@ -220,6 +190,9 @@ export function StatsScreen({ module, state, onReplay, onSelect }: StatsScreenPr
           )}
 
           <div className="stats-screen__actions">
+            <button type="button" onClick={onClose}>
+              Back to the story
+            </button>
             <button type="button" onClick={onReplay}>
               Replay
             </button>
