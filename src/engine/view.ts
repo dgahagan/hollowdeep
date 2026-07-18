@@ -10,6 +10,7 @@ import {
   hasVisited,
   isCarrying,
   itemsAt,
+  visibleContents,
 } from './state';
 import { evalConditions, isExitRevealed } from './systems/events';
 import { buildVocabulary } from './parser/vocab';
@@ -181,10 +182,15 @@ export function describeScene(module: AdventureModule, state: GameState): SceneV
   // brief — and `verbose` still means what it says everywhere else.
   const description = state.verbose ? location.full : location.brief;
 
-  const items: SceneItem[] = itemsAt(module, state, state.locationId).map((item) => ({
-    id: item.id,
-    brief: item.brief,
-  }));
+  // Room items, each followed by the visible contents of any open container
+  // among them — same rule as `look` (senses.ts) and parser scope, so the
+  // panel never hides something the transcript just announced.
+  const items: SceneItem[] = itemsAt(module, state, state.locationId)
+    .flatMap((item) => [item, ...visibleContents(module, state, item.id)])
+    .map((item) => ({
+      id: item.id,
+      brief: item.brief,
+    }));
 
   const creatures: SceneCreature[] = creaturesHere(module, state).map((creature) => ({
     id: creature.id,
@@ -332,7 +338,11 @@ export function availableActions(module: AdventureModule, state: GameState): UIA
       });
     }
 
-    for (const item of itemsAt(module, state, state.locationId)) {
+    const roomItems = itemsAt(module, state, state.locationId).flatMap((item) => [
+      item,
+      ...visibleContents(module, state, item.id),
+    ]);
+    for (const item of roomItems) {
       const noun = nounFor(module, state, item.id);
       if (noun === undefined) continue;
       for (const [verb, prefix] of itemVerbs(module, state, item.id, false)) {
@@ -389,8 +399,16 @@ export function suggestions(module: AdventureModule, state: GameState, prefix: s
   for (const dir of DIRECTIONS) pool.add(dir);
 
   // Nouns ONLY for what is in scope. In the dark, that is what you carry.
-  const visible = canSee(module, state) ? itemsAt(module, state, state.locationId) : [];
-  for (const item of [...visible, ...module.items.filter((i) => isCarrying(state, i.id))]) {
+  // Open-container contents ride along with their container, both on the
+  // floor and in your pack — mirroring resolveScope, which is the list the
+  // parser will actually accept these nouns against.
+  const visible = canSee(module, state)
+    ? itemsAt(module, state, state.locationId).flatMap((item) => [item, ...visibleContents(module, state, item.id)])
+    : [];
+  const carried = module.items
+    .filter((i) => isCarrying(state, i.id))
+    .flatMap((item) => [item, ...visibleContents(module, state, item.id)]);
+  for (const item of [...visible, ...carried]) {
     for (const name of item.names) pool.add(name);
     for (const adjective of item.adjectives ?? []) pool.add(adjective);
   }

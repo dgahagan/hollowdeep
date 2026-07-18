@@ -195,3 +195,45 @@ describe('search', () => {
     expect(result.consumesTurn).toBe(true);
   });
 });
+
+describe('open-container contents — look / examine / search reveal what is inside (the jade-idol discoverability fix)', () => {
+  const IDOL_BRIEF = /jade idol squats in the box/i;
+
+  /** deep-vault with the box unlocked and standing open; the idol starts inside it. */
+  function boxOpen(): GameState {
+    return setItemState(at('deep-vault'), 'wooden-box', { locked: false, open: true });
+  }
+
+  it('look lists the contents of an open container after its own brief', () => {
+    const result = act(boxOpen(), 'look');
+    expect(texts(result)).toMatch(IDOL_BRIEF);
+  });
+
+  it('look does NOT list the contents while the container is closed', () => {
+    const result = act(at('deep-vault'), 'look');
+    expect(texts(result)).not.toMatch(IDOL_BRIEF);
+  });
+
+  it('examine on an open container appends its contents', () => {
+    const result = act(boxOpen(), 'examine box');
+    expect(texts(result)).toMatch(IDOL_BRIEF);
+  });
+
+  it('examine on the closed container stays a static description', () => {
+    const result = act(at('deep-vault'), 'examine box');
+    expect(texts(result)).not.toMatch(IDOL_BRIEF);
+  });
+
+  it('search on an open container with no search event lists contents instead of "nothing of interest"', () => {
+    const result = act(boxOpen(), 'search box');
+    expect(texts(result)).toMatch(IDOL_BRIEF);
+    expect(texts(result)).not.toMatch(/nothing of interest/i);
+    expect(result.consumesTurn).toBe(true);
+  });
+
+  it('search on an open but EMPTY container still finds nothing of interest', () => {
+    const emptied = setItemLocation(boxOpen(), 'jade-idol', 'deep-vault');
+    const result = act(emptied, 'search box');
+    expect(texts(result)).toMatch(/nothing of interest/i);
+  });
+});

@@ -366,3 +366,36 @@ describe('suggestions (FR-2.6)', () => {
     }
   });
 });
+
+describe('open-container contents surface in the view layer (the jade-idol discoverability fix)', () => {
+  /** deep-vault, lamp lit, with the wooden box unlocked and standing open. */
+  function boxOpen(): GameState {
+    return setItemState(lit('deep-vault'), 'wooden-box', { locked: false, open: true });
+  }
+
+  it('describeScene lists the idol once the box is open, right after the box', () => {
+    const ids = describeScene(module_, boxOpen()).items.map((i) => i.id);
+    expect(ids).toContain('jade-idol');
+    expect(ids.indexOf('jade-idol')).toBe(ids.indexOf('wooden-box') + 1);
+  });
+
+  it('describeScene hides the idol while the box is closed', () => {
+    const ids = describeScene(module_, lit('deep-vault')).items.map((i) => i.id);
+    expect(ids).not.toContain('jade-idol');
+  });
+
+  it('availableActions offers Take on the idol in the open box', () => {
+    const takes = availableActions(module_, boxOpen()).filter((a) => a.targetId === 'jade-idol');
+    expect(takes.some((a) => a.command === 'take idol')).toBe(true);
+  });
+
+  it('availableActions offers nothing for the idol while the box is closed', () => {
+    const actions = availableActions(module_, lit('deep-vault'));
+    expect(actions.some((a) => a.targetId === 'jade-idol')).toBe(false);
+  });
+
+  it('suggestions complete the idol noun only once the box is open', () => {
+    expect(suggestions(module_, boxOpen(), 'ido')).toContain('idol');
+    expect(suggestions(module_, lit('deep-vault'), 'ido')).not.toContain('idol');
+  });
+});
