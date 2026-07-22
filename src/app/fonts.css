@@ -4,11 +4,17 @@
    subset only, woff2 only. The files and their OFL licenses live in
    `public/fonts/` rather than under src/ so `index.html` can preload them by a
    stable URL in dev and prod alike (Vite would content-hash anything imported
-   from src/, which a static <link rel="preload"> cannot follow). */
+   from src/, which a static <link rel="preload"> cannot follow).
+
+   The `/hollowdeep/` prefix is the Vite `base` (see vite.config.ts) — required
+   because GitHub Pages serves this site from a subpath. Plain CSS can't read
+   `import.meta.env.BASE_URL`, so the prefix is written literally here and must
+   stay in sync with `base`. index.html's preload hrefs need no prefix: Vite
+   rewrites their root-absolute URLs with `base` automatically. */
 
 @font-face {
   font-family: 'Literata';
-  src: url('/fonts/literata-latin-400-normal.woff2') format('woff2');
+  src: url('/hollowdeep/fonts/literata-latin-400-normal.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -16,7 +22,7 @@
 
 @font-face {
   font-family: 'Literata';
-  src: url('/fonts/literata-latin-400-italic.woff2') format('woff2');
+  src: url('/hollowdeep/fonts/literata-latin-400-italic.woff2') format('woff2');
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -24,7 +30,7 @@
 
 @font-face {
   font-family: 'Literata';
-  src: url('/fonts/literata-latin-700-normal.woff2') format('woff2');
+  src: url('/hollowdeep/fonts/literata-latin-700-normal.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -32,7 +38,7 @@
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');
+  src: url('/hollowdeep/fonts/jetbrains-mono-latin-400-normal.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -40,7 +46,7 @@
 
 @font-face {
   font-family: 'JetBrains Mono';
-  src: url('/fonts/jetbrains-mono-latin-700-normal.woff2') format('woff2');
+  src: url('/hollowdeep/fonts/jetbrains-mono-latin-700-normal.woff2') format('woff2');
   font-weight: 700;
   font-style: normal;
   font-display: swap;

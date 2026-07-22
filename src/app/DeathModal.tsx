@@ -33,7 +33,7 @@ export function deathVignetteUrl(module: AdventureModule, deathText: string): st
   const entry = Object.entries(module.strings).find(([, text]) => text === deathText);
   if (entry === undefined) return null;
   const key = entry[0].endsWith('-death') ? entry[0].slice(0, -'-death'.length) : entry[0];
-  return `/adventures/${module.manifest.id}/art/marquee-death-${key}.${module.manifest.artFormat}`;
+  return `${import.meta.env.BASE_URL}adventures/${module.manifest.id}/art/marquee-death-${key}.${module.manifest.artFormat}`;
 }
 
 /**

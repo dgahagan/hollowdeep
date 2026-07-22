@@ -139,7 +139,7 @@ function formatTimestamp(ms: number): string {
 
 /** Same `<artId>.<format>` convention `ScenePanel.tsx` renders with — kept in sync deliberately, not re-derived from it (that file is out of T8's scope). */
 function thumbnailUrl(module: AdventureModule, artId: string): string {
-  return `/adventures/${module.manifest.id}/art/${artId}.${module.manifest.artFormat}`;
+  return `${import.meta.env.BASE_URL}adventures/${module.manifest.id}/art/${artId}.${module.manifest.artFormat}`;
 }
 
 function downloadJson(filename: string, contents: string): void {

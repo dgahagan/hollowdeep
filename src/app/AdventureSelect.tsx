@@ -173,10 +173,14 @@ function AdventureCard({ card, hardcore, onHardcoreChange, onNewGame, onContinue
   // plate keeps the card's shape (art-plan §7's placeholder tolerance).
   const coverCandidates: string[] = [];
   if (module !== undefined) {
-    coverCandidates.push(`/adventures/${entry.id}/art/marquee-title.${module.manifest.artFormat}`);
+    coverCandidates.push(
+      `${import.meta.env.BASE_URL}adventures/${entry.id}/art/marquee-title.${module.manifest.artFormat}`,
+    );
     const startArtId = module.locations.find((l) => l.id === module.manifest.startLocation)?.artId;
     if (startArtId !== undefined) {
-      coverCandidates.push(`/adventures/${entry.id}/art/${startArtId}.${module.manifest.artFormat}`);
+      coverCandidates.push(
+        `${import.meta.env.BASE_URL}adventures/${entry.id}/art/${startArtId}.${module.manifest.artFormat}`,
+      );
     }
   }
   const [coverIndex, setCoverIndex] = useState(0);

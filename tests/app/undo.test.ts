@@ -131,7 +131,9 @@ describe('deathVignetteUrl — the death→vignette map (cross-task note 4)', ()
       expect(text).toBeDefined();
       const url = deathVignetteUrl(hollowdeep, text ?? '');
       const key = id.slice(0, -'-death'.length);
-      expect(url).toBe(`/adventures/hollowdeep/art/marquee-death-${key}.${hollowdeep.manifest.artFormat}`);
+      expect(url).toBe(
+        `${import.meta.env.BASE_URL}adventures/hollowdeep/art/marquee-death-${key}.${hollowdeep.manifest.artFormat}`,
+      );
     }
   });
 

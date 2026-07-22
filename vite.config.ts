@@ -36,6 +36,15 @@ function copyAdventuresPlugin(): Plugin {
 }
 
 export default defineConfig({
+  // GitHub Pages serves this project site from a subpath
+  // (https://dgahagan.github.io/hollowdeep/), so every asset and runtime
+  // `fetch()` must be rooted at `/hollowdeep/`, not `/`. Setting `base` here
+  // makes Vite rewrite index.html + bundled asset URLs, and exposes the prefix
+  // to app code as `import.meta.env.BASE_URL` (used by fetchReader and the art
+  // URL builders). It applies in dev and preview too, so paths behave
+  // identically everywhere. Kept in sync with the `/hollowdeep/` prefix in
+  // `src/app/fonts.css`; update both together if the repo is ever renamed.
+  base: '/hollowdeep/',
   plugins: [react(), copyAdventuresPlugin()],
   test: {
     environment: 'node',

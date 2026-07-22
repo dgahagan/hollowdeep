@@ -1,0 +1,49 @@
+name: Deploy to GitHub Pages
+
+# Builds the static Vite bundle and publishes it to GitHub Pages on every push
+# to main. Pages must be enabled once in the repo: Settings → Pages → Build and
+# deployment → Source: "GitHub Actions". The site then serves from
+# https://dgahagan.github.io/hollowdeep/ (the `base` set in vite.config.ts).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Least-privilege permissions the deploy-pages action needs.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time; a newer push supersedes an in-flight run.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      # Typecheck + lint + tests + validate before we ship the bundle, so a
+      # red build never reaches Pages. Mirrors `npm run gate` locally.
+      - run: npm run gate
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

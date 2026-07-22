@@ -82,7 +82,7 @@ export interface ScenePanelProps {
 
 /** Same `<artId>.<format>` convention as the render below, shared (also by InventoryPanel's thumbnails) so nothing drifts from it. */
 export function artUrl(module: AdventureModule, artId: string): string {
-  return `/adventures/${module.manifest.id}/art/${artId}.${module.manifest.artFormat}`;
+  return `${import.meta.env.BASE_URL}adventures/${module.manifest.id}/art/${artId}.${module.manifest.artFormat}`;
 }
 
 export function ScenePanel({ module, scene, lampWarn = false, inspect = null }: ScenePanelProps) {

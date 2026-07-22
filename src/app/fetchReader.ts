@@ -6,12 +6,13 @@
 // `loadAdventure(read, baseDir)` builds paths as `${baseDir}/${filename}`,
 // e.g. `adventures/test-cave/manifest.json` for `baseDir = 'adventures/test-cave'`.
 // Those documents are served from `public/adventures/` (copied there by
-// `vite.config.ts`'s `copy-adventures` plugin), which Vite serves at the site
-// root — so the path only needs a leading slash to become a real URL.
+// `vite.config.ts`'s `copy-adventures` plugin), which Vite serves under the
+// configured `base` — so the path is joined onto `import.meta.env.BASE_URL`
+// (which always ends in `/`) to become a real URL under any deploy subpath.
 
 /** A `read(path)` function backed by `fetch`, for `loadAdventure` in the browser. */
 export async function fetchReader(path: string): Promise<string> {
-  const url = path.startsWith('/') ? path : `/${path}`;
+  const url = `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`;
   const response = await fetch(url);
   if (!response.ok) {
     throw new Error(`fetch "${url}" failed: ${response.status} ${response.statusText}`);
