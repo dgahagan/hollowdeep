@@ -1,10 +1,21 @@
 # Hollowdeep
 
+[![Play](https://img.shields.io/badge/%E2%96%B6_play_it-dgahagan.github.io%2Fhollowdeep-2ea44f)](https://dgahagan.github.io/hollowdeep/)
+[![Deploy](https://github.com/dgahagan/hollowdeep/actions/workflows/deploy.yml/badge.svg)](https://github.com/dgahagan/hollowdeep/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![Node >= 22.12](https://img.shields.io/badge/node-%E2%89%A5%2022.12-brightgreen)
+
+[![Hollowdeep — an original text adventure](public/social-preview.jpg)](https://dgahagan.github.io/hollowdeep/)
+
 An original browser-based text adventure in the spirit of *Colossal Cave
 Adventure* — a cave, a lamp, some treasure, and a narrator who is not on your
 side. Not a port: no text or map from the 1977 game, only its manners.
 
-Vite + React + TypeScript, static-only, no backend, no runtime AI.
+**[Play it in your browser](https://dgahagan.github.io/hollowdeep/)** — free,
+static, no install, no account, no backend, no runtime AI. Saves live in your
+browser's local storage; you can export them to a file.
+
+Vite + React + TypeScript, static-only.
 
 ---
 
